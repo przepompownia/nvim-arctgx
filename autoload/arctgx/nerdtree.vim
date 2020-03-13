@@ -3,7 +3,7 @@ function! arctgx#nerdtree#canOpenFzfFiles()
 endfunction
 
 function! arctgx#nerdtree#find()
-  let l:filename = expand(glob('%'))
+  let l:filename = glob(expand('%:p'))
 
   execute empty(l:filename)
         \ ? 'NERDTree '. getcwd() .'/'
