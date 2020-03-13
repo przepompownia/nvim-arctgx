@@ -1,0 +1,23 @@
+{
+  "command": "vim-language-server",
+  "args": ["--stdio"],
+  "initializationOptions": {
+    "iskeyword": "@,48-57,_,192-255,#",
+    "vimruntime": "/usr/share/nvim/runtime",
+    "runtimepath": "/home/arctgx/.vim,/home/arctgx/.vim/pack/bundle/start/vim-unimpaired,/home/arctgx/.vim/pack/bundle/start/vim-twig,/home/arctgx/.vim/pack/bundle/start/vim-toml,/home/arctgx/.vim/pack/bundle/start/vim-tmux-focus-events,/home/arctgx/.vim/pack/bundle/start/vim-test,/home/arctgx/.vim/pack/bundle/start/vim-spacejam,/home/arctgx/.vim/pack/bundle/start/vim-rhubarb,/home/arctgx/.vim/pack/bundle/start/vim-repeat,/home/arctgx/.vim/pack/bundle/start/vim-pasta,/home/arctgx/.vim/pack/bundle/start/vim-move,/home/arctgx/.vim/pack/bundle/start/vim-markdown-folding,/home/arctgx/.vim/pack/bundle/start/vim-markdown,/home/arctgx/.vim/pack/bundle/start/vim-javascript,/home/arctgx/.vim/pack/bundle/start/vim-gitgutter,/home/arctgx/.vim/pack/bundle/start/vim-dispatch,/home/arctgx/.vim/pack/bundle/start/vim-commentary,/home/arctgx/.vim/pack/bundle/start/vim-airline-themes,/home/arctgx/.vim/pack/bundle/start/vim-airline,/home/arctgx/.vim/pack/bundle/start/vader.vim,/home/arctgx/.vim/pack/bundle/start/tmux.vim,/home/arctgx/.vim/pack/bundle/start/tail-bundle,/home/arctgx/.vim/pack/bundle/start/tabname,/home/arctgx/.vim/pack/bundle/start/surround,/home/arctgx/.vim/pack/bundle/start/snippets,/home/arctgx/.vim/pack/bundle/start/phpactor,/home/arctgx/.vim/pack/bundle/start/nginx.vim,/home/arctgx/.vim/pack/bundle/start/nerdtree,/home/arctgx/.vim/pack/bundle/start/neopairs.vim,/home/arctgx/.vim/pack/bundle/start/luciusColorscheme,/home/arctgx/.vim/pack/bundle/start/jsonc.vim,/home/arctgx/.vim/pack/bundle/start/fzf.vim,/home/arctgx/.vim/pack/bundle/start/fzf,/home/arctgx/.vim/pack/bundle/start/fugitive,/home/arctgx/.vim/pack/bundle/start/coc.nvim,/home/arctgx/.vim/pack/bundle/start/auto-pairs,/home/arctgx/.vim/pack/bundle/start/ale,/home/arctgx/.vim/pack/bundle/start/PHP-Indenting-for-VIm,/home/arctgx/.vim/pack/bundle/opt/arctgx,/home/arctgx/.config/nvim,/etc/xdg/nvim,/home/arctgx/.local/share/nvim/site,/usr/local/share/nvim/site,/usr/share/nvim/site,/usr/share/nvim/runtime,/usr/share/nvim/runtime/pack/dist/opt/matchit,/usr/lib/x86_64-linux-gnu/nvim,/home/arctgx/.vim/pack/bundle/start/vim-markdown-folding/after,/home/arctgx/.vim/pack/bundle/start/vim-javascript/after,/home/arctgx/.vim/pack/bundle/opt/arctgx/after,/usr/share/nvim/site/after,/usr/local/share/nvim/site/after,/home/arctgx/.local/share/nvim/site/after,/etc/xdg/nvim/after,/home/arctgx/.config/nvim/after,/home/arctgx/.vim/after,/home/arctgx/.config/coc/extensions/node_modules/coc-snippets",
+    "diagnostic": {
+      "enable": true
+    },
+    "indexes": {
+      "runtimepath": true,
+      "gap": 1,
+      "count": 4,
+      "projectRootPatterns" : ["vimrc_per_host", ".git", "autoload", "plugin"]
+    },
+    "suggest": {
+      "fromVimruntime": false,
+      "fromRuntimepath": true
+    }
+  },
+  "filetypes": [ "vim" ]
+}

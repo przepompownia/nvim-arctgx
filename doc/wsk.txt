@@ -1,0 +1,16 @@
+*wsk.txt* - dodatkowe wskazówki
+
+|wsk-surround|				Surround
+
+==============================================================================
+
+SURROUND					*wsk-surround*
+
+	doc:	|surround| 
+
+	ysiwtu<CR>	- tagu <u> wokół słowa
+	Stu<CR>		- tagu <u> wokół zazanaczenia wizualnego
+
+==============================================================================
+
+vim:tw=78:noet:wrap:ts=2:ft=help:norl:

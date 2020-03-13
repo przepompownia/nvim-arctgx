@@ -1,0 +1,19 @@
+snippet '
+	'${1}'${2}
+snippet "
+	"${1}"${2}
+
+snippet [[
+	'${1}' => [
+		${2}
+	],${3}
+snippet [
+	[
+		${1}
+	],${2}
+snippet fl
+	FirePHP::getInstance(TRUE)->log(${1}); 
+snippet thr
+	throw new Exception(${1});
+snippet vdx
+	var_dump(xdebug_get_function_stack());

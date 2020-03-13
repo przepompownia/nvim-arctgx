@@ -1,0 +1,56 @@
+global !p
+import vim
+
+# Set g:ultisnips_php_scalar_types to 1 if you'd like to enable PHP 7's scalar types for return values
+def isPHPScalarTypesEnabled():
+	isEnabled = vim.eval("get(g:, 'ultisnips_php_scalar_types', 0)") == "1"
+	return isEnabled or re.match('<\?php\s+declare\(strict_types=[01]\);', '\n'.join(vim.current.window.buffer))
+
+def isAppendingPHPDocblockEnabled():
+	return vim.eval("get(g:, 'ultisnips_php_append_docblock', 1)") == "1"
+
+variableDeclarationRegex = r'\s*([\w\\]+ )*\$(\w+)(\s*=\s*\w+)*(,*\s)*'
+setterLineFormat = r'\n        $this->\2 = $\2;'
+docblockParamEntryFormat = r'\n     * @param \1 $\2'
+
+def getDocblockParamEntry(variableDeclaration):
+	return re.sub(variableDeclarationRegex, docblockParamEntryFormat, variableDeclaration)
+
+def getSetterLine(variableDeclaration):
+	return re.sub(variableDeclarationRegex, setterLineFormat, variableDeclaration)
+
+def getEndOfPSR2MultilineArgsList(argsBody):
+	if argsBody.find('\n'):
+		return ')\n    {'
+	else:
+		return ') {'
+
+endglobal
+## Snippets from SnipMate, taken from
+## https://github.com/scrooloose/snipmate-snippets.git
+
+
+snippet construct "__construct()" b
+`!p
+if isAppendingPHPDocblockEnabled():
+	snip.rv = '/**' + getDocblockParamEntry(t[1]) + '\n     */\n    '
+`public function __construct(${1:$dependencies}`!p
+snip.rv = getEndOfPSR2MultilineArgsList(t[1])
+` `!p
+snip.rv = getSetterLine(t[1])
+`
+}
+$0
+endsnippet
+
+snippet pub "Public function" b
+`!p
+if isAppendingPHPDocblockEnabled():
+	snip.rv = '/**' + getDocblockParamEntry(t[2]) + '\n     */\n    '
+`public function ${1:name}(${2:$param}`!p
+snip.rv = getEndOfPSR2MultilineArgsList(t[2])
+`
+	${VISUAL}${5:return null;}
+}
+$0
+endsnippet
