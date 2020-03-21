@@ -2,7 +2,7 @@ augroup cocMaps
   autocmd!
   autocmd User CocJumpPlaceholder call
               \ CocActionAsync('showSignatureHelp')
-  autocmd User CocNvimInit call <SID>defineIDEMaps()
+  autocmd User CocNvimInit call s:defineIDEMaps()
   autocmd User CocNvimInit highlight CocFloating guifg=#888888 guibg=#dddddd
   autocmd User CocNvimInit highlight CocErrorFloat guifg=#880000 guibg=#dddddd
 augroup END

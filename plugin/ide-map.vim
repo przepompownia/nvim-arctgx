@@ -1,6 +1,6 @@
 augroup ideMaps
   autocmd!
-  autocmd FileType * call <SID>defineIDEMaps()
+  autocmd FileType * call s:defineIDEMaps()
 augroup END
 
 function s:isExcludedFromIDEMapping(filetype)
@@ -10,7 +10,7 @@ function s:isExcludedFromIDEMapping(filetype)
 endfunction
 
 function s:defineIDEMaps()
-  if <SID>isExcludedFromIDEMapping(&filetype)
+  if s:isExcludedFromIDEMapping(&filetype)
     return
   endif
 

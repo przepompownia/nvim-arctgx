@@ -4,7 +4,7 @@ let g:phpactorUseOpenWindows = v:true
 
 augroup phpactor
   autocmd!
-  autocmd FileType php call <SID>definePhpactorMaps()
+  autocmd FileType php call s:definePhpactorMaps()
   autocmd FileType php setlocal omnifunc=phpactor#Complete
 augroup END
 

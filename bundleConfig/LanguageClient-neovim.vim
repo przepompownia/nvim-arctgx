@@ -20,7 +20,7 @@ let g:LanguageClient_hoverPreview = 'Always'
 
 augroup LanguageClient
   autocmd!
-  autocmd FileType * call <SID>define_maps()
+  autocmd FileType * call s:define_maps()
   autocmd FileType vim let g:LanguageClient_settingsPath = arctgx#arctgx#getInitialVimDirectory() . '/pack/bundle/start/arctgx/languageServerConfig/vim-language-server.json'
 augroup END
 
