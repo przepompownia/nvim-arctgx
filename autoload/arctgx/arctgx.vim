@@ -1,3 +1,7 @@
+function arctgx#arctgx#getInitialVimDirectory() abort
+  return get(g:, 'initialVimDirectory', expand('~/.vim'))
+endfunction
+
 function arctgx#arctgx#enablePrivateMode()
   set history=0
   set nobackup
@@ -15,8 +19,8 @@ function arctgx#arctgx#sudowq()
   if ! executable('sudo')
     echoerr 'Command sudo not found'
   endif
-  exe "w !sudo tee % > /dev/null"
-  exe "e!"
+  exe 'w !sudo tee % > /dev/null'
+  exe 'e!'
 endfunction
 
 function arctgx#arctgx#openShell(directory)
@@ -30,7 +34,7 @@ function arctgx#arctgx#openShell(directory)
 endfunction
 
 function arctgx#arctgx#editIDEMaps()
-  execute 'lcd '.expand('~/.vim/pack/bundle/start/arctgx/')
+  execute 'lcd ' . arctgx#arctgx#getInitialVimDirectory() . '/pack/bundle/opt/arctgx/'
   tabedit plugin/ide-map.vim
   vsplit bundleConfig/coc.nvim.vim
   split bundleConfig/phpactor.vim
@@ -38,7 +42,7 @@ function arctgx#arctgx#editIDEMaps()
 endfunction
 
 function arctgx#arctgx#reloadIDEMaps()
-  execute 'lcd '.expand('~/.vim/pack/bundle/start/arctgx/')
+  execute 'lcd ' . arctgx#arctgx#getInitialVimDirectory() . '/pack/bundle/opt/arctgx/'
   source plugin/ide-map.vim
   source bundleConfig/coc.nvim.vim
   source bundleConfig/phpactor.vim
