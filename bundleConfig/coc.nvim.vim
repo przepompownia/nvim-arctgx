@@ -24,5 +24,5 @@ endfunction
 inoremap <expr> <Plug>(ide-trigger-completion) coc#refresh()
 inoremap <expr> <Plug>(ide-workspace-symbols) <Cmd>CocList symbols<CR>
 
-let g:coc_config_home = get(g:, 'coc_config_home', arctgx#arctgx#getInitialVimDirectory())
+let g:coc_config_home = expand(arctgx#arctgx#getInitialVimDirectory() . '/.config/coc')
 let g:coc_data_home = expand(arctgx#arctgx#getInitialVimDirectory() . '/.config/coc')
