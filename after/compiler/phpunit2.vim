@@ -1,14 +1,14 @@
-if exists("current_compiler")
+if exists('b:current_compiler')
   finish
 endif
-let current_compiler = "phpunit"
+let b:current_compiler = 'phpunit'
 
-if exists(":CompilerSet") != 2
+if exists(':CompilerSet') != 2
   command -nargs=* CompilerSet setlocal <args>
 endif
 
-let s:cpo_save = &cpo
-set cpo&vim
+let s:cpo_save = &cpoptions
+set cpoptions&vim
 
 CompilerSet makeprg=phpunit\ $*
 
@@ -40,5 +40,5 @@ CompilerSet errorformat=
       \%f:%l,
       \%m
 
-let &cpo = s:cpo_save
+let &cpoptions = s:cpo_save
 unlet s:cpo_save

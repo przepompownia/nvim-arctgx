@@ -2,21 +2,21 @@
 " compiler phpunitx
 " Make! % (from vim-dispatch)
 
-if exists("current_compiler")
+if exists('b:current_compiler')
   finish
 endif
-let current_compiler = "phpunitxdebug"
+let b:current_compiler = 'phpunitxdebug'
 
-if exists(":CompilerSet") != 2
+if exists(':CompilerSet') != 2
   command -nargs=* CompilerSet setlocal <args>
 endif
 
-let s:cpo_save = &cpo
-set cpo&vim
+let s:cpo_save = &cpoptions
+set cpoptions&vim
 
-let phpunit_executable = exepath('phpunit')
+let s:phpunit_executable = exepath('phpunit')
 
-execute 'CompilerSet makeprg=XDEBUG_CONFIG=\"vim\"\ php\ -dzend_extension=xdebug.so\ '.phpunit_executable.'\ $*'
+execute 'CompilerSet makeprg=XDEBUG_CONFIG=\"vim\"\ php\ -dzend_extension=xdebug.so\ '.s:phpunit_executable.'\ $*'
 
 CompilerSet errorformat=
       \%-G,
@@ -46,5 +46,5 @@ CompilerSet errorformat=
       \%f:%l,
       \%m
 
-let &cpo = s:cpo_save
+let &cpoptions = s:cpo_save
 unlet s:cpo_save
