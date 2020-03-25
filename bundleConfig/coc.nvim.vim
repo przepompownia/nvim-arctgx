@@ -26,3 +26,13 @@ inoremap <expr> <Plug>(ide-workspace-symbols) <Cmd>CocList symbols<CR>
 
 let g:coc_config_home = expand(arctgx#arctgx#getInitialVimDirectory() . '/.config/coc')
 let g:coc_data_home = expand(arctgx#arctgx#getInitialVimDirectory() . '/.config/coc')
+augroup CocRootPatterns
+  autocmd!
+  autocmd FileType php let b:coc_root_patterns = [
+        \ "composer.json",
+        \ "extensions.json",
+        \ ".git",
+        \ ".hg",
+        \ ".projections.json"
+        \ ]
+augroup end
