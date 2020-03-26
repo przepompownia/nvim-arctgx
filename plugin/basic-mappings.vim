@@ -1,3 +1,6 @@
+scriptencoding utf-8
+nnoremap i i<C-f>
+nnoremap a a<C-f>
 noremap <S-Insert> <MiddleMouse>
 noremap! <S-Insert> <MiddleMouse>
 nnoremap <Tab> <C-w>w
