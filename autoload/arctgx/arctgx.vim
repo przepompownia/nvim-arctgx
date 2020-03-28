@@ -48,3 +48,17 @@ function arctgx#arctgx#reloadIDEMaps()
   source bundleConfig/phpactor.vim
   source bundleConfig/fzf.vim
 endfunction
+
+function arctgx#arctgx#insertWithInitialIndentation(modeCharacter)
+  if a:modeCharacter !=# 'a' && a:modeCharacter !=# 'i'
+    throw 'Only "i" and "a" are allowed to enter Insert mode this way'
+  endif
+
+  call feedkeys(a:modeCharacter, 'n')
+
+  if empty(&indentexpr)
+    return
+  endif
+
+  call feedkeys("\<C-f>", 'n')
+endfunction

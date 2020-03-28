@@ -1,6 +1,6 @@
 scriptencoding utf-8
-nnoremap i i<C-f>
-nnoremap a a<C-f>
+nnoremap i :call arctgx#arctgx#insertWithInitialIndentation('i')<CR>
+nnoremap a :call arctgx#arctgx#insertWithInitialIndentation('a')<CR>
 noremap <S-Insert> <MiddleMouse>
 noremap! <S-Insert> <MiddleMouse>
 nnoremap <Tab> <C-w>w
