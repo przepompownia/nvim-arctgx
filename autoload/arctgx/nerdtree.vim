@@ -5,9 +5,14 @@ endfunction
 function! arctgx#nerdtree#find()
   let l:filename = glob(expand('%:p'))
 
-  execute empty(l:filename)
-        \ ? 'NERDTree '. getcwd() .'/'
-        \ : 'NERDTreeFind '. l:filename
+  if !empty(l:filename)
+    execute 'NERDTreeFind '. l:filename
+    return
+  endif
+
+  let l:dir = glob(expand('%:p:h'))
+  let l:dir = empty(l:dir) ? getcwd() : l:dir
+  execute 'NERDTree '. l:dir
 endfunction
 
 function! arctgx#nerdtree#getNodeDirectory()
