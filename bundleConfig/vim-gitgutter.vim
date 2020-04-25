@@ -1,4 +1,4 @@
-if $TERM =~ '-256color$'
+if $TERM =~# '-256color$'
   highlight GitGutterAdd ctermbg=254 ctermfg=34
   highlight GitGutterAdd guifg=#51983c guibg=#eeeeee
   highlight GitGutterDelete guifg=#cc3b3b guibg=#eeeeee
