@@ -18,6 +18,7 @@ function s:defineIDEMaps()
   nmap <Leader>cre <Plug>(coc-references)
 
   nmap <Plug>(ide-goto-definition) <Plug>(coc-definition)
+  nmap <Plug>(ide-goto-implementation) <Plug>(coc-implementation)
   imap <Plug>(ide-show-signature-help) <C-o>:call CocActionAsync('showSignatureHelp')<CR>
   nmap <Plug>(ide-hover) <Cmd>call CocActionAsync('doHover')<CR>
   nmap <buffer> <Plug>(ide-find-references) <Cmd>call CocActionAsync('jumpReferences')<CR>
