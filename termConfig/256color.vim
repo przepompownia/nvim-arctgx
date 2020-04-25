@@ -17,6 +17,4 @@ highlight DiffAdd term=reverse cterm=NONE ctermbg=145 ctermfg=239
 highlight DiffChange term=reverse cterm=NONE ctermbg=188 ctermfg=16
 highlight DiffText term=reverse cterm=NONE ctermbg=188 ctermfg=166
 highlight DiffDelete term=reverse ctermbg=253 ctermfg=250
-highlight DbgBreakptLine ctermbg=113 ctermfg=244
-highlight DbgBreakptSign ctermbg=113 ctermfg=244
 highlight CursorLine ctermbg=255 ctermfg=239
