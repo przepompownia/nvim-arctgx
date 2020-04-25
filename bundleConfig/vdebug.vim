@@ -4,6 +4,13 @@ augroup vdebugConfig
   autocmd BufFilePost DebuggerWatch setlocal foldmethod=manual
 augroup END
 
+highlight DbgBreakptLine ctermbg=113 ctermfg=244 guibg=#008800 guifg=#dddddd
+highlight DbgBreakptSign ctermbg=113 ctermfg=244 guibg=#008800 guifg=#dddddd
+highlight DbgCurrentLine ctermbg=124 ctermfg=244 guibg=#880000 guifg=#dddddd
+highlight DbgCurrentSign ctermbg=124 ctermfg=244 guibg=#880000 guifg=#dddddd
+highlight DbgDisabledLine ctermbg=114 ctermfg=244 guibg=#b4ee9a guifg=#888888
+highlight DbgDisabledSign ctermbg=114 ctermfg=244 guibg=#b4ee9a guifg=#888888
+
 let g:vdebug_options = get(g:, 'vdebug_options', {})
 let g:vdebug_options['break_on_open']=0
 let g:vdebug_options['marker_default']='○'
