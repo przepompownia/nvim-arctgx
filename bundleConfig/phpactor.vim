@@ -1,4 +1,4 @@
-let g:phpactorBranch = systemlist("git -C $HOME config --get submodule..vim/bundle/phpactor.branch")[0]
+let g:phpactorBranch = 'develop'
 let g:phpactorQuickfixStrategy = 'phpactor#quickfix#fzf'
 let g:phpactorUseOpenWindows = v:true
 
