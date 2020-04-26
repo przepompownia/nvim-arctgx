@@ -6,6 +6,8 @@ let g:airline#extensions#tabline#show_buffers=0
 let g:airline#extensions#tabline#show_splits = 0
 let g:airline#extensions#tabline#show_close_button = 0
 let g:airline#extensions#fugitiveline#enabled = 1
+let g:airline#extensions#coc#enabled = 0
+let g:airline#extensions#ale#enabled = 0
 " ro=⊝, ws=☲, lnr=☰, mlnr=㏑, br=ᚠ, nx=Ɇ, crypt=🔒
 let g:airline_symbols.maxlinenr = ''
 let g:airline_symbols.linenr = ''
