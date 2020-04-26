@@ -47,6 +47,7 @@ function arctgx#arctgx#reloadIDEMaps()
   source bundleConfig/coc.nvim.vim
   source bundleConfig/phpactor.vim
   source bundleConfig/fzf.vim
+  source bundleConfig/vdebug.vim
 endfunction
 
 function arctgx#arctgx#insertWithInitialIndentation(modeCharacter)
