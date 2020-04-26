@@ -27,3 +27,4 @@ let g:vdebug_keymap['step_over'] = '<F8>'
 let g:vdebug_keymap['step_into'] = '<F7>'
 let g:vdebug_keymap['step_out'] = '<S-F7>'
 let g:vdebug_keymap['detach'] = '<S-F6>'
+" let g:vdebug_options['debug_file_level'] = 1
