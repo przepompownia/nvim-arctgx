@@ -17,7 +17,7 @@ let g:airline_symbols.readonly = ''
 let g:airline_symbols.crypt = ''
 let g:airline_symbols.spell = ''
 " let g:airline#extensions#tabline#buffer_nr_show = 1
-let g:airline_section_a = 'b%n, w%{winnr()}%#__accent_bold#%{winnr()==winnr("#")?" [LW]":""}%#__restore__#'
+let g:airline_section_a = 'b:%n, tw:%{tabpagenr()}.%{winnr()} (%{win_getid()}) %#__accent_bold#%{winnr()==winnr("#")?" [LW]":""}%#__restore__#'
 " let g:airline_section_c = '%<%f%m %#__accent_red#%{airline#util#wrap(airline#parts#readonly(),0)}%#__restore__#'
 " let g:airline_inactive_collapse=0
 let g:airline#init#vim_async = 1
