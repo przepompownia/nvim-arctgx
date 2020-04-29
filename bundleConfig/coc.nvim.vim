@@ -29,6 +29,7 @@ inoremap <expr> <Plug>(ide-workspace-symbols) <Cmd>CocList symbols<CR>
 
 let g:coc_config_home = expand(arctgx#arctgx#getInitialVimDirectory() . '/.config/coc')
 let g:coc_data_home = expand(arctgx#arctgx#getInitialVimDirectory() . '/.config/coc')
+let g:coc_enable_locationlist = 0
 augroup CocRootPatterns
   autocmd!
   autocmd FileType php let b:coc_root_patterns = [
