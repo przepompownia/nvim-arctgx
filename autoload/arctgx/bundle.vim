@@ -14,8 +14,8 @@ function arctgx#bundle#isEnabled(bundle, bundleDir)
 endfunction
 
 function arctgx#bundle#loadCustomConfigurations(bundleDirs, bundleConfigDir)
-  for dir in a:bundleDirs
-    call arctgx#bundle#loadCustomConfiguration(dir, a:bundleConfigDir)
+  for l:dir in a:bundleDirs
+    call arctgx#bundle#loadCustomConfiguration(l:dir, a:bundleConfigDir)
   endfor
 endfunction
 
