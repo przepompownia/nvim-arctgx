@@ -1,15 +1,19 @@
 scriptencoding utf-8
+
+function s:loadHighlight() abort
+  highlight DbgBreakptLine ctermbg=113 ctermfg=244 guibg=#008800 guifg=#dddddd
+  highlight DbgBreakptSign ctermbg=113 ctermfg=244 guibg=#008800 guifg=#dddddd
+  highlight DbgCurrentLine ctermbg=124 ctermfg=244 guibg=#880000 guifg=#dddddd
+  highlight DbgCurrentSign ctermbg=124 ctermfg=244 guibg=#880000 guifg=#dddddd
+  highlight DbgDisabledLine ctermbg=114 ctermfg=244 guibg=#b4ee9a guifg=#888888
+  highlight DbgDisabledSign ctermbg=114 ctermfg=244 guibg=#b4ee9a guifg=#888888
+endfunction
+
 augroup vdebugConfig
   autocmd!
   autocmd BufFilePost DebuggerWatch setlocal foldmethod=manual
+  autocmd ColorScheme * call s:loadHighlight()
 augroup END
-
-highlight DbgBreakptLine ctermbg=113 ctermfg=244 guibg=#008800 guifg=#dddddd
-highlight DbgBreakptSign ctermbg=113 ctermfg=244 guibg=#008800 guifg=#dddddd
-highlight DbgCurrentLine ctermbg=124 ctermfg=244 guibg=#880000 guifg=#dddddd
-highlight DbgCurrentSign ctermbg=124 ctermfg=244 guibg=#880000 guifg=#dddddd
-highlight DbgDisabledLine ctermbg=114 ctermfg=244 guibg=#b4ee9a guifg=#888888
-highlight DbgDisabledSign ctermbg=114 ctermfg=244 guibg=#b4ee9a guifg=#888888
 
 let g:vdebug_options = get(g:, 'vdebug_options', {})
 let g:vdebug_options['break_on_open'] = 0
