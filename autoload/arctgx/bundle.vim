@@ -33,9 +33,8 @@ function arctgx#bundle#loadCustomConfiguration(bundleDir, bundleConfigDir)
     try
       call arctgx#base#sourceFile(l:config)
     catch /^Config \/.* does not exist\.$/
+      " echom v:exception
       continue
-    catch
-      echom v:exception
     endtry
   endfor
 endfunction
