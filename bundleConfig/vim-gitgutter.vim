@@ -1,9 +1,17 @@
-if $TERM =~# '-256color$'
-  highlight GitGutterAdd ctermbg=254 ctermfg=34 guifg=#51983c guibg=#eeeeee
-  highlight GitGutterDelete guifg=#cc3b3b guibg=#eeeeee
-  highlight GitGutterChange guifg=#d89b0b guibg=#eeeeee
-  highlight GitGutterChangeDelete guifg=#a7680b guibg=#eeeeee
-endif
+function s:loadCustomHighlight() abort
+  if $TERM =~# '-256color$'
+    highlight GitGutterAdd guifg=#51983c
+    highlight GitGutterDelete guifg=#cc3b3b
+    highlight GitGutterChange guifg=#d89b0b
+    highlight GitGutterChangeDelete guifg=#a7680b
+  endif
+endfunction
+
+augroup vimGitgutterCustom
+  autocmd!
+  autocmd VimEnter * call s:loadCustomHighlight()
+augroup END
+
 nmap [h <Plug>(GitGutterPrevHunk)
 nmap ]h <Plug>(GitGutterNextHunk)
 nmap <Leader>ht :GitGutterLineHighlightsToggle<CR>
