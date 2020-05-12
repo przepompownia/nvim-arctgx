@@ -1,2 +1,2 @@
 nnoremap <buffer> q :q<CR>
-wincmd _
+wincmd T
