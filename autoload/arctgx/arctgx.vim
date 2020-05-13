@@ -2,6 +2,21 @@ function arctgx#arctgx#getInitialVimDirectory() abort
   return get(g:, 'initialVimDirectory', expand('~/.vim'))
 endfunction
 
+let s:arctgxBundleDir = simplify(fnamemodify(expand('<sfile>:p:h:h:h'), ':p'))
+echomsg s:arctgxBundleDir
+
+function s:listIdeSources() abort
+  let l:ideSources = [
+        \ {'source': 'plugin/ide-map.vim', 'action': 'edit'},
+        \ {'source': 'bundleConfig/coc.nvim.vim', 'action': 'vsplit'},
+        \ {'source': 'bundleConfig/phpactor.vim', 'action': 'split'},
+        \ {'source': 'bundleConfig/fzf.vim', 'action': 'split'},
+        \ {'source': 'bundleConfig/vdebug.vim', 'action': 'split'},
+        \ {'source': 'bundleConfig/vim-project.vim', 'action': 'split'},
+        \ ]
+  return map(l:ideSources, {_, item -> {'source': s:arctgxBundleDir . item['source'], 'action': item['action']}})
+endfunction
+
 function arctgx#arctgx#enablePrivateMode()
   set history=0
   set nobackup
@@ -34,20 +49,19 @@ function arctgx#arctgx#openShell(directory)
 endfunction
 
 function arctgx#arctgx#editIDEMaps()
-  execute 'lcd ' . arctgx#arctgx#getInitialVimDirectory() . '/pack/bundle/opt/arctgx/'
-  tabedit plugin/ide-map.vim
-  vsplit bundleConfig/coc.nvim.vim
-  split bundleConfig/phpactor.vim
-  split bundleConfig/fzf.vim
+  tabnew
+  let l:ideSources = s:listIdeSources()
+  for l:item in l:ideSources
+    let l:action = l:item['action']
+    execute printf('%s %s', l:action, l:item['source'])
+  endfor
 endfunction
 
 function arctgx#arctgx#reloadIDEMaps()
-  execute 'lcd ' . arctgx#arctgx#getInitialVimDirectory() . '/pack/bundle/opt/arctgx/'
-  source plugin/ide-map.vim
-  source bundleConfig/coc.nvim.vim
-  source bundleConfig/phpactor.vim
-  source bundleConfig/fzf.vim
-  source bundleConfig/vdebug.vim
+  let l:ideSources = s:listIdeSources()
+  for l:item in l:ideSources
+    execute 'source ' l:item['source']
+  endfor
 endfunction
 
 function arctgx#arctgx#insertWithInitialIndentation(modeCharacter)
