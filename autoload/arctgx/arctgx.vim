@@ -52,6 +52,9 @@ function arctgx#arctgx#editIDEMaps()
   tabnew
   let l:ideSources = s:listIdeSources()
   for l:item in l:ideSources
+    if (!filereadable(l:item['source']))
+      continue
+    endif
     let l:action = l:item['action']
     execute printf('%s %s', l:action, l:item['source'])
   endfor
@@ -60,6 +63,9 @@ endfunction
 function arctgx#arctgx#reloadIDEMaps()
   let l:ideSources = s:listIdeSources()
   for l:item in l:ideSources
+    if (!filereadable(l:item['source']))
+      continue
+    endif
     execute 'source ' l:item['source']
   endfor
 endfunction
