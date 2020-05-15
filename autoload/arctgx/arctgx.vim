@@ -3,7 +3,6 @@ function arctgx#arctgx#getInitialVimDirectory() abort
 endfunction
 
 let s:arctgxBundleDir = simplify(fnamemodify(expand('<sfile>:p:h:h:h'), ':p'))
-echomsg s:arctgxBundleDir
 
 function s:listIdeSources() abort
   let l:ideSources = [
