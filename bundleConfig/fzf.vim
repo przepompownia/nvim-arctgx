@@ -1,11 +1,11 @@
 let g:fzf_history_dir = expand('~/.cache/fzf-history')
 let g:fzf_action = {
-  \ 'enter': 'tab drop',
-  \ 'ctrl-y': 'edit',
-  \ 'ctrl-t': 'tab split',
-  \ 'ctrl-x': 'split',
-  \ 'ctrl-v': 'vsplit'
-  \ }
+      \ 'enter': 'tab drop ',
+      \ 'ctrl-y': 'edit',
+      \ 'ctrl-t': 'tab split',
+      \ 'ctrl-x': 'split',
+      \ 'ctrl-v': 'vsplit'
+      \ }
 
 nmap <Plug>(ide-browse-files) <Cmd>:Files<CR>
 nmap <Plug>(ide-browse-gfiles) <Cmd>:GFiles<CR>
