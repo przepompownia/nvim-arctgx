@@ -14,5 +14,5 @@ function s:definePhpactorMaps()
   nnoremap <buffer> <Leader>pn :call phpactor#Navigate()<CR>
   " nmap <Plug>(ide-goto-definition) :call phpactor#GotoDefinition()<CR>
   nnoremap <buffer> <Plug>(ide-class-new) :call phpactor#ClassNew()<CR>
-  nnoremap <buffer> <Plug>(ide-find-references) :call phpactor#FindReferences()<CR>
+  nnoremap <buffer> <Leader>pfr :call phpactor#FindReferences()<CR>
 endfunction
