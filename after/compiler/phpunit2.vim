@@ -1,3 +1,6 @@
+" test:
+" compiler phpunit2
+" Make! % (from vim-dispatch)
 if exists('b:current_compiler')
   finish
 endif
@@ -10,7 +13,10 @@ endif
 let s:cpo_save = &cpoptions
 set cpoptions&vim
 
-CompilerSet makeprg=phpunit\ $*
+let g:phpunit_executable = get(g:, 'phpunit_executable', exepath('phpunit'))
+" let g:phpunit_executable = 'cd /project && docker-compose -f docker-compose.yml exec service ./bin/phpunit'
+
+execute 'CompilerSet makeprg=' . shellescape(escape(g:phpunit_executable, ' \')) . '\ $*'
 
 CompilerSet errorformat=
       \%-G,
