@@ -17,7 +17,7 @@ set cpoptions&vim
 let g:phpunit_executable = get(g:, 'phpunit_executable', exepath('phpunit'))
 " let g:phpunit_executable = 'cd /project && docker-compose -f docker-compose.yml exec service ./bin/phpunit'
 
-execute 'CompilerSet makeprg=XDEBUG_CONFIG=\"vim\"\ php\ -dzend_extension=xdebug.so\ '. shellescape(escape(g:phpunit_executable, ' \')) .'\ $*'
+execute 'CompilerSet makeprg=XDEBUG_CONFIG=\"vim\"\ php\ -dzend_extension=xdebug.so\ '. escape(g:phpunit_executable, ' \') .'\ $*'
 
 CompilerSet errorformat=
       \%-G,
