@@ -1,0 +1,1 @@
+highlight IdeDiagnosticError guibg=#ffeeee
