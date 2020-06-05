@@ -1,6 +1,6 @@
 let g:fzf_history_dir = expand('~/.cache/fzf-history')
 let g:fzf_action = {
-      \ 'enter': 'tab drop ',
+      \ 'enter': 'tab drop',
       \ 'ctrl-y': 'edit',
       \ 'ctrl-t': 'tab split',
       \ 'ctrl-x': 'split',
@@ -26,7 +26,7 @@ endif
 
 command! -bang -nargs=* GGrep call s:ggrep(<q-args>, <bang>0)
 
-function s:ggrep(args, bang) abort
+function s:ggrep(query, fullscreen) abort
   let l:bufdir = expand('%:p:h')
   let l:gitTopCmd = printf('git -C "%s" rev-parse --show-toplevel ', l:bufdir)
   let l:gitTop = systemlist(l:gitTopCmd)[0]
@@ -34,7 +34,16 @@ function s:ggrep(args, bang) abort
     let l:gitTop = getcwd()
   endif
 
-  let l:gitGrepCmd = printf('git -C "%s" grep --line-number -- %s', l:gitTop, shellescape(a:args))
+  call fzf#vim#grep(s:gitGrepCmd(l:gitTop, shellescape(a:query)), 0, fzf#vim#with_preview({
+        \ 'dir': l:gitTop,
+        \ 'options': [
+        \ '--phony',
+        \ '--query', a:query,
+        \ '--bind', 'change:reload:' . s:gitGrepCmd(l:gitTop, '{q}'),
+        \ ]
+        \ }), a:fullscreen)
+endfunction
 
-  call fzf#vim#grep(l:gitGrepCmd, 0, fzf#vim#with_preview({'dir': l:gitTop}), a:bang)
+function s:gitGrepCmd(topDir, query) abort
+  return printf('git -C "%s" grep --line-number -- %s || true', a:topDir, a:query)
 endfunction
