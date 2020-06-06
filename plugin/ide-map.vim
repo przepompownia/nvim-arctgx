@@ -36,6 +36,7 @@ nmap <Leader>ibg <Plug>(ide-browse-gfiles)
 nmap <Leader>ibw <Plug>(ide-browse-windows)
 
 nmap <Leader>igg <Plug>(ide-grep-git)
+nmap <Leader>igf <Plug>(ide-grep-files)
 
 command! IDEMapsEdit call arctgx#arctgx#editIDEMaps()
 command! IDEMapsReload call arctgx#arctgx#reloadIDEMaps()
