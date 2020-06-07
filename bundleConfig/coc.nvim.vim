@@ -7,6 +7,7 @@ augroup cocMaps
   autocmd User CocNvimInit highlight CocErrorFloat guifg=#880000 guibg=#dddddd
   autocmd User CocNvimInit highlight link CocErrorHighlight IdeDiagnosticError
   autocmd User CocNvimInit highlight CocErrorSign guifg=#ff0000 guibg=#dddddd
+  autocmd CursorHold * silent call CocActionAsync('highlight')
 augroup END
 
 function s:defineIDEMaps()
