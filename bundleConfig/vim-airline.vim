@@ -22,4 +22,4 @@ let g:airline_section_a = 'b:%n, tw:%{tabpagenr()}.%{winnr()} (%{win_getid()}) %
 " let g:airline_inactive_collapse=0
 let g:airline#init#vim_async = 1
 let g:airline#extensions#branch#format = 'arctgx#string#shorten'
-let g:airline_inactive_collapse=0
+let g:airline_inactive_collapse = 0
