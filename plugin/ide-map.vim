@@ -26,6 +26,7 @@ function s:defineIDEMaps()
   nmap <buffer> <Leader>inm <Plug>(ide-navigation-menu)
   nmap <buffer> <Leader>iws <Plug>(ide-workspace-symbols)
   nmap <buffer> <Leader>ih <Plug>(ide-hover)
+  nmap <buffer> <Leader>iaf <Plug>(ide-action-fold)
 endfunction
 
 nmap <Leader>ibb <Plug>(ide-browse-buffers)

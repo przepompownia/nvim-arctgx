@@ -25,6 +25,7 @@ function s:defineIDEMaps()
   imap <Plug>(ide-show-signature-help) <C-o>:call CocActionAsync('showSignatureHelp')<CR>
   nmap <Plug>(ide-hover) <Cmd>call CocActionAsync('doHover')<CR>
   nmap <Plug>(ide-find-references) <Plug>(coc-references)
+  nmap <Plug>(ide-action-fold) <Cmd>call CocActionAsync('fold')<CR>
 endfunction
 
 inoremap <expr> <Plug>(ide-trigger-completion) coc#refresh()
