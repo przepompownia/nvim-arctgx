@@ -1,5 +1,6 @@
 map <C-_> gccj
 imap <C-_> <C-o>gcc<C-o>j
+vmap <C-_> gc
 augroup Start
   autocmd!
   autocmd FileType php let b:commentary_format = '// %s'
