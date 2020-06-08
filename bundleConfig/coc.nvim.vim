@@ -27,6 +27,8 @@ function s:defineIDEMaps()
   nmap <Plug>(ide-find-references) <Plug>(coc-references)
   nmap <Plug>(ide-action-fold) <Cmd>call CocActionAsync('fold')<CR>
   nmap <Plug>(ide-action-rename) <Plug>(coc-rename)<CR>
+  nmap <Plug>(ide-list-document-symbol) <Cmd>CocList outline<CR>
+  nmap <Plug>(ide-list-workspace-symbol) <Cmd>CocList symbols<CR>
 endfunction
 
 inoremap <expr> <Plug>(ide-trigger-completion) coc#refresh()
