@@ -3,7 +3,7 @@ function! arctgx#grep#grep(...)
   call map(l:params, 'shellescape(v:val)')
   let l:paramstring = join(l:params, ' ')
 
-  silent execute "lgrep! " . l:paramstring . ' .'
+  silent execute 'lgrep! ' . l:paramstring . ' .'
   lopen
   let w:quickfix_title = 'grep: ' . l:paramstring
 endfunction
