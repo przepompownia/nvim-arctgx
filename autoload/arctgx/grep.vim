@@ -30,7 +30,8 @@ function arctgx#grep#gnu(params)
   let w:quickfix_title = 'grep: ' . l:params
 endfunction
 
-function arctgx#grep#ggrep(query, fullscreen) abort
+function arctgx#grep#ggrep(query, ...) abort
+  let l:fullscreen = get(a:, 1, 0)
   let l:bufdir = expand('%:p:h')
   let l:gitTopCmd = printf('git -C "%s" rev-parse --show-toplevel ', l:bufdir)
   let l:gitTop = systemlist(l:gitTopCmd)[0]
@@ -43,17 +44,18 @@ function arctgx#grep#ggrep(query, fullscreen) abort
         \ s:gitGrepCmd(l:gitTop, shellescape(a:query)),
         \ s:gitGrepCmd(l:gitTop, '{q}'),
         \ a:query,
-        \ a:fullscreen
+        \ l:fullscreen
         \ )
 endfunction
 
-function arctgx#grep#rgrep(query, fullscreen) abort
+function arctgx#grep#rgrep(query, ...) abort
+  let l:fullscreen = get(a:, 1, 0)
   call s:fzfVimGrep(
         \ getcwd(),
         \ s:ripgrepCmd(shellescape(a:query)),
         \ s:ripgrepCmd('{q}'),
         \ a:query,
-        \ a:fullscreen
+        \ l:fullscreen
         \ )
 endfunction
 
