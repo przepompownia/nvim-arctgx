@@ -3,9 +3,8 @@ function! arctgx#grep#grep(...)
   call map(l:params, 'shellescape(v:val)')
   let l:paramstring = join(l:params, ' ')
 
-  silent execute 'lgrep! ' . l:paramstring . ' .'
-  lopen
-  let w:quickfix_title = 'grep: ' . l:paramstring
+  let l:GrepCallback = get(g:, 'ArctgxGrepCallback', function('arctgx#grep#gnu'))
+  call l:GrepCallback(l:paramstring)
 endfunction
 
 function! arctgx#grep#grepOperator(type)
@@ -19,9 +18,16 @@ function! arctgx#grep#grepOperator(type)
     return
   endif
 
-  call arctgx#grep#grep('--recursive', '--', @@)
+  call arctgx#grep#grep(@@)
 
   let @@ = l:saved_unnamed_register
+endfunction
+
+function arctgx#grep#gnu(params)
+  let l:params = '--recursive -- ' . a:params
+  silent execute 'lgrep! ' . l:params . ' .'
+  lopen
+  let w:quickfix_title = 'grep: ' . l:params
 endfunction
 
 function arctgx#grep#ggrep(query, fullscreen) abort
