@@ -4,8 +4,8 @@
 nnoremap <leader>q :set operatorfunc=arctgx#grep#grepOperator<cr>g@
 vnoremap <leader>q :<c-u>call arctgx#grep#grepOperator(visualmode())<cr>
 if has('nvim')
-  nmap <Plug>(ide-grep-git) <Cmd>:GGrep<CR>
-  nmap <Plug>(ide-grep-files) <Cmd>:RGrep<CR>
+  nmap <Plug>(ide-grep-git) <Cmd>GGrep<CR>
+  nmap <Plug>(ide-grep-files) <Cmd>RGrep<CR>
 else
   nmap <Plug>(ide-grep-git) :<C-U>GGrep<CR>
   nmap <Plug>(ide-grep-files) :<C-U>RGrep<CR>

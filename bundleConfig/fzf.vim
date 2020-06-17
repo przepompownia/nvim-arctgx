@@ -7,8 +7,8 @@ let g:fzf_action = {
       \ 'ctrl-v': 'vsplit'
       \ }
 
-nmap <Plug>(ide-browse-files) <Cmd>:Files<CR>
-nmap <Plug>(ide-browse-gfiles) <Cmd>:GFiles<CR>
+nmap <Plug>(ide-browse-files) <Cmd>Files<CR>
+nmap <Plug>(ide-browse-gfiles) <Cmd>GFiles<CR>
 
 if has('nvim')
   nmap <Plug>(ide-browse-buffers) <Cmd>call fzf#vim#buffers({}, 0)<CR>
