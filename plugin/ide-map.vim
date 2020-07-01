@@ -36,9 +36,11 @@ endfunction
 nmap <Leader>ibb <Plug>(ide-browse-buffers)
 nmap <Leader>; <Plug>(ide-browse-cmd-history)
 nmap <Leader>ibh <Plug>(ide-browse-history)
+nmap <F4> <Plug>(ide-browse-history)
 nmap <Leader>ibf <Plug>(ide-browse-files)
 nmap <Leader>ibg <Plug>(ide-browse-gfiles)
 nmap <Leader>ibw <Plug>(ide-browse-windows)
+nmap <S-F4> <Plug>(ide-browse-windows)
 
 nmap <Leader>igg <Plug>(ide-grep-git)
 nmap <Leader>igf <Plug>(ide-grep-files)
