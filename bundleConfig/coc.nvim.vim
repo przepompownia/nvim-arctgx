@@ -32,6 +32,15 @@ function s:defineIDEMaps()
   nmap <Plug>(ide-action-rename) <Plug>(coc-rename)<CR>
   nmap <Plug>(ide-list-document-symbol) <Cmd>CocList outline<CR>
   nmap <Plug>(ide-list-workspace-symbol) <Cmd>CocList symbols<CR>
+  nmap <buffer> <Plug>(ide-range-select) <Plug>(coc-range-select)
+  xmap <buffer> <Plug>(ide-funcobj-i) <Plug>(coc-funcobj-i)
+  omap <buffer> <Plug>(ide-funcobj-i) <Plug>(coc-funcobj-i)
+  xmap <buffer> <Plug>(ide-funcobj-a) <Plug>(coc-funcobj-a)
+  omap <buffer> <Plug>(ide-funcobj-a) <Plug>(coc-funcobj-a)
+  xmap <buffer> <Plug>(ide-classobj-i) <Plug>(coc-classobj-i)
+  omap <buffer> <Plug>(ide-classobj-i) <Plug>(coc-classobj-i)
+  xmap <buffer> <Plug>(ide-classobj-a) <Plug>(coc-classobj-a)
+  omap <buffer> <Plug>(ide-classobj-a) <Plug>(coc-classobj-a)
 endfunction
 
 inoremap <expr> <Plug>(ide-trigger-completion) coc#refresh()
