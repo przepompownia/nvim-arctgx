@@ -13,7 +13,21 @@ augroup cocMaps
   autocmd CursorHold * silent call CocActionAsync('highlight')
 augroup END
 
+function! s:check_back_space() abort
+  let l:col = col('.') - 1
+  return !l:col || getline('.')[l:col - 1]  =~# '\s'
+endfunction
+
 function s:defineIDEMaps()
+  inoremap <silent><expr> <TAB>
+    \ pumvisible() ? coc#_select_confirm() :
+    \ coc#expandableOrJumpable() ?
+    \ "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
+    \ <SID>check_back_space() ? "\<TAB>" :
+    \ coc#refresh()
+
+  let g:coc_snippet_next = '<tab>'
+
   nmap <Leader>ca <Plug>(coc-codeaction)
   nmap <Leader>cd <Plug>(coc-definition)
   nmap <Leader>cfh <Plug>(coc-float-hide)
