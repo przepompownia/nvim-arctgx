@@ -36,6 +36,7 @@ function s:defineIDEMaps()
   nmap <Leader>cfr <Plug>(coc-codelens-action)
   nmap <Leader>cmv <Plug>(coc-rename)
   nmap <Leader>cre <Plug>(coc-references)
+  xmap <leader>ccs <Plug>(coc-convert-snippet)
 
   nmap <Plug>(ide-goto-definition) <Plug>(coc-definition)
   nmap <Plug>(ide-goto-implementation) <Plug>(coc-implementation)
