@@ -56,6 +56,14 @@ endsnippet
 
 # From Ultisnips
 
+snippet pug "Public getter" b
+public function $1(): ${2:string}
+{
+	return $this->${1:name};
+}
+$0
+endsnippet
+
 snippet pub "Public function" b
 public function ${1:name}(${2:$param})
 {
