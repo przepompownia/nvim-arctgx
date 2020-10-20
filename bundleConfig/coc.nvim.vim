@@ -37,6 +37,10 @@ function s:defineIDEMaps()
   nmap <Leader>cmv <Plug>(coc-rename)
   nmap <Leader>cre <Plug>(coc-references)
   xmap <leader>ccs <Plug>(coc-convert-snippet)
+  nnoremap <expr><C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+  nnoremap <expr><C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+  inoremap <expr><C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<Right>"
+  inoremap <expr><C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<Left>"
 
   nmap <Plug>(ide-goto-definition) <Plug>(coc-definition)
   nmap <Plug>(ide-goto-implementation) <Plug>(coc-implementation)
