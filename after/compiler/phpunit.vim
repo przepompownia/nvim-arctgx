@@ -1,6 +1,6 @@
 " test:
-" compiler phpunit2
-" Make! % (from vim-dispatch)
+" compiler phpunit
+" Make! --filter '::testMethod' % (from vim-dispatch)
 if exists('b:current_compiler')
   finish
 endif
@@ -14,9 +14,10 @@ let s:cpo_save = &cpoptions
 set cpoptions&vim
 
 let g:phpunit_executable = get(g:, 'phpunit_executable', exepath('phpunit'))
-" let g:phpunit_executable = 'cd /project && docker-compose -f docker-compose.yml exec service ./bin/phpunit'
+" let g:phpunit_executable = 'cd /project && docker-compose -f docker-compose.yml exec -T service ./bin/phpunit'
 
 execute 'CompilerSet makeprg=' . escape(g:phpunit_executable, ' \') . '\ $*'
+" execute 'CompilerSet makeprg=XDEBUG_CONFIG=\"vim\"\ php\ -dzend_extension=xdebug.so\ '. escape(g:phpunit_executable, ' \') .'\ $*'
 
 CompilerSet errorformat=
       \%-G,
