@@ -6,6 +6,7 @@ let g:NERDTreeBookmarksFile = expand('~/.config/NERDTreeBookmarks.cfg')
 let g:NERDTreeMouseMode = 2
 let g:NERDChristmasTree = 1
 let g:NERDTreeCustomOpenArgs = {'file': {'reuse': 'all', 'where': 't'}, 'dir': {}}
+let g:NERDTreeHighlightCursorline =1
 augroup NERDTreeVimEnter
   autocmd!
   autocmd VimEnter * call NERDTreeAddMenuItem({
