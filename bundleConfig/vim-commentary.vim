@@ -1,7 +1,7 @@
 map <C-_> gccj
 imap <C-_> <C-o>gcc<C-o>j
 vmap <C-_> gc
-augroup Start
+augroup CommentaryStart
   autocmd!
   autocmd FileType php let b:commentary_format = '// %s'
   autocmd FileType smarty let b:commentary_format = '{* %s *}'
