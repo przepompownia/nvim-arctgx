@@ -30,17 +30,13 @@ function s:defineIDEMaps()
   " inoremap <silent><expr> <C-s> coc#rpc#request('doKeymap', ['snippets-expand-jump',''])
   nmap <Leader>ca <Plug>(coc-codeaction)
   nmap <Leader>cd <Plug>(coc-definition)
-  nmap <Leader>cfh <Plug>(coc-float-hide)
+  nmap <Leader>cfh <Cmd>call coc#float#close_all()<CR>
   nmap <Leader>cfj <Plug>(coc-float-jump)
   nmap <Leader>col <Plug>(coc-openlink)
   nmap <Leader>cfr <Plug>(coc-codelens-action)
   nmap <Leader>cmv <Plug>(coc-rename)
   nmap <Leader>cre <Plug>(coc-references)
   xmap <leader>ccs <Plug>(coc-convert-snippet)
-  nnoremap <expr><C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
-  nnoremap <expr><C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
-  inoremap <expr><C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<Right>"
-  inoremap <expr><C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<Left>"
 
   nmap <Plug>(ide-goto-definition) <Plug>(coc-definition)
   nmap <Plug>(ide-goto-implementation) <Plug>(coc-implementation)
