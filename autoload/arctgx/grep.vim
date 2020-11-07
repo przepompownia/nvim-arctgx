@@ -1,9 +1,9 @@
-function arctgx#grep#getRipGrepCmd(query, useFixedStrings) abort
+function! arctgx#grep#getRipGrepCmd(query, useFixedStrings) abort
   let l:fixedStringOption = (a:useFixedStrings is v:true) ? ' --fixed-strings' : ''
   return printf('rg --column --line-number --no-heading --color=always --smart-case %s %s', l:fixedStringOption, a:query)
 endfunction
 
-function arctgx#grep#getGnuGrepCmd(query, useFixedStrings)
+function! arctgx#grep#getGnuGrepCmd(query, useFixedStrings) abort
   let l:fixedStringOption = (a:useFixedStrings is v:true) ? ' --fixed-strings' : ''
 
   return printf(
@@ -13,7 +13,7 @@ function arctgx#grep#getGnuGrepCmd(query, useFixedStrings)
         \ )
 endfunction
 
-function arctgx#grep#getGitGrepCmd(query, useFixedStrings) abort
+function! arctgx#grep#getGitGrepCmd(query, useFixedStrings) abort
   let l:fixedStringOption = (a:useFixedStrings is v:true) ? ' --fixed-strings' : ''
 
   return printf(
@@ -24,7 +24,7 @@ function arctgx#grep#getGitGrepCmd(query, useFixedStrings) abort
         \ )
 endfunction
 
-function arctgx#grep#gitGetWorkspaceRoot() abort
+function! arctgx#grep#gitGetWorkspaceRoot() abort
   let l:bufdir = expand('%:p:h')
   let l:gitTopCmd = printf('git -C "%s" rev-parse --show-toplevel ', l:bufdir)
   let l:gitTop = systemlist(l:gitTopCmd)[0]
@@ -36,7 +36,7 @@ function arctgx#grep#gitGetWorkspaceRoot() abort
   return getcwd()
 endfunction
 
-function! arctgx#grep#grepOperator(type)
+function! arctgx#grep#grepOperator(type) abort
   let l:GetGrepCmd = get(g:, 'ArctgxGetGrepCmd', function('arctgx#grep#getRipGrepCmd'))
 
   call arctgx#grep#grep(
@@ -48,7 +48,7 @@ function! arctgx#grep#grepOperator(type)
         \ )
 endfunction
 
-function! arctgx#grep#gitGrepOperator(type)
+function! arctgx#grep#gitGrepOperator(type) abort
   call arctgx#grep#grep(
         \ function('arctgx#grep#getGitGrepCmd'),
         \ arctgx#grep#gitGetWorkspaceRoot(),
@@ -58,7 +58,7 @@ function! arctgx#grep#gitGrepOperator(type)
         \ )
 endfunction
 
-function arctgx#grep#grep(Cmd, root, query, useFixedStrings, fullscreen) abort
+function! arctgx#grep#grep(Cmd, root, query, useFixedStrings, fullscreen) abort
   call fzf#vim#grep(a:Cmd(a:query, a:useFixedStrings), 0, fzf#vim#with_preview({
         \ 'dir': a:root,
         \ 'options': [
