@@ -41,8 +41,6 @@ inoremap <C-Left> <C-o>b
 inoremap <C-Right> <C-o>w
 inoremap <S-Right> <C-o>v
 inoremap <S-Left> <C-o>v
-inoremap <F1> <C-o>za
-noremap <F1> za
 noremap <S-Up> <C-y>
 noremap <S-Down> <C-e>
 inoremap <C-z> <C-x><C-o>
