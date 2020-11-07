@@ -59,7 +59,7 @@ function! arctgx#grep#gitGrepOperator(type) abort
 endfunction
 
 function! arctgx#grep#grep(Cmd, root, query, useFixedStrings, fullscreen) abort
-  call fzf#vim#grep(a:Cmd(a:query, a:useFixedStrings), 0, fzf#vim#with_preview({
+  call fzf#vim#grep(a:Cmd(shellescape(a:query), a:useFixedStrings), 0, fzf#vim#with_preview({
         \ 'dir': a:root,
         \ 'options': [
         \ '--phony',

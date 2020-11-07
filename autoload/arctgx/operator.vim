@@ -9,7 +9,7 @@ function arctgx#operator#getText(type) abort
     return
   endif
 
-  let l:query = shellescape(@@)
+  let l:query = @@
 
   let @@ = l:saved_unnamed_register
 
