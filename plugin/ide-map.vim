@@ -53,6 +53,8 @@ nmap <S-F4> <Plug>(ide-browse-gfiles)
 nmap <Leader>ibw <Plug>(ide-browse-windows)
 nmap <F1> <Plug>(ide-browse-windows)
 inoremap <F1> <C-o>(ide-browse-windows)
+nmap <F12> <Plug>(ide-grep-git)
+nmap <S-F12> <Plug>(ide-grep-files)
 
 nmap <Leader>igg <Plug>(ide-grep-git)
 nmap <Leader>igf <Plug>(ide-grep-files)
