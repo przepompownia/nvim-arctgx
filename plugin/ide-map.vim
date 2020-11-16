@@ -40,6 +40,18 @@ function s:defineIDEMaps()
   omap <buffer> <Leader>irci <Plug>(ide-classobj-i)
   xmap <buffer> <Leader>irca <Plug>(ide-classobj-a)
   omap <buffer> <Leader>irca <Plug>(ide-classobj-a)
+
+  nmap <buffer> <Leader><F5> <Plug>(ide-debugger-run)
+  nmap <buffer> <Leader><F6> <Plug>(ide-debugger-close)
+  nmap <buffer> <Leader><S-F6> <Plug>(ide-debugger-detach)
+  nmap <buffer> <Leader><F7> <Plug>(ide-debugger-step-into)
+  nmap <buffer> <Leader><F7> <Plug>(ide-debugger-step-out)
+  nmap <buffer> <Leader><F8> <Plug>(ide-debugger-step-over)
+  nmap <buffer> <Leader><F9> <Plug>(ide-debugger-run-to-cursor)
+  nmap <buffer> <Leader><F10> <Plug>(ide-debugger-set-breakpoint)
+  nmap <buffer> <Leader><F11> <Plug>(ide-debugger-get-context)
+  nmap <buffer> <Leader><F12> <Plug>(ide-debugger-eval-under-cursor)
+  nmap <buffer> <Leader><Leader>e <Plug>(ide-debugger-eval-visual)
 endfunction
 
 nmap <Leader>ibb <Plug>(ide-browse-buffers)
