@@ -10,7 +10,7 @@ function s:listIdeSources() abort
         \ {'source': 'bundleConfig/coc.nvim.vim', 'action': 'vsplit'},
         \ {'source': 'bundleConfig/phpactor.vim', 'action': 'split'},
         \ {'source': 'bundleConfig/fzf.vim', 'action': 'split'},
-        \ {'source': 'bundleConfig/vdebug.vim', 'action': 'split'},
+        \ {'source': 'bundleConfig/vimspector.vim', 'action': 'split'},
         \ {'source': 'bundleConfig/vim-project.vim', 'action': 'split'},
         \ ]
   return map(l:ideSources, {_, item -> {'source': s:arctgxBundleDir . item['source'], 'action': item['action']}})
