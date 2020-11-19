@@ -26,14 +26,14 @@ endfunction
 
 function! arctgx#grep#gitGetWorkspaceRoot() abort
   let l:bufdir = expand('%:p:h')
-  let l:gitTopCmd = printf('git -C "%s" rev-parse --show-toplevel ', l:bufdir)
-  let l:gitTop = systemlist(l:gitTopCmd)[0]
-  if ! empty(l:gitTop)
-    return l:gitTop
+  let l:gitTopCmd = printf('git -C "%s" rev-parse --show-toplevel 2>/dev/null', l:bufdir)
+  let l:gitTopCmdResult = systemlist(l:gitTopCmd)
+  if empty(l:gitTopCmdResult)
+    echomsg printf('Git work tree root not found for %s. Searching within CWD.', l:bufdir)
+    return getcwd()
   endif
 
-  echomsg printf('Git work tree root not found for %s. Searching within CWD.', l:bufdir)
-  return getcwd()
+  return l:gitTopCmdResult[0]
 endfunction
 
 function! arctgx#grep#grepOperator(type) abort
