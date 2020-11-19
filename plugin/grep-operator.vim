@@ -13,5 +13,17 @@ else
   nmap <Plug>(ide-grep-files) :<C-U>RGrep<CR>
 endif
 
-command! -bang -nargs=* GGrep call arctgx#grep#grep(function('arctgx#grep#getGitGrepCmd'), arctgx#grep#gitGetWorkspaceRoot(), <q-args>, v:false, <bang>0)
-command! -bang -nargs=* RGrep call arctgx#grep#grep(function('arctgx#grep#getRipGrepCmd'), getcwd(), <q-args>, v:false, <bang>0)
+command! -bang -nargs=* GGrep call arctgx#grep#grep(
+      \ function('arctgx#grep#getGitGrepCmd'),
+      \ arctgx#grep#gitGetWorkspaceRoot(expand('%:p:h')),
+      \ <q-args>,
+      \ v:false,
+      \ <bang>0
+      \ )
+command! -bang -nargs=* RGrep call arctgx#grep#grep(
+      \ function('arctgx#grep#getRipGrepCmd'),
+      \ getcwd(),
+      \ <q-args>,
+      \ v:false,
+      \ <bang>0
+      \ )
