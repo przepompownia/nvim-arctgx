@@ -26,7 +26,7 @@ endfunction
 
 function! arctgx#grep#gitGetWorkspaceRoot(startDirectory) abort
   if !isdirectory(a:startDirectory)
-    throw 'arctgx#grep#gitGetWorkspaceRootL invalid directory'
+    throw 'arctgx#grep#gitGetWorkspaceRoot: invalid directory'
   endif
 
   let l:gitTopCmd = printf('git -C "%s" rev-parse --show-toplevel 2>/dev/null', a:startDirectory)
