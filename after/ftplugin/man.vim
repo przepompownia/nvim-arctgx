@@ -4,3 +4,4 @@ vnoremap <buffer> q <C-c>:quit<CR>
 setlocal nomodified noma
 setlocal nonumber
 setlocal foldmethod=manual
+wincmd T
