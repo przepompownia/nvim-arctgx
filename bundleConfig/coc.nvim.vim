@@ -27,6 +27,8 @@ function s:defineIDEMaps()
     " \ coc#refresh()
 
   " let g:coc_snippet_next = '<tab>'
+  inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
+              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
   " inoremap <silent><expr> <C-s> coc#rpc#request('doKeymap', ['snippets-expand-jump',''])
   nmap <Leader>ca <Plug>(coc-codeaction)
   nmap <Leader>cd <Plug>(coc-definition)
