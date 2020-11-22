@@ -11,6 +11,7 @@ augroup cocMaps
   autocmd User CocNvimInit highlight link CocWarningHighlight IdeDiagnosticWarning
   autocmd User CocNvimInit highlight link CocErrorSign IdeErrorSign
   autocmd CursorHold * silent call CocActionAsync('highlight')
+  autocmd CursorHold * silent call CocActionAsync('getCurrentFunctionSymbol', function('arctgx#coc#setCurrentFunctionCallback'))
 augroup END
 
 " function! s:check_back_space() abort
