@@ -68,6 +68,8 @@ function! arctgx#grep#grep(Cmd, root, query, useFixedStrings, fullscreen) abort
         \ '--phony',
         \ '--query', a:query,
         \ '--bind', 'change:reload:' . a:Cmd('{q}', a:useFixedStrings),
+        \ '--bind', 'ctrl-f:reload:' . a:Cmd('{q}', v:true),
+        \ '--bind', 'ctrl-r:reload:' . a:Cmd('{q}', v:false),
         \ ]
         \ }), a:fullscreen)
 endfunction
