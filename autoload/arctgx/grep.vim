@@ -66,6 +66,7 @@ function! arctgx#grep#grep(Cmd, root, query, useFixedStrings, fullscreen) abort
         \ 'dir': a:root,
         \ 'options': [
         \ '--phony',
+        \ '--multi',
         \ '--query', a:query,
         \ '--bind', 'change:reload:' . a:Cmd('{q}', a:useFixedStrings),
         \ '--bind', 'ctrl-f:reload:' . a:Cmd('{q}', v:true),
