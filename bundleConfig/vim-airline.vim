@@ -1,7 +1,8 @@
 let g:airline_extensions = [
       \ 'ide',
       \ 'branch',
-      \ 'fugitiveline'
+      \ 'fugitiveline',
+      \ 'tabline',
   \ ]
 let g:airline_symbols = get(g:, 'airline_symbols', {})
 let g:airline_left_sep = ''
@@ -12,7 +13,7 @@ let g:airline#extensions#branch#format = 'arctgx#string#shorten'
 let g:airline#extensions#tabline#show_buffers=0
 let g:airline#extensions#tabline#show_splits = 0
 let g:airline#extensions#tabline#show_close_button = 0
-let g:airline#extensions#fugitiveline#enabled = 1
+" let g:airline#extensions#tabline#fnamemod = ':t'
 " ro=⊝, ws=☲, lnr=☰, mlnr=㏑, br=ᚠ, nx=Ɇ, crypt=🔒
 let g:airline_symbols.maxlinenr = ''
 let g:airline_symbols.linenr = ''
