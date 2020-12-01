@@ -1,25 +1,24 @@
 function! arctgx#grep#getRipGrepCmd(query, useFixedStrings) abort
-  let l:fixedStringOption = (a:useFixedStrings is v:true) ? ' --fixed-strings' : ''
-  return printf('rg --column --line-number --no-heading --color=always --smart-case %s %s', l:fixedStringOption, a:query)
+  return printf(
+        \ 'rg --column --line-number --no-heading --color=always --smart-case %s %s',
+        \ s:useFixedStringsDefaultString(a:useFixedStrings),
+        \ a:query
+        \ )
 endfunction
 
 function! arctgx#grep#getGnuGrepCmd(query, useFixedStrings) abort
-  let l:fixedStringOption = (a:useFixedStrings is v:true) ? ' --fixed-strings' : ''
-
   return printf(
         \ 'grep --with-filename --extended-regexp --no-messages --color=never --binary-files=without-match --exclude-dir=.svn --exclude=tags --exclude=taglist.vim --exclude-dir=.git --line-number --recursive %s %s',
-        \ l:fixedStringOption,
+        \ s:useFixedStringsDefaultString(a:useFixedStrings),
         \ a:query
         \ )
 endfunction
 
 function! arctgx#grep#getGitGrepCmd(query, useFixedStrings) abort
-  let l:fixedStringOption = (a:useFixedStrings is v:true) ? ' --fixed-strings' : ''
-
   return printf(
         \ 'git -C "%s" grep --line-number %s -- %s || true',
         \ arctgx#grep#gitGetWorkspaceRoot(expand('%:p:h')),
-        \ l:fixedStringOption,
+        \ s:useFixedStringsDefaultString(a:useFixedStrings),
         \ a:query
         \ )
 endfunction
@@ -73,4 +72,8 @@ function! arctgx#grep#grep(Cmd, root, query, useFixedStrings, fullscreen) abort
         \ '--bind', 'ctrl-r:reload:' . a:Cmd('{q}', v:false),
         \ ]
         \ }), a:fullscreen)
+endfunction
+
+function! s:useFixedStringsDefaultString(useFixedStrings) abort
+  return (a:useFixedStrings is v:true) ? ' --fixed-strings' : ''
 endfunction
