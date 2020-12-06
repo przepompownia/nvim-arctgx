@@ -18,12 +18,14 @@ command! -bang -nargs=* GGrep call arctgx#grep#grep(
       \ arctgx#grep#gitGetWorkspaceRoot(expand('%:p:h')),
       \ <q-args>,
       \ v:false,
+      \ v:false,
       \ <bang>0
       \ )
 command! -bang -nargs=* RGrep call arctgx#grep#grep(
       \ function('arctgx#grep#getRipGrepCmd'),
       \ getcwd(),
       \ <q-args>,
+      \ v:false,
       \ v:false,
       \ <bang>0
       \ )
