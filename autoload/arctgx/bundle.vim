@@ -10,7 +10,9 @@ function arctgx#bundle#listAllBundles(bundleDir)
 endfunction
 
 function arctgx#bundle#isEnabled(bundle, bundleDir)
-  return isdirectory(expand(a:bundleDir.'/'.a:bundle))
+  let l:rtp = split(&runtimepath, ',')
+  let l:absoluteBundlePath = expand(a:bundleDir.'/'.a:bundle)
+  return index(l:rtp, l:absoluteBundlePath) >= 0 && isdirectory(l:absoluteBundlePath)
 endfunction
 
 function arctgx#bundle#loadCustomConfigurations(bundleDirs, bundleConfigDir)
