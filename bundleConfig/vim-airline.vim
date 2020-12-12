@@ -29,4 +29,4 @@ let g:airline_section_a = 'b:%n, tw:%{tabpagenr()}.%{winnr()} (%{win_getid()}) %
 let g:airline#init#vim_async = 1
 let g:airline_inactive_collapse = 0
 " let g:airline_section_x = '%{airline#util#prepend("",0)}%{airline#util#prepend("",0)}%{airline#util#prepend("",0)}%{airline#util#wrap(airline#parts#filetype(),0)}'
-let g:airline_section_c = '%<%<%{airline#extensions#fugitiveline#bufname()}%{airline#extensions#ide#get_current_function()}%m %#__accent_red#%{airline#util#wrap(airline#parts#readonly(),0)}%#__restore__#%#__accent_bold#%#__restore__#'
+let g:airline_section_c = '%<%<%{airline#extensions#ide#bufname()}%{airline#extensions#ide#get_current_function()}%m %#__accent_red#%{airline#util#wrap(airline#parts#readonly(),0)}%#__restore__#%#__accent_bold#%#__restore__#'

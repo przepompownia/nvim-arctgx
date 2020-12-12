@@ -1,5 +1,13 @@
 scriptencoding utf-8
 
+function airline#extensions#ide#bufname() abort
+  if exists('*airline#extensions#fugitiveline#bufname')
+    return airline#extensions#fugitiveline#bufname()
+  endif
+
+  return bufname()
+endfunction
+
 function airline#extensions#ide#get_current_function() abort
   let l:funcname = get(b:, 'ide_current_function', '')
 
