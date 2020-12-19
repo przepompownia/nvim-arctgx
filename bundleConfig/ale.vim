@@ -11,6 +11,7 @@ let g:ale_echo_msg_warning_str = 'W'
 let g:ale_set_quickfix = 0
 let g:ale_set_loclist = 0
 let g:ale_disable_lsp = 1
+let g:ale_hover_cursor = 0
 let g:ale_linters = {
       \   'sh': ['shell'],
       \   'typescript': ['eslint', 'tslint', 'typecheck', 'xo'],
