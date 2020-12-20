@@ -22,6 +22,7 @@ let g:airline_symbols.notexists = ''
 let g:airline_symbols.readonly = ''
 let g:airline_symbols.crypt = ''
 let g:airline_symbols.spell = ''
+let g:airline_highlighting_cache = 1
 " let g:airline#extensions#tabline#buffer_nr_show = 1
 let g:airline_section_a = 'b:%n, tw:%{tabpagenr()}.%{winnr()} (%{win_getid()}) %#__accent_bold#%{winnr()==winnr("#")?" [LW]":""}%#__restore__#'
 " let g:airline_section_c = '%<%f%m %#__accent_red#%{airline#util#wrap(airline#parts#readonly(),0)}%#__restore__#'
