@@ -70,6 +70,10 @@ function s:defineIDEMaps()
   nmap <Plug>(ide-git-hunk-stage) <Cmd>CocCommand git.chunkStage<CR>
   nmap <Plug>(ide-git-hunk-undo) <Cmd>CocCommand git.chunkUndo<CR>
   nmap <Plug>(ide-git-hunk-print) <Cmd>CocCommand git.chunkInfo<CR>
+  nmap <Plug>(ide-git-hunk-previous) <Plug>(coc-git-prevchunk)
+  nmap <Plug>(ide-git-hunk-next) <Plug>(coc-git-nextchunk)
+  nmap <Plug>(ide-git-hunk-previous-conflict) <Plug>(coc-git-prevconflict)
+  nmap <Plug>(ide-git-hunk-next-conflict) <Plug>(coc-git-nextconflict)
 endfunction
 
 inoremap <expr> <Plug>(ide-trigger-completion) coc#refresh()

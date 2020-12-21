@@ -55,6 +55,10 @@ function s:defineIDEMaps()
   nmap <buffer> <Leader>hs <Plug>(ide-git-hunk-stage)
   nmap <buffer> <Leader>hu <Plug>(ide-git-hunk-undo)
   nmap <buffer> <Leader>hp <Plug>(ide-git-hunk-print)
+  nmap <buffer> <Leader>[h <Plug>(ide-git-hunk-previous-conflict)
+  nmap <buffer> <Leader>]h <Plug>(ide-git-hunk-next-conflict)
+  nmap <buffer> [h <Plug>(ide-git-hunk-previous)
+  nmap <buffer> ]h <Plug>(ide-git-hunk-next)
 endfunction
 
 nmap <Leader>ibb <Plug>(ide-browse-buffers)
