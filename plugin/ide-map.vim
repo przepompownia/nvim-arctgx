@@ -52,6 +52,9 @@ function s:defineIDEMaps()
   nmap <buffer> <Leader><F11> <Plug>(ide-debugger-get-context)
   nmap <buffer> <Leader><F12> <Plug>(ide-debugger-eval-under-cursor)
   nmap <buffer> <Leader><Leader>e <Plug>(ide-debugger-eval-visual)
+  nmap <buffer> <Leader>hs <Plug>(ide-git-hunk-stage)
+  nmap <buffer> <Leader>hu <Plug>(ide-git-hunk-undo)
+  nmap <buffer> <Leader>hp <Plug>(ide-git-hunk-print)
 endfunction
 
 nmap <Leader>ibb <Plug>(ide-browse-buffers)

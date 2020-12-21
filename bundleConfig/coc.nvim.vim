@@ -67,6 +67,9 @@ function s:defineIDEMaps()
   omap <buffer> <Plug>(ide-classobj-i) <Plug>(coc-classobj-i)
   xmap <buffer> <Plug>(ide-classobj-a) <Plug>(coc-classobj-a)
   omap <buffer> <Plug>(ide-classobj-a) <Plug>(coc-classobj-a)
+  nmap <Plug>(ide-git-hunk-stage) <Cmd>CocCommand git.chunkStage<CR>
+  nmap <Plug>(ide-git-hunk-undo) <Cmd>CocCommand git.chunkUndo<CR>
+  nmap <Plug>(ide-git-hunk-print) <Cmd>CocCommand git.chunkInfo<CR>
 endfunction
 
 inoremap <expr> <Plug>(ide-trigger-completion) coc#refresh()
