@@ -5,6 +5,7 @@ let g:airline_extensions = [
       \ 'tabline',
   \ ]
 let g:airline_symbols = get(g:, 'airline_symbols', {})
+let g:airline#extensions#branch#vcs_priority = ['git']
 let g:airline_left_sep = ''
 let g:airline_right_sep = ''
 
