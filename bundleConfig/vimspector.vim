@@ -11,7 +11,7 @@ nmap <Plug>(ide-debugger-step-out) <Plug>VimspectorStepOut
 nmap <Plug>(ide-debugger-run-to-cursor) <Plug>VimspectorRunToCursor
 
 let g:vimspector_sign_priority = {
-      \    'vimspectorBP':         99,
-      \    'vimspectorBPCond':     99,
-      \    'vimspectorBPDisabled': 9,
+      \    'vimspectorBP':         999,
+      \    'vimspectorBPCond':     999,
+      \    'vimspectorBPDisabled': 999,
       \ }
