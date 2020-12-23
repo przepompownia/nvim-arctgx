@@ -76,10 +76,10 @@ function! arctgx#grep#grep(Cmd, root, query, useFixedStrings, ignoreCase, fullsc
         \ '--query', a:query,
         \ '--prompt', s:prompt(l:cmdShortName, a:useFixedStrings),
         \ '--bind', 'change:reload:' . a:Cmd('{q}', a:useFixedStrings, a:ignoreCase),
-        \ '--bind', 'ctrl-f:reload:' . a:Cmd('{q}', v:true, a:ignoreCase),
-        \ '--bind', 'ctrl-f:+change-prompt:' . s:prompt(l:cmdShortName, v:true),
-        \ '--bind', 'ctrl-r:reload:' . a:Cmd('{q}', v:false, a:ignoreCase),
-        \ '--bind', 'ctrl-r:+change-prompt:' . s:prompt(l:cmdShortName, v:false),
+        \ '--bind', 'alt-f:reload:' . a:Cmd('{q}', v:true, a:ignoreCase),
+        \ '--bind', 'alt-f:+change-prompt:' . s:prompt(l:cmdShortName, v:true),
+        \ '--bind', 'alt-r:reload:' . a:Cmd('{q}', v:false, a:ignoreCase),
+        \ '--bind', 'alt-r:+change-prompt:' . s:prompt(l:cmdShortName, v:false),
         \ ]
         \ }), a:fullscreen)
 endfunction
