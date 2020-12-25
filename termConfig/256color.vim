@@ -1,5 +1,3 @@
-highlight LineNr ctermbg=255
-highlight SignColumn ctermbg=254
 if !has('nvim')
   set <A-.>=.
   set <S-Up>=[1;2A
@@ -10,6 +8,8 @@ if !has('nvim')
   let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
 endif
 
+highlight LineNr ctermbg=255
+highlight SignColumn ctermbg=254
 highlight Folded term=standout cterm=NONE ctermbg=255 ctermfg=248
 highlight FoldColumn term=standout ctermbg=255 ctermfg=253
 
