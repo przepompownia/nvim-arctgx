@@ -15,7 +15,7 @@ function arctgx#ide#getCurrentGitHead() abort
 endfunction
 
 function arctgx#ide#getCurrentFunction() abort
-  let l:funcname = get(b:, 'ide_current_function', '')
+  let l:funcname = get(b:, 'ideCurrentFunction', '')
 
   if empty(l:funcname)
     return ''
