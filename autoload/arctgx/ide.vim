@@ -39,7 +39,7 @@ function arctgx#ide#showWinInfo() abort
         \ tabpagenr(),
         \ winnr(),
         \ win_getid(),
-        \ arctgx#ide#showIsLastUsedWindow(),
+        \ len(tabpagebuflist(tabpagenr())) > 1 ? arctgx#ide#showIsLastUsedWindow() : '',
         \ )
 endfunction
 
