@@ -60,15 +60,17 @@ function arctgx#ide#recognizeGitHead() abort
   call arctgx#ide#executeCommand(l:command, 's:handleGitHeadOutput', 's:handleSymbolicRefExitCode')
 endfunction
 
-function s:handleGitHeadOutput(jobId, data, event)
-  if empty(a:data)
+function s:handleGitHeadOutput(jobId, data, ...)
+  let l:output = type(a:data) is v:t_list ? join(a:data) : a:data
+
+  if empty(l:output)
     return
   endif
 
-  let b:ideCurrentGitHead = join(a:data)
+  let b:ideCurrentGitHead = l:output
 endfunction
 
-function s:handleSymbolicRefExitCode(jobId, data, event)
+function s:handleSymbolicRefExitCode(jobId, data, ...)
   let l:exitCode = a:data
 
   if (0 == l:exitCode)
@@ -80,7 +82,7 @@ function s:handleSymbolicRefExitCode(jobId, data, event)
   call arctgx#ide#executeCommand(l:command, 's:handleGitHeadOutput', 's:handleShowRefExitCode')
 endfunction
 
-function s:handleShowRefExitCode(jobId, data, event)
+function s:handleShowRefExitCode(jobId, data, ...)
   let l:exitCode = a:data
 
   if (0 == l:exitCode)
@@ -91,11 +93,16 @@ function s:handleShowRefExitCode(jobId, data, event)
 endfunction
 
 function arctgx#ide#executeCommand(command, stdoutHandler, exitHandler) abort
-  let l:options = {
-        \ 'on_stdout': function(a:stdoutHandler),
-        \ 'on_exit': function(a:exitHandler),
-        \ 'stdout_buffered': 1,
-        \ }
+  let l:nv = has('nvim')
+  let l:JobStart = l:nv ? function('jobstart') : function('job_start')
+  let l:onStdout = l:nv ? 'on_stdout' : 'out_cb'
+  let l:onExit = l:nv ? 'on_exit' : 'exit_cb'
 
-  let job = jobstart(a:command, l:options)
+  let l:options = {}
+  let l:options[l:onStdout] = function(a:stdoutHandler)
+  let l:options[l:onExit] = function(a:exitHandler)
+        " \ 'stdout_buffered': 1,
+        " mode nl
+
+  let job = l:JobStart(a:command, l:options)
 endfunction
