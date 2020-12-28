@@ -28,10 +28,6 @@ function arctgx#ide#showLocation() abort
   return arctgx#ide#bufname() . arctgx#ide#getCurrentFunction()
 endfunction
 
-function arctgx#ide#showGitBranch() abort
-  return arctgx#string#shorten(FugitiveHead())
-endfunction
-
 function arctgx#ide#showIsLastUsedWindow() abort
   return winnr() is winnr("#") ? ' [LW]' : ''
 endfunction
@@ -55,13 +51,30 @@ function arctgx#ide#displayFileNameInTab(tabNumber) abort
   return _ !=# '' ? _ : '[No Name]'
 endfunction
 
-function arctgx#ide#recognizeGitHead() abort
-  let l:command = ['git', 'symbolic-ref', '--quiet', '--short', 'HEAD']
-  call arctgx#ide#executeCommand(l:command, 's:handleGitHeadOutput', 's:handleSymbolicRefExitCode')
+function arctgx#ide#recognizeGitHead(filename) abort
+  let l:directory = fnamemodify(a:filename, ':p:h')
+  if !isdirectory(l:directory)
+    return
+  endif
+
+  let l:command = ['git', '-C', l:directory, 'rev-parse', '--show-toplevel']
+
+  call arctgx#ide#executeCommand(l:command, l:directory, 's:handleGitToplevelOutput', 's:handleSymbolicRefExitCode')
 endfunction
 
-function s:handleGitHeadOutput(jobId, data, ...)
-  let l:output = type(a:data) is v:t_list ? join(a:data) : a:data
+function s:handleGitToplevelOutput(cwd, jobId, stdOut, ...)
+  let l:toplevel = trim(type(a:stdOut) is v:t_list ? join(a:stdOut) : a:stdOut)
+
+  if empty(l:toplevel)
+    return
+  endif
+
+  let l:command = ['git', 'symbolic-ref', '--quiet', '--short', 'HEAD']
+  call arctgx#ide#executeCommand(l:command, l:toplevel, 's:handleGitHeadOutput', 's:handleSymbolicRefExitCode')
+endfunction
+
+function s:handleGitHeadOutput(cwd, jobId, stdOut, ...)
+  let l:output = type(a:stdOut) is v:t_list ? join(a:stdOut) : a:stdOut
 
   if empty(l:output)
     return
@@ -70,19 +83,17 @@ function s:handleGitHeadOutput(jobId, data, ...)
   let b:ideCurrentGitHead = l:output
 endfunction
 
-function s:handleSymbolicRefExitCode(jobId, data, ...)
-  let l:exitCode = a:data
-
-  if (0 == l:exitCode)
+function s:handleSymbolicRefExitCode(cwd, jobId, exitCode, ...) abort
+  if (0 == a:exitCode)
     return
   endif
 
   let l:command = ['git', 'show-ref', '--hash', '--head', '--abbrev', '^HEAD']
 
-  call arctgx#ide#executeCommand(l:command, 's:handleGitHeadOutput', 's:handleShowRefExitCode')
+  call arctgx#ide#executeCommand(l:command, a:cwd, 's:handleGitHeadOutput', 's:handleShowRefExitCode')
 endfunction
 
-function s:handleShowRefExitCode(jobId, data, ...)
+function s:handleShowRefExitCode(cwd, jobId, data, ...) abort
   let l:exitCode = a:data
 
   if (0 == l:exitCode)
@@ -92,17 +103,23 @@ function s:handleShowRefExitCode(jobId, data, ...)
   let b:ideCurrentGitHead = ''
 endfunction
 
-function arctgx#ide#executeCommand(command, stdoutHandler, exitHandler) abort
+function arctgx#ide#executeCommand(command, cwd, stdoutHandler, exitHandler) abort
   let l:nv = has('nvim')
   let l:JobStart = l:nv ? function('jobstart') : function('job_start')
   let l:onStdout = l:nv ? 'on_stdout' : 'out_cb'
   let l:onExit = l:nv ? 'on_exit' : 'exit_cb'
 
   let l:options = {}
-  let l:options[l:onStdout] = function(a:stdoutHandler)
-  let l:options[l:onExit] = function(a:exitHandler)
-        " \ 'stdout_buffered': 1,
-        " mode nl
+
+  if (!empty(a:cwd))
+    if ! isdirectory(a:cwd)
+      throw printf('Directory does not exist (%s)', a:cwd)
+    endif
+
+    let l:options['cwd'] = a:cwd
+  endif
+  let l:options[l:onStdout] = function(a:stdoutHandler, [a:cwd])
+  let l:options[l:onExit] = function(a:exitHandler, [a:cwd])
 
   let job = l:JobStart(a:command, l:options)
 endfunction

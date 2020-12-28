@@ -79,7 +79,7 @@ let g:lightline = {
       \ 'component_function': {
         \ 'wininfo': 'arctgx#ide#showWinInfo',
         \ 'filename': 'arctgx#ide#showLocation',
-        \ 'branch': 'arctgx#ide#showGitBranch',
+        \ 'branch': 'arctgx#ide#getCurrentGitHead',
       \ },
       \ 'tab_component_function': {
         \ 'filename': 'arctgx#ide#displayFileNameInTab',
