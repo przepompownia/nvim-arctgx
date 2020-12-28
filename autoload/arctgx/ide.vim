@@ -4,17 +4,17 @@ function arctgx#ide#bufname() abort
   return bufname()
 endfunction
 
-function arctgx#ide#get_current_git_head() abort
-  let l:head = get(b:, 'ide_current_git_head', '')
+function arctgx#ide#getCurrentGitHead() abort
+  let l:head = get(b:, 'ideCurrentGitHead', '')
 
   if empty(l:head)
     return ''
   endif
 
-  return printf('%s', l:funcname)
+  return printf('%s', arctgx#string#shorten(l:head))
 endfunction
 
-function arctgx#ide#get_current_function() abort
+function arctgx#ide#getCurrentFunction() abort
   let l:funcname = get(b:, 'ide_current_function', '')
 
   if empty(l:funcname)
@@ -25,7 +25,7 @@ function arctgx#ide#get_current_function() abort
 endfunction
 
 function arctgx#ide#showLocation() abort
-  return arctgx#ide#bufname() . arctgx#ide#get_current_function()
+  return arctgx#ide#bufname() . arctgx#ide#getCurrentFunction()
 endfunction
 
 function arctgx#ide#showGitBranch() abort
@@ -55,7 +55,7 @@ function arctgx#ide#displayFileNameInTab(tabNumber) abort
   return _ !=# '' ? _ : '[No Name]'
 endfunction
 
-function arctgx#ide#showGitHead() abort
+function arctgx#ide#recognizeGitHead() abort
   let l:command = ['git', 'symbolic-ref', '--quiet', '--short', 'HEAD']
   call arctgx#ide#executeCommand(l:command, 's:handleGitHeadOutput', 's:handleSymbolicRefExitCode')
 endfunction
@@ -65,7 +65,7 @@ function s:handleGitHeadOutput(jobId, data, event)
     return
   endif
 
-  let b:ide_current_git_head = join(a:data)
+  let b:ideCurrentGitHead = join(a:data)
 endfunction
 
 function s:handleSymbolicRefExitCode(jobId, data, event)
@@ -87,7 +87,7 @@ function s:handleShowRefExitCode(jobId, data, event)
     return
   endif
 
-  let b:ide_current_git_head = 'fallback ref'
+  let b:ideCurrentGitHead = ''
 endfunction
 
 function arctgx#ide#executeCommand(command, stdoutHandler, exitHandler) abort
