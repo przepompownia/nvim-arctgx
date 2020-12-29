@@ -9,6 +9,15 @@ endfunction
 
 function arctgx#term#loadConfiguration(configDir)
   call s:loadSingleConfig(a:configDir, 'all')
+
+  if &termguicolors == 1
+    call s:loadSingleConfig(a:configDir, 'termguicolors')
+  endif
+
+  if exists('g:GuiLoaded') || has('gui')
+    return
+  endif
+
   if $TERM == 'linux'
     colorscheme desert
   endif
@@ -32,9 +41,5 @@ function arctgx#term#loadConfiguration(configDir)
 
   if $TERM =~ 'rxvt-unicode$'
     call s:loadSingleConfig(a:configDir, 'rxvt-unicode')
-  endif
-
-  if &termguicolors == 1
-    call s:loadSingleConfig(a:configDir, 'termguicolors')
   endif
 endfunction

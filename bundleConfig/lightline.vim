@@ -1,52 +1,62 @@
-let s:blue   = [ '#61afef', 75 ]
-let s:green  = [ '#98c379', 76 ]
-let s:purple = [ '#8798D6', 176 ]
-let s:red1   = [ '#e06c75', 168 ]
-let s:red2   = [ '#be5046', 168 ]
-let s:yellow = [ '#e5c07b', 180 ]
+function s:providePalette()
+  let l:palette = {'normal': {}, 'inactive': {}, 'insert': {}, 'replace': {}, 'visual': {}, 'tabline': {}}
+  let l:blue   = [ '#61afef', 75 ]
+  let l:purple = [ '#8798D6', 176 ]
+  let l:red1   = [ '#e06c75', 168 ]
+  let l:red2   = [ '#be5046', 168 ]
+  let l:yellow = [ '#e5c07b', 180 ]
 
-let s:p = {'normal': {}, 'inactive': {}, 'insert': {}, 'replace': {}, 'visual': {}, 'tabline': {}}
+  if lightline#colorscheme#background() ==# 'light'
+    let l:fg    = [ '#494b53', 238 ]
+    let l:bg    = [ '#fafafa', 255 ]
+    let l:gray1 = [ '#494b53', 238 ]
+    let l:gray2 = [ '#f0f0f0', 255 ]
+    let l:gray3 = [ '#d0d0d0', 250 ]
+    let l:green = [ '#98c379', 35 ]
 
-if lightline#colorscheme#background() ==# 'light'
-  let s:fg    = [ '#494b53', 238 ]
-  let s:bg    = [ '#fafafa', 255 ]
-  let s:gray1 = [ '#494b53', 238 ]
-  let s:gray2 = [ '#f0f0f0', 255 ]
-  let s:gray3 = [ '#d0d0d0', 250 ]
-  let s:green = [ '#98c379', 35 ]
+    let l:palette.inactive.left   = [ [ l:bg,  l:gray3 ], [ l:bg, l:gray3 ] ]
+    let l:palette.inactive.middle = [ [ l:gray3, l:gray2 ] ]
+    let l:palette.inactive.right  = [ [ l:bg, l:gray3 ] ]
+  else
+    let l:fg    = [ '#abb2bf', 145 ]
+    let l:bg    = [ '#282c34', 235 ]
+    let l:gray1 = [ '#5c6370', 241 ]
+    let l:gray2 = [ '#2c323d', 235 ]
+    let l:gray3 = [ '#3e4452', 240 ]
+    let l:green  = [ '#98c379', 76 ]
 
-  let s:p.inactive.left   = [ [ s:bg,  s:gray3 ], [ s:bg, s:gray3 ] ]
-  let s:p.inactive.middle = [ [ s:gray3, s:gray2 ] ]
-  let s:p.inactive.right  = [ [ s:bg, s:gray3 ] ]
-else
-  let s:fg    = [ '#abb2bf', 145 ]
-  let s:bg    = [ '#282c34', 235 ]
-  let s:gray1 = [ '#5c6370', 241 ]
-  let s:gray2 = [ '#2c323d', 235 ]
-  let s:gray3 = [ '#3e4452', 240 ]
+    let l:palette.inactive.left   = [ [ l:gray1,  l:bg ], [ l:gray1, l:bg ] ]
+    let l:palette.inactive.middle = [ [ l:gray1, l:gray2 ] ]
+    let l:palette.inactive.right  = [ [ l:gray1, l:bg ] ]
+  endif
 
-  let s:p.inactive.left   = [ [ s:gray1,  s:bg ], [ s:gray1, s:bg ] ]
-  let s:p.inactive.middle = [ [ s:gray1, s:gray2 ] ]
-  let s:p.inactive.right  = [ [ s:gray1, s:bg ] ]
-endif
+  let l:palette.normal.left    = [ [ l:bg, l:green, 'bold' ], [ l:fg, l:gray3 ] ]
+  let l:palette.normal.middle  = [ [ l:fg, l:gray2 ] ]
+  let l:palette.normal.right   = [ [ l:bg, l:green, 'bold' ], [ l:fg, l:gray3 ] ]
+  let l:palette.normal.error   = [ [ l:red2, l:bg ] ]
+  let l:palette.normal.warning = [ [ l:yellow, l:bg ] ]
+  let l:palette.insert.right   = [ [ l:bg, l:blue, 'bold' ], [ l:fg, l:gray3 ] ]
+  let l:palette.insert.left    = [ [ l:bg, l:blue, 'bold' ], [ l:fg, l:gray3 ] ]
+  let l:palette.replace.right  = [ [ l:bg, l:red1, 'bold' ], [ l:fg, l:gray3 ] ]
+  let l:palette.replace.left   = [ [ l:bg, l:red1, 'bold' ], [ l:fg, l:gray3 ] ]
+  let l:palette.visual.right   = [ [ l:bg, l:purple, 'bold' ], [ l:fg, l:gray3 ] ]
+  let l:palette.visual.left    = [ [ l:bg, l:purple, 'bold' ], [ l:fg, l:gray3 ] ]
+  let l:palette.tabline.left   = [ [ l:fg, l:gray3 ] ]
+  let l:palette.tabline.tabsel = [ [ l:bg, l:purple, 'bold' ] ]
+  let l:palette.tabline.middle = [ [ l:gray3, l:gray2 ] ]
+  let l:palette.tabline.right  = copy(l:palette.normal.right)
 
-let s:p.normal.left    = [ [ s:bg, s:green, 'bold' ], [ s:fg, s:gray3 ] ]
-let s:p.normal.middle  = [ [ s:fg, s:gray2 ] ]
-let s:p.normal.right   = [ [ s:bg, s:green, 'bold' ], [ s:fg, s:gray3 ] ]
-let s:p.normal.error   = [ [ s:red2, s:bg ] ]
-let s:p.normal.warning = [ [ s:yellow, s:bg ] ]
-let s:p.insert.right   = [ [ s:bg, s:blue, 'bold' ], [ s:fg, s:gray3 ] ]
-let s:p.insert.left    = [ [ s:bg, s:blue, 'bold' ], [ s:fg, s:gray3 ] ]
-let s:p.replace.right  = [ [ s:bg, s:red1, 'bold' ], [ s:fg, s:gray3 ] ]
-let s:p.replace.left   = [ [ s:bg, s:red1, 'bold' ], [ s:fg, s:gray3 ] ]
-let s:p.visual.right   = [ [ s:bg, s:purple, 'bold' ], [ s:fg, s:gray3 ] ]
-let s:p.visual.left    = [ [ s:bg, s:purple, 'bold' ], [ s:fg, s:gray3 ] ]
-let s:p.tabline.left   = [ [ s:fg, s:gray3 ] ]
-let s:p.tabline.tabsel = [ [ s:bg, s:purple, 'bold' ] ]
-let s:p.tabline.middle = [ [ s:gray3, s:gray2 ] ]
-let s:p.tabline.right  = copy(s:p.normal.right)
+  return l:palette
+endfunction
 
-let g:lightline#colorscheme#arctgx#palette = lightline#colorscheme#flatten(s:p)
+let g:lightline#colorscheme#arctgx#palette = lightline#colorscheme#flatten(s:providePalette())
+
+augroup LightLineReloadPalette
+  autocmd!
+  autocmd ColorScheme *
+        \ let g:lightline#colorscheme#arctgx#palette = lightline#colorscheme#flatten(s:providePalette()) |
+        \ call lightline#colorscheme()
+augroup END
 
 let g:lightline = {
       \ 'colorscheme': 'arctgx',
