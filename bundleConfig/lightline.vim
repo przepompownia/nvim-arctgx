@@ -55,7 +55,8 @@ augroup LightLineReloadPalette
   autocmd!
   autocmd ColorScheme *
         \ let g:lightline#colorscheme#arctgx#palette = lightline#colorscheme#flatten(s:providePalette()) |
-        \ call lightline#colorscheme()
+        \ call lightline#colorscheme() |
+        \ call lightline#update()
 augroup END
 
 let g:lightline = {
