@@ -1,6 +1,6 @@
 augroup NvimGuiSettings
   autocmd!
-  autocmd VimEnter * call s:nvimQtSettings()
+  autocmd UIEnter * call s:nvimQtSettings()
 augroup END NvimGui
 
 function s:nvimQtSettings() abort
