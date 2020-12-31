@@ -71,6 +71,7 @@ let g:lightline = {
           \ 'branch',
           \ 'readonly',
           \ 'filename',
+          \ 'modified',
         \ ]
       \ ],
       \ },
@@ -84,6 +85,7 @@ let g:lightline = {
           \ 'branch',
           \ 'readonly',
           \ 'filename',
+          \ 'modified',
         \ ]
       \ ],
       \ },
