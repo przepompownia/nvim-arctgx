@@ -73,8 +73,7 @@ function s:defineIDEMaps()
     nmap <Plug>(ide-git-hunk-stage) <Cmd>CocCommand git.chunkStage<CR>
     nmap <Plug>(ide-git-hunk-undo) <Cmd>CocCommand git.chunkUndo<CR>
     nmap <Plug>(ide-git-hunk-print) <Cmd>CocCommand git.chunkInfo<CR>
-	nmap <Plug>(ide-list-workspace-symbol) <Cmd>CocList symbols<CR>
-    inoremap <expr> <Plug>(ide-workspace-symbols) <Cmd>CocList symbols<CR>
+	nmap <Plug>(ide-list-workspace-symbols) <Cmd>CocList symbols<CR>
     nmap <Plug>(ide-list-document-symbol) <Cmd>CocList outline<CR>
     nmap <Plug>(ide-hover) <Cmd>call CocActionAsync('doHover')<CR>
     nmap <Plug>(ide-action-fold) <Cmd>call CocActionAsync('fold')<CR>
@@ -83,8 +82,7 @@ function s:defineIDEMaps()
   nmap <Plug>(ide-git-hunk-stage) :<C-U>CocCommand git.chunkStage<CR>
   nmap <Plug>(ide-git-hunk-undo) :<C-U>CocCommand git.chunkUndo<CR>
   nmap <Plug>(ide-git-hunk-print) :<C-U>CocCommand git.chunkInfo<CR>
-  nmap <Plug>(ide-list-workspace-symbol) :<C-U>CocList symbols<CR>
-  inoremap <expr> <Plug>(ide-workspace-symbols) :<C-U>CocList symbols<CR>
+  nmap <Plug>(ide-list-workspace-symbols) :<C-U>CocList symbols<CR>
   nmap <Plug>(ide-list-document-symbol) :<C-U>CocList outline<CR>
   nmap <Plug>(ide-hover) :<C-U>call CocActionAsync('doHover')<CR>
   nmap <Plug>(ide-action-fold) :<C-U>call CocActionAsync('fold')<CR>
