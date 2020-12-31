@@ -12,7 +12,7 @@ augroup cocMaps
   autocmd User CocNvimInit highlight link CocErrorSign IdeErrorSign
   autocmd CursorHold * silent call CocActionAsync('highlight')
   autocmd CursorHold * silent call CocActionAsync('getCurrentFunctionSymbol', function('arctgx#coc#setCurrentFunctionCallback'))
-  autocmd CursorHold,BufWritePost * CocCommand git.refresh
+  autocmd BufWritePost * CocCommand git.refresh
 augroup END
 
 " function! s:check_back_space() abort
