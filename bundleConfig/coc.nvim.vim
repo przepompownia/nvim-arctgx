@@ -42,7 +42,7 @@ function s:defineIDEMaps()
   endif
   nmap <Leader>ca <Plug>(coc-codeaction)
   nmap <Leader>cd <Plug>(coc-definition)
-  nmap <Leader>cfh <Cmd>call coc#float#close_all()<CR>
+  nmap <Leader>cfh <Plug>(coc-float-hide)
   nmap <Leader>cfj <Plug>(coc-float-jump)
   nmap <Leader>col <Plug>(coc-openlink)
   nmap <Leader>cfr <Plug>(coc-codelens-action)
@@ -53,12 +53,8 @@ function s:defineIDEMaps()
   nmap <Plug>(ide-goto-definition) <Plug>(coc-definition)
   nmap <Plug>(ide-goto-implementation) <Plug>(coc-implementation)
   imap <Plug>(ide-show-signature-help) <C-o>:call CocActionAsync('showSignatureHelp')<CR>
-  nmap <Plug>(ide-hover) <Cmd>call CocActionAsync('doHover')<CR>
   nmap <Plug>(ide-find-references) <Plug>(coc-references)
-  nmap <Plug>(ide-action-fold) <Cmd>call CocActionAsync('fold')<CR>
   nmap <Plug>(ide-action-rename) <Plug>(coc-rename)<CR>
-  nmap <Plug>(ide-list-document-symbol) <Cmd>CocList outline<CR>
-  nmap <Plug>(ide-list-workspace-symbol) <Cmd>CocList symbols<CR>
   nmap <buffer> <Plug>(ide-range-select) <Plug>(coc-range-select)
   xmap <buffer> <Plug>(ide-funcobj-i) <Plug>(coc-funcobj-i)
   omap <buffer> <Plug>(ide-funcobj-i) <Plug>(coc-funcobj-i)
@@ -68,17 +64,31 @@ function s:defineIDEMaps()
   omap <buffer> <Plug>(ide-classobj-i) <Plug>(coc-classobj-i)
   xmap <buffer> <Plug>(ide-classobj-a) <Plug>(coc-classobj-a)
   omap <buffer> <Plug>(ide-classobj-a) <Plug>(coc-classobj-a)
-  nmap <Plug>(ide-git-hunk-stage) <Cmd>CocCommand git.chunkStage<CR>
-  nmap <Plug>(ide-git-hunk-undo) <Cmd>CocCommand git.chunkUndo<CR>
-  nmap <Plug>(ide-git-hunk-print) <Cmd>CocCommand git.chunkInfo<CR>
   nmap <Plug>(ide-git-hunk-previous) <Plug>(coc-git-prevchunk)
   nmap <Plug>(ide-git-hunk-next) <Plug>(coc-git-nextchunk)
   nmap <Plug>(ide-git-hunk-previous-conflict) <Plug>(coc-git-prevconflict)
   nmap <Plug>(ide-git-hunk-next-conflict) <Plug>(coc-git-nextconflict)
+  inoremap <expr> <Plug>(ide-trigger-completion) coc#refresh()
+  if has('nvim')
+    nmap <Plug>(ide-git-hunk-stage) <Cmd>CocCommand git.chunkStage<CR>
+    nmap <Plug>(ide-git-hunk-undo) <Cmd>CocCommand git.chunkUndo<CR>
+    nmap <Plug>(ide-git-hunk-print) <Cmd>CocCommand git.chunkInfo<CR>
+	nmap <Plug>(ide-list-workspace-symbol) <Cmd>CocList symbols<CR>
+    inoremap <expr> <Plug>(ide-workspace-symbols) <Cmd>CocList symbols<CR>
+    nmap <Plug>(ide-list-document-symbol) <Cmd>CocList outline<CR>
+    nmap <Plug>(ide-hover) <Cmd>call CocActionAsync('doHover')<CR>
+    nmap <Plug>(ide-action-fold) <Cmd>call CocActionAsync('fold')<CR>
+    return
+  endif
+  nmap <Plug>(ide-git-hunk-stage) :<C-U>CocCommand git.chunkStage<CR>
+  nmap <Plug>(ide-git-hunk-undo) :<C-U>CocCommand git.chunkUndo<CR>
+  nmap <Plug>(ide-git-hunk-print) :<C-U>CocCommand git.chunkInfo<CR>
+  nmap <Plug>(ide-list-workspace-symbol) :<C-U>CocList symbols<CR>
+  inoremap <expr> <Plug>(ide-workspace-symbols) :<C-U>CocList symbols<CR>
+  nmap <Plug>(ide-list-document-symbol) :<C-U>CocList outline<CR>
+  nmap <Plug>(ide-hover) :<C-U>call CocActionAsync('doHover')<CR>
+  nmap <Plug>(ide-action-fold) :<C-U>call CocActionAsync('fold')<CR>
 endfunction
-
-inoremap <expr> <Plug>(ide-trigger-completion) coc#refresh()
-inoremap <expr> <Plug>(ide-workspace-symbols) <Cmd>CocList symbols<CR>
 
 let g:coc_config_home = expand(arctgx#arctgx#getInitialVimDirectory() . '/.config/coc')
 let g:coc_data_home = expand(arctgx#arctgx#getInitialVimDirectory() . '/.config/coc')
