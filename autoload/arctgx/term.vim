@@ -21,9 +21,6 @@ function arctgx#term#loadConfiguration(configDir)
   if $TERM == 'linux'
     colorscheme desert
   endif
-  if $TERM =~ '^xterm'
-    call s:loadSingleConfig(a:configDir, 'xterm')
-  endif
 
   if $TERM =~ '-256color'
     call s:loadSingleConfig(a:configDir, '256color')
