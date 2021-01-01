@@ -10,10 +10,6 @@ endfunction
 function arctgx#term#loadConfiguration(configDir)
   call s:loadSingleConfig(a:configDir, 'all')
 
-  if &termguicolors == 1
-    call s:loadSingleConfig(a:configDir, 'termguicolors')
-  endif
-
   if exists('g:GuiLoaded') || has('gui_running')
     return
   endif

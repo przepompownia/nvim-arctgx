@@ -8,6 +8,7 @@ try
   call arctgx#bundle#loadCustomConfigurations(g:bundle_dirs, s:bundleConfigDir)
   set termguicolors
   call arctgx#term#loadConfiguration(s:path . '/../termConfig')
+  call arctgx#base#sourceFile(s:path . '/../colors/light.vim')
 catch /^Vim\%((\a\+)\)\=:E117/
   echomsg v:exception
 endtry
