@@ -8,3 +8,8 @@ highlight DiffDelete term=reverse ctermbg=253 ctermfg=250 guibg=#fff2ff guifg=#c
 highlight DiffChange term=reverse cterm=NONE ctermbg=188 ctermfg=16 guibg=#e1e1c8
 highlight DiffText term=reverse cterm=NONE ctermbg=188 ctermfg=166 gui=NONE
 highlight LineNr ctermbg=255 guibg=#eeeeee
+highlight IdeDiagnosticError guibg=#ffeeee
+highlight IdeDiagnosticWarning guibg=#fffff0
+highlight IdeDiagnosticInfo guibg=#ffffee
+highlight IdeDiagnosticHint guibg=#ffffdd
+highlight IdeErrorSign guifg=#ff0000 guibg=#dddddd
