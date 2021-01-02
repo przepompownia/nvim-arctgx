@@ -12,16 +12,17 @@ catch /^Vim\%((\a\+)\)\=:E117/
   echomsg v:exception
 endtry
 
-function s:configureHighlight() abort
-  if &background ==# 'dark'
-    return
-  endif
-
-  call arctgx#base#sourceFile(s:path . '/../colors/light.vim')
+function s:configureHighlight(background) abort
+  let l:path = simplify(fnamemodify(printf(
+        \ '%s/../colors/%s.vim',
+        \ s:path,
+        \ a:background
+        \ ), ':p'))
+  call arctgx#base#sourceFile(l:path)
 endfunction
 
 augroup ConfigureHighlight
   autocmd!
   autocmd ColorScheme *
-        \ call s:configureHighlight()
+        \ call s:configureHighlight(&background)
 augroup END
