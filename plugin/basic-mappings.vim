@@ -7,9 +7,7 @@ noremap <S-Insert> <MiddleMouse>
 noremap! <S-Insert> <MiddleMouse>
 nnoremap <Tab> <C-w>w
 nnoremap <C-Tab> :tabNext<CR>
-"noremap <C-Tab> <C-w>w
-inoremap <C-Tab> <C-o><C-w>w
-" enter wybiera pozycję menu jak Ctrl-Y
+inoremap <C-Tab> <C-o>:tabNext<CR>
 inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<CR>"
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
