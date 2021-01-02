@@ -56,9 +56,4 @@ noremap zD <Nop>
 noremap zd <Nop>
 noremap zE <Nop>
 nmap <silent> <Leader>` <Plug>(jump-last-tab)
-
-for s:key in [5,6,7,9,10]
-  execute 'inoremap <F'.s:key.'> <C-o><F'.s:key.'>'
-endfor
-
 set pastetoggle=<F11>
