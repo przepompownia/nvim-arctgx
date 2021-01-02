@@ -1,3 +1,12 @@
+function s:configureHighlight(background) abort
+  let l:path = simplify(fnamemodify(printf(
+        \ '%s/../colors/%s.vim',
+        \ s:path,
+        \ a:background
+        \ ), ':p'))
+  call arctgx#base#sourceFile(l:path)
+endfunction
+
 let s:path = expand('<sfile>:p:h')
 let s:bundleConfigDir = s:path . '/../bundleConfig/'
 let g:bundle_dirs = get(g:, 'bundle_dirs', [])
@@ -8,18 +17,10 @@ try
   call arctgx#bundle#loadCustomConfigurations(g:bundle_dirs, s:bundleConfigDir)
   set termguicolors
   call arctgx#term#loadConfiguration(s:path . '/../termConfig')
+  call s:configureHighlight(&background)
 catch /^Vim\%((\a\+)\)\=:E117/
   echomsg v:exception
 endtry
-
-function s:configureHighlight(background) abort
-  let l:path = simplify(fnamemodify(printf(
-        \ '%s/../colors/%s.vim',
-        \ s:path,
-        \ a:background
-        \ ), ':p'))
-  call arctgx#base#sourceFile(l:path)
-endfunction
 
 augroup ConfigureHighlight
   autocmd!
