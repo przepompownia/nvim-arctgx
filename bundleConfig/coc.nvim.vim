@@ -17,6 +17,7 @@ function s:loadColorSettings()
   call s:defineIDEMaps()
   highlight link CocFloating IdeFloating
   highlight link CocErrorFloat IdeErrorFloat
+  highlight link CocHintFloat IdeHintFloat
   highlight link CocErrorHighlight IdeDiagnosticError
   highlight link CocInfoHighlight IdeDiagnosticInfo
   highlight link CocHintHighlight IdeDiagnosticHint
