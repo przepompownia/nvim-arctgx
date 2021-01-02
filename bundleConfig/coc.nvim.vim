@@ -24,6 +24,7 @@ function s:loadColorSettings()
   highlight link CocWarningHighlight IdeDiagnosticWarning
   highlight link CocErrorSign IdeErrorSign
   highlight link CocInfoSign IdeInfoSign
+  highlight link CocWarningSign IdeWarningSign
 endfunction
 
 " function! s:check_back_space() abort
