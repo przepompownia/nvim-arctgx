@@ -2,18 +2,26 @@ augroup cocMaps
   autocmd!
   autocmd User CocJumpPlaceholder call
               \ CocActionAsync('showSignatureHelp')
-  autocmd User CocNvimInit call s:defineIDEMaps()
-  autocmd User CocNvimInit highlight CocFloating guifg=#888888 guibg=#dddddd
-  autocmd User CocNvimInit highlight CocErrorFloat guifg=#880000 guibg=#dddddd
-  autocmd User CocNvimInit highlight link CocErrorHighlight IdeDiagnosticError
-  autocmd User CocNvimInit highlight link CocInfoHighlight IdeDiagnosticInfo
-  autocmd User CocNvimInit highlight link CocHintHighlight IdeDiagnosticHint
-  autocmd User CocNvimInit highlight link CocWarningHighlight IdeDiagnosticWarning
-  autocmd User CocNvimInit highlight link CocErrorSign IdeErrorSign
-  autocmd CursorHold * silent call CocActionAsync('highlight')
-  autocmd CursorHold * silent call CocActionAsync('getCurrentFunctionSymbol', function('arctgx#coc#setCurrentFunctionCallback'))
   autocmd BufWritePost * CocCommand git.refresh
+  autocmd User CocNvimInit call s:onCoCNvimInit()
+  autocmd CursorHold * call s:onCursorHold()
 augroup END
+
+function s:onCursorHold()
+  silent call CocActionAsync('highlight')
+  silent call CocActionAsync('getCurrentFunctionSymbol', function('arctgx#coc#setCurrentFunctionCallback'))
+endfunction
+
+function s:onCoCNvimInit()
+  call s:defineIDEMaps()
+  highlight CocFloating guifg=#888888 guibg=#dddddd
+  highlight CocErrorFloat guifg=#880000 guibg=#dddddd
+  highlight link CocErrorHighlight IdeDiagnosticError
+  highlight link CocInfoHighlight IdeDiagnosticInfo
+  highlight link CocHintHighlight IdeDiagnosticHint
+  highlight link CocWarningHighlight IdeDiagnosticWarning
+  highlight link CocErrorSign IdeErrorSign
+endfunction
 
 " function! s:check_back_space() abort
   " let l:col = col('.') - 1
