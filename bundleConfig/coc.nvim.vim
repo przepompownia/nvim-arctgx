@@ -18,6 +18,7 @@ function s:loadColorSettings()
   highlight link CocFloating IdeFloating
   highlight link CocErrorFloat IdeErrorFloat
   highlight link CocHintFloat IdeHintFloat
+  highlight link CocWarningFloat IdeWarningFloat
   highlight link CocErrorHighlight IdeDiagnosticError
   highlight link CocInfoHighlight IdeDiagnosticInfo
   highlight link CocHintHighlight IdeDiagnosticHint

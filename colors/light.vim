@@ -15,5 +15,6 @@ highlight IdeDiagnosticHint guibg=#ffffdd
 highlight IdeErrorSign guifg=#ff0000 guibg=#dddddd
 highlight IdeFloating guifg=#888888 guibg=#dddddd
 highlight IdeErrorFloat guifg=#880000 guibg=#dddddd
+highlight IdeWarningFloat guibg=NONE guifg=#884400
 call arctgx#highlight#highlight('IdeInfoSign', 'SignColumn', '#626262')
 call arctgx#highlight#highlight('IdeWarningSign', 'SignColumn', 'WarningMsg')
