@@ -3,7 +3,8 @@ augroup cocMaps
   autocmd User CocJumpPlaceholder call
               \ CocActionAsync('showSignatureHelp')
   autocmd BufWritePost * CocCommand git.refresh
-  autocmd User CocNvimInit call s:onCoCNvimInit()
+  autocmd User CocNvimInit call s:loadColorSettings()
+  autocmd ColorScheme * call s:loadColorSettings()
   autocmd CursorHold * call s:onCursorHold()
 augroup END
 
@@ -12,7 +13,7 @@ function s:onCursorHold()
   silent call CocActionAsync('getCurrentFunctionSymbol', function('arctgx#coc#setCurrentFunctionCallback'))
 endfunction
 
-function s:onCoCNvimInit()
+function s:loadColorSettings()
   call s:defineIDEMaps()
   highlight CocFloating guifg=#888888 guibg=#dddddd
   highlight CocErrorFloat guifg=#880000 guibg=#dddddd

@@ -2,7 +2,7 @@ function arctgx#highlight#highlight(hlID, background, foreground) abort
   let l:background = s:determineColor('bg#', a:background)
   let l:foreground = s:determineColor('fg#', a:foreground)
 
-  execute printf('verbose highlight %s guibg=%s guifg=%s', a:hlID, l:background, l:foreground)
+  execute printf('highlight %s guibg=%s guifg=%s', a:hlID, l:background, l:foreground)
 endfunction
 
 function arctgx#highlight#getExistingHighlight(hlID, mode) abort
