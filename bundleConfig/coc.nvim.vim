@@ -15,8 +15,8 @@ endfunction
 
 function s:loadColorSettings()
   call s:defineIDEMaps()
-  highlight CocFloating guifg=#888888 guibg=#dddddd
-  highlight CocErrorFloat guifg=#880000 guibg=#dddddd
+  highlight link CocFloating IdeFloating
+  highlight link CocErrorFloat IdeErrorFloat
   highlight link CocErrorHighlight IdeDiagnosticError
   highlight link CocInfoHighlight IdeDiagnosticInfo
   highlight link CocHintHighlight IdeDiagnosticHint
