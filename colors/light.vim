@@ -9,7 +9,7 @@ highlight DiffChange term=reverse cterm=NONE ctermbg=188 ctermfg=16 guibg=#e1e1c
 highlight DiffText term=reverse cterm=NONE ctermbg=188 ctermfg=166 gui=NONE
 highlight LineNr ctermbg=255 guibg=#eeeeee
 highlight IdeDiagnosticError guibg=#fff6f6
-highlight IdeDiagnosticWarning guibg=#fff6aa
+highlight IdeDiagnosticWarning guibg=#fff8e8
 highlight IdeDiagnosticInfo guibg=#ffffee
 highlight IdeDiagnosticHint guibg=#ffffdd
 highlight IdeFloating guifg=#888888 guibg=#dddddd
@@ -19,7 +19,7 @@ highlight IdeInfoFloat guibg=NONE guifg=#626262
 call arctgx#highlight#highlight('IdeInfoSign', 'SignColumn', '#626262')
 call arctgx#highlight#highlight('IdeWarningSign', 'SignColumn', 'WarningMsg')
 call arctgx#highlight#highlight('IdeHintSign', 'SignColumn', '#15aabf')
-call arctgx#highlight#highlight('IdeErrorSign', 'SignColumn', '#ff0000')
+call arctgx#highlight#highlight('IdeErrorSign', 'SignColumn', '#bb8800')
 call arctgx#highlight#highlight('IdeGutterAdd', 'SignColumn', '#008800')
 call arctgx#highlight#highlight('IdeGutterChange', 'SignColumn', '#000088')
 call arctgx#highlight#highlight('IdeGutterDelete', 'SignColumn', '#880000')
