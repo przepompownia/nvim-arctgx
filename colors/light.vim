@@ -9,7 +9,7 @@ highlight DiffChange term=reverse cterm=NONE ctermbg=188 ctermfg=16 guibg=#e1e1c
 highlight DiffText term=reverse cterm=NONE ctermbg=188 ctermfg=166 gui=NONE
 highlight LineNr ctermbg=255 guibg=#eeeeee
 highlight IdeDiagnosticError guibg=#fff6f6
-highlight IdeDiagnosticWarning guibg=#ffaaf0
+highlight IdeDiagnosticWarning guibg=#fff6aa
 highlight IdeDiagnosticInfo guibg=#ffffee
 highlight IdeDiagnosticHint guibg=#ffffdd
 highlight IdeFloating guifg=#888888 guibg=#dddddd
