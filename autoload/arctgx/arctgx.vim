@@ -11,7 +11,6 @@ function s:listIdeSources() abort
         \ {'source': 'bundleConfig/phpactor.vim', 'action': 'split'},
         \ {'source': 'bundleConfig/fzf.vim', 'action': 'split'},
         \ {'source': 'bundleConfig/vimspector.vim', 'action': 'split'},
-        \ {'source': 'bundleConfig/vim-project.vim', 'action': 'split'},
         \ ]
   return map(l:ideSources, {_, item -> {'source': s:arctgxBundleDir . item['source'], 'action': item['action']}})
 endfunction
@@ -57,6 +56,8 @@ function arctgx#arctgx#editIDEMaps()
     let l:action = l:item['action']
     execute printf('%s %s', l:action, l:item['source'])
   endfor
+
+  wincmd w
 endfunction
 
 function arctgx#arctgx#reloadIDEMaps()
@@ -67,6 +68,8 @@ function arctgx#arctgx#reloadIDEMaps()
     endif
     execute 'source ' l:item['source']
   endfor
+
+  wincmd w
 endfunction
 
 function arctgx#arctgx#insertWithInitialIndentation(modeCharacter)
