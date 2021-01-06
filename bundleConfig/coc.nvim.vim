@@ -104,7 +104,7 @@ function s:defineIDEMaps()
   nmap <Plug>(ide-action-fold) :<C-U>call CocActionAsync('fold')<CR>
 endfunction
 
-let g:coc_config_home = expand(arctgx#arctgx#getInitialVimDirectory() . '/.config/coc')
+let g:coc_config_home = expand('<sfile>:p:h')
 let g:coc_data_home = expand(arctgx#arctgx#getInitialVimDirectory() . '/.config/coc')
 let g:coc_enable_locationlist = 1
 augroup CocRootPatterns
