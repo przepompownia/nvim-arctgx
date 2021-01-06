@@ -29,7 +29,7 @@ function arctgx#ide#showLocation() abort
 endfunction
 
 function arctgx#ide#showIsLastUsedWindow() abort
-  return winnr() is winnr("#") ? ' [LW]' : ''
+  return winnr() is winnr('#') ? ' [LW]' : ''
 endfunction
 
 function arctgx#ide#showWinInfo() abort
@@ -44,11 +44,11 @@ function arctgx#ide#showWinInfo() abort
 endfunction
 
 function arctgx#ide#displayFileNameInTab(tabNumber) abort
-  let buflist = tabpagebuflist(a:tabNumber)
-  let winnr = tabpagewinnr(a:tabNumber)
-  let _ = expand('#'.buflist[winnr - 1].':p:t:r')
+  let l:buflist = tabpagebuflist(a:tabNumber)
+  let l:winnr = tabpagewinnr(a:tabNumber)
+  let l:output = expand('#'.l:buflist[l:winnr - 1].':p:t:r')
 
-  return _ !=# '' ? _ : '[No Name]'
+  return l:output !=# '' ? l:output : '[No Name]'
 endfunction
 
 function arctgx#ide#recognizeGitHead(filename) abort
@@ -57,23 +57,12 @@ function arctgx#ide#recognizeGitHead(filename) abort
     return
   endif
 
-  let l:command = ['git', '-C', l:directory, 'rev-parse', '--show-toplevel']
-
-  call arctgx#ide#executeCommand(l:command, l:directory, 's:handleGitToplevelOutput', 's:handleSymbolicRefExitCode')
-endfunction
-
-function s:handleGitToplevelOutput(cwd, jobId, stdOut, ...)
-  let l:toplevel = trim(type(a:stdOut) is v:t_list ? join(a:stdOut) : a:stdOut)
-
-  if empty(l:toplevel)
-    return
-  endif
-
   let l:command = ['git', 'symbolic-ref', '--quiet', '--short', 'HEAD']
-  call arctgx#ide#executeCommand(l:command, l:toplevel, 's:handleGitHeadOutput', 's:handleSymbolicRefExitCode')
+
+  call arctgx#ide#executeCommand(l:command, l:directory, 's:handleGitHeadOutput', 's:handleSymbolicRefExitCode')
 endfunction
 
-function s:handleGitHeadOutput(cwd, jobId, stdOut, ...)
+function s:handleGitHeadOutput(cwd, jobId, stdOut, ...) abort
   let l:output = type(a:stdOut) is v:t_list ? join(a:stdOut) : a:stdOut
 
   if empty(l:output)
@@ -121,5 +110,7 @@ function arctgx#ide#executeCommand(command, cwd, stdoutHandler, exitHandler) abo
   let l:options[l:onStdout] = function(a:stdoutHandler, [a:cwd])
   let l:options[l:onExit] = function(a:exitHandler, [a:cwd])
 
-  let job = l:JobStart(a:command, l:options)
+  let l:jobId = l:JobStart(a:command, l:options)
+
+  return l:jobId
 endfunction
