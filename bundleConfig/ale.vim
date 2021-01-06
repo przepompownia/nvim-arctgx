@@ -13,7 +13,8 @@ let g:ale_set_loclist = 0
 let g:ale_disable_lsp = 1
 let g:ale_hover_cursor = 0
 let g:ale_linters = {
-      \   'sh': ['shell'],
-      \   'typescript': ['eslint', 'tslint', 'typecheck', 'xo'],
-      \   'php': ['langserver', 'phan', 'php', 'psalm']
-      \}
+      \ 'sh': ['shell'],
+      \ 'typescript': ['eslint', 'tslint', 'typecheck', 'xo'],
+      \ 'php': ['langserver', 'php', 'psalm'],
+      \ 'vim': ['ale_custom_linting_rules'],
+      \ }
