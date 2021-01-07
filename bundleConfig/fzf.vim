@@ -1,4 +1,6 @@
 let g:fzf_history_dir = expand('~/.cache/fzf-history')
+call setenv('DELTA_FEATURES', 'fzf')
+let g:fzf_preview_window = ['up:70%', 'ctrl-/']
 let g:fzf_action = {
       \ 'enter': 'tab drop',
       \ 'ctrl-y': 'edit',
