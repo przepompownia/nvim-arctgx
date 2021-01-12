@@ -1,4 +1,4 @@
-nnoremap <Leader>nn :call arctgx#nerdtree#find()<CR>
+nnoremap <Leader>m :call arctgx#nerdtree#find()<CR>
 nnoremap <Leader>nb :NERDTree <CR> :OpenBookmark<Space>
 let g:NERDTreeMinimalUI = 1
 let g:NERDTreeShowBookmarks = 1
