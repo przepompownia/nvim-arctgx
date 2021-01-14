@@ -19,26 +19,11 @@ endfunction
 function! arctgx#grep#getGitGrepCmd(query, useFixedStrings, ignoreCase) abort
   return printf(
         \ 'git -C "%s" grep --line-number %s %s -- %s || true',
-        \ arctgx#grep#gitGetWorkspaceRoot(expand('%:p:h')),
+        \ arctgx#git#gitGetWorkspaceRoot(expand('%:p:h')),
         \ s:ignoreCaseDefaultString(a:ignoreCase),
         \ s:useFixedStringsDefaultString(a:useFixedStrings),
         \ a:query
         \ )
-endfunction
-
-function! arctgx#grep#gitGetWorkspaceRoot(startDirectory) abort
-  if !isdirectory(a:startDirectory)
-    throw 'arctgx#grep#gitGetWorkspaceRoot: invalid directory'
-  endif
-
-  let l:gitTopCmd = printf('git -C "%s" rev-parse --show-toplevel 2>/dev/null', a:startDirectory)
-  let l:gitTopCmdResult = systemlist(l:gitTopCmd)
-  if empty(l:gitTopCmdResult)
-    echomsg printf('Git work tree root not found for %s. Searching within CWD.', a:startDirectory)
-    return getcwd()
-  endif
-
-  return l:gitTopCmdResult[0]
 endfunction
 
 function! arctgx#grep#grepOperator(type) abort
@@ -57,7 +42,7 @@ endfunction
 function! arctgx#grep#gitGrepOperator(type) abort
   call arctgx#grep#grep(
         \ function('arctgx#grep#getGitGrepCmd'),
-        \ arctgx#grep#gitGetWorkspaceRoot(expand('%:p:h')),
+        \ arctgx#git#gitGetWorkspaceRoot(expand('%:p:h')),
         \ arctgx#operator#getText(a:type),
         \ v:true,
         \ v:false,
