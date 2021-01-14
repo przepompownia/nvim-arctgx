@@ -6,6 +6,7 @@ augroup cocMaps
   autocmd User CocNvimInit call s:loadColorSettings()
   autocmd ColorScheme * call s:loadColorSettings()
   autocmd CursorHold * call s:onCursorHold()
+  autocmd QuitPre * execute "normal \<Plug>(coc-float-hide)"
 augroup END
 
 function s:onCursorHold()
