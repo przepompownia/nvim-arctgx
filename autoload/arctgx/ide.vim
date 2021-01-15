@@ -1,20 +1,20 @@
 scriptencoding utf-8
 
-function arctgx#ide#bufname() abort
+function! arctgx#ide#bufname() abort
   return bufname()
 endfunction
 
-function arctgx#ide#getCurrentGitHead() abort
+function! arctgx#ide#getCurrentGitHead() abort
   let l:head = get(b:, 'ideCurrentGitHead', '')
 
   if empty(l:head)
     return ''
   endif
 
-  return printf('%s', arctgx#string#shorten(l:head))
+  return printf('%s', arctgx#string#shorten(l:head, 11))
 endfunction
 
-function arctgx#ide#getCurrentFunction() abort
+function! arctgx#ide#getCurrentFunction() abort
   let l:funcname = get(b:, 'ideCurrentFunction', '')
 
   if empty(l:funcname)
@@ -24,15 +24,15 @@ function arctgx#ide#getCurrentFunction() abort
   return printf('[::%s]', l:funcname)
 endfunction
 
-function arctgx#ide#showLocation() abort
+function! arctgx#ide#showLocation() abort
   return arctgx#ide#bufname() . arctgx#ide#getCurrentFunction()
 endfunction
 
-function arctgx#ide#showIsLastUsedWindow() abort
+function! arctgx#ide#showIsLastUsedWindow() abort
   return winnr() is winnr('#') ? ' [LW]' : ''
 endfunction
 
-function arctgx#ide#showWinInfo() abort
+function! arctgx#ide#showWinInfo() abort
   return printf(
         \ 'b:%d, tw: %d.%d (%d)%s',
         \ bufnr(),
@@ -43,15 +43,16 @@ function arctgx#ide#showWinInfo() abort
         \ )
 endfunction
 
-function arctgx#ide#displayFileNameInTab(tabNumber) abort
+function! arctgx#ide#displayFileNameInTab(tabNumber) abort
   let l:buflist = tabpagebuflist(a:tabNumber)
   let l:winnr = tabpagewinnr(a:tabNumber)
   let l:output = expand('#'.l:buflist[l:winnr - 1].':p:t:r')
 
-  return l:output !=# '' ? l:output : '[No Name]'
+  return l:output !=# '' ? arctgx#string#shorten(l:output, 8) : '[No Name]'
 endfunction
 
-function arctgx#ide#recognizeGitHead(filename) abort
+" vint: next-line -ProhibitUnusedVariable
+function! arctgx#ide#recognizeGitHead(filename) abort
   let l:directory = fnamemodify(a:filename, ':p:h')
   if !isdirectory(l:directory)
     return
@@ -62,7 +63,7 @@ function arctgx#ide#recognizeGitHead(filename) abort
   call arctgx#ide#executeCommand(l:command, l:directory, 's:handleGitHeadOutput', 's:handleSymbolicRefExitCode')
 endfunction
 
-function s:handleGitHeadOutput(cwd, jobId, stdOut, ...) abort
+function! s:handleGitHeadOutput(cwd, jobId, stdOut, ...) abort
   let l:output = type(a:stdOut) is v:t_list ? join(a:stdOut) : a:stdOut
 
   if empty(l:output)
@@ -72,7 +73,7 @@ function s:handleGitHeadOutput(cwd, jobId, stdOut, ...) abort
   let b:ideCurrentGitHead = l:output
 endfunction
 
-function s:handleSymbolicRefExitCode(cwd, jobId, exitCode, ...) abort
+function! s:handleSymbolicRefExitCode(cwd, jobId, exitCode, ...) abort
   if (0 == a:exitCode)
     return
   endif
@@ -82,7 +83,7 @@ function s:handleSymbolicRefExitCode(cwd, jobId, exitCode, ...) abort
   call arctgx#ide#executeCommand(l:command, a:cwd, 's:handleGitHeadOutput', 's:handleShowRefExitCode')
 endfunction
 
-function s:handleShowRefExitCode(cwd, jobId, data, ...) abort
+function! s:handleShowRefExitCode(cwd, jobId, data, ...) abort
   let l:exitCode = a:data
 
   if (0 == l:exitCode)
@@ -92,7 +93,7 @@ function s:handleShowRefExitCode(cwd, jobId, data, ...) abort
   let b:ideCurrentGitHead = ''
 endfunction
 
-function arctgx#ide#executeCommand(command, cwd, stdoutHandler, exitHandler) abort
+function! arctgx#ide#executeCommand(command, cwd, stdoutHandler, exitHandler) abort
   let l:nv = has('nvim')
   let l:JobStart = l:nv ? function('jobstart') : function('job_start')
   let l:onStdout = l:nv ? 'on_stdout' : 'out_cb'

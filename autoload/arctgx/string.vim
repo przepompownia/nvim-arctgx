@@ -1,15 +1,16 @@
-function arctgx#string#shorten(name)
-  let l:margin = 11
+scriptencoding utf-8
+
+function! arctgx#string#shorten(name, margin) abort
   let l:coupler = '…'
 
-  if (strlen(a:name) <= strchars(l:coupler)+2*l:margin)
+  if (strlen(a:name) <= strchars(l:coupler)+2*a:margin)
     return a:name
   endif
 
   return printf(
         \ '%s%s%s',
-        \strcharpart(a:name, 0, l:margin),
+        \ strcharpart(a:name, 0, a:margin),
         \ l:coupler,
-        \ strcharpart(a:name, strchars(a:name) - l:margin, l:margin)
+        \ strcharpart(a:name, strchars(a:name) - a:margin, a:margin)
         \ )
 endfunction
