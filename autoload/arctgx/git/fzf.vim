@@ -44,5 +44,5 @@ function! arctgx#git#fzf#diff(CmdSerializer, dir, fullscreen, ...) abort
           \ '--preview',
           \ a:CmdSerializer(l:previewCmd) . ' | delta --width ${FZF_PREVIEW_COLUMNS:-$COLUMNS} --file-style=omit | sed 1d',
           \ ]
-        \ }), a:fullscreen)
+        \ }, a:fullscreen))
 endfunction
