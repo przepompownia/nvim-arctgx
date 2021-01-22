@@ -1,7 +1,6 @@
-command! -bang -nargs=* GFDiff call arctgx#git#fzf#diff(
-      \ function('arctgx#git#fzf#gregex'),
+command! -bang -nargs=+ GFDiff call arctgx#git#fzf#diff2(
+      \ function('arctgx#git#fzf#serializeGFDiffCommand'),
       \ arctgx#git#gitGetWorkspaceRoot(expand('%:p:h')),
-      \ <q-args>,
-      \ '',
       \ <bang>0,
+      \ <f-args>,
       \ )

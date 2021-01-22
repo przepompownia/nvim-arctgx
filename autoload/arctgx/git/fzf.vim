@@ -1,46 +1,48 @@
-function! arctgx#git#fzf#gregex(commits, query, path, ...) abort
-  let l:args = join(a:000, ' ')
-
+function! arctgx#git#fzf#serializeGFDiffCommand(cmd) abort
   return printf(
         \ 'git diff --relative %s %s %s %s',
-        \ s:createGQueryString(a:query),
-        \ l:args,
-        \ a:commits,
-        \ s:createPathString(a:path)
+        \ (a:cmd.query.value is v:null) ? '' : printf('%s %s', a:cmd.query.type, a:cmd.query.value),
+        \ join(a:cmd.options, ' '),
+        \ join(a:cmd.commits, ' '),
+        \ s:createPathString(join(a:cmd.paths, ' '))
         \ )
 endfunction
 
-function s:createPathString(path) abort
+function! s:createPathString(path) abort
   if len(a:path)
-    return ' -- ' . a:path
+    return '-- ' . a:path
   endif
 
   return ''
 endfunction
 
-function s:createGQueryString(query) abort
-  if len(a:query)
-    return '-G ' . a:query
-  endif
+function! arctgx#git#fzf#diff(CmdSerializer, dir, fullscreen, ...) abort
+  let l:cmd = arctgx#git#parseGFDiffCommandArguments(a:000)
+  let l:previewCmd = deepcopy(l:cmd)
 
-  return ''
-endfunction
+  call add(l:cmd.options, '--name-only')
+  echom a:CmdSerializer(l:previewCmd)
+  let l:interactiveCmd = deepcopy(l:cmd)
+  let l:interactiveCmd.query.value = '{q}'
 
-function! arctgx#git#fzf#diff(Cmd, dir, commits, query, fullscreen) abort
-  let l:command = a:Cmd(a:commits, len(a:query) ? shellescape(a:query) : '', '', '--name-only')
-  echom l:command
+  let l:previewCmd.paths = ['{}']
+  let l:previewCmd.query.value = '{q}'
+
+  let l:initialCmdString = a:CmdSerializer(l:cmd)
+
   call fzf#run(fzf#wrap({
-        \ 'source': l:command,
+        \ 'source': l:initialCmdString,
         \ 'sink': 'tab drop',
         \ 'dir': a:dir,
         \ 'options': [
           \ '--multi',
           \ '--disabled',
-          \ '--prompt', a:Cmd(a:commits, '{q}', '', '--name-only') . '> ',
-          \ '--bind', 'change:reload:' . a:Cmd(a:commits, '{q}', '', '--name-only'),
+          \ '--query', l:cmd.query.value,
+          \ '--prompt', a:CmdSerializer(l:interactiveCmd) . '> ',
+          \ '--bind', 'change:reload:' . a:CmdSerializer(l:interactiveCmd),
           \ '--bind', 'alt-s:toggle-search',
           \ '--preview',
-          \ a:Cmd(a:commits, '', '{}') . ' | delta --width ${FZF_PREVIEW_COLUMNS:-$COLUMNS} --file-style=omit | sed 1d',
+          \ a:CmdSerializer(l:previewCmd) . ' | delta --width ${FZF_PREVIEW_COLUMNS:-$COLUMNS} --file-style=omit | sed 1d',
           \ ]
         \ }), a:fullscreen)
 endfunction
