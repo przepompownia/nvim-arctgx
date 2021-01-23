@@ -3,6 +3,7 @@ augroup cocMaps
   autocmd User CocJumpPlaceholder call
               \ CocActionAsync('showSignatureHelp')
   autocmd BufWritePost * CocCommand git.refresh
+  autocmd User ChangeIdeStatus CocCommand git.refresh
   autocmd User CocNvimInit call s:loadColorSettings()
   autocmd ColorScheme * call s:loadColorSettings()
   autocmd CursorHold * call s:onCursorHold()

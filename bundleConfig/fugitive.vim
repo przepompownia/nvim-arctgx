@@ -1,7 +1,7 @@
 augroup FugitiveConfig
   autocmd!
   autocmd BufReadPost fugitive://* set bufhidden=delete
-  autocmd User FugitiveChanged call arctgx#ide#recognizeGitHeadsInTab()
+  autocmd User FugitiveChanged doautocmd <nomodeline> User ChangeIdeStatus
 augroup end
 nmap <Leader>gs :Gstatus<CR><C-w>33+
 nmap <Leader>gl :Glog<CR>
