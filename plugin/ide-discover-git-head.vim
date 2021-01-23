@@ -1,7 +1,7 @@
 augroup DiscoverGitHead
   autocmd!
-  autocmd BufWinEnter,FocusGained * call arctgx#ide#recognizeGitHead(expand('<afile>'))
+  autocmd BufEnter,WinEnter,FocusGained * call arctgx#ide#recognizeGitHead(str2nr(expand('<abuf>')))
   if has('nvim')
-    autocmd VimResume * call arctgx#ide#recognizeGitHead(expand('<afile>'))
+    autocmd VimResume * call arctgx#ide#recognizeGitHead(str2nr(expand('<abuf>')))
   endif
 augroup END
