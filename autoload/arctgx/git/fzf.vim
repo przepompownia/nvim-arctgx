@@ -30,7 +30,8 @@ function! arctgx#git#fzf#diff(CmdSerializer, dir, fullscreen, ...) abort
   let l:previewCmdString = a:CmdSerializer(l:previewCmd, '{q}', '\"{}\"')
   let l:previewCmdString .= ' | delta --width ${FZF_PREVIEW_COLUMNS:-$COLUMNS} --file-style=omit | sed 1d'
 
-  call fzf#run(fzf#wrap({
+  let l:fzfHistoryKey = 'gfdiff'
+  let l:fzfOptions = {
         \ 'source': l:initialCmdString,
         \ 'sink': 'tab drop',
         \ 'dir': a:dir,
@@ -44,5 +45,7 @@ function! arctgx#git#fzf#diff(CmdSerializer, dir, fullscreen, ...) abort
           \ '--preview',
           \ l:previewCmdString,
           \ ]
-        \ }, a:fullscreen))
+        \ }
+
+  call fzf#run(fzf#wrap(l:fzfHistoryKey, l:fzfOptions, a:fullscreen))
 endfunction
