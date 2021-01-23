@@ -57,6 +57,14 @@ function! arctgx#ide#displayFileNameInTab(tabNumber) abort
   return l:output !=# '' ? arctgx#string#shorten(l:output, 8) : '[No Name]'
 endfunction
 
+function! arctgx#ide#recognizeGitHeadsInTab() abort
+  let l:tabBufNumbers = tabpagebuflist()
+
+  for l:bufnr in l:tabBufNumbers
+    call arctgx#ide#recognizeGitHead(l:bufnr)
+  endfor
+endfunction
+
 " vint: next-line -ProhibitUnusedVariable
 function! arctgx#ide#recognizeGitHead(bufnr) abort
   let l:directory = fnamemodify(bufname(str2nr(a:bufnr)), ':p:h')
