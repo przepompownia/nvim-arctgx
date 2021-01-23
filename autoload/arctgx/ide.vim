@@ -16,6 +16,8 @@ endfunction
 
 function! s:setIdeCurrentGitHead(bufnr, value) abort
   call setbufvar(a:bufnr, 'ideCurrentGitHead', a:value)
+
+  doautocmd <nomodeline> User IdeStatusChanged
 endfunction
 
 function! arctgx#ide#getCurrentFunction() abort
