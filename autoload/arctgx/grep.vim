@@ -55,7 +55,7 @@ function! s:deserializeLine(line) abort
   let l:parts = matchlist(a:line, '\(.\{-}\)\s*:\s*\(\d\+\)\%(\s*:\s*\(\d\+\)\)\?\%(\s*:\(.*\)\)\?')
 
   return {
-        \ 'filename': &acd ? fnamemodify(l:parts[1], ':p') : l:parts[1],
+        \ 'filename': &autochdir ? fnamemodify(l:parts[1], ':p') : l:parts[1],
         \ 'lineNumber': l:parts[2],
         \ 'text': l:parts[4],
         \ 'column': l:parts[3]
