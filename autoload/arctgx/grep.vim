@@ -1,6 +1,6 @@
 function! arctgx#grep#getRipGrepCmd(query, useFixedStrings, ignoreCase) abort
   return printf(
-        \ 'rg --column --line-number --no-heading --color=always --smart-case %s %s -- %s',
+        \ 'rg --column --line-number --column --no-heading --color=always --smart-case %s %s -- %s',
         \ s:useFixedStringsDefaultString(a:useFixedStrings),
         \ s:ignoreCaseDefaultString(a:ignoreCase),
         \ a:query
@@ -18,7 +18,7 @@ endfunction
 
 function! arctgx#grep#getGitGrepCmd(query, useFixedStrings, ignoreCase) abort
   return printf(
-        \ 'git -C "%s" grep --line-number %s %s -- %s || true',
+        \ 'git -C "%s" grep --line-number --column %s %s -- %s || true',
         \ arctgx#git#gitGetWorkspaceRoot(expand('%:p:h')),
         \ s:ignoreCaseDefaultString(a:ignoreCase),
         \ s:useFixedStringsDefaultString(a:useFixedStrings),
