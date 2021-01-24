@@ -51,6 +51,7 @@ function! arctgx#grep#gitGrepOperator(type) abort
 endfunction
 
 function! s:deserializeLine(line) abort
+  " stolen from fzf.vim
   let l:parts = matchlist(a:line, '\(.\{-}\)\s*:\s*\(\d\+\)\%(\s*:\s*\(\d\+\)\)\?\%(\s*:\(.*\)\)\?')
 
   return {
@@ -132,7 +133,7 @@ function! arctgx#grep#grep(Cmd, root, query, useFixedStrings, ignoreCase, fullsc
         \ '--bind', 'alt-r:reload:' . a:Cmd('{q}', v:false, a:ignoreCase),
         \ '--bind', 'alt-r:+change-prompt:' . s:prompt(l:cmdShortName, v:false),
         \ ]
-        \ }, a:fullscreen))
+        \ }), a:fullscreen)
 endfunction
 
 function s:prompt(cmd, useFixedStrings) abort
