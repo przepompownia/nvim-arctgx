@@ -50,11 +50,77 @@ function! arctgx#grep#gitGrepOperator(type) abort
         \ )
 endfunction
 
+function! s:deserializeLine(line) abort
+  let l:parts = matchlist(a:line, '\(.\{-}\)\s*:\s*\(\d\+\)\%(\s*:\s*\(\d\+\)\)\?\%(\s*:\(.*\)\)\?')
+
+  return {
+        \ 'filename': &acd ? fnamemodify(l:parts[1], ':p') : l:parts[1],
+        \ 'lineNumber': l:parts[2],
+        \ 'text': l:parts[4],
+        \ 'column': l:parts[3]
+        \ }
+endfunction
+
+function! s:openGrepSelection(lines) abort
+  if len(a:lines) < 2
+    return
+  endif
+
+  let l:keyboardShortcut = a:lines[0]
+
+  let l:lines = map(filter(a:lines[1:], {line -> len(line)}), {idx, line -> s:deserializeLine(line)})
+
+  if empty(l:lines)
+    return
+  endif
+
+  " todo support more actions
+  let l:action = 'tab drop'
+
+  call s:performActionOnLines(l:action, l:lines)
+endfunction
+
+function! s:performActionOnLines(action, lines) abort
+  if a:action is# 'tab drop'
+    call s:tabDropLines(a:lines)
+    return
+  endif
+
+  for l:line in a:lines
+  endfor
+endfunction
+
+function! s:tabDropLines(lines) abort
+  let l:filesToOpen = {}
+  for l:line in a:lines
+    if has_key(l:filesToOpen, l:line.filename)
+      continue
+    endif
+
+    let l:filesToOpen[l:line.filename] = l:line
+  endfor
+
+  for l:fn in keys(l:filesToOpen)
+    call s:tabDropLine(l:filesToOpen[l:fn])
+  endfor
+endfunction
+
+function! s:tabDropLine(line) abort
+  execute 'tab drop ' . fnameescape(a:line.filename)
+
+  execute a:line.lineNumber
+  if !empty(a:line.column)
+    call cursor(0, str2nr(a:line.column))
+  endif
+  normal! zz
+endfunction
+
 function! arctgx#grep#grep(Cmd, root, query, useFixedStrings, ignoreCase, fullscreen) abort
   let l:command = a:Cmd(shellescape(a:query), a:useFixedStrings, a:ignoreCase)
   let l:cmdShortName = split(l:command, '\s')[0]
-  call fzf#vim#grep(l:command, 0, fzf#vim#with_preview({
+  call fzf#vim#grep(l:command, 1, fzf#vim#with_preview({
         \ 'dir': a:root,
+        \ 'sink*': function('s:openGrepSelection'),
         \ 'options': [
         \ '--phony',
         \ '--multi',
