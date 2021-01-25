@@ -79,6 +79,7 @@ set autoread
 set sessionoptions-=help
 set sessionoptions-=folds
 set grepprg=grep\ --with-filename\ --extended-regexp\ --no-messages\ --color=never\ --binary-files=without-match\ --exclude-dir=.svn\ --exclude=tags\ --exclude=taglist.vim\ --exclude-dir=.git\ --line-number
+set signcolumn=auto:1-9
 
 " set tags=./tags;/
 set tags=
