@@ -1,5 +1,5 @@
 nnoremap <Leader>m :call arctgx#nerdtree#find()<CR>
-nnoremap <Leader>nb :NERDTree <CR> :OpenBookmark<Space>
+nnoremap <Plug>(ide-tree-focus-current-file) :NERDTree <CR> :OpenBookmark<Space>
 let g:NERDTreeMinimalUI = 1
 let g:NERDTreeShowBookmarks = 1
 let g:NERDTreeBookmarksFile = expand('~/.config/NERDTreeBookmarks.cfg')

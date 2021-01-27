@@ -78,6 +78,7 @@ nmap <S-F12> <Plug>(ide-grep-files)
 
 nmap <Leader>igg <Plug>(ide-grep-git)
 nmap <Leader>igf <Plug>(ide-grep-files)
+nmap <Leader>m <Plug>(ide-tree-focus-current-file)
 
 command! IDEMapsEdit call arctgx#arctgx#editIDEMaps()
 command! IDEMapsReload call arctgx#arctgx#reloadIDEMaps()
