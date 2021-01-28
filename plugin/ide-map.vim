@@ -71,6 +71,12 @@ nmap <Leader>ibf <Plug>(ide-browse-files)
 nmap <Leader>ibg <Plug>(ide-browse-gfiles)
 nmap <Leader>ibw <Plug>(ide-browse-windows)
 nmap <F1> <Plug>(ide-browse-windows)
+imap <F1> <C-o><F1>
+imap <S-F1> <C-o><S-F1>
+imap <S-F11> <C-o><S-F11>
+imap <S-F12> <C-o><S-F12>
+imap <F11> <C-o><F11>
+imap <F12> <C-o><F12>
 nmap <F11> <Plug>(ide-browse-gfiles)
 nmap <S-F11> <Plug>(ide-browse-files)
 nmap <F12> <Plug>(ide-grep-git)
