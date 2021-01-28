@@ -59,28 +59,30 @@ nmap <Leader>hp <Plug>(ide-git-hunk-print)
 nmap <Leader>[h <Plug>(ide-git-hunk-previous-conflict)
 nmap <Leader>]h <Plug>(ide-git-hunk-next-conflict)
 nmap <S-F2> <Plug>(ide-git-stage-write-file)
+imap <S-F2> <C-o><S-F2>
 nmap [h <Plug>(ide-git-hunk-previous)
 nmap ]h <Plug>(ide-git-hunk-next)
 
 nmap <Leader>ibb <Plug>(ide-browse-buffers)
 nmap <S-F1> <Plug>(ide-browse-buffers)
+imap <S-F1> <C-o><S-F1>
 nmap <Leader>; <Plug>(ide-browse-cmd-history)
 nmap <Leader>ibh <Plug>(ide-browse-history)
 nmap <F4> <Plug>(ide-browse-history)
+imap <F4> <C-o><F4>
 nmap <Leader>ibf <Plug>(ide-browse-files)
 nmap <Leader>ibg <Plug>(ide-browse-gfiles)
 nmap <Leader>ibw <Plug>(ide-browse-windows)
 nmap <F1> <Plug>(ide-browse-windows)
 imap <F1> <C-o><F1>
-imap <S-F1> <C-o><S-F1>
-imap <S-F11> <C-o><S-F11>
-imap <S-F12> <C-o><S-F12>
 imap <F11> <C-o><F11>
 imap <F12> <C-o><F12>
 nmap <F11> <Plug>(ide-browse-gfiles)
 nmap <S-F11> <Plug>(ide-browse-files)
+imap <S-F11> <C-o><S-F11>
 nmap <F12> <Plug>(ide-grep-git)
 nmap <S-F12> <Plug>(ide-grep-files)
+imap <S-F12> <C-o><S-F12>
 
 nmap <Leader>igg <Plug>(ide-grep-git)
 nmap <Leader>igf <Plug>(ide-grep-files)

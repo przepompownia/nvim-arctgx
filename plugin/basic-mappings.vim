@@ -56,4 +56,4 @@ noremap zD <Nop>
 noremap zd <Nop>
 noremap zE <Nop>
 nmap <silent> <Leader>` <Plug>(jump-last-tab)
-set pastetoggle=<F11>
+set pastetoggle=<Nop>
