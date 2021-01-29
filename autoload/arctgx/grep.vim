@@ -75,19 +75,49 @@ function! s:openGrepSelection(lines) abort
     return
   endif
 
-  " todo support more actions
-  let l:action = 'tab drop'
+  let l:action = s:getActionFromKeyboardShortcut(l:keyboardShortcut)
 
-  call s:performActionOnLines(l:action, l:lines)
+  call s:performActionOnLines(s:actionMap, l:action, l:lines)
 endfunction
 
-function! s:performActionOnLines(action, lines) abort
-  if a:action is# 'tab drop'
-    call s:tabDropLines(a:lines)
+function! s:getActionFromKeyboardShortcut(shortcut) abort
+  let l:shortcutMap = get(g:, 'fzf_action', {})
+
+  if !has_key(l:shortcutMap, a:shortcut)
+    echoerr printf('No action for "%s"', a:shortcut)
+
     return
   endif
 
+  return g:fzf_action[a:shortcut]
+endfunction
+
+function! s:performActionOnLines(actionMap, actionName, lines) abort
+  if !has_key(a:actionMap, a:actionName)
+    echoerr printf('Action %s not supported\n', a:actionName)
+    return
+  endif
+
+  let l:Action = a:actionMap[a:actionName]
+
+  call l:Action(a:lines)
+endfunction
+
+let s:actionMap = {
+      \ 'tab drop': {lines -> s:tabDropLines(lines)},
+      \ 'edit': {lines -> s:editLines(lines, 'edit')},
+      \ 'split': {lines -> s:editLines(lines, 'split')},
+      \ 'vsplit': {lines -> s:editLines(lines, 'vsplit')},
+      \ }
+
+function! s:editLines(lines, command) abort
+  if index(['edit', 'split', 'vsplit'], a:command) < 0
+    throw 'Command not allowed'
+  endif
+
   for l:line in a:lines
+    execute a:command . ' ' . l:line.filename
+    call s:goToLine(l:line)
   endfor
 endfunction
 
@@ -109,6 +139,10 @@ endfunction
 function! s:tabDropLine(line) abort
   execute 'tab drop ' . fnameescape(a:line.filename)
 
+  call s:goToLine(a:line)
+endfunction
+
+function! s:goToLine(line) abort
   execute a:line.lineNumber
   if !empty(a:line.column)
     call cursor(0, str2nr(a:line.column))
