@@ -1,10 +1,11 @@
-function arctgx#arctgx#getInitialVimDirectory() abort
+function! arctgx#arctgx#getInitialVimDirectory() abort
   return get(g:, 'initialVimDirectory', expand('~/.vim'))
 endfunction
 
+" vint: next-line -ProhibitUnusedVariable
 let s:arctgxBundleDir = simplify(fnamemodify(expand('<sfile>:p:h:h:h'), ':p'))
 
-function s:listIdeSources() abort
+function! s:listIdeSources() abort
   let l:ideSources = [
         \ {'source': 'plugin/ide-map.vim', 'action': 'edit'},
         \ {'source': 'bundleConfig/coc.nvim.vim', 'action': 'vsplit'},
@@ -15,7 +16,7 @@ function s:listIdeSources() abort
   return map(l:ideSources, {_, item -> {'source': s:arctgxBundleDir . item['source'], 'action': item['action']}})
 endfunction
 
-function arctgx#arctgx#enablePrivateMode()
+function! arctgx#arctgx#enablePrivateMode() abort
   set history=0
   set nobackup
   " set nomodeline
@@ -28,7 +29,7 @@ function arctgx#arctgx#enablePrivateMode()
   set shada=""
 endfunction
 
-function arctgx#arctgx#sudowq()
+function! arctgx#arctgx#sudowq() abort
   if ! executable('sudo')
     echoerr 'Command sudo not found'
   endif
@@ -36,7 +37,7 @@ function arctgx#arctgx#sudowq()
   exe 'e!'
 endfunction
 
-function arctgx#arctgx#openShell(directory)
+function! arctgx#arctgx#openShell(directory) abort
   botright new
   if !has('nvim')
     call term_start(&shell, {'cwd': a:directory, 'term_finish': 'close', 'curwin': 1})
@@ -46,7 +47,7 @@ function arctgx#arctgx#openShell(directory)
   call termopen(&shell, {'cwd': a:directory})
 endfunction
 
-function arctgx#arctgx#editIDEMaps()
+function! arctgx#arctgx#editIDEMaps() abort
   tabnew
   let l:ideSources = s:listIdeSources()
   for l:item in l:ideSources
@@ -60,7 +61,7 @@ function arctgx#arctgx#editIDEMaps()
   wincmd w
 endfunction
 
-function arctgx#arctgx#reloadIDEMaps()
+function! arctgx#arctgx#reloadIDEMaps() abort
   let l:ideSources = s:listIdeSources()
   for l:item in l:ideSources
     if (!filereadable(l:item['source']))
@@ -72,7 +73,7 @@ function arctgx#arctgx#reloadIDEMaps()
   wincmd w
 endfunction
 
-function arctgx#arctgx#insertWithInitialIndentation(modeCharacter)
+function! arctgx#arctgx#insertWithInitialIndentation(modeCharacter) abort
   if a:modeCharacter !=# 'a' && a:modeCharacter !=# 'i'
     throw 'Only "i" and "a" are allowed to enter Insert mode this way'
   endif
