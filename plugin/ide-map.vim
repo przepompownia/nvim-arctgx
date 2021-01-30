@@ -1,6 +1,7 @@
 augroup ideMaps
   autocmd!
   autocmd FileType * call s:defineIDEMaps()
+  autocmd User IDEDebuggerMapsNeeded call s:defineDebuggerMaps()
 augroup END
 
 function s:isExcludedFromIDEMapping(filetype)
@@ -40,6 +41,11 @@ function s:defineIDEMaps()
   xmap <buffer> <Leader>irca <Plug>(ide-classobj-a)
   omap <buffer> <Leader>irca <Plug>(ide-classobj-a)
 
+  nmap <buffer> <Leader><F5> <Plug>(ide-debugger-run)
+  nmap <buffer> <Leader><F10> <Plug>(ide-debugger-toggle-breakpoint)
+endfunction
+
+function s:defineDebuggerMaps() abort
   nmap <buffer> <Leader><F5> <Plug>(ide-debugger-run)
   nmap <buffer> <Leader><F6> <Plug>(ide-debugger-close)
   nmap <buffer> <Leader><S-F6> <Plug>(ide-debugger-detach)
