@@ -5,3 +5,12 @@ let g:db_ui_table_helpers = {
       \     'Show create table': 'SHOW CREATE TABLE {optional_schema}{table}'
       \ }
       \ }
+
+augroup DBUISettings
+  autocmd!
+
+  autocmd FileType dbui let b:ideTabName = 'DBUI[d]'
+  " fix for non-dbui sql buffers
+  autocmd FileType sql let b:ideTabName = 'DBUI[q]'
+  autocmd FileType dbout let b:ideTabName = 'DBUI[o]'
+augroup end
