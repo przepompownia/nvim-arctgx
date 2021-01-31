@@ -52,9 +52,15 @@ endfunction
 function! arctgx#ide#displayFileNameInTab(tabNumber) abort
   let l:buflist = tabpagebuflist(a:tabNumber)
   let l:winnr = tabpagewinnr(a:tabNumber)
-  let l:output = expand('#'.l:buflist[l:winnr - 1].':p:t:r')
+  let l:bufnr = l:buflist[l:winnr - 1]
 
-  return l:output !=# '' ? arctgx#string#shorten(l:output, 8) : '[No Name]'
+  return getbufvar(l:bufnr, 'ideTabName', arctgx#ide#createDefaultTabname(l:bufnr))
+endfunction
+
+function arctgx#ide#createDefaultTabname(bufnr) abort
+  let l:bufname = expand('#'. a:bufnr .':p:t:r')
+
+  return l:bufname !=# '' ? arctgx#string#shorten(l:bufname, 8) : '[No Name]'
 endfunction
 
 function! arctgx#ide#recognizeGitHeadsInTab() abort
