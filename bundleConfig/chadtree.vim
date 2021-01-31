@@ -6,3 +6,9 @@ let g:chadtree_settings = {
       \ 'theme.icon_glyph_set': 'ascii',
       \ 'keymap.secondary': ['<right>', '<left>', '<2-leftmouse>'],
       \ }
+
+augroup CHADSettings
+  autocmd!
+
+  autocmd FileType CHADTree let b:ideTabName = 'CHADTree'
+augroup end
