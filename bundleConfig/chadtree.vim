@@ -1,4 +1,4 @@
-command! -nargs=* -complete=file CH execute 'CHADopen ' . expand(<q-args>)
+command! -nargs=* -complete=file CH execute 'CHADopen ' . fnameescape(expand(<q-args>))
 
 nnoremap <Plug>(ide-tree-focus-current-file) <Cmd>execute 'CHADopen ' . fnameescape(bufname())<CR>
 
