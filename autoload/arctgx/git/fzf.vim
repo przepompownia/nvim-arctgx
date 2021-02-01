@@ -49,3 +49,24 @@ function! arctgx#git#fzf#diff(CmdSerializer, dir, fullscreen, ...) abort
 
   call fzf#run(fzf#wrap(l:fzfHistoryKey, l:fzfOptions, a:fullscreen))
 endfunction
+
+function s:runActionOnBranch(branches) abort
+  call system('git switch ' . shellescape(a:branches))
+  doautocmd <nomodeline> User ChangeIdeStatus
+endfunction
+
+function! arctgx#git#fzf#branch(dir, fullscreen, ...) abort
+  let l:initialCmdString = 'git for-each-ref --format="%(refname:strip=3)"  --sort="refname:strip=3" "refs/remotes/*/*" "refs/remotes/*/*/**" | uniq -u'
+  let l:fzfHistoryKey = 'gfbranches'
+  let l:fzfOptions = {
+        \ 'source': l:initialCmdString,
+        \ 'sink': function('s:runActionOnBranch'),
+        \ 'dir': a:dir,
+        \ 'options': [
+          \ '--multi',
+          \ '--prompt', 'Branch > ',
+          \ ]
+        \ }
+
+  call fzf#run(fzf#wrap(l:fzfHistoryKey, l:fzfOptions, a:fullscreen))
+endfunction
