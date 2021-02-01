@@ -50,19 +50,43 @@ function! arctgx#git#fzf#diff(CmdSerializer, dir, fullscreen, ...) abort
   call fzf#run(fzf#wrap(l:fzfHistoryKey, l:fzfOptions, a:fullscreen))
 endfunction
 
-function! s:runActionOnBranch(branches) abort
-  call system('git switch ' . shellescape(a:branches))
+function! s:runActionOnBranch(line) abort
+  let l:parts = split(a:line, ';')
+  if empty(l:parts[0])
+    return
+  endif
+
+  let l:branch = l:parts[0]
+  call system('git switch ' . shellescape(l:branch))
   doautocmd <nomodeline> User ChangeIdeStatus
 endfunction
 
-function! arctgx#git#fzf#branch(dir, fullscreen, ...) abort
+function! s:renderSingleLine(line) abort
+  let l:parts = split(a:line, ';')
+  if empty(l:parts[0])
+    return
+  endif
+
+  return printf('%s;%s', l:parts[0], join(l:parts[1:], ' '))
+endfunction
+
+function! s:prepareBranchList() abort
   let l:initialCmdString = s:binDir . '/git-list-branches'
+
+  let l:rawOutput = systemlist(l:initialCmdString)
+
+  return map(l:rawOutput, {_, line -> s:renderSingleLine(line)})
+endfunction
+
+function! arctgx#git#fzf#branch(dir, fullscreen, ...) abort
   let l:fzfHistoryKey = 'gfbranches'
   let l:fzfOptions = {
-        \ 'source': l:initialCmdString,
+        \ 'source': s:prepareBranchList(),
         \ 'sink': function('s:runActionOnBranch'),
         \ 'dir': a:dir,
         \ 'options': [
+          \ '--delimiter=;',
+          \ '--nth=1',
           \ '--multi',
           \ '--prompt', 'Branch > ',
           \ ]

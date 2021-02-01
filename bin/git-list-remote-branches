@@ -1,3 +1,9 @@
 #!/usr/bin/env bash
 
-git for-each-ref --format="%(refname:strip=3)"  --sort="refname:strip=3" "refs/remotes/*/*" "refs/remotes/*/*/**" | uniq --unique
+format="${1:-%(refname:strip=3)}"
+
+git for-each-ref \
+    --format="$format" \
+    --sort="committerdate:relative" \
+    "refs/remotes/*/*" \
+    "refs/remotes/*/*/**"
