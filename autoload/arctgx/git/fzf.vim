@@ -56,7 +56,7 @@ function! s:runActionOnBranch(branches) abort
 endfunction
 
 function! arctgx#git#fzf#branch(dir, fullscreen, ...) abort
-  let l:initialCmdString = 'git for-each-ref --format="%(refname:strip=3)"  --sort="refname:strip=3" "refs/remotes/*/*" "refs/remotes/*/*/**" | uniq -u'
+  let l:initialCmdString = s:binDir . '/git-list-branches'
   let l:fzfHistoryKey = 'gfbranches'
   let l:fzfOptions = {
         \ 'source': l:initialCmdString,

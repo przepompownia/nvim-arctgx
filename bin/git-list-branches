@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+currentDir="$(realpath "$(dirname "${BASH_SOURCE[0]}")")"
+
+{ "${currentDir}/git-list-local-branches"; "${currentDir}/git-list-remote-branches"; }

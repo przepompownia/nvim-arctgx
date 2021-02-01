@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+git for-each-ref --format="%(refname:strip=2)" "refs/tags/*" "refs/tags/*/**" "refs/heads/*" "refs/heads/*/**" "refs/remotes/*" "refs/remotes/*/**"
