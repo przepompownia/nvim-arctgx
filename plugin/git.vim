@@ -9,3 +9,5 @@ command! -bang -nargs=* GFBranch call arctgx#git#fzf#branch(
       \ arctgx#git#gitGetWorkspaceRoot(expand('%:p:h')),
       \ <bang>0,
       \ )
+
+nmap <Plug>(ide-git-show-branches) :<C-U>GFBranch!<CR>

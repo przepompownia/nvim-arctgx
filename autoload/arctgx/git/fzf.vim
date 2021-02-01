@@ -50,7 +50,7 @@ function! arctgx#git#fzf#diff(CmdSerializer, dir, fullscreen, ...) abort
   call fzf#run(fzf#wrap(l:fzfHistoryKey, l:fzfOptions, a:fullscreen))
 endfunction
 
-function s:runActionOnBranch(branches) abort
+function! s:runActionOnBranch(branches) abort
   call system('git switch ' . shellescape(a:branches))
   doautocmd <nomodeline> User ChangeIdeStatus
 endfunction
