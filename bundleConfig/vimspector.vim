@@ -3,7 +3,7 @@ nmap <Plug>(ide-debugger-close) <Plug>VimspectorStop
  " <Plug>VimspectorRestart
  " <Plug>VimspectorPause
 nmap <Plug>(ide-debugger-toggle-breakpoint) <Plug>VimspectorToggleBreakpoint
- " <Plug>VimspectorToggleConditionalBreakpoint
+nmap <Plug>(ide-debugger-toggle-breakpoint-conditional) <Plug>VimspectorToggleConditionalBreakpoint
  " <Plug>VimspectorAddFunctionBreakpoint
 nmap <Plug>(ide-debugger-step-over) :<C-U>call vimspector#StepOver()<CR>
 nmap <Plug>(ide-debugger-step-into) <Plug>VimspectorStepInto

@@ -43,6 +43,7 @@ function s:defineIDEMaps()
 
   nmap <buffer> <Leader><F5> <Plug>(ide-debugger-run)
   nmap <buffer> <Leader><F10> <Plug>(ide-debugger-toggle-breakpoint)
+  nmap <buffer> <Leader><S-F10> <Plug>(ide-debugger-toggle-breakpoint-conditional)
 endfunction
 
 function s:defineDebuggerMaps() abort
@@ -54,6 +55,7 @@ function s:defineDebuggerMaps() abort
   nmap <buffer> <Leader><F8> <Plug>(ide-debugger-step-over)
   nmap <buffer> <Leader><F9> <Plug>(ide-debugger-run-to-cursor)
   nmap <buffer> <Leader><F10> <Plug>(ide-debugger-toggle-breakpoint)
+  nmap <buffer> <Leader><S-F10> <Plug>(ide-debugger-toggle-breakpoint-conditional)
   nmap <buffer> <Leader><F11> <Plug>(ide-debugger-get-context)
   nmap <buffer> <Leader><F12> <Plug>(ide-debugger-eval-under-cursor)
   nmap <buffer> <Leader><Leader>e <Plug>(ide-debugger-eval-visual)
