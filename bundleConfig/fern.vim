@@ -17,6 +17,8 @@ function! s:defineMappings() abort
   nmap <buffer> s <Plug>(fern-action-open:split)
   nmap <buffer> v <Plug>(fern-action-open:vsplit)
   nmap <buffer> r <Plug>(fern-action-reload)
+  nmap <buffer> <Right> <Plug>(fern-action-expand)
+  nmap <buffer> <Left> <Plug>(fern-action-collapse)
   nmap <buffer> <nowait> d <Plug>(fern-action-hidden:toggle)
   nmap <buffer> <nowait> < <Plug>(fern-action-leave)
   nmap <buffer> <nowait> > <Plug>(fern-action-enter)
@@ -29,11 +31,11 @@ augroup FernSettings
         \ let b:ideTabName = 'Fern'
 augroup END
 
-let g:fern#mark_symbol                       = '●'
-let g:fern#renderer#default#collapsed_symbol = '▷ '
+let g:fern#mark_symbol                       = '⬦'
+let g:fern#renderer#default#collapsed_symbol = '▶ '
 let g:fern#renderer#default#expanded_symbol  = '▼ '
 let g:fern#renderer#default#leading          = ' '
-let g:fern#renderer#default#leaf_symbol      = ' '
+let g:fern#renderer#default#leaf_symbol      = '● '
 let g:fern#renderer#default#root_symbol      = '~ '
 
 nnoremap <Plug>(ide-tree-focus-current-file) :Fern %:p:h -width=40 -drawer -reveal=%<CR>
