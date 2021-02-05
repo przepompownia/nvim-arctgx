@@ -11,7 +11,7 @@ function! arctgx#ide#getCurrentGitHead() abort
     return ''
   endif
 
-  return printf('%s', arctgx#string#shorten(l:head, 11))
+  return printf('%s', arctgx#string#shorten(pathshorten(l:head), 11))
 endfunction
 
 function! s:setIdeCurrentGitHead(bufnr, value) abort
