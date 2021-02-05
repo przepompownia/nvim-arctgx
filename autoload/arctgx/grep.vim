@@ -35,7 +35,7 @@ function! arctgx#grep#grepOperator(type) abort
         \ arctgx#operator#getText(a:type),
         \ v:true,
         \ v:false,
-        \ 0
+        \ 1
         \ )
 endfunction
 
@@ -46,7 +46,7 @@ function! arctgx#grep#gitGrepOperator(type) abort
         \ arctgx#operator#getText(a:type),
         \ v:true,
         \ v:false,
-        \ 0
+        \ 1
         \ )
 endfunction
 
