@@ -14,3 +14,7 @@ function! arctgx#string#shorten(name, margin) abort
         \ strcharpart(a:name, strchars(a:name) - a:margin, a:margin)
         \ )
 endfunction
+
+function! arctgx#string#tail(text, length) abort
+  return strcharpart(a:text, strwidth(a:text) - a:length)
+endfunction
