@@ -3,6 +3,7 @@
   "coc.preferences.extensionUpdateCheck": "daily",
   "npm.binPath": "yarn",
   "signature.hideOnTextChange": true,
+  "diagnostic.enableMessage": "jump",
   "diagnostic.enableSign": true,
   "diagnostic.displayByAle": false,
   "diagnostic.messageTarget": "float",
