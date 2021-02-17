@@ -86,6 +86,7 @@ function s:defineIDEMaps()
   nmap <Plug>(ide-git-hunk-next) <Plug>(coc-git-nextchunk)
   nmap <Plug>(ide-git-hunk-previous-conflict) <Plug>(coc-git-prevconflict)
   nmap <Plug>(ide-git-hunk-next-conflict) <Plug>(coc-git-nextconflict)
+  nmap <Plug>(ide-diagnostic-info) <Plug>(coc-diagnostic-info)
   inoremap <expr> <Plug>(ide-trigger-completion) coc#refresh()
   if has('nvim')
     nmap <Plug>(ide-git-hunk-stage) <Cmd>CocCommand git.chunkStage<CR>
