@@ -1,6 +1,6 @@
 function! arctgx#grep#getRipGrepCmd(query, useFixedStrings, ignoreCase) abort
   return printf(
-        \ 'rg --column --line-number --column --no-heading --color=always --smart-case %s %s -- %s',
+        \ 'rg --column --line-number --column --no-heading --color=never --smart-case %s %s -- %s',
         \ s:useFixedStringsDefaultString(a:useFixedStrings),
         \ s:ignoreCaseDefaultString(a:ignoreCase),
         \ a:query
