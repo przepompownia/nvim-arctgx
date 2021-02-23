@@ -18,7 +18,7 @@ endfunction
 
 function! arctgx#grep#getGitGrepCmd(query, useFixedStrings, ignoreCase) abort
   return printf(
-        \ 'git -C "%s" grep --line-number --column %s %s -- %s || true',
+        \ 'git -C "%s" grep --color=never --line-number --column %s %s -- %s || true',
         \ arctgx#git#gitGetWorkspaceRoot(expand('%:p:h')),
         \ s:ignoreCaseDefaultString(a:ignoreCase),
         \ s:useFixedStringsDefaultString(a:useFixedStrings),
