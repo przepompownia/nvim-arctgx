@@ -9,6 +9,8 @@ nmap <Plug>(ide-debugger-step-over) :<C-U>call vimspector#StepOver()<CR>
 nmap <Plug>(ide-debugger-step-into) <Plug>VimspectorStepInto
 nmap <Plug>(ide-debugger-step-out) <Plug>VimspectorStepOut
 nmap <Plug>(ide-debugger-run-to-cursor) <Plug>VimspectorRunToCursor
+nmap <Plug>(ide-debugger-eval-popup) <Plug>VimspectorBalloonEval
+xmap <Plug>(ide-debugger-eval-popup) <Plug>VimspectorBalloonEval
 
 let g:vimspector_sign_priority = {
       \    'vimspectorBP':         999,

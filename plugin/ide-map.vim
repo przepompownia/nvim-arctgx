@@ -60,6 +60,8 @@ function s:defineDebuggerMaps() abort
   nmap <buffer> <Leader><F11> <Plug>(ide-debugger-get-context)
   nmap <buffer> <Leader><F12> <Plug>(ide-debugger-eval-under-cursor)
   nmap <buffer> <Leader><Leader>e <Plug>(ide-debugger-eval-visual)
+  nmap <buffer> <Leader><Leader>p <Plug>(ide-debugger-eval-popup)
+  xmap <buffer> <Leader><Leader>p <Plug>(ide-debugger-eval-popup)
 endfunction
 
 nmap <Leader>hs <Plug>(ide-git-hunk-stage)
