@@ -16,7 +16,7 @@ snippet pub2 "Public function" b
 `!p
 if isAppendingPHPDocblockEnabled():
 	snip.rv = wrapByDocblock(getDocblockParamEntry(t[2]))
-`public function ${1:name}(${2:$param}`!p
+`public function ${1:name}(${2}`!p
 snip.rv = getEndOfPSR2MultilineArgsList(t[2])
 `
 	${VISUAL}${5:;}
@@ -43,7 +43,7 @@ $0
 endsnippet
 
 snippet pub "Public function" b
-public function ${1:name}(${2:$param})
+public function ${1:name}(${2})
 {
 	${VISUAL}${5:;}
 }
@@ -51,7 +51,7 @@ $0
 endsnippet
 
 snippet pro "Protected function" b
-protected function ${1:name}(${2:$param})
+protected function ${1:name}(${2})
 {
 	${VISUAL}${5:;}
 }
@@ -59,7 +59,7 @@ $0
 endsnippet
 
 snippet pri "Private function" b
-private function ${1:name}(${2:$param})
+private function ${1:name}(${2})
 {
 	${VISUAL}${5:;}
 }
@@ -67,7 +67,7 @@ $0
 endsnippet
 
 snippet pubs "Public static function" b
-public static function ${1:name}(${2:$param})
+public static function ${1:name}(${2})
 {
 	${VISUAL}${5:;}
 }
@@ -75,7 +75,7 @@ $0
 endsnippet
 
 snippet pros "Protected static function" b
-protected static function ${1:name}(${2:$param})
+protected static function ${1:name}(${2})
 {
 	${VISUAL}${5:;}
 }
@@ -83,7 +83,7 @@ $0
 endsnippet
 
 snippet pris "Private static function" b
-private static function ${1:name}(${2:$param})
+private static function ${1:name}(${2})
 {
 	${VISUAL}${5:;}
 }
