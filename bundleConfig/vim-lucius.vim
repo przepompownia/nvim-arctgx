@@ -5,10 +5,11 @@ function! s:loadLuciusColorscheme() abort
 
   let g:lucius_contrast		= 'high'
   let g:lucius_contrast_bg	= 'high'
+
   colorscheme lucius
 endfunction
 
 augroup LuciusColorschemeLoading
   autocmd!
-  autocmd VimEnter * call timer_start(100, {-> s:loadLuciusColorscheme()})
+  autocmd OptionSet background ++nested call s:loadLuciusColorscheme()
 augroup end
