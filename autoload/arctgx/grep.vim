@@ -1,28 +1,30 @@
-function! arctgx#grep#getRipGrepCmd(query, useFixedStrings, ignoreCase) abort
+function! arctgx#grep#getRipGrepCmd(root, query, useFixedStrings, ignoreCase) abort
   return printf(
-        \ 'rg --column --line-number --column --no-heading --color=never --smart-case %s %s -- %s',
+        \ 'rg --column --line-number --column --no-heading --color=never --smart-case %s %s -- %s %s',
         \ s:useFixedStringsDefaultString(a:useFixedStrings),
         \ s:ignoreCaseDefaultString(a:ignoreCase),
-        \ a:query
+        \ a:query,
+        \ a:root,
         \ )
 endfunction
 
-function! arctgx#grep#getGnuGrepCmd(query, useFixedStrings, ignoreCase) abort
+function! arctgx#grep#getGnuGrepCmd(root, query, useFixedStrings, ignoreCase) abort
   return printf(
-        \ 'grep --with-filename --extended-regexp --no-messages --color=never --binary-files=without-match --exclude-dir=.svn --exclude=tags --exclude=taglist.vim --exclude-dir=.git --line-number --recursive %s %s -- %s',
+        \ 'grep --with-filename --extended-regexp --no-messages --color=never --binary-files=without-match --exclude-dir=.svn --exclude=tags --exclude=taglist.vim --exclude-dir=.git --line-number --recursive %s %s -- %s %s',
         \ s:ignoreCaseDefaultString(a:ignoreCase),
         \ s:useFixedStringsDefaultString(a:useFixedStrings),
-        \ a:query
+        \ a:query,
+        \ a:root,
         \ )
 endfunction
 
-function! arctgx#grep#getGitGrepCmd(query, useFixedStrings, ignoreCase) abort
+function! arctgx#grep#getGitGrepCmd(root, query, useFixedStrings, ignoreCase) abort
   return printf(
         \ 'git -C "%s" grep --color=never --line-number --column %s %s -- %s || true',
-        \ arctgx#git#gitGetWorkspaceRoot(expand('%:p:h')),
+        \ a:root,
         \ s:ignoreCaseDefaultString(a:ignoreCase),
         \ s:useFixedStringsDefaultString(a:useFixedStrings),
-        \ a:query
+        \ a:query,
         \ )
 endfunction
 
@@ -151,7 +153,8 @@ function! s:goToLine(line) abort
 endfunction
 
 function! arctgx#grep#grep(Cmd, root, query, useFixedStrings, ignoreCase, fullscreen) abort
-  let l:command = a:Cmd(shellescape(a:query), a:useFixedStrings, a:ignoreCase)
+  let l:queryRoot = fnamemodify(a:root, ':p:.')
+  let l:command = a:Cmd(l:queryRoot, shellescape(a:query), a:useFixedStrings, a:ignoreCase)
   let l:cmdShortName = split(l:command, '\s')[0]
   call fzf#vim#grep(l:command, 1, fzf#vim#with_preview({
         \ 'dir': a:root,
@@ -161,10 +164,10 @@ function! arctgx#grep#grep(Cmd, root, query, useFixedStrings, ignoreCase, fullsc
         \ '--multi',
         \ '--query', a:query,
         \ '--prompt', s:prompt(l:cmdShortName, a:useFixedStrings),
-        \ '--bind', 'change:reload:' . a:Cmd('{q}', a:useFixedStrings, a:ignoreCase),
-        \ '--bind', 'alt-f:reload:' . a:Cmd('{q}', v:true, a:ignoreCase),
+        \ '--bind', 'change:reload:' . a:Cmd(l:queryRoot, '{q}', a:useFixedStrings, a:ignoreCase),
+        \ '--bind', 'alt-f:reload:' . a:Cmd(l:queryRoot, '{q}', v:true, a:ignoreCase),
         \ '--bind', 'alt-f:+change-prompt:' . s:prompt(l:cmdShortName, v:true),
-        \ '--bind', 'alt-r:reload:' . a:Cmd('{q}', v:false, a:ignoreCase),
+        \ '--bind', 'alt-r:reload:' . a:Cmd(l:queryRoot, '{q}', v:false, a:ignoreCase),
         \ '--bind', 'alt-r:+change-prompt:' . s:prompt(l:cmdShortName, v:false),
         \ ]
         \ }), a:fullscreen)
