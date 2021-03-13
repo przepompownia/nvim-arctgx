@@ -2,7 +2,7 @@ function! s:defineMappings() abort
   nmap <buffer><expr>
         \ <Plug>(fern-my-open-expand-collapse)
         \ fern#smart#leaf(
-        \   "\<Plug>(fern-action-open:select)",
+        \   "\<Plug>(fern-action-arctgx:tabdrop)",
         \   "\<Plug>(fern-action-expand)",
         \   "\<Plug>(fern-action-collapse)",
         \ )
@@ -24,6 +24,7 @@ function! s:defineMappings() abort
   nmap <buffer> <nowait> > <Plug>(fern-action-enter)
   nmap <buffer> <nowait> q :q<CR>
 endfunction
+call add(g:fern#mapping#mappings, 'arctgx')
 
 augroup FernSettings
   autocmd!
