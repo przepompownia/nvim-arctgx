@@ -23,6 +23,7 @@ function! s:defineMappings() abort
   nmap <buffer> <nowait> < <Plug>(fern-action-leave)
   nmap <buffer> <nowait> > <Plug>(fern-action-enter)
   nmap <buffer> <nowait> q :q<CR>
+  nmap <buffer> <nowait> <Leader>r <Plug>(fern-action-arctgx:git-top-reveal)
 endfunction
 call add(g:fern#mapping#mappings, 'arctgx')
 
@@ -44,10 +45,10 @@ nnoremap <Plug>(ide-tree-focus-current-file) :<C-u>call FernRevealInGitToplevelI
 
 function! FernOpen(file, root, reveal, drawer) abort
   execute printf(
-        \ 'Fern -width=40 %s%s%s',
+        \ 'Fern %s%s%s',
         \ fnameescape(a:root),
         \ a:reveal ? ' -reveal=' . fnameescape(a:file) : '',
-        \ a:drawer ? ' -drawer' : '',
+        \ a:drawer ? ' -drawer -width=40' : '',
         \ )
 endfunction
 
