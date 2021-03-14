@@ -1,4 +1,13 @@
 function! arctgx#git#getWorkspaceRoot(startDirectory) abort
+  try
+    return arctgx#git#getToplevelDirectory(a:startDirectory)
+  catch /^Git toplevel not found for .*/
+    echomsg printf('%s Using current working dir.', v:exception)
+    return getcwd()
+  endtry
+endfunction
+
+function! arctgx#git#getToplevelDirectory(startDirectory) abort
   if !isdirectory(a:startDirectory)
     throw 'arctgx#git#getWorkspaceRoot: invalid directory'
   endif
@@ -6,8 +15,7 @@ function! arctgx#git#getWorkspaceRoot(startDirectory) abort
   let l:gitTopCmd = printf('git -C "%s" rev-parse --show-toplevel 2>/dev/null', a:startDirectory)
   let l:gitTopCmdResult = systemlist(l:gitTopCmd)
   if empty(l:gitTopCmdResult)
-    echomsg printf('Git work tree root not found for %s. Searching within CWD.', a:startDirectory)
-    return getcwd()
+    throw printf('Git toplevel not found for %s.', a:startDirectory)
   endif
 
   return l:gitTopCmdResult[0]
