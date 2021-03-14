@@ -20,8 +20,7 @@ endfunction
 
 function! arctgx#grep#getGitGrepCmd(root, query, useFixedStrings, ignoreCase) abort
   return printf(
-        \ 'git -C "%s" grep --color=never --line-number --column %s %s -- %s || true',
-        \ a:root,
+        \ 'git grep --color=never --line-number --column %s %s -- %s || true',
         \ s:ignoreCaseDefaultString(a:ignoreCase),
         \ s:useFixedStringsDefaultString(a:useFixedStrings),
         \ a:query,
