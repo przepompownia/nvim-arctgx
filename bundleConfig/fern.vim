@@ -40,4 +40,25 @@ let g:fern#renderer#default#leading          = ' '
 let g:fern#renderer#default#leaf_symbol      = '● '
 let g:fern#renderer#default#root_symbol      = '~ '
 
-nnoremap <Plug>(ide-tree-focus-current-file) :Fern %:p:h -width=40 -drawer -reveal=%<CR>
+nnoremap <Plug>(ide-tree-focus-current-file) :<C-u>call FernRevealInGitToplevelIfPossible()<CR>
+
+function! FernOpen(file, root, reveal, drawer) abort
+  execute printf(
+        \ 'Fern -width=40 %s%s%s',
+        \ fnameescape(a:root),
+        \ a:reveal ? ' -reveal=' . fnameescape(a:file) : '',
+        \ a:drawer ? ' -drawer' : '',
+        \ )
+endfunction
+
+function! FernRevealInGitToplevelIfPossible() abort
+  let l:startDirectory = arctgx#base#getBufferDirectory()
+
+  try
+    let l:toplevelDirectory = arctgx#git#getToplevelDirectory(l:startDirectory)
+  catch /^Git toplevel not found for .*/
+    let l:toplevelDirectory = expand('%:p:h')
+  endtry
+
+  call FernOpen(expand('%:p'), l:toplevelDirectory, v:true, v:true)
+endfunction
