@@ -15,7 +15,7 @@ endif
 
 command! -bang -nargs=* GGrep call arctgx#grep#grep(
       \ function('arctgx#grep#getGitGrepCmd'),
-      \ arctgx#git#getWorkspaceRoot(empty(&buftype) ? expand('%:p:h') : getcwd()),
+      \ arctgx#git#getWorkspaceRoot(arctgx#base#getBufferDirectory()),
       \ <q-args>,
       \ v:false,
       \ v:false,

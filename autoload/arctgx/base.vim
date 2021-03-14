@@ -6,3 +6,7 @@ function arctgx#base#sourceFile(path)
 
   execute 'source ' . a:path
 endfunction
+
+function arctgx#base#getBufferDirectory()
+  return empty(&buftype) ? expand('%:p:h') : getcwd()
+endfunction
