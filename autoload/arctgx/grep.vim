@@ -44,7 +44,7 @@ endfunction
 function! arctgx#grep#gitGrepOperator(type) abort
   call arctgx#grep#grep(
         \ function('arctgx#grep#getGitGrepCmd'),
-        \ arctgx#git#gitGetWorkspaceRoot(expand('%:p:h')),
+        \ arctgx#git#getWorkspaceRoot(expand('%:p:h')),
         \ arctgx#operator#getText(a:type),
         \ v:true,
         \ v:false,
