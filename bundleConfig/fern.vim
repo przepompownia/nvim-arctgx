@@ -24,6 +24,7 @@ function! s:defineMappings() abort
   nmap <buffer> <nowait> > <Plug>(fern-action-enter)
   nmap <buffer> <nowait> q :q<CR>
   nmap <buffer> <nowait> <Leader>r <Plug>(fern-action-arctgx:git-top-reveal)
+  nmap <buffer> <A-Up> <Plug>(fern-action-focus:parent)
 endfunction
 call add(g:fern#mapping#mappings, 'arctgx')
 
