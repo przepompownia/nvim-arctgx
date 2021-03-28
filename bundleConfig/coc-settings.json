@@ -147,7 +147,7 @@
     "phpstan": {
       "command": "phpstan",
       "debounce": 100,
-      "rootPatterns": [ "composer.json", "composer.lock", "vendor", ".git" ],
+      "rootPatterns": [ "phpstan.neon", "composer.json", "composer.lock", "vendor", ".git" ],
       "args": [ "analyze", "--level", "max", "--error-format", "raw", "--no-progress", "%file" ],
       "offsetLine": 0,
       "offsetColumn": 0,
