@@ -13,5 +13,6 @@ augroup DBUISettings
   autocmd FileType dbui let b:ideTabName = 'DBUI[d]'
   " fix for non-dbui sql buffers
   autocmd FileType sql let b:ideTabName = 'DBUI[q]'
+  autocmd FileType mysql let b:ideTabName = 'DBUI[q]'
   autocmd FileType dbout let b:ideTabName = 'DBUI[o]'
 augroup end
