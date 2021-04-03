@@ -5,6 +5,7 @@ let g:db_ui_table_helpers = {
       \     'Show create table': 'SHOW CREATE TABLE {optional_schema}{table}'
       \ }
       \ }
+let g:db_ui_force_echo_notifications = 1
 
 augroup DBUISettings
   autocmd!
