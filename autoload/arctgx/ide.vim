@@ -91,8 +91,12 @@ function! arctgx#ide#recognizeGitHead(bufnr) abort
         \ l:params,
         \ function('s:handleGitHeadOutput'),
         \ function('s:handleSymbolicRefExitCode'),
-        \ v:null,
+        \ function('s:errorHandler'),
         \ )
+endfunction
+
+function! s:errorHandler(params, jobId, output, ...) abort
+  return v:null
 endfunction
 
 function! s:handleGitHeadOutput(params, jobId, stdOut, ...) abort
@@ -117,7 +121,7 @@ function! s:handleSymbolicRefExitCode(params, jobId, exitCode, ...) abort
         \ a:params,
         \ function('s:handleGitHeadOutput'),
         \ function('s:handleShowRefExitCode'),
-        \ v:null,
+        \ function('s:errorHandler'),
         \ )
 endfunction
 
