@@ -12,19 +12,19 @@ function! s:echoMessage(message, level) abort
   echomsg a:message
 endfunction
 
-function! s:outputHandler(level, params, jobId, stdOut, ...) abort
-  call s:displayOutput(a:stdOut, a:level)
+function! s:outputHandler(level, params, jobId, output, ...) abort
+  call s:displayOutput(a:output, a:level)
 endfunction
 
-function! s:displayOutput(stdOut, level) abort
-  if type(a:stdOut) is v:t_string
-    call s:echoMessage(a:stdOut, a:level)
+function! s:displayOutput(output, level) abort
+  if type(a:output) is v:t_string
+    call s:echoMessage(a:output, a:level)
 
     return
   endif
 
-  if type(a:stdOut) is v:t_list
-    for l:message in a:stdOut
+  if type(a:output) is v:t_list
+    for l:message in a:output
       call s:echoMessage(l:message, a:level)
     endfor
   endif

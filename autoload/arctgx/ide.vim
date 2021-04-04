@@ -74,6 +74,10 @@ endfunction
 
 " vint: next-line -ProhibitUnusedVariable
 function! arctgx#ide#recognizeGitHead(bufnr) abort
+  if !empty(getbufvar(a:bufnr, '&buftype'))
+    return
+  endif
+
   let l:directory = fnamemodify(bufname(str2nr(a:bufnr)), ':p:h')
   if !isdirectory(l:directory)
     return
@@ -82,7 +86,13 @@ function! arctgx#ide#recognizeGitHead(bufnr) abort
   let l:command = ['git', 'symbolic-ref', '--quiet', '--short', 'HEAD']
   let l:params = {'bufnr': a:bufnr, 'cwd': l:directory}
 
-  call arctgx#job#executeCommand(l:command, l:params, function('s:handleGitHeadOutput'), function('s:handleSymbolicRefExitCode'), v:null)
+  call arctgx#job#executeCommand(
+        \ l:command,
+        \ l:params,
+        \ function('s:handleGitHeadOutput'),
+        \ function('s:handleSymbolicRefExitCode'),
+        \ v:null,
+        \ )
 endfunction
 
 function! s:handleGitHeadOutput(params, jobId, stdOut, ...) abort
@@ -102,7 +112,13 @@ function! s:handleSymbolicRefExitCode(params, jobId, exitCode, ...) abort
 
   let l:command = ['git', 'show-ref', '--hash', '--head', '--abbrev', '^HEAD']
 
-  call arctgx#job#executeCommand(l:command, a:params, function('s:handleGitHeadOutput'), function('s:handleShowRefExitCode'), v:null)
+  call arctgx#job#executeCommand(
+        \ l:command,
+        \ a:params,
+        \ function('s:handleGitHeadOutput'),
+        \ function('s:handleShowRefExitCode'),
+        \ v:null,
+        \ )
 endfunction
 
 function! s:handleShowRefExitCode(params, jobId, data, ...) abort
