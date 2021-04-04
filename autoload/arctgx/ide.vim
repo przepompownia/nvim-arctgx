@@ -58,7 +58,7 @@ function! arctgx#ide#displayFileNameInTab(tabNumber) abort
   return getbufvar(l:bufnr, 'ideTabName', arctgx#ide#createDefaultTabname(l:bufnr))
 endfunction
 
-function arctgx#ide#createDefaultTabname(bufnr) abort
+function! arctgx#ide#createDefaultTabname(bufnr) abort
   let l:bufname = expand('#'. a:bufnr .':p:t:r')
 
   return l:bufname !=# '' ? arctgx#string#shorten(l:bufname, 8) : '[No Name]'
@@ -82,7 +82,7 @@ function! arctgx#ide#recognizeGitHead(bufnr) abort
   let l:command = ['git', 'symbolic-ref', '--quiet', '--short', 'HEAD']
   let l:params = {'bufnr': a:bufnr, 'cwd': l:directory}
 
-  call arctgx#ide#executeCommand(l:command, l:params, 's:handleGitHeadOutput', 's:handleSymbolicRefExitCode')
+  call arctgx#ide#executeCommand(l:command, l:params, 's:handleGitHeadOutput', 's:handleSymbolicRefExitCode', 's:errorHandler')
 endfunction
 
 function! s:handleGitHeadOutput(params, jobId, stdOut, ...) abort
@@ -102,7 +102,17 @@ function! s:handleSymbolicRefExitCode(params, jobId, exitCode, ...) abort
 
   let l:command = ['git', 'show-ref', '--hash', '--head', '--abbrev', '^HEAD']
 
-  call arctgx#ide#executeCommand(l:command, a:params, 's:handleGitHeadOutput', 's:handleShowRefExitCode')
+  call arctgx#ide#executeCommand(l:command, a:params, 's:handleGitHeadOutput', 's:handleShowRefExitCode', 's:errorHandler')
+endfunction
+
+function! s:errorHandler(params, jobId, message, ...) abort
+  let l:stderr = join(a:message, "\n")
+
+  if (empty(l:stderr))
+    return
+  endif
+
+  echoerr l:stderr
 endfunction
 
 function! s:handleShowRefExitCode(params, jobId, data, ...) abort
@@ -115,11 +125,12 @@ function! s:handleShowRefExitCode(params, jobId, data, ...) abort
   call s:setIdeCurrentGitHead(a:params.bufnr, '')
 endfunction
 
-function! arctgx#ide#executeCommand(command, params, stdoutHandler, exitHandler) abort
+function! arctgx#ide#executeCommand(command, params, stdoutHandler, exitHandler, errorHandler) abort
   let l:nv = has('nvim')
   let l:JobStart = l:nv ? function('jobstart') : function('job_start')
   let l:onStdout = l:nv ? 'on_stdout' : 'out_cb'
   let l:onExit = l:nv ? 'on_exit' : 'exit_cb'
+  let l:onError = l:nv ? 'on_stderr' : 'err_cb'
 
   let l:options = {}
 
@@ -133,6 +144,7 @@ function! arctgx#ide#executeCommand(command, params, stdoutHandler, exitHandler)
 
   let l:options[l:onStdout] = function(a:stdoutHandler, [a:params])
   let l:options[l:onExit] = function(a:exitHandler, [a:params])
+  let l:options[l:onError] = function(a:errorHandler, [a:params])
 
   let l:jobId = l:JobStart(a:command, l:options)
 
