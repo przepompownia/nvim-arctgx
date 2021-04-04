@@ -3,7 +3,7 @@ function! s:echoMessage(message, level) abort
     return
   endif
 
-  if ('error' is a:level)
+  if ('error' is# a:level)
     echoerr a:message
 
     return
@@ -58,4 +58,3 @@ function! arctgx#job#executeCommand(command, params, stdoutHandler, exitHandler,
 
   return l:jobId
 endfunction
-
