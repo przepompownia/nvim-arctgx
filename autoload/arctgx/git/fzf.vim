@@ -105,6 +105,7 @@ function! arctgx#git#fzf#branch(dir, fullscreen, ...) abort
           \ '--nth=1',
           \ '--multi',
           \ '--prompt', 'Branch > ',
+          \ '--tac',
           \ ]
         \ }
 
