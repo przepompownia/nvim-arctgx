@@ -110,7 +110,7 @@ function! s:handleGitHeadOutput(params, jobId, stdOut, ...) abort
 endfunction
 
 function! s:handleSymbolicRefExitCode(params, jobId, exitCode, ...) abort
-  if (0 == a:exitCode || 128 === a:exitCode)
+  if (0 == a:exitCode || 128 == a:exitCode)
     return
   endif
 
