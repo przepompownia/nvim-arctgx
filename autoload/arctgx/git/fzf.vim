@@ -66,7 +66,6 @@ function! s:runActionOnBranch(cwd, line) abort
 
   let l:branch = l:parts[0]
   let l:command = ['git', 'switch', l:branch]
-  echom l:command
 
   call arctgx#job#executeCommand(
         \ l:command,
