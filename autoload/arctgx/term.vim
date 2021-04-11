@@ -27,8 +27,6 @@ function arctgx#term#loadConfiguration(configDir)
 
   if $TERM == 'nvim'
     set guicursor=n-v-c:block-Cursor/lCursor-blinkon0,i-ci:ver25-Cursor/lCursor,r-cr:hor20-Cursor/lCursor
-    " map <F15> <S-F3> " ultisnips dawał błąd w trybie wstawiania na
-    " zmienionym pliku
     map ® <A-.>
     map  <C-/>
   endif
