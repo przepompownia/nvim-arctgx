@@ -51,7 +51,7 @@ function! arctgx#git#fzf#diff(CmdSerializer, dir, fullscreen, ...) abort
 endfunction
 
 function! s:nofifyBranchWasChanged(params, jobId, exitCode, ...) abort
-  if (0 == a:exitCode || 128 == a:exitCode)
+  if (0 != a:exitCode)
     return
   endif
 
