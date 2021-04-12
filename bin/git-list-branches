@@ -11,5 +11,5 @@ format() {
 }
 
 { "${currentDir}/git-list-local-branches" "$(format 2)"; "${currentDir}/git-list-remote-branches" "$(format 3)"; } | \
-    IFS=';' sort --numeric-sort --key=1 --unique | \
+    IFS=';' sort --numeric-sort --key=1 | \
     cut --delimiter=';' --fields=2-
