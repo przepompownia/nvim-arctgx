@@ -86,9 +86,7 @@ function! s:renderSingleLine(line) abort
 endfunction
 
 function! s:prepareBranchList() abort
-  let l:initialCmdString = s:binDir . '/git-list-branches'
-
-  let l:rawOutput = systemlist(l:initialCmdString)
+  let l:rawOutput = arctgx#git#listBranches(v:true)
 
   return map(l:rawOutput, {_, line -> s:renderSingleLine(line)})
 endfunction

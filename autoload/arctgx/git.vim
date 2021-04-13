@@ -1,3 +1,5 @@
+let s:binDir = simplify(expand('<sfile>:p:h') . '/../../bin')
+
 function! arctgx#git#getWorkspaceRoot(startDirectory) abort
   try
     return arctgx#git#getToplevelDirectory(a:startDirectory)
@@ -21,6 +23,15 @@ function! arctgx#git#getToplevelDirectory(startDirectory) abort
   return l:gitTopCmdResult[0]
 endfunction
 
+function! arctgx#git#listBranches(withRelativeDate) abort
+  let l:initialCmdString = s:binDir . '/git-list-branches'
+
+  if a:withRelativeDate isnot v:true
+    let l:initialCmdString .= ' 1'
+  endif
+
+  return systemlist(l:initialCmdString)
+endfunction
 ""
 "
 " commitspecs -- options -- paths
