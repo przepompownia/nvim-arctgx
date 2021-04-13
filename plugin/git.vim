@@ -1,4 +1,4 @@
-command! -bang -nargs=+ GFDiff call arctgx#git#fzf#diff(
+command! -bang -nargs=+ -complete=customlist,s:completeGFDiff GFDiff call arctgx#git#fzf#diff(
       \ function('arctgx#git#fzf#serializeGFDiffCommand'),
       \ arctgx#git#getWorkspaceRoot(expand('%:p:h')),
       \ <bang>0,
@@ -11,3 +11,7 @@ command! -bang -nargs=* GFBranch call arctgx#git#fzf#branch(
       \ )
 
 nmap <Plug>(ide-git-show-branches) :<C-U>GFBranch!<CR>
+
+function! s:completeGFDiff(ArgLead, CmdLine, CursorPos) abort
+  return arctgx#git#listBranches(v:false)
+endfunction
