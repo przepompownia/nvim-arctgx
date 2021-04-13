@@ -13,5 +13,5 @@ command! -bang -nargs=* GFBranch call arctgx#git#fzf#branch(
 nmap <Plug>(ide-git-show-branches) :<C-U>GFBranch!<CR>
 
 function! s:completeGFDiff(ArgLead, CmdLine, CursorPos) abort
-  return arctgx#git#listBranches(v:false)
+  return reverse(arctgx#git#listBranches(v:false))
 endfunction
