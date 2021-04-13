@@ -1,16 +1,23 @@
 #!/usr/bin/env bash
 
 currentDir="$(realpath "$(dirname "${BASH_SOURCE[0]}")")"
+onlyNames="${1:+ }"
 
 format() {
     declare -i strip
+    declare tail
     strip="$1"
+    tail="$2"
 
-    echo "%(committerdate:unix);%(refname:strip=${strip});%09%(committerdate:relative)"
+    printf "%%(committerdate:unix);%%(refname:strip=%s)%s" "${strip}" "${tail}"
     # echo "%(committerdate:unix);%(refname:strip=${strip});%(committerdate:relative);%(authorname);%(authoremail);%(subject)"
 }
 
-{ "${currentDir}/git-list-local-branches" "$(format 2)"; "${currentDir}/git-list-remote-branches" "$(format 3)"; } | \
+{
+    tail="${onlyNames:-;%09%(committerdate:relative)}"
+    "${currentDir}/git-list-local-branches" "$(format 2 "${tail% }")"
+    "${currentDir}/git-list-remote-branches" "$(format 3 "${tail% }")"
+} | \
     sort --field-separator=';' --key=2,2 --unique | \
     sort --field-separator=';' --numeric-sort --key=1 | \
     cut --delimiter=';' --fields=2-
