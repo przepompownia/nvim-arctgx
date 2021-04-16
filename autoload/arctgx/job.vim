@@ -4,7 +4,9 @@ function! s:echoMessage(message, level) abort
   endif
 
   if ('error' is# a:level)
-    echoerr a:message
+    echohl WarningMsg
+    echomsg a:message
+    echohl None
 
     return
   endif
