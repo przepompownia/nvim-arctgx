@@ -2,7 +2,7 @@ function! s:defineMappings() abort
   nmap <buffer><expr>
         \ <Plug>(fern-my-open-expand-collapse)
         \ fern#smart#leaf(
-        \   "\<Plug>(fern-action-arctgx:tabdrop)",
+        \   "\<Plug>(fern-action-arctgx:tabdrop-close)",
         \   "\<Plug>(fern-action-expand)",
         \   "\<Plug>(fern-action-collapse)",
         \ )

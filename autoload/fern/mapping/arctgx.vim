@@ -1,14 +1,23 @@
 function! fern#mapping#arctgx#init(disable_default_mappings) abort
-  nmap <silent><buffer> <Plug>(fern-action-arctgx:tabdrop) :<C-u>call <SID>tabDrop()<CR>
+  nmap <silent><buffer> <Plug>(fern-action-arctgx:tabdrop) :<C-u>call <SID>tabDrop(v:false)<CR>
+  nmap <silent><buffer> <Plug>(fern-action-arctgx:tabdrop-close) :<C-u>call <SID>tabDrop(v:true)<CR>
   nmap <silent><buffer> <Plug>(fern-action-arctgx:git-top) :<C-u>call <SID>gitTop(v:false)<CR>
   nmap <silent><buffer> <Plug>(fern-action-arctgx:git-top-reveal) :<C-u>call <SID>gitTop(v:true)<CR>
 endfunction
 
-function! s:tabDrop() abort
+function! s:tabDrop(closeAfter) abort
   let l:helper = fern#helper#new()
   let l:node = l:helper.sync.get_cursor_node()
 
+  let l:bufnr = bufnr()
+
   execute 'tab drop ' . l:node._path
+
+  if v:true isnot a:closeAfter
+    return
+  endif
+
+  execute l:bufnr . 'bunload'
 endfunction
 
 function! s:gitTop(reveal) abort
