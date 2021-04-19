@@ -6,6 +6,19 @@ function! s:defineMappings() abort
         \   "\<Plug>(fern-action-expand)",
         \   "\<Plug>(fern-action-collapse)",
         \ )
+  nnoremap <Plug>(fern-action-close-drawer) <Cmd>FernDo close -drawer -stay<CR>
+  nmap <buffer> <Plug>(fern-action-open-close)
+        \ <Plug>(fern-action-open)
+        \ <Plug>(fern-action-close-drawer)
+  nmap <buffer> <Plug>(fern-action-split-close)
+        \ <Plug>(fern-action-open:split)
+        \ <Plug>(fern-action-close-drawer)
+  nmap <buffer> <Plug>(fern-action-vsplit-close)
+        \ <Plug>(fern-action-open:vsplit)
+        \ <Plug>(fern-action-close-drawer)
+  nmap <buffer> <Plug>(fern-action-select-close)
+        \ <Plug>(fern-action-open:select)
+        \ <Plug>(fern-action-close-drawer)
   nmap <buffer> <CR> <Plug>(fern-my-open-expand-collapse)
   nmap <buffer> <2-LeftMouse> <Plug>(fern-my-open-expand-collapse)
   nmap <buffer> m <Plug>(fern-action-mark:toggle)j
@@ -14,8 +27,10 @@ function! s:defineMappings() abort
   nmap <buffer> D <Plug>(fern-action-remove)
   nmap <buffer> V <Plug>(fern-action-move)
   nmap <buffer> R <Plug>(fern-action-rename)
-  nmap <buffer> s <Plug>(fern-action-open:split)
-  nmap <buffer> v <Plug>(fern-action-open:vsplit)
+  nmap <buffer> e <Plug>(fern-action-open-close)
+  nmap <buffer> <Leader>e <Plug>(fern-action-select-close)
+  nmap <buffer> s <Plug>(fern-action-split-close)
+  nmap <buffer> v <Plug>(fern-action-vsplit-close)
   nmap <buffer> r <Plug>(fern-action-reload)
   nmap <buffer> <Right> <Plug>(fern-action-expand)
   nmap <buffer> <Left> <Plug>(fern-action-collapse)
