@@ -10,7 +10,7 @@ let g:db_ui_force_echo_notifications = 1
 function s:bufferNameGenerator(opts) abort
   let l:time = strftime('%Y-%m-%d-%T')
 
-  let l:table = has_key(a:opts, 'table') ? '-' . a:opts.table : ''
+  let l:table = has_key(a:opts, 'table') ? ('-' . a:opts.table) : ''
 
   return printf('%s%s.%s', l:time, l:table, a:opts.filetype)
 endfunction
