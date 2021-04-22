@@ -20,9 +20,16 @@ let g:Db_ui_buffer_name_generator = function('s:bufferNameGenerator')
 augroup DBUISettings
   autocmd!
 
-  autocmd FileType dbui let b:ideTabName = 'DBUI[d]'
+  autocmd FileType dbui
+        \ let b:ideTabName = 'DBUI[d]' |
+        \ call s:loadMappings()
   " fix for non-dbui sql buffers
   autocmd FileType sql let b:ideTabName = 'DBUI[q]'
   autocmd FileType mysql let b:ideTabName = 'DBUI[q]'
   autocmd FileType dbout let b:ideTabName = 'DBUI[o]'
 augroup end
+
+function! s:loadMappings() abort
+  nmap <buffer> <Left> <Plug>(DBUI_GotoParentNode)<CR>
+  nmap <buffer> <Right> <Plug>(DBUI_GotoChildNode)
+endfunction
