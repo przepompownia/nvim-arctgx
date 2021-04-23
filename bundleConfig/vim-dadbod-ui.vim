@@ -25,7 +25,10 @@ augroup DBUISettings
         \ call s:loadMappings()
   " fix for non-dbui sql buffers
   autocmd FileType dbui,dbout,sql nmap <Leader>n <Plug>(dbui-new-query)
-  autocmd FileType sql let b:ideTabName = 'DBUI[q]'
+  autocmd FileType sql |
+        \ if exists('b:dbui_db_key_name') |
+        \ let b:ideTabName = 'DBUI[q]' |
+        \ endif
   autocmd FileType mysql let b:ideTabName = 'DBUI[q]'
   autocmd FileType dbout let b:ideTabName = 'DBUI[o]'
 augroup end
