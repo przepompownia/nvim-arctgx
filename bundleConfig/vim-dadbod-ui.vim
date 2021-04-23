@@ -7,7 +7,7 @@ let g:db_ui_table_helpers = {
       \ }
 let g:db_ui_force_echo_notifications = 1
 
-function s:bufferNameGenerator(opts) abort
+function! s:bufferNameGenerator(opts) abort
   let l:time = strftime('%Y-%m-%d-%T')
 
   let l:table = has_key(a:opts, 'table') ? ('-' . a:opts.table) : ''
@@ -41,6 +41,8 @@ endfunction
 nmap <Plug>(dbui-new-query) <Cmd>call <SID>openNewQuery()<CR>
 function! s:openNewQuery() abort
   DBUI
-  execute "/New query"
+  execute '/New query'
   exe "normal \<Plug>(DBUI_SelectLine)"
 endfunction
+
+nmap <Plug>(ide-db-ui-toggle) <Cmd>DBUIToggle<CR>

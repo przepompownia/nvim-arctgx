@@ -83,6 +83,7 @@ nmap <F4> <Plug>(ide-browse-history)
 imap <F4> <C-o><F4>
 nmap <S-F4> <Plug>(ide-git-show-branches)
 imap <S-F4> <C-o><S-F4>
+nmap <F5> <Plug>(ide-db-ui-toggle)
 nmap <Leader>ibf <Plug>(ide-browse-files)
 nmap <Leader>ibg <Plug>(ide-browse-gfiles)
 nmap <Leader>ibw <Plug>(ide-browse-windows)
