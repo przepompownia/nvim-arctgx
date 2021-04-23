@@ -24,6 +24,7 @@ augroup DBUISettings
         \ let b:ideTabName = 'DBUI[d]' |
         \ call s:loadMappings()
   " fix for non-dbui sql buffers
+  autocmd FileType dbui,dbout,sql nmap <Leader>n <Plug>(dbui-new-query)
   autocmd FileType sql let b:ideTabName = 'DBUI[q]'
   autocmd FileType mysql let b:ideTabName = 'DBUI[q]'
   autocmd FileType dbout let b:ideTabName = 'DBUI[o]'
@@ -32,4 +33,11 @@ augroup end
 function! s:loadMappings() abort
   nmap <buffer> <Left> <Plug>(DBUI_GotoParentNode)<CR>
   nmap <buffer> <Right> <Plug>(DBUI_GotoChildNode)
+endfunction
+
+nmap <Plug>(dbui-new-query) <Cmd>call <SID>openNewQuery()<CR>
+function! s:openNewQuery() abort
+  DBUI
+  execute "/New query"
+  exe "normal \<Plug>(DBUI_SelectLine)"
 endfunction
