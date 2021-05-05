@@ -17,10 +17,10 @@ endfunction
 
 function s:loadColorSettings()
   call s:defineIDEMaps()
-  sign define CocHint text=>> linehl=CocHintLine texthl=CocHintSign numhl=IdeLineNrHint
-  sign define CocInfo text=🛈  linehl=CocInfoLine texthl=CocInfoSign numhl=IdeLineNrInfo
-  sign define CocWarning text=⚠  linehl=CocWarningLine texthl=CocWarningSign numhl=IdeLineNrWarning
-  sign define CocError text=✗  linehl=CocErrorLine texthl=CocErrorSign numhl=IdeLineNrError
+  sign define CocHint text=>> linehl=CocHintLine texthl=IdeHintSign numhl=IdeLineNrHint
+  sign define CocInfo text=🛈  linehl=CocInfoLine texthl=IdeInfoSign numhl=IdeLineNrInfo
+  sign define CocWarning text=⚠  linehl=CocWarningLine texthl=IdeWarningSign numhl=IdeLineNrWarning
+  sign define CocError text=✗  linehl=CocErrorLine texthl=IdeErrorSign numhl=IdeLineNrError
   highlight link CocFloating IdeFloating
   highlight link CocErrorFloat IdeErrorFloat
   highlight link CocHintFloat IdeHintFloat
