@@ -13,6 +13,8 @@ nmap <Plug>(ide-debugger-eval-popup) <Plug>VimspectorBalloonEval
 nmap <Plug>(ide-debugger-up-frame) <Plug>VimspectorUpFrame
 nmap <Plug>(ide-debugger-down-frame) <Plug>VimspectorDownFrame
 xmap <Plug>(ide-debugger-eval-popup) <Plug>VimspectorBalloonEval
+command! VimspectorClearBreakpoints call vimspector#ClearBreakpoints()
+command! VimspectorListBreakpoints call vimspector#ListBreakpoints()
 
 let g:vimspector_sign_priority = {
       \    'vimspectorBP':         999,
