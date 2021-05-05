@@ -18,6 +18,14 @@ let g:vimspector_sign_priority = {
       \    'vimspectorBPDisabled': 999,
       \ }
 
+sign define vimspectorBP text=● texthl=IdeBreakpointSign numhl=IdeBreakpointLineNr
+sign define vimspectorBPCond text=◆ texthl=IdeBreakpointSign numhl=IdeBreakpointLineNr
+sign define vimspectorBPDisabled text=● texthl=LineNr
+sign define vimspectorPCBP text=●▶ linehl=CursorLine texthl=IdeCodeWindowCurrentFrameSign linehl=IdeCodeWindowCurrentFrameLineNr
+sign define vimspectorPC text=▶ linehl=CursorLine texthl=IdeCodeWindowCurrentFrameSign linehl=IdeCodeWindowCurrentFrameLineNr
+sign define vimspectorCurrentThread text=▶ linehl=CursorLine texthl=IdeCodeWindowCurrentFrameSign
+sign define vimspectorCurrentFrame text=▶ linehl=CursorLine texthl=IdeCodeWindowCurrentFrameSign
+
 augroup VimspectorSettings
   autocmd!
 
