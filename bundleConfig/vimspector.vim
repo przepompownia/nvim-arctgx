@@ -10,6 +10,8 @@ nmap <Plug>(ide-debugger-step-into) <Plug>VimspectorStepInto
 nmap <Plug>(ide-debugger-step-out) <Plug>VimspectorStepOut
 nmap <Plug>(ide-debugger-run-to-cursor) <Plug>VimspectorRunToCursor
 nmap <Plug>(ide-debugger-eval-popup) <Plug>VimspectorBalloonEval
+nmap <Plug>(ide-debugger-up-frame) <Plug>VimspectorUpFrame
+nmap <Plug>(ide-debugger-down-frame) <Plug>VimspectorDownFrame
 xmap <Plug>(ide-debugger-eval-popup) <Plug>VimspectorBalloonEval
 
 let g:vimspector_sign_priority = {

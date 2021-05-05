@@ -62,6 +62,8 @@ function s:defineDebuggerMaps() abort
   nmap <buffer> <Leader><Leader>e <Plug>(ide-debugger-eval-visual)
   nmap <buffer> <Leader><Leader>p <Plug>(ide-debugger-eval-popup)
   xmap <buffer> <Leader><Leader>p <Plug>(ide-debugger-eval-popup)
+  nmap <buffer> <Leader>k <Plug>(ide-debugger-up-frame)
+  nmap <buffer> <Leader>j <Plug>(ide-debugger-down-frame)
 endfunction
 
 nmap <Leader>hs <Plug>(ide-git-hunk-stage)
