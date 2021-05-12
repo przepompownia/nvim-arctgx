@@ -5,6 +5,8 @@ augroup FugitiveConfig
   autocmd FileType gitcommit inoremap <buffer> <F3> <C-\><C-n>:q<CR>
   autocmd FileType fugitiveblame,fugitive nmap <buffer> q :q<CR>
 augroup end
-nmap <Leader>gs :Gstatus<CR><C-w>33+
-nmap <Leader>gl :Glog<CR>
+nmap <Plug>(ide-git-status) :G<CR><C-w>33+
+nmap <Plug>(ide-git-log) :Glog<CR>
+nmap <Plug>(ide-git-push-all) :Git pushall<CR>
+nmap <Plug>(ide-git-commit) :Git commit<CR>
 nmap <Plug>(ide-git-stage-write-file) :Gwrite<CR>

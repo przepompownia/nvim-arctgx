@@ -67,6 +67,11 @@ function s:defineDebuggerMaps() abort
 endfunction
 
 nmap <Leader>hs <Plug>(ide-git-hunk-stage)
+nmap <Leader>g <Plug>(ide-git-status)
+nmap <Leader>gc <Plug>(ide-git-commit)
+nmap <Leader>gs <Plug>(ide-git-status)
+nmap <Leader>gl <Plug>(ide-git-log)
+nmap <Leader>gp <Plug>(ide-git-push-all)
 nmap <Leader>hu <Plug>(ide-git-hunk-undo)
 nmap <Leader>hp <Plug>(ide-git-hunk-print)
 nmap <Leader>[h <Plug>(ide-git-hunk-previous-conflict)
