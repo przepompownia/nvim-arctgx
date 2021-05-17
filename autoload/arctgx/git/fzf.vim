@@ -56,6 +56,7 @@ function! s:nofifyBranchWasChanged(params, jobId, exitCode, ...) abort
   endif
 
   doautocmd <nomodeline> User ChangeIdeStatus
+  checktime
 endfunction
 
 function! s:runActionOnBranch(cwd, line) abort
