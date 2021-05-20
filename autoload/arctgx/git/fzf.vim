@@ -44,6 +44,7 @@ function! arctgx#git#fzf#diff(CmdSerializer, dir, fullscreen, ...) abort
           \ '--bind', 'alt-s:toggle-search',
           \ '--preview',
           \ l:previewCmdString,
+          \ '--preview-window', 'right,135',
           \ ]
         \ }
 
