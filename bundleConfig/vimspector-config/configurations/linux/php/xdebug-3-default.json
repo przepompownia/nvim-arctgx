@@ -1,0 +1,25 @@
+{
+  "$schema": "https://puremourning.github.io/vimspector/schema/vimspector.schema.json#",
+  "configurations": {
+    "XDebug 3 for local projects": {
+      "adapter": "vscode-php-debug",
+      "default": "false",
+      "configuration": {
+        "name": "Local projects with Xdebug 3 and no mappings",
+        "type": "php",
+        "request": "launch",
+        "port": 9003,
+        "stopOnEntry": false
+      },
+      "breakpoints": {
+        "exception": {
+          "Notice": false,
+          "Warning": false,
+          "Error": false,
+          "Exception": false,
+          "*": true
+        }
+      }
+    }
+  }
+}
