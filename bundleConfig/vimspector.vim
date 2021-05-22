@@ -1,3 +1,5 @@
+let g:vimspector_base_dir=expand( '<sfile>:p:h' ) . '/vimspector-config'
+
 nmap <Plug>(ide-debugger-run) <Plug>VimspectorContinue
 nmap <Plug>(ide-debugger-close) <Plug>VimspectorStop
  " <Plug>VimspectorRestart
