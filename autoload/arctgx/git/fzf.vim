@@ -26,7 +26,7 @@ function! arctgx#git#fzf#diff(CmdSerializer, dir, fullscreen, ...) abort
 
   let l:initialQuery = empty(l:cmd.query.value) ? '' : l:cmd.query.value
   let l:initialCmdString = a:CmdSerializer(l:cmd, shellescape(l:initialQuery), '')
-  let l:interactiveCmdString = a:CmdSerializer(l:interactiveCmd, '{q}', '')
+  let l:interactiveCmdString = a:CmdSerializer(l:interactiveCmd, '{q}', '') . ' || true'
   let l:previewCmdString = a:CmdSerializer(l:previewCmd, '{q}', '\"{}\"')
   let l:previewCmdString .= ' | delta --width ${FZF_PREVIEW_COLUMNS:-$COLUMNS} --file-style=omit | sed 1d'
 
@@ -39,9 +39,9 @@ function! arctgx#git#fzf#diff(CmdSerializer, dir, fullscreen, ...) abort
           \ '--multi',
           \ '--disabled',
           \ '--query', l:initialQuery,
-          \ '--prompt', '> ',
-          \ '--bind', 'change:reload:' . l:interactiveCmdString,
-          \ '--bind', 'alt-s:toggle-search',
+          \ '--prompt', 'Search by query: ',
+          \ '--bind', printf('change:reload(%s)', l:interactiveCmdString),
+          \ '--bind', 'alt-s:unbind(change,alt-s)+change-prompt(Search by filenames: )+enable-search+clear-query',
           \ '--preview',
           \ l:previewCmdString,
           \ '--preview-window', 'right,135',
