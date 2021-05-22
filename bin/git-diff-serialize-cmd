@@ -3,9 +3,9 @@
 
 $cmdJson = $argv[1];
 $query = $argv[2] ?? '';
-$paths = json_decode($argv[3] ?? '[]');
+$paths = json_decode($argv[3] ?? '[]', false, 512, JSON_THROW_ON_ERROR);
 
-$cmd = json_decode($cmdJson);
+$cmd = json_decode($cmdJson, false, 512, JSON_THROW_ON_ERROR);
 
 $cmd->query->value = $query;
 
