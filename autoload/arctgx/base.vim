@@ -1,4 +1,4 @@
-function arctgx#base#sourceFile(path)
+function! arctgx#base#sourceFile(path) abort
   if !filereadable(a:path)
     throw printf('Config %s does not exist.', a:path)
     return
@@ -7,7 +7,7 @@ function arctgx#base#sourceFile(path)
   execute 'source ' . a:path
 endfunction
 
-function arctgx#base#getBufferDirectory()
+function! arctgx#base#getBufferDirectory() abort
   return empty(&buftype) ? expand('%:p:h') : getcwd()
 endfunction
 
@@ -27,12 +27,19 @@ endfunction
 function! arctgx#base#tabDrop(path) abort
   let l:tabNr = s:getTabOfLoadedFile(a:path)
 
-  if v:null is l:tabNr
-    execute 'tabedit ' . a:path
+  if v:null isnot# l:tabNr
+    execute 'tabnext ' . l:tabNr
     return
   endif
 
-  execute 'tabnext ' . l:tabNr
+  let l:curentBufInfo = getbufinfo('%')[0]
+
+  if (l:curentBufInfo.name ==# '' && l:curentBufInfo.changed ==# 0)
+    execute 'edit ' . a:path
+    return
+  endif
+
+  execute 'tabedit ' . a:path
 endfunction
 
 function! arctgx#base#tabDropMulti(...) abort
