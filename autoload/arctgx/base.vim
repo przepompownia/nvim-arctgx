@@ -29,12 +29,13 @@ function! arctgx#base#tabDrop(path) abort
 
   if v:null isnot# l:tabNr
     execute 'tabnext ' . l:tabNr
+    execute 'drop ' . a:path
     return
   endif
 
   let l:curentBufInfo = getbufinfo('%')[0]
 
-  if (l:curentBufInfo.name ==# '' && l:curentBufInfo.changed ==# 0)
+  if l:curentBufInfo.name ==# '' && l:curentBufInfo.changed ==# 0
     execute 'edit ' . a:path
     return
   endif
