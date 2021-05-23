@@ -28,19 +28,19 @@ function! arctgx#base#tabDrop(path) abort
   let l:tabNr = s:getTabOfLoadedFile(a:path)
 
   if v:null isnot# l:tabNr
-    execute 'tabnext ' . l:tabNr
-    execute 'drop ' . a:path
+    silent execute 'tabnext ' . l:tabNr
+    silent execute 'drop ' . a:path
     return
   endif
 
   let l:curentBufInfo = getbufinfo('%')[0]
 
   if l:curentBufInfo.name ==# '' && l:curentBufInfo.changed ==# 0
-    execute 'edit ' . a:path
+    silent execute 'edit ' . a:path
     return
   endif
 
-  execute 'tabedit ' . a:path
+  silent execute 'tabedit ' . a:path
 endfunction
 
 function! arctgx#base#tabDropMulti(...) abort
