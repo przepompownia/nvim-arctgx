@@ -168,6 +168,7 @@ function! arctgx#grep#grep(Cmd, root, query, useFixedStrings, ignoreCase, fullsc
         \ '--bind', 'alt-f:+change-prompt:' . s:prompt(l:cmdShortName, v:true),
         \ '--bind', 'alt-r:reload:' . a:Cmd(l:queryRoot, '{q}', v:false, a:ignoreCase),
         \ '--bind', 'alt-r:+change-prompt:' . s:prompt(l:cmdShortName, v:false),
+        \ '--bind', 'alt-s:unbind(change,alt-s)+change-prompt(FZF search: )+enable-search+clear-query',
         \ ]
         \ }), a:fullscreen)
 endfunction
