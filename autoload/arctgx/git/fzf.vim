@@ -87,8 +87,8 @@ function! s:renderSingleLine(line) abort
   return printf('%s;%s', l:parts[0], join(l:parts[1:], ' '))
 endfunction
 
-function! s:prepareBranchList() abort
-  let l:rawOutput = arctgx#git#listBranches(v:true)
+function! s:prepareBranchList(gitDir) abort
+  let l:rawOutput = arctgx#git#listBranches(a:gitDir, v:true)
 
   return map(l:rawOutput, {_, line -> s:renderSingleLine(line)})
 endfunction
@@ -96,7 +96,7 @@ endfunction
 function! arctgx#git#fzf#branch(dir, fullscreen, ...) abort
   let l:fzfHistoryKey = 'gfbranches'
   let l:fzfOptions = {
-        \ 'source': s:prepareBranchList(),
+        \ 'source': s:prepareBranchList(a:dir),
         \ 'sink': function('s:runActionOnBranch', [a:dir]),
         \ 'dir': a:dir,
         \ 'options': [

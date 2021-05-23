@@ -1,7 +1,10 @@
 #!/usr/bin/env bash
 
-currentDir="$(realpath "$(dirname "${BASH_SOURCE[0]}")")"
-onlyNames="${1:+ }"
+scriptDir="$(realpath "$(dirname "${BASH_SOURCE[0]}")")"
+gitDir="${1:-"$PWD"}"
+onlyNames="${2:+ }"
+
+cd "$gitDir" || exit 1
 
 format() {
     declare -i strip
@@ -15,8 +18,8 @@ format() {
 
 {
     tail="${onlyNames:-;%09%(committerdate:relative)}"
-    "${currentDir}/git-list-local-branches" "$(format 2 "${tail% }")"
-    "${currentDir}/git-list-remote-branches" "$(format 3 "${tail% }")"
+    "${scriptDir}/git-list-local-branches" "$(format 2 "${tail% }")"
+    "${scriptDir}/git-list-remote-branches" "$(format 3 "${tail% }")"
 } | \
     sort --field-separator=';' --key=2,2 --unique | \
     sort --field-separator=';' --numeric-sort --key=1 | \

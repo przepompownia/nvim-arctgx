@@ -23,14 +23,14 @@ function! arctgx#git#getToplevelDirectory(startDirectory) abort
   return l:gitTopCmdResult[0]
 endfunction
 
-function! arctgx#git#listBranches(withRelativeDate) abort
-  let l:initialCmdString = s:binDir . '/git-list-branches'
+function! arctgx#git#listBranches(gitDir, withRelativeDate) abort
+  let l:initialCmd = [s:binDir . '/git-list-branches', a:gitDir]
 
   if a:withRelativeDate isnot v:true
-    let l:initialCmdString .= ' 1'
+    call add(l:initialCmd, 1)
   endif
 
-  return systemlist(l:initialCmdString)
+  return systemlist(l:initialCmd)
 endfunction
 ""
 "

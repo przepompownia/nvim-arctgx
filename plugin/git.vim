@@ -13,5 +13,6 @@ command! -bang -nargs=* GFBranch call arctgx#git#fzf#branch(
 nmap <Plug>(ide-git-show-branches) :<C-U>GFBranch!<CR>
 
 function! s:completeGFDiff(ArgLead, CmdLine, CursorPos) abort
-  return reverse(arctgx#git#listBranches(v:false))
+  let l:gitDir = arctgx#git#getWorkspaceRoot(expand('%:p:h'))
+  return reverse(arctgx#git#listBranches(l:gitDir, v:false))
 endfunction
