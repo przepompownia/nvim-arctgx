@@ -105,7 +105,7 @@ function! s:performActionOnLines(actionMap, actionName, lines) abort
 endfunction
 
 let s:actionMap = {
-      \ 'tab drop': {lines -> s:tabDropLines(lines)},
+      \ 'TabDrop': {lines -> s:tabDropLines(lines)},
       \ 'edit': {lines -> s:editLines(lines, 'edit')},
       \ 'split': {lines -> s:editLines(lines, 'split')},
       \ 'vsplit': {lines -> s:editLines(lines, 'vsplit')},
@@ -138,7 +138,7 @@ function! s:tabDropLines(lines) abort
 endfunction
 
 function! s:tabDropLine(line) abort
-  execute 'tab drop ' . fnameescape(a:line.filename)
+  execute 'TabDrop ' . fnameescape(a:line.filename)
 
   call s:goToLine(a:line)
 endfunction

@@ -1,6 +1,8 @@
 {
-  "coc.preferences.jumpCommand": "tab drop",
+  "coc.preferences.jumpCommand": "TabDrop",
   "coc.preferences.extensionUpdateCheck": "daily",
+  "list.source.location.defaultAction": "TabDrop",
+  "list.source.outline.defaultAction": "TabDrop",
   "npm.binPath": "yarn",
   "signature.hideOnTextChange": true,
   "diagnostic.enableMessage": "jump",

@@ -33,7 +33,7 @@ function! arctgx#git#fzf#diff(CmdSerializer, dir, fullscreen, ...) abort
   let l:fzfHistoryKey = 'gfdiff'
   let l:fzfOptions = {
         \ 'source': l:initialCmdString,
-        \ 'sink': 'tab drop',
+        \ 'sink': 'TabDrop',
         \ 'dir': a:dir,
         \ 'options': [
           \ '--multi',

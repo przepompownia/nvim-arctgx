@@ -11,7 +11,7 @@ function! s:tabDrop(closeAfter) abort
 
   let l:bufnr = bufnr()
 
-  execute 'tab drop ' . l:node._path
+  execute 'TabDrop ' . l:node._path
 
   if v:true isnot a:closeAfter
     return
