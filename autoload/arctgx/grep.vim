@@ -159,7 +159,7 @@ function! arctgx#grep#grep(Cmd, root, query, useFixedStrings, ignoreCase, fullsc
         \ 'dir': a:root,
         \ 'sink*': function('s:openGrepSelection'),
         \ 'options': [
-        \ '--phony',
+        \ '--disabled',
         \ '--multi',
         \ '--query', a:query,
         \ '--prompt', s:prompt(l:cmdShortName, a:useFixedStrings),
