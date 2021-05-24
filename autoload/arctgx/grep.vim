@@ -69,23 +69,23 @@ function! arctgx#grep#grep(Cmd, root, query, useFixedStrings, ignoreCase, fullsc
   let l:cmdShortName = split(l:command, '\s')[0]
   call fzf#vim#grep(l:command, 1, fzf#vim#with_preview({
         \ 'dir': a:root,
-        \ 'sink*': function( 'arctgx#fzf#openFzfSelection', [
+        \ 'sink*': function('arctgx#fzf#openFzfSelection', [
           \ function('s:deserializeLine'),
-          \ function('arctgx#fzf#getActionFromKeyboardShortcut'),
+          \ function('arctgx#fzf#getActionFromKeyboardShortcut', g:fzf_action),
           \ arctgx#fzf#defaultActionMap()
         \ ]),
         \ 'options': [
-        \ '--disabled',
-        \ '--multi',
-        \ '--query', a:query,
-        \ '--prompt', s:prompt(l:cmdShortName, a:useFixedStrings),
-        \ '--bind', 'change:reload:' . a:Cmd(l:queryRoot, '{q}', a:useFixedStrings, a:ignoreCase),
-        \ '--bind', 'alt-f:reload:' . a:Cmd(l:queryRoot, '{q}', v:true, a:ignoreCase),
-        \ '--bind', 'alt-f:+change-prompt:' . s:prompt(l:cmdShortName, v:true),
-        \ '--bind', 'alt-r:reload:' . a:Cmd(l:queryRoot, '{q}', v:false, a:ignoreCase),
-        \ '--bind', 'alt-r:+change-prompt:' . s:prompt(l:cmdShortName, v:false),
-        \ '--bind', 'alt-s:unbind(change,alt-s)+change-prompt(FZF search: )+enable-search+clear-query',
-        \ ]
+          \ '--disabled',
+          \ '--multi',
+          \ '--prompt', s:prompt(l:cmdShortName, a:useFixedStrings),
+          \ '--query', a:query,
+          \ '--bind', 'change:reload:' . a:Cmd(l:queryRoot, '{q}', a:useFixedStrings, a:ignoreCase),
+          \ '--bind', 'alt-f:reload:' . a:Cmd(l:queryRoot, '{q}', v:true, a:ignoreCase),
+          \ '--bind', 'alt-f:+change-prompt:' . s:prompt(l:cmdShortName, v:true),
+          \ '--bind', 'alt-r:reload:' . a:Cmd(l:queryRoot, '{q}', v:false, a:ignoreCase),
+          \ '--bind', 'alt-r:+change-prompt:' . s:prompt(l:cmdShortName, v:false),
+          \ '--bind', 'alt-s:unbind(change,alt-s)+change-prompt(FZF search: )+enable-search+clear-query',
+          \ ]
         \ }), a:fullscreen)
 endfunction
 

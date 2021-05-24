@@ -42,6 +42,14 @@ function! s:tabDropLine(line) abort
 endfunction
 
 function! s:goToLine(line) abort
+  if !has_key(a:line, 'lineNumber')
+    return
+  endif
+
+  if a:line.lineNumber =~# '\D'
+    throw 'Expected line number'
+  endif
+
   execute a:line.lineNumber
   if !empty(a:line.column)
     call cursor(0, str2nr(a:line.column))
@@ -49,16 +57,14 @@ function! s:goToLine(line) abort
   normal! zz
 endfunction
 
-function! arctgx#fzf#getActionFromKeyboardShortcut(shortcut) abort
-  let l:shortcutMap = get(g:, 'fzf_action', {})
-
-  if !has_key(l:shortcutMap, a:shortcut)
+function! arctgx#fzf#getActionFromKeyboardShortcut(shortcutMap, shortcut) abort
+  if !has_key(a:shortcutMap, a:shortcut)
     echoerr printf('No action for "%s"', a:shortcut)
 
     return
   endif
 
-  return g:fzf_action[a:shortcut]
+  return a:shortcutMap[a:shortcut]
 endfunction
 
 function! arctgx#fzf#defaultActionMap() abort

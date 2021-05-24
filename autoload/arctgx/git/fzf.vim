@@ -33,9 +33,14 @@ function! arctgx#git#fzf#diff(CmdSerializer, dir, fullscreen, ...) abort
   let l:fzfHistoryKey = 'gfdiff'
   let l:fzfOptions = {
         \ 'source': l:initialCmdString,
-        \ 'sink': 'TabDrop',
+        \ 'sink*': function('arctgx#fzf#openFzfSelection', [
+          \ {item -> {'filename': item}},
+          \ function('arctgx#fzf#getActionFromKeyboardShortcut', [g:fzf_action]),
+          \ arctgx#fzf#defaultActionMap()
+        \ ]),
         \ 'dir': a:dir,
         \ 'options': [
+          \ '--expect', join(keys(g:fzf_action), ','),
           \ '--multi',
           \ '--disabled',
           \ '--query', l:initialQuery,
