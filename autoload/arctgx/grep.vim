@@ -71,7 +71,7 @@ function! arctgx#grep#grep(Cmd, root, query, useFixedStrings, ignoreCase, fullsc
         \ 'dir': a:root,
         \ 'sink*': function('arctgx#fzf#openFzfSelection', [
           \ function('s:deserializeLine'),
-          \ function('arctgx#fzf#getActionFromKeyboardShortcut', g:fzf_action),
+          \ function('arctgx#fzf#getActionFromKeyboardShortcut', [g:fzf_action]),
           \ arctgx#fzf#defaultActionMap()
         \ ]),
         \ 'options': [
