@@ -1,4 +1,4 @@
-function arctgx#bundle#listAllBundles(bundleDir)
+function! arctgx#bundle#listAllBundles(bundleDir) abort
   let l:all_plugins = []
   let l:plugin_paths = globpath(a:bundleDir, '*', 1, 1)
 
@@ -9,19 +9,19 @@ function arctgx#bundle#listAllBundles(bundleDir)
   return l:all_plugins
 endfunction
 
-function arctgx#bundle#isEnabled(bundle, bundleDir)
+function! arctgx#bundle#isEnabled(bundle, bundleDir) abort
   let l:rtp = split(&runtimepath, ',')
   let l:absoluteBundlePath = expand(a:bundleDir.'/'.a:bundle)
   return index(l:rtp, l:absoluteBundlePath) >= 0 && isdirectory(l:absoluteBundlePath)
 endfunction
 
-function arctgx#bundle#loadCustomConfigurations(bundleDirs, bundleConfigDir)
+function! arctgx#bundle#loadCustomConfigurations(bundleDirs, bundleConfigDir) abort
   for l:dir in a:bundleDirs
     call arctgx#bundle#loadCustomConfiguration(l:dir, a:bundleConfigDir)
   endfor
 endfunction
 
-function arctgx#bundle#loadCustomConfiguration(bundleDir, bundleConfigDir)
+function! arctgx#bundle#loadCustomConfiguration(bundleDir, bundleConfigDir) abort
   if !isdirectory(a:bundleConfigDir)
     return
   endif
@@ -30,13 +30,17 @@ function arctgx#bundle#loadCustomConfiguration(bundleDir, bundleConfigDir)
     if !arctgx#bundle#isEnabled(l:bundle, a:bundleDir)
       continue
     endif
-    let l:bundle = substitute(l:bundle, '\.vim$', '', '').'.vim'
-    let l:config = a:bundleConfigDir . l:bundle
-    try
-      call arctgx#base#sourceFile(l:config)
-    catch /^Config \/.* does not exist\.$/
-      " echom v:exception
-      continue
-    endtry
+    call arctgx#bundle#loadSingleCustomConfiguration(l:bundle, a:bundleConfigDir)
   endfor
+endfunction
+
+function! arctgx#bundle#loadSingleCustomConfiguration(bundle, bundleConfigDir) abort
+  let l:bundle = substitute(a:bundle, '\.vim$', '', '').'.vim'
+  let l:config = a:bundleConfigDir . l:bundle
+  try
+    call arctgx#base#sourceFile(l:config)
+  catch /^Config \/.* does not exist\.$/
+    " echom v:exception
+    return
+  endtry
 endfunction
