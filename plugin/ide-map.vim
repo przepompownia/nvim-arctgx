@@ -83,6 +83,9 @@ imap <S-F2> <C-o><S-F2>
 nmap [h <Plug>(ide-git-hunk-previous)
 nmap ]h <Plug>(ide-git-hunk-next)
 
+nmap <Leader>ff <Plug>(ide-files-search-operator)
+vmap <Leader>ff <Plug>(ide-files-search-operator)
+
 nmap <Leader>ibb <Plug>(ide-browse-buffers)
 nmap <S-F1> <Plug>(ide-browse-buffers)
 imap <S-F1> <C-o><S-F1>
