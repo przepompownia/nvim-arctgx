@@ -1,4 +1,4 @@
-function s:configureHighlight(background) abort
+function! s:configureHighlight(background) abort
   let l:path = simplify(fnamemodify(printf(
         \ '%s/../colors/%s.vim',
         \ s:path,
@@ -8,7 +8,7 @@ function s:configureHighlight(background) abort
 endfunction
 
 let s:path = expand('<sfile>:p:h')
-let s:bundleConfigDir = s:path . '/../bundleConfig/'
+let s:bundleConfigDir = simplify(s:path . '/../bundleConfig/')
 let g:bundle_dirs = get(g:, 'bundle_dirs', [])
 try
   if empty(g:bundle_dirs)
@@ -27,3 +27,5 @@ augroup ConfigureHighlight
   autocmd ColorScheme *
         \ call s:configureHighlight(&background)
 augroup END
+
+command! -complete=packadd -nargs=1 Packadd call arctgx#bundle#packadd(<q-args>, s:bundleConfigDir)
