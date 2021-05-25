@@ -11,6 +11,8 @@ command! -bang -nargs=* GFBranch call arctgx#git#fzf#branch(
       \ )
 
 nmap <Plug>(ide-git-show-branches) :<C-U>GFBranch!<CR>
+vmap <Plug>(ide-git-files-search-operator) :<C-U>call arctgx#git#findFileOperator(visualmode())<CR>
+nmap <Plug>(ide-git-files-search-operator) :set operatorfunc=arctgx#git#findFileOperator<CR>g@
 
 function! s:completeGFDiff(ArgLead, CmdLine, CursorPos) abort
   let l:gitDir = arctgx#git#getWorkspaceRoot(expand('%:p:h'))

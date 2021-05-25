@@ -76,6 +76,8 @@ nmap <Leader>hu <Plug>(ide-git-hunk-undo)
 nmap <Leader>hp <Plug>(ide-git-hunk-print)
 nmap <Leader>[h <Plug>(ide-git-hunk-previous-conflict)
 nmap <Leader>]h <Plug>(ide-git-hunk-next-conflict)
+nmap <Leader>fg <Plug>(ide-git-files-search-operator)
+vmap <Leader>fg <Plug>(ide-git-files-search-operator)
 nmap <S-F2> <Plug>(ide-git-stage-write-file)
 imap <S-F2> <C-o><S-F2>
 nmap [h <Plug>(ide-git-hunk-previous)

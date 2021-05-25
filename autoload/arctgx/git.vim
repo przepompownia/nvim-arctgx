@@ -71,3 +71,8 @@ function! arctgx#git#parseGFDiffCommandArguments(argList) abort
 
   return l:cmd
 endfunction
+
+function! arctgx#git#findFileOperator(type) abort
+  let l:query = arctgx#operator#getText(a:type)
+  call fzf#vim#gitfiles('', fzf#vim#with_preview({'options': ['--query', l:query]}), 1)
+endfunction
