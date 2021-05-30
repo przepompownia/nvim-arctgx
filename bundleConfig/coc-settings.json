@@ -187,8 +187,10 @@
       "port": 11111
     },
     "phpactor": {
-      "enable": false,
-      "trace.server": "messages",
+      "enable": true,
+      "trace.server": "verbose",
+      "disableCompletion": true,
+      "disableDiagnostics": true,
       "filetypes": ["php", "cucumber"],
       /* "port": 8888 */
       "command": "phpactor",
