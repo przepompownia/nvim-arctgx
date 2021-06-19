@@ -50,10 +50,10 @@ function! s:goToLine(line) abort
     throw 'Expected line number'
   endif
 
-  execute a:line.lineNumber
-  if !empty(a:line.column)
-    call cursor(0, str2nr(a:line.column))
-  endif
+  let l:line = str2nr(a:line.lineNumber)
+  let l:column = empty(a:line.column) ? 0 : str2nr(a:line.column)
+
+  call cursor(l:line, l:column)
   normal! zz
 endfunction
 
