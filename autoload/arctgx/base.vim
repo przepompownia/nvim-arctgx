@@ -48,3 +48,14 @@ function! arctgx#base#tabDropMulti(...) abort
     call arctgx#base#tabDrop(l:filename)
   endfor
 endfunction
+
+function! arctgx#base#cursor(line = 0, column = 0) abort
+  if a:line =~# '\D' || a:column =~# '\D'
+    throw 'Expected line number'
+  endif
+
+  let l:line = empty(a:line) ? 0 : str2nr(a:line)
+  let l:column = empty(a:column) ? 0 : str2nr(a:column)
+
+  call cursor(l:line, l:column)
+endfunction
