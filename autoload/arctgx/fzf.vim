@@ -46,14 +46,7 @@ function! s:goToLine(line) abort
     return
   endif
 
-  if a:line.lineNumber =~# '\D'
-    throw 'Expected line number'
-  endif
-
-  let l:line = str2nr(a:line.lineNumber)
-  let l:column = empty(a:line.column) ? 0 : str2nr(a:line.column)
-
-  call cursor(l:line, l:column)
+  call arctgx#base#cursor(a:line.lineNumber, has_key(a:line, 'column') ? a:line.column : 0)
   normal! zz
 endfunction
 
