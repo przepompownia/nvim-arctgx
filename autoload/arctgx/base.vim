@@ -59,3 +59,8 @@ function! arctgx#base#cursor(line = 0, column = 0) abort
 
   call cursor(l:line, l:column)
 endfunction
+
+function! arctgx#base#tabDropToLineAndColumn(path, line = 0, column = 0) abort
+  call arctgx#base#tabDrop(a:path)
+  call arctgx#base#cursor(a:line, a:column)
+endfunction
