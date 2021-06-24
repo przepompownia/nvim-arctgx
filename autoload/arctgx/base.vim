@@ -64,3 +64,18 @@ function! arctgx#base#tabDropToLineAndColumn(path, line = 0, column = 0) abort
   call arctgx#base#tabDrop(a:path)
   call arctgx#base#cursor(a:line, a:column)
 endfunction
+
+function! arctgx#base#tabDropToLineAndColumnWithMapping(path, mapping, line = 0, column = 0) abort
+  let l:path = a:path
+
+  for l:remotePath in keys(a:mapping)
+    if a:path !~# '^' . l:remotePath
+      continue
+    endif
+
+    let l:path = substitute(a:path, '^' . l:remotePath, a:mapping[l:remotePath], '')
+    break
+  endfor
+
+  call arctgx#base#tabDropToLineAndColumn(l:path, a:line, a:column)
+endfunction
