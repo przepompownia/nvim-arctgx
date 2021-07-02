@@ -79,3 +79,9 @@ function! arctgx#base#tabDropToLineAndColumnWithMapping(path, mapping, line = 0,
 
   call arctgx#base#tabDropToLineAndColumn(l:path, a:line, a:column)
 endfunction
+
+function! arctgx#base#tabDropToLineAndColumnWithDefaultMapping(path, line = 0, column = 0) abort
+  let l:mapping = get(g:, 'projectPathMappings', {})
+
+  call arctgx#base#tabDropToLineAndColumnWithMapping(a:path, l:mapping, a:line, a:column)
+endfunction

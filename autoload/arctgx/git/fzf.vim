@@ -66,12 +66,37 @@ function! s:nofifyBranchWasChanged(params, jobId, exitCode, ...) abort
 endfunction
 
 function! s:runActionOnBranch(cwd, line) abort
-  let l:parts = split(a:line, ';')
+  let l:action = a:line[0]
+  let l:branchspec = a:line[1]
+
+  let l:parts = split(l:branchspec, ';')
   if empty(l:parts[0])
     return
   endif
 
   let l:branch = l:parts[0]
+
+  let l:actionMap = {
+        \ 'enter': function('s:switchToBranch', [a:cwd, l:branch]),
+        \ 'ctrl-d': function('s:deleteBranch', [a:cwd, l:branch]),
+      \ }
+
+  call l:actionMap[l:action]()
+endfunction
+
+function! s:deleteBranch(cwd, branch) abort
+  let l:command = ['git', 'branch', '-D', a:branch]
+
+  call arctgx#job#executeCommand(
+        \ l:command,
+        \ {'cwd': a:cwd},
+        \ v:null,
+        \ {-> v:null},
+        \ v:null,
+        \ )
+endfunction
+
+function! s:switchToBranch(cwd, branch) abort
   let l:command = ['git', 'switch', l:branch]
 
   call arctgx#job#executeCommand(
@@ -98,13 +123,14 @@ function! s:prepareBranchList(gitDir) abort
   return map(l:rawOutput, {_, line -> s:renderSingleLine(line)})
 endfunction
 
-function! arctgx#git#fzf#branch(dir, fullscreen, ...) abort
+function! arctgx#git#fzf#branch(dir, fullscreen) abort
   let l:fzfHistoryKey = 'gfbranches'
   let l:fzfOptions = {
         \ 'source': s:prepareBranchList(a:dir),
-        \ 'sink': function('s:runActionOnBranch', [a:dir]),
+        \ 'sinklist': function('s:runActionOnBranch', [a:dir]),
         \ 'dir': a:dir,
         \ 'options': [
+          \ '--expect', 'enter,ctrl-d',
           \ '--delimiter=;',
           \ '--nth=1',
           \ '--multi',
