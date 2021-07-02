@@ -67,36 +67,49 @@ endfunction
 
 function! s:runActionOnBranch(cwd, line) abort
   let l:action = a:line[0]
-  let l:branchspec = a:line[1]
-
-  let l:parts = split(l:branchspec, ';')
-  if empty(l:parts[0])
-    return
-  endif
-
-  let l:branch = l:parts[0]
+  let l:branchspecs = a:line[1:]
 
   let l:actionMap = {
-        \ 'enter': function('s:switchToBranch', [a:cwd, l:branch]),
-        \ 'ctrl-d': function('s:deleteBranch', [a:cwd, l:branch]),
+        \ 'enter': function('s:switchToBranch', [a:cwd, l:branchspecs]),
+        \ 'ctrl-d': function('s:deleteBranches', [a:cwd, l:branchspecs]),
       \ }
 
   call l:actionMap[l:action]()
 endfunction
 
-function! s:deleteBranch(cwd, branch) abort
-  let l:command = ['git', 'branch', '-D', a:branch]
+function s:getBranchFromSpec(branchspec) abort
+  let l:parts = split(a:branchspec, ';')
+  if empty(l:parts[0])
+    return v:null
+  endif
 
-  call arctgx#job#executeCommand(
-        \ l:command,
-        \ {'cwd': a:cwd},
-        \ v:null,
-        \ {-> v:null},
-        \ v:null,
-        \ )
+  return l:parts[0]
 endfunction
 
-function! s:switchToBranch(cwd, branch) abort
+function! s:deleteBranches(cwd, branchspecs) abort
+  for l:branchspec in a:branchspecs
+    let l:branch = s:getBranchFromSpec(l:branchspec)
+
+    let l:command = ['git', 'branch', '-D', l:branch]
+
+    call arctgx#job#executeCommand(
+          \ l:command,
+          \ {'cwd': a:cwd},
+          \ v:null,
+          \ {-> v:null},
+          \ v:null,
+          \ )
+  endfor
+endfunction
+
+function! s:switchToBranch(cwd, branchspecs) abort
+  if len(a:branchspecs) > 1
+    echoerr 'Select exactly one branch to switch'
+    return
+  endif
+
+  let l:branch = s:getBranchFromSpec(a:branchspecs[0])
+
   let l:command = ['git', 'switch', l:branch]
 
   call arctgx#job#executeCommand(
@@ -130,6 +143,7 @@ function! arctgx#git#fzf#branch(dir, fullscreen) abort
         \ 'sinklist': function('s:runActionOnBranch', [a:dir]),
         \ 'dir': a:dir,
         \ 'options': [
+          \ '--multi',
           \ '--expect', 'enter,ctrl-d',
           \ '--delimiter=;',
           \ '--nth=1',
