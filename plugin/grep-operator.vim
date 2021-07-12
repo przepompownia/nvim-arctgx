@@ -19,7 +19,7 @@ command! -bang -nargs=* GGrep call arctgx#grep#grep(
       \ <q-args>,
       \ v:false,
       \ v:false,
-      \ <bang>0
+      \ <bang>0,
       \ )
 command! -bang -nargs=* RGrep call arctgx#grep#grep(
       \ function('arctgx#grep#getRipGrepCmd'),

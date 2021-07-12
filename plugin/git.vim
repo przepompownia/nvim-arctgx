@@ -1,12 +1,12 @@
 command! -bang -nargs=+ -complete=customlist,s:completeGFDiff GFDiff call arctgx#git#fzf#diff(
       \ function('arctgx#git#fzf#serializeGFDiffCommand'),
-      \ arctgx#git#getWorkspaceRoot(expand('%:p:h')),
+      \ arctgx#git#getWorkspaceRoot(arctgx#base#getBufferDirectory()),
       \ <bang>0,
       \ <f-args>,
       \ )
 
 command! -bang -nargs=* GFBranch call arctgx#git#fzf#branch(
-      \ arctgx#git#getWorkspaceRoot(expand('%:p:h')),
+      \ arctgx#git#getWorkspaceRoot(arctgx#base#getBufferDirectory()),
       \ <bang>0,
       \ )
 
