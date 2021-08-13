@@ -1,10 +1,12 @@
 augroup cocMaps
   autocmd!
-  autocmd User CocJumpPlaceholder call
-              \ CocActionAsync('showSignatureHelp')
+  autocmd User CocJumpPlaceholder
+        \ call CocActionAsync('showSignatureHelp')
   autocmd BufWritePost * CocCommand git.refresh
   autocmd User ChangeIdeStatus CocCommand git.refresh
-  autocmd User CocNvimInit call s:loadColorSettings()
+  autocmd User CocNvimInit
+        \ call s:defineIDEMaps() |
+        \ call s:loadColorSettings()
   autocmd ColorScheme * call s:loadColorSettings()
   autocmd CursorHold * call s:onCursorHold()
   autocmd QuitPre * execute "normal \<Plug>(coc-float-hide)"
@@ -16,7 +18,6 @@ function s:onCursorHold()
 endfunction
 
 function s:loadColorSettings()
-  call s:defineIDEMaps()
   sign define CocHint text=>> linehl=CocHintLine texthl=IdeHintSign numhl=IdeLineNrHint
   sign define CocInfo text=🛈  linehl=CocInfoLine texthl=IdeInfoSign numhl=IdeLineNrInfo
   sign define CocWarning text=⚠  linehl=CocWarningLine texthl=IdeWarningSign numhl=IdeLineNrWarning
@@ -91,7 +92,7 @@ function s:defineIDEMaps()
   nmap <Plug>(ide-git-hunk-previous-conflict) <Plug>(coc-git-prevconflict)
   nmap <Plug>(ide-git-hunk-next-conflict) <Plug>(coc-git-nextconflict)
   nmap <Plug>(ide-diagnostic-info) <Plug>(coc-diagnostic-info)
-  inoremap <expr> <Plug>(ide-trigger-completion) coc#refresh()
+  imap <silent><expr> <Plug>(ide-trigger-completion) coc#refresh()
   if has('nvim')
     nmap <Plug>(ide-git-hunk-stage) <Cmd>CocCommand git.chunkStage<CR>
     nmap <Plug>(ide-git-hunk-undo) <Cmd>CocCommand git.chunkUndo<CR>
@@ -100,6 +101,7 @@ function s:defineIDEMaps()
     nmap <Plug>(ide-list-document-symbol) <Cmd>CocList outline<CR>
     nmap <Plug>(ide-hover) <Cmd>call CocActionAsync('doHover')<CR>
     nmap <Plug>(ide-action-fold) <Cmd>call CocActionAsync('fold')<CR>
+    nmap <Plug>(ide-outline) <Cmd>call CocActionAsync('showOutline', 0)<CR>
     return
   endif
   nmap <Plug>(ide-git-hunk-stage) :<C-U>CocCommand git.chunkStage<CR>
@@ -109,6 +111,7 @@ function s:defineIDEMaps()
   nmap <Plug>(ide-list-document-symbol) :<C-U>CocList outline<CR>
   nmap <Plug>(ide-hover) :<C-U>call CocActionAsync('doHover')<CR>
   nmap <Plug>(ide-action-fold) :<C-U>call CocActionAsync('fold')<CR>
+  nmap <Plug>(ide-outline) :<C-U>call CocActionAsync('showOutline', 0)<CR>
 endfunction
 
 let g:coc_config_home = expand('<sfile>:p:h')
