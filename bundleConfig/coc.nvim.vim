@@ -93,25 +93,14 @@ function s:defineIDEMaps()
   nmap <Plug>(ide-git-hunk-next-conflict) <Plug>(coc-git-nextconflict)
   nmap <Plug>(ide-diagnostic-info) <Plug>(coc-diagnostic-info)
   imap <silent><expr> <Plug>(ide-trigger-completion) coc#refresh()
-  if has('nvim')
-    nmap <Plug>(ide-git-hunk-stage) <Cmd>CocCommand git.chunkStage<CR>
-    nmap <Plug>(ide-git-hunk-undo) <Cmd>CocCommand git.chunkUndo<CR>
-    nmap <Plug>(ide-git-hunk-print) <Cmd>CocCommand git.chunkInfo<CR>
-	nmap <Plug>(ide-list-workspace-symbols) <Cmd>CocList symbols<CR>
-    nmap <Plug>(ide-list-document-symbol) <Cmd>CocList outline<CR>
-    nmap <Plug>(ide-hover) <Cmd>call CocActionAsync('doHover')<CR>
-    nmap <Plug>(ide-action-fold) <Cmd>call CocActionAsync('fold')<CR>
-    nmap <Plug>(ide-outline) <Cmd>call CocActionAsync('showOutline', 0)<CR>
-    return
-  endif
-  nmap <Plug>(ide-git-hunk-stage) :<C-U>CocCommand git.chunkStage<CR>
-  nmap <Plug>(ide-git-hunk-undo) :<C-U>CocCommand git.chunkUndo<CR>
-  nmap <Plug>(ide-git-hunk-print) :<C-U>CocCommand git.chunkInfo<CR>
-  nmap <Plug>(ide-list-workspace-symbols) :<C-U>CocList symbols<CR>
-  nmap <Plug>(ide-list-document-symbol) :<C-U>CocList outline<CR>
-  nmap <Plug>(ide-hover) :<C-U>call CocActionAsync('doHover')<CR>
-  nmap <Plug>(ide-action-fold) :<C-U>call CocActionAsync('fold')<CR>
-  nmap <Plug>(ide-outline) :<C-U>call CocActionAsync('showOutline', 0)<CR>
+  nmap <Plug>(ide-git-hunk-stage) <Cmd>CocCommand git.chunkStage<CR>
+  nmap <Plug>(ide-git-hunk-undo) <Cmd>CocCommand git.chunkUndo<CR>
+  nmap <Plug>(ide-git-hunk-print) <Cmd>CocCommand git.chunkInfo<CR>
+  nmap <Plug>(ide-list-workspace-symbols) <Cmd>CocList symbols<CR>
+  nmap <Plug>(ide-list-document-symbol) <Cmd>CocList outline<CR>
+  nmap <Plug>(ide-hover) <Cmd>call CocActionAsync('doHover')<CR>
+  nmap <Plug>(ide-action-fold) <Cmd>call CocActionAsync('fold')<CR>
+  nmap <Plug>(ide-outline) <Cmd>call CocActionAsync('showOutline', 0)<CR>
 endfunction
 
 let g:coc_config_home = expand('<sfile>:p:h')

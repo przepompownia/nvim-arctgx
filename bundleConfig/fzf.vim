@@ -9,19 +9,10 @@ let g:fzf_action = {
       \ 'ctrl-v': 'vsplit'
       \ }
 
-if has('nvim')
-  nmap <Plug>(ide-browse-files) <Cmd>Files!<CR>
-  nmap <Plug>(ide-browse-gfiles) <Cmd>GFiles!<CR>
-  nmap <Plug>(ide-browse-buffers) <Cmd>call fzf#vim#buffers({}, 0)<CR>
-  nmap <Plug>(ide-browse-cmd-history) <Cmd>History:<CR>
-  nmap <Plug>(ide-browse-history) <Cmd>call fzf#vim#history(fzf#vim#with_preview(), 1)<CR>
-  nmap <Plug>(ide-browse-windows) <Cmd>call fzf#vim#windows()<CR>
-else
-  nmap <Plug>(ide-browse-files) :<C-U>Files!<CR>
-  nmap <Plug>(ide-browse-gfiles) :<C-U>GFiles!<CR>
-  nmap <Plug>(ide-browse-buffers) :<C-U>call fzf#vim#buffers({}, 0)<CR>
-  nmap <Plug>(ide-browse-cmd-history) :<C-U>History:<CR>
-  nmap <Plug>(ide-browse-history) :<C-U>call fzf#vim#history(fzf#vim#with_preview(), 1)<CR>
-  nmap <Plug>(ide-browse-windows) :<C-U>call fzf#vim#windows()<CR>
-endif
+nmap <Plug>(ide-browse-files) <Cmd>Files!<CR>
+nmap <Plug>(ide-browse-gfiles) <Cmd>GFiles!<CR>
+nmap <Plug>(ide-browse-buffers) <Cmd>call fzf#vim#buffers({}, 0)<CR>
+nmap <Plug>(ide-browse-cmd-history) <Cmd>History:<CR>
+nmap <Plug>(ide-browse-history) <Cmd>call fzf#vim#history(fzf#vim#with_preview(), 1)<CR>
+nmap <Plug>(ide-browse-windows) <Cmd>call fzf#vim#windows()<CR>
 let g:fzf_git_buffer_relative_root = 1
