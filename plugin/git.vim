@@ -10,7 +10,7 @@ command! -bang -nargs=* GFBranch call arctgx#git#fzf#branch(
       \ <bang>0,
       \ )
 
-nmap <Plug>(ide-git-show-branches) :<C-U>GFBranch!<CR>
+nmap <Plug>(ide-git-show-branches) <Cmd>GFBranch!<CR>
 vmap <Plug>(ide-git-files-search-operator) :<C-U>call arctgx#git#findFileOperator(visualmode())<CR>
 nmap <Plug>(ide-git-files-search-operator) :set operatorfunc=arctgx#git#findFileOperator<CR>g@
 
