@@ -1,4 +1,4 @@
-augroup cocMaps
+augroup cocInit
   autocmd!
   autocmd User CocJumpPlaceholder
         \ call CocActionAsync('showSignatureHelp')
@@ -11,6 +11,19 @@ augroup cocMaps
   autocmd CursorHold * call s:onCursorHold()
   autocmd QuitPre * execute "normal \<Plug>(coc-float-hide)"
 augroup END
+
+function s:autocommandsAfterInit() abort
+  augroup cocAfterInit
+    autocmd!
+    autocmd User CocJumpPlaceholder
+          \ call CocActionAsync('showSignatureHelp')
+    autocmd BufWritePost * CocCommand git.refresh
+    autocmd User ChangeIdeStatus CocCommand git.refresh
+    autocmd ColorScheme * call s:loadColorSettings()
+    autocmd CursorHold * call s:onCursorHold()
+    autocmd QuitPre * execute "normal \<Plug>(coc-float-hide)"
+  augroup END
+endfunction
 
 function s:onCursorHold()
   silent call CocActionAsync('highlight')
