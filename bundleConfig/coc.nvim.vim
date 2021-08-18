@@ -1,15 +1,9 @@
 augroup cocInit
   autocmd!
-  autocmd User CocJumpPlaceholder
-        \ call CocActionAsync('showSignatureHelp')
-  autocmd BufWritePost * CocCommand git.refresh
-  autocmd User ChangeIdeStatus CocCommand git.refresh
   autocmd User CocNvimInit
         \ call s:defineIDEMaps() |
-        \ call s:loadColorSettings()
-  autocmd ColorScheme * call s:loadColorSettings()
-  autocmd CursorHold * call s:onCursorHold()
-  autocmd QuitPre * execute "normal \<Plug>(coc-float-hide)"
+        \ call s:loadColorSettings() |
+        \ call s:autocommandsAfterInit()
 augroup END
 
 function s:autocommandsAfterInit() abort
