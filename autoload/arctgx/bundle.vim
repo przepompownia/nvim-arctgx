@@ -47,5 +47,5 @@ endfunction
 
 function! arctgx#bundle#packadd(bundle, bundleConfigDir) abort
   call arctgx#bundle#loadSingleCustomConfiguration(a:bundle, a:bundleConfigDir)
-  packadd a:bundle
+  execute 'packadd ' . a:bundle
 endfunction
