@@ -17,7 +17,7 @@
           "Warning": false,
           "Error": false,
           "Exception": false,
-          "*": true
+          "*": false
         }
       }
     }
