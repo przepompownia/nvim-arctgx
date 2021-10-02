@@ -28,4 +28,9 @@ augroup ConfigureHighlight
         \ call s:configureHighlight(&background)
 augroup END
 
+augroup AfterVimEnter
+  autocmd!
+  autocmd VimEnter * ++nested set background=light
+augroup END
+
 command! -complete=packadd -nargs=1 Packadd call arctgx#bundle#packadd(<q-args>, s:bundleConfigDir)
