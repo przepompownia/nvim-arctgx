@@ -27,6 +27,7 @@ inoremap <silent> <A-Down> <C-o>:wincmd j<CR>
 inoremap <silent> <A-Left> <C-o>:wincmd h<CR>
 inoremap <silent> <A-Right> <C-o>:wincmd l<CR>
 inoremap <Insert> <Nop>
+inoremap <C-BS> <Cmd>normal db<CR>
 noremap Q <Nop>
 inoremap <F2> <C-o>:update<CR>
 noremap <F2> <ESC>:update<CR>
