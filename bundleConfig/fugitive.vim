@@ -3,7 +3,7 @@ augroup FugitiveConfig
   autocmd BufReadPost fugitive://* set bufhidden=delete
   autocmd User FugitiveChanged doautocmd <nomodeline> User ChangeIdeStatus
   autocmd FileType gitcommit inoremap <buffer> <F3> <C-\><C-n>:q<CR>
-  autocmd FileType fugitiveblame,fugitive nmap <buffer> q :q<CR>
+  autocmd FileType git,fugitiveblame,fugitive nmap <buffer> q :q<CR>
 augroup end
 nmap <Plug>(ide-git-status) :G<CR><C-w>33+
 nmap <Plug>(ide-git-log) :Glog<CR>
