@@ -1,14 +1,11 @@
-if !exists('g:lastTab')
-    let g:lastTab = 1
-    let g:lastTabBackup = 1
-endif
-augroup LastTab
+augroup WindowHistory
   autocmd!
-  autocmd! TabLeave *
-        \ let g:lastTabBackup = g:lastTab |
-        \ let g:lastTab = tabpagenr()
-  autocmd! TabClosed *
-        \ let g:lastTab = g:lastTabBackup
+  autocmd VimEnter * call arctgx#windowhistory#createFromWindowList()
+  autocmd! WinClosed * ++nested
+        \ call arctgx#windowhistory#remove(str2nr(expand('<afile>'))) |
+        \ call arctgx#windowhistory#jumpOnTop()
+  autocmd! WinEnter *
+        \ call arctgx#windowhistory#putOnTop(win_getid())
 augroup END
 nmap <Plug>(jump-last-tab) :exe 'tabn ' . g:lastTab<cr>
 
