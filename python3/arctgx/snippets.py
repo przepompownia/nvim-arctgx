@@ -33,9 +33,7 @@ def wrapByDocblock(text):
 
 
 def getEndOfPSR2MultilineArgsList(argsBody):
-    if argsBody.find('\n') >= 0:
-        return '\n\t) {'
-    return ')\n\t{'
+    return '\n) {'
 
 def ufcirst(text):
     if len(text) > 0:
