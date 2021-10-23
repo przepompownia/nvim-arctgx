@@ -37,4 +37,5 @@ augroup VimspectorSettings
 
   autocmd User VimspectorUICreated windo doautocmd User IDEDebuggerMapsNeeded
   autocmd User VimspectorJumpedToFrame doautocmd User IDEDebuggerMapsNeeded
+  autocmd User VimspectorJumpedToFrame normal zz
 augroup END
