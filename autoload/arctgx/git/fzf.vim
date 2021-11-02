@@ -71,6 +71,7 @@ function! s:runActionOnBranch(cwd, line) abort
 
   let l:actionMap = {
         \ 'enter': function('s:switchToBranch', [a:cwd, l:branchspecs]),
+        \ 'ctrl-h': function('s:switchToBranch', [a:cwd, l:branchspecs, ['-c', 'core.hooksPath=']]),
         \ 'ctrl-d': function('s:deleteBranches', [a:cwd, l:branchspecs]),
       \ }
 
@@ -102,7 +103,7 @@ function! s:deleteBranches(cwd, branchspecs) abort
   endfor
 endfunction
 
-function! s:switchToBranch(cwd, branchspecs) abort
+function! s:switchToBranch(cwd, branchspecs, gitOptions = []) abort
   if len(a:branchspecs) > 1
     echoerr 'Select exactly one branch to switch'
     return
@@ -110,7 +111,7 @@ function! s:switchToBranch(cwd, branchspecs) abort
 
   let l:branch = s:getBranchFromSpec(a:branchspecs[0])
 
-  let l:command = ['git', 'switch', l:branch]
+  let l:command = ['git'] + a:gitOptions + ['switch', l:branch]
 
   call arctgx#job#executeCommand(
         \ l:command,
@@ -144,7 +145,7 @@ function! arctgx#git#fzf#branch(dir, fullscreen) abort
         \ 'dir': a:dir,
         \ 'options': [
           \ '--multi',
-          \ '--expect', 'enter,ctrl-d',
+          \ '--expect', 'enter,ctrl-d,ctrl-h',
           \ '--delimiter=;',
           \ '--nth=1',
           \ '--multi',
