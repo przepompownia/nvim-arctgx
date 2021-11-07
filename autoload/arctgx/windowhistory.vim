@@ -10,10 +10,6 @@ function! arctgx#windowhistory#jumpBack() abort
   call win_gotoid(s:history.previous())
 endfunction
 
-function! arctgx#windowhistory#putOnTop(windowId) abort
-  return s:history.putOnTop(a:windowId)
-endfunction
-
 function! arctgx#windowhistory#getInstance() abort
   return s:history
 endfunction
