@@ -1,8 +1,8 @@
 function! arctgx#history#create(history = []) abort
   return {
       \ 'history': a:history,
-      \ 'top': {->get(self.history, 0, v:null)},
-      \ 'previous': {->get(self.history, 1, v:null)},
+      \ 'top': function('s:top'),
+      \ 'previous': function('s:previous'),
       \ 'remove': function('s:remove'),
       \ 'putOnTop': function('s:putOnTop'),
       \ 'show': function('s:show'),
@@ -18,9 +18,17 @@ endfunction
 
 function! s:putOnTop(windowId) dict abort
   if l:self.history->index(a:windowId) >= 0
-    call self.remove(a:windowId)
+    call l:self.remove(a:windowId)
   endif
   return l:self.history->insert(a:windowId)
+endfunction
+
+function! s:top() dict abort
+  return get(l:self.history, 0, v:null)
+endfunction
+
+function! s:previous() dict abort
+  return get(l:self.history, 0, v:null)
 endfunction
 
 function! s:show() dict abort
