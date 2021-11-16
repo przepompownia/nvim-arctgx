@@ -18,6 +18,7 @@ xmap <Plug>(ide-debugger-eval-popup) <Plug>VimspectorBalloonEval
 command! VimspectorClearBreakpoints call vimspector#ClearBreakpoints()
 command! VimspectorListBreakpoints call vimspector#ListBreakpoints()
 
+let g:vimspector_install_gadgets = [ 'vscode-php-debug' ]
 let g:vimspector_sign_priority = {
       \    'vimspectorBP':         999,
       \    'vimspectorBPCond':     999,
