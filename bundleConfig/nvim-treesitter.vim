@@ -1,5 +1,6 @@
 lua <<EOF
 require'nvim-treesitter.configs'.setup {
+  ensure_installed = {'dockerfile', 'php', 'lua', 'javascript', 'json', 'jsonc', 'python', 'vim', 'bash'},
   highlight = {
     enable = true,
   },
