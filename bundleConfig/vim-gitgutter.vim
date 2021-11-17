@@ -12,8 +12,11 @@ augroup vimGitgutterCustom
   autocmd VimEnter * call s:loadCustomHighlight()
 augroup END
 
-nmap [h <Plug>(GitGutterPrevHunk)
-nmap ]h <Plug>(GitGutterNextHunk)
+nmap <Plug>(ide-git-hunk-previous) <Plug>(GitGutterPrevHunk)
+nmap <Plug>(ide-git-hunk-next) <Plug>(GitGutterNextHunk)
+nmap <Plug>(ide-git-hunk-print) <Plug>(GitGutterPreviewHunk)
+nmap <Plug>(ide-git-hunk-stage) <Plug>(GitGutterStageHunk)
+nmap <Plug>(ide-git-hunk-undo) <Plug>(GitGutterUndoHunk)
 nmap <Leader>ht :GitGutterLineHighlightsToggle<CR>
 let g:gitgutter_log = 0
 let g:gitgutter_preview_win_floating = 1
