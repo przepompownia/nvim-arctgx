@@ -1,4 +1,3 @@
-lua <<EOF
 require'nvim-treesitter.configs'.setup {
   ensure_installed = {'dockerfile', 'php', 'lua', 'javascript', 'json', 'jsonc', 'python', 'vim', 'bash'},
   highlight = {
@@ -17,6 +16,8 @@ require'nvim-treesitter.configs'.setup {
     enable = true,
   },
 }
-EOF
-set foldmethod=expr
-set foldexpr=nvim_treesitter#foldexpr()
+
+vim.cmd([[
+  set foldmethod=expr
+  set foldexpr=nvim_treesitter#foldexpr()
+]])
