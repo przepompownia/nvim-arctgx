@@ -30,7 +30,8 @@ cmp.setup({
     -- { name = 'snippy' }, -- For snippy users.
   }, {
       { name = 'buffer' },
-    })
+    }),
+  completion = { completeopt = 'menu,menuone' },
 })
 
 cmp.setup.cmdline('/', {
