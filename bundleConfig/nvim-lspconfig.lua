@@ -220,7 +220,7 @@ require'lspconfig'.diagnosticls.setup{
 }
 
 
-local servers = { 'phpactor', 'vimls', 'diagnosticls', 'dockerls' }
+local servers = { 'bashls', 'phpactor', 'vimls', 'dockerls' }
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup {
     capabilities = capabilities,
