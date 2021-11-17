@@ -38,8 +38,8 @@ local tab_drop_location = function(location)
   --- Jump to new location (adjusting for UTF-16 encoding of characters)
   -- api.nvim_set_current_buf(bufnr)
   -- api.nvim_buf_set_option(0, 'buflisted', true)
-  -- api.nvim_command('TabDrop '..vim.uri_to_fname(uri))  
-  api.nvim_command('call arctgx#base#tabDrop("'..vim.uri_to_fname(uri)..'")')  
+  -- api.nvim_command('TabDrop '..vim.uri_to_fname(uri))
+  api.nvim_command('call arctgx#base#tabDrop("'..vim.uri_to_fname(uri)..'")')
   local range = location.range or location.targetSelectionRange
   local row = range.start.line
   local col = get_line_byte_from_position(0, range.start)
@@ -113,8 +113,12 @@ vim.lsp.handlers['textDocument/declaration'] = location_handler
 vim.lsp.handlers['textDocument/definition'] = location_handler
 vim.lsp.handlers['textDocument/typeDefinition'] = location_handler
 vim.lsp.handlers['textDocument/implementation'] = location_handler
--- vim.lsp.handlers["textDocument/definition"] = my_custom_default_definition
-vim.lsp.set_log_level('debug')
+vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
+  vim.lsp.diagnostic.on_publish_diagnostics, {
+    virtual_text = false
+  }
+)
+-- vim.lsp.set_log_level('debug')
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
