@@ -8,8 +8,8 @@ let s:arctgxBundleDir = simplify(fnamemodify(expand('<sfile>:p:h:h:h'), ':p'))
 function! s:listIdeSources() abort
   let l:ideSources = [
         \ {'source': 'plugin/ide-map.vim', 'action': 'edit'},
-        \ {'source': 'bundleConfig/coc.nvim.vim', 'action': 'vsplit'},
-        \ {'source': 'bundleConfig/phpactor.vim', 'action': 'split'},
+        \ {'source': 'bundleConfig/nvim-lspconfig.lua', 'action': 'vsplit'},
+        \ {'source': 'bundleConfig/nvim-cmp.lua', 'action': 'split'},
         \ {'source': 'bundleConfig/fzf.vim', 'action': 'split'},
         \ {'source': 'bundleConfig/vimspector.vim', 'action': 'split'},
         \ ]
