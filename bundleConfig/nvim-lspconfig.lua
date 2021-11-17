@@ -130,6 +130,96 @@ require'lspconfig'.sqls.setup{
   on_attach = on_attach,
 }
 
+require'lspconfig'.diagnosticls.setup{
+  capabilities = capabilities,
+  on_attach = on_attach,
+  filetypes = { 'php' },
+  init_options = {
+    filetypes = {
+      php = {
+        'phpmd',
+        'phpcs',
+        'phpstan',
+      },
+    },
+    linters = {
+      phpcs = {
+        sourceName = 'phpcs',
+        command = 'phpcs',
+        rootPatterns = { "composer.json", "composer.lock", "vendor", ".git" },
+        debounce = 100,
+        args = {
+          "--standard=PSR12",
+          "--report=json",
+          "-s",
+          "-",
+        },
+        parseJson = {
+          errorsRoot = "files.STDIN.messages",
+          line = "line",
+          column = "column",
+          endLine = "endLine",
+          endColumn = "endColumn",
+          message = "[phpcs] ${message} [${source}]",
+          security = "type",
+        },
+        securities = {
+          ERROR = "error",
+          WARNING = "warning"
+        }
+      },
+      phpmd = {
+        sourceName = 'phpmd',
+        command = 'phpmd',
+        rootPatterns = { "composer.json", "composer.lock", "vendor", ".git" },
+        debounce = 100,
+        args = {
+          '%filepath',
+          "json",
+          "cleancode,codesize,controversial,design,naming,unusedcode",
+        },
+        parseJson = {
+          errorsRoot = "files.STDIN.messages",
+          line = "beginLine",
+          -- column = "column",
+          -- endLine = "endLine",
+          -- endColumn = "endColumn",
+          message = "[phpmd] ${description} [${rule}] [${ruleSet}] [${externalInfoUrl}]",
+          security = "priority",
+        },
+      },
+      phpstan = {
+        sourceName = 'phpstan',
+        command = 'phpstan',
+        rootPatterns = { "phpstan.neon", "composer.json", "composer.lock", "vendor", ".git" },
+        debounce = 100,
+        args = {
+          "analyze",
+          "--autoload-file",
+          ".ide/phpstan-bootstrap.php",
+          "--level",
+          "max",
+          "--error-format",
+          "raw",
+          "--no-progress",
+          "%file"
+        },
+        offsetLine = 0,
+        offsetColumn = 0,
+        formatLines = 1,
+        formatPattern = {
+          '^[^:]+:(\\d+):(.*)(\\r|\\n)*$',
+          {
+            line = 1,
+            message = 2,
+          }
+        },
+      },
+    }
+  }
+}
+
+
 local servers = { 'phpactor', 'vimls', 'diagnosticls', 'dockerls' }
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup {
