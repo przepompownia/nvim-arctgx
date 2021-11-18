@@ -9,7 +9,7 @@ function! s:loadLuciusColorscheme() abort
   colorscheme lucius
 endfunction
 
-augroup LuciusColorschemeLoading
+augroup ColorschemeLoading
   autocmd!
   autocmd OptionSet background ++nested call s:loadLuciusColorscheme()
 augroup end
