@@ -1,10 +1,11 @@
 function s:loadCustomHighlight() abort
-  if $TERM =~# '-256color$'
-    highlight GitGutterAdd guifg=#51983c
-    highlight GitGutterDelete guifg=#cc3b3b
-    highlight GitGutterChange guifg=#d89b0b
-    highlight GitGutterChangeDelete guifg=#a7680b
+  if $TERM !~# '-256color$' && &termguicolors == 0
+    return
   endif
+  highlight link GitGutterAdd IdeGutterAdd
+  highlight link GitGutterDelete IdeGutterDelete
+  highlight link GitGutterChange IdeGutterChange
+  highlight link GitGutterChangeDelete IdeGutterChangeDelete
 endfunction
 
 augroup vimGitgutterCustom
