@@ -251,7 +251,7 @@ require'lspconfig'.sumneko_lua.setup {
   },
 }
 
-local servers = { 'bashls', 'phpactor', 'vimls', 'dockerls' }
+local servers = { 'bashls', 'vimls', 'dockerls' }
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup {
     capabilities = capabilities,
@@ -261,3 +261,10 @@ for _, lsp in ipairs(servers) do
     }
   }
 end
+
+vim.cmd([[
+  sign define DiagnosticSignHint text=💡 linehl= texthl=IdeHintSign numhl=IdeLineNrHint
+  sign define DiagnosticSignInfo text=🛈  linehl= texthl=IdeInfoSign numhl=IdeLineNrInfo
+  sign define DiagnosticSignWarn text=⚠ linehl= texthl=IdeWarningSign numhl=IdeLineNrWarning
+  sign define DiagnosticSignError text=✗ linehl= texthl=IdeErrorSign numhl=IdeLineNrError
+]])
