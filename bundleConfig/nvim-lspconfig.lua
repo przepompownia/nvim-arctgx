@@ -118,7 +118,7 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
     virtual_text = false
   }
 )
--- vim.lsp.set_log_level('debug')
+vim.lsp.set_log_level('debug')
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
@@ -146,63 +146,70 @@ require'lspconfig'.diagnosticls.setup{
       phpcs = {
         sourceName = 'phpcs',
         command = 'phpcs',
-        rootPatterns = { "composer.json", "composer.lock", "vendor", ".git" },
+        rootPatterns = { 'composer.json', 'composer.lock', 'vendor', '.git' },
         debounce = 100,
         args = {
-          "--standard=PSR12",
-          "--report=json",
-          "-s",
-          "-",
+          '--standard=PSR12',
+          '--report=json',
+          '-s',
+          '-',
         },
         parseJson = {
-          errorsRoot = "files.STDIN.messages",
-          line = "line",
-          column = "column",
-          endLine = "endLine",
-          endColumn = "endColumn",
-          message = "[phpcs] ${message} [${source}]",
-          security = "type",
+          errorsRoot = 'files.STDIN.messages',
+          line = 'line',
+          column = 'column',
+          endLine = 'endLine',
+          endColumn = 'endColumn',
+          message = '[phpcs] ${message} [${source}]',
+          security = 'type',
         },
         securities = {
-          ERROR = "error",
-          WARNING = "warning"
+          ERROR = 'error',
+          WARNING = 'warning'
         }
       },
       phpmd = {
         sourceName = 'phpmd',
         command = 'phpmd',
-        rootPatterns = { "composer.json", "composer.lock", "vendor", ".git" },
+        rootPatterns = { 'composer.json', 'composer.lock', 'vendor', '.git' },
         debounce = 100,
         args = {
           '%filepath',
-          "json",
-          "cleancode,codesize,controversial,design,naming,unusedcode",
+          'json',
+          'cleancode,codesize,controversial,design,naming,unusedcode',
+        },
+        securities = {
+          [1] = 'error',
+          [2] = 'warning',
+          [3] = 'info',
+          [4] = 'hint',
+          [5] = 'hint'
         },
         parseJson = {
-          errorsRoot = "files.STDIN.messages",
-          line = "beginLine",
-          -- column = "column",
-          -- endLine = "endLine",
-          -- endColumn = "endColumn",
-          message = "[phpmd] ${description} [${rule}] [${ruleSet}] [${externalInfoUrl}]",
-          security = "priority",
+          errorsRoot = 'files[0].violations',
+          line = 'beginLine',
+          -- column = 'column',
+          -- endLine = 'endLine',
+          -- endColumn = 'endColumn',
+          message = '[phpmd] ${description} [${rule}] [${ruleSet}] [${externalInfoUrl}]',
+          security = 'priority',
         },
       },
       phpstan = {
         sourceName = 'phpstan',
         command = 'phpstan',
-        rootPatterns = { "phpstan.neon", "composer.json", "composer.lock", "vendor", ".git" },
+        rootPatterns = { 'phpstan.neon', 'composer.json', 'composer.lock', 'vendor', '.git' },
         debounce = 100,
         args = {
-          "analyze",
-          "--autoload-file",
-          ".ide/phpstan-bootstrap.php",
-          "--level",
-          "max",
-          "--error-format",
-          "raw",
-          "--no-progress",
-          "%file"
+          'analyze',
+          '--autoload-file',
+          '.ide/phpstan-bootstrap.php',
+          '--level',
+          'max',
+          '--error-format',
+          'raw',
+          '--no-progress',
+          '%file'
         },
         offsetLine = 0,
         offsetColumn = 0,
