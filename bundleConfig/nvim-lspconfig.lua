@@ -186,7 +186,7 @@ require'lspconfig'.diagnosticls.setup{
 }
 
 -- todo check if path exist
-local sumneko_root_path = os.getenv( "HOME" )..'/dev/external/lua-language-server'
+local sumneko_root_path = os.getenv( 'HOME' )..'/dev/external/lua-language-server'
 local sumneko_binary = sumneko_root_path.."/bin/Linux/lua-language-server"
 
 local runtime_path = vim.split(package.path, ';')
