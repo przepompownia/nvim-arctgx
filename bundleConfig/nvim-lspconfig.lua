@@ -4,6 +4,7 @@ local vim = vim
 local api = vim.api
 local log = require 'vim.lsp.log'
 local util = require 'vim.lsp.util'
+local arctgx_lsp = require 'arctgx/lsp'
 
 local function get_line_byte_from_position(bufnr, position)
   -- LSP's line and characters are 0-indexed
@@ -36,14 +37,12 @@ local tab_drop_location = function(location)
   -- vim.fn.settagstack(vim.fn.win_getid(), {items=items}, 't')
 
   --- Jump to new location (adjusting for UTF-16 encoding of characters)
-  -- api.nvim_set_current_buf(bufnr)
-  -- api.nvim_buf_set_option(0, 'buflisted', true)
-  -- api.nvim_command('TabDrop '..vim.uri_to_fname(uri))
   api.nvim_command('call arctgx#base#tabDrop("'..vim.uri_to_fname(uri)..'")')
   local range = location.range or location.targetSelectionRange
   local row = range.start.line
   local col = get_line_byte_from_position(0, range.start)
   api.nvim_win_set_cursor(0, {row + 1, col})
+
   return true
 end
 
@@ -67,47 +66,6 @@ local location_handler = function(_, result, ctx, _)
     tab_drop_location(result)
   end
 end
-
-local on_attach = function(client, bufnr)
-  local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
-  local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
-
-  buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
-
-  local opts = { noremap=true, silent=true }
-
-  -- See `:help vim.lsp.*` for documentation on any of the below functions
-  buf_set_keymap('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
-  buf_set_keymap('n', '<Plug>(ide-goto-definition)', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
-  buf_set_keymap('n', '<Plug>(ide-hover)', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
-  buf_set_keymap('n', '<Plug>(ide-goto-implementation)', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
-  buf_set_keymap('n', '<Plug>(ide-show-signature-help)', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-  buf_set_keymap('n', '<space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
-  buf_set_keymap('n', '<space>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
-  buf_set_keymap('n', '<space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
-  buf_set_keymap('n', '<space>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
-  buf_set_keymap('n', '<Plug>(ide-action-rename)', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-  buf_set_keymap('n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
-  buf_set_keymap('n', '<Plug>(ide-find-references)', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
-  buf_set_keymap('n', '<Plug>(ide-diagnostic-info)', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
-  buf_set_keymap('n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
-  buf_set_keymap('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
-  buf_set_keymap('n', '<space>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
-  buf_set_keymap('n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
-
-  if client.resolved_capabilities.document_highlight then
-    vim.api.nvim_exec([[
-      hi LspReferenceRead cterm=bold ctermbg=red guibg=LightYellow
-      hi LspReferenceText cterm=bold ctermbg=red guibg=LightYellow
-      hi LspReferenceWrite cterm=bold ctermbg=red guibg=LightYellow
-      augroup lsp_document_highlight
-        autocmd! * <buffer>
-        autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
-        autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
-      augroup END
-    ]], false)
-  end
-end
 --see: https://microsoft.github.io/language-server-protocol/specifications/specification-current/#textDocument_declaration
 vim.lsp.handlers['textDocument/declaration'] = location_handler
 vim.lsp.handlers['textDocument/definition'] = location_handler
@@ -126,21 +84,21 @@ capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 -- capabilities.textDocument.completion.completionItem.snippetSupport = true
 
 require'lspconfig'.sqls.setup{
-  cmd = {"$HOME/go/bin/sqls", "-config", "$HOME/.config/sqls/config.yml"};
+  cmd = {os.getenv('HOME')..'/go/bin/sqls', "-config", os.getenv('HOME')..'/.config/sqls/config.yml'};
   capabilities = capabilities,
-  on_attach = on_attach,
+  on_attach = arctgx_lsp.on_attach,
 }
 
 require'lspconfig'.diagnosticls.setup{
   capabilities = capabilities,
-  on_attach = on_attach,
+  on_attach = arctgx_lsp.on_attach,
   filetypes = { 'php' },
   init_options = {
     filetypes = {
       php = {
         'phpmd',
         'phpcs',
-        'phpstan',
+        -- 'phpstan',
       },
     },
     linters = {
@@ -204,7 +162,7 @@ require'lspconfig'.diagnosticls.setup{
         args = {
           'analyze',
           '--autoload-file',
-          '.ide/phpstan-bootstrap.php',
+          'legacy/.ide/phpstan-bootstrap.php',
           '--level',
           'max',
           '--error-format',
@@ -239,7 +197,7 @@ require'lspconfig'.sumneko_lua.setup {
   autostart = false,
   cmd = {sumneko_binary, "-E", sumneko_root_path .. "/main.lua"};
   capabilities = capabilities,
-  on_attach = on_attach,
+  on_attach = arctgx_lsp.on_attach,
   settings = {
     Lua = {
       runtime = {
@@ -263,7 +221,7 @@ local servers = { 'bashls', 'vimls', 'dockerls' }
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup {
     capabilities = capabilities,
-    on_attach = on_attach,
+    on_attach = arctgx_lsp.on_attach,
     flags = {
       debounce_text_changes = 150,
     }
