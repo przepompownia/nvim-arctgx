@@ -11,5 +11,9 @@ function! arctgx#windowhistory#jumpBack() abort
 endfunction
 
 function! arctgx#windowhistory#getInstance() abort
-  return get(s:, 'history', arctgx#windowhistory#createFromWindowList())
+  if (!exists('s:history'))
+    call arctgx#windowhistory#createFromWindowList()
+  endif
+
+  return s:history
 endfunction
