@@ -1,4 +1,8 @@
 function arctgx#highlight#highlight(hlID, background, foreground) abort
+  if (has('nvim') && empty(nvim_list_uis()))
+    return
+  endif
+
   let l:background = s:determineColor('bg#', a:background)
   let l:foreground = s:determineColor('fg#', a:foreground)
 
