@@ -20,7 +20,11 @@ function! arctgx#window#onWinClosed(winId) abort
 endfunction
 
 function! arctgx#window#closePopupForTab() abort
+  if (!has('nvim'))
+    return
+  endif
+
   call nvim_tabpage_list_wins(0)
         \ ->filter({_,v -> arctgx#window#isPopup(v)})
-        \ ->map({_,v->nvim_win_close(v, v:true)})
+        \ ->map({_,v -> nvim_win_close(v, v:true)})
 endfunction

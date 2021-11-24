@@ -9,7 +9,7 @@ function! s:listIdeSources() abort
   let l:ideSources = [
         \ {'source': 'plugin/ide-map.vim', 'action': 'edit'},
         \ {'source': 'lua/arctgx/lsp.lua', 'action': 'vsplit'},
-        \ {'source': 'bundleConfig/nvim-lspconfig.lua', 'action': 'vsplit'},
+        \ {'source': 'bundleConfig/nvim-lspconfig.lua', 'action': 'split'},
         \ {'source': 'bundleConfig/nvim-cmp.lua', 'action': 'split'},
         \ {'source': 'bundleConfig/fzf.vim', 'action': 'split'},
         \ {'source': 'bundleConfig/vimspector.vim', 'action': 'split'},
