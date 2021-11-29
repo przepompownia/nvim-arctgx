@@ -98,7 +98,7 @@ require'lspconfig'.diagnosticls.setup{
       php = {
         'phpmd',
         'phpcs',
-        -- 'phpstan',
+        'phpstan',
       },
     },
     linters = {
@@ -161,25 +161,27 @@ require'lspconfig'.diagnosticls.setup{
         debounce = 100,
         args = {
           'analyze',
-          '--autoload-file',
-          'legacy/.ide/phpstan-bootstrap.php',
+          -- '--autoload-file',
+          -- '.ide/phpstan-bootstrap.php',
           '--level',
           'max',
           '--error-format',
-          'raw',
+          'json',
           '--no-progress',
-          '%file'
+          '--no-interaction',
+          '--',
+          '%file',
         },
-        offsetLine = 0,
-        offsetColumn = 0,
-        formatLines = 1,
-        formatPattern = {
-          '^[^:]+:(\\d+):(.*)(\\r|\\n)*$',
-          {
-            line = 1,
-            message = 2,
-          }
+        parseJson = {
+          errorsRoot = 'files[\"%filepath\"].messages',
+          line = 'line',
+          message = '[phpstan] ${message}',
+          -- security = 'ignorable',
         },
+        -- securities = {
+          -- true = 'error',
+          -- false = 'warning',
+        -- },
       },
     }
   }
