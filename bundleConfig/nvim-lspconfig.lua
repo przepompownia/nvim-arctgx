@@ -217,7 +217,7 @@ require'lspconfig'.sumneko_lua.setup {
   },
 }
 
-local servers = { 'bashls', 'vimls', 'dockerls' }
+local servers = { 'bashls', 'vimls', 'dockerls', 'tsserver' }
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup {
     capabilities = capabilities,
