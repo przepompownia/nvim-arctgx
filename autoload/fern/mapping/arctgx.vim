@@ -11,13 +11,14 @@ function! s:tabDrop(closeAfter) abort
 
   let l:bufnr = bufnr()
 
-  execute 'TabDrop ' . l:node._path
+  wincmd w
+  call arctgx#base#tabDrop(l:node._path)
 
   if v:true isnot a:closeAfter
     return
   endif
 
-  execute l:bufnr . 'bunload'
+  execute 'bunload ' . l:bufnr
 endfunction
 
 function! s:gitTop(reveal) abort
