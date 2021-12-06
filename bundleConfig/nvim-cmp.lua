@@ -1,4 +1,5 @@
 local cmp = require'cmp'
+local cmp_buffer = require('cmp_buffer')
 
 cmp.setup({
   snippet = {
@@ -19,11 +20,15 @@ cmp.setup({
     }),
     ['<CR>'] = cmp.mapping.confirm({ select = true }),
   },
-  sources = cmp.config.sources({
+  sources = {
     { name = 'nvim_lsp' },
     { name = 'ultisnips' },
-  }, {
-      { name = 'buffer' },
-    }),
+    { name = 'buffer' },
+  },
+  sorting = {
+    comparators = {
+      function(...) return cmp_buffer:compare_locality(...) end,
+    }
+  },
   completion = { completeopt = 'menu,menuone' },
 })
