@@ -6,19 +6,6 @@ variableDeclarationRegex = re.compile(
         r'\s*([\w\\\\]+ )*\$(\w+)(\s*=\s*\w+)*(,*\s)*'
         )
 setterLineFormat = r'\n        $this->\2 = $\2;'
-docblockParamEntryFormat = r'\n     * @param \1 $\2'
-
-def isAppendingPHPDocblockEnabled():
-    return vim.eval("get(g:, 'ultisnips_php_append_docblock', 0)") == "1"
-
-
-def getDocblockParamEntry(variableDeclaration):
-    return re.sub(
-            variableDeclarationRegex,
-            docblockParamEntryFormat,
-            variableDeclaration
-            )
-
 
 def getSetterLine(variableDeclaration):
     return '\n' + re.sub(
@@ -26,11 +13,6 @@ def getSetterLine(variableDeclaration):
             setterLineFormat,
             variableDeclaration
             )
-
-
-def wrapByDocblock(text):
-    return '/**' + text + '\n     */\n    '
-
 
 def getEndOfPSR2MultilineArgsList(argsBody):
     return '\n) {'
