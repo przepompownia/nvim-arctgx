@@ -46,6 +46,7 @@ function s:defineIDEMaps()
   xmap <buffer> <Leader>irca <Plug>(ide-classobj-a)
   omap <buffer> <Leader>irca <Plug>(ide-classobj-a)
   nmap <buffer> <Leader>d <Plug>(ide-diagnostic-info)
+  nmap <buffer> <Leader>ca <Plug>(ide-codelens-action)
 
   nmap <buffer> <Leader><F5> <Plug>(ide-debugger-run)
   nmap <buffer> <F6> <Plug>(ide-outline)
