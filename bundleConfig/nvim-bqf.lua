@@ -34,5 +34,6 @@ vim.cmd([[
   augroup BqfMappings
     autocmd!
     autocmd FileType qf nmap <buffer> <CR> <Cmd>lua require('bqf.qfwin.handler').open(true, 'TabDrop')<CR>
+    autocmd FileType qf nmap <buffer> <2-LeftMouse> <Cmd>lua require('bqf.qfwin.handler').open(true, 'TabDrop')<CR>
   augroup END
 ]])
