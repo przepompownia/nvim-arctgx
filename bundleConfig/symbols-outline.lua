@@ -4,6 +4,9 @@ vim.g.symbols_outline = {
   symbol_blacklist = {
     'Variable',
   },    
+  keymaps = {
+    goto_location = {'<CR>', '<2-LeftMouse>'},
+  },
 }
 
 vim.api.nvim_exec([[
