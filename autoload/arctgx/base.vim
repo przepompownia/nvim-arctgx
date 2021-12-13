@@ -8,7 +8,7 @@ function! arctgx#base#sourceFile(path) abort
 endfunction
 
 function! arctgx#base#getBufferDirectory() abort
-  return empty(&buftype) ? expand('%:p:h') : getcwd()
+  return (empty(&buftype) || &buftype ==# 'help') ? expand('%:p:h') : getcwd()
 endfunction
 
 function! s:getTabOfLoadedFile(path) abort
