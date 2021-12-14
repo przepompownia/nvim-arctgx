@@ -1,5 +1,16 @@
 require'nvim-treesitter.configs'.setup {
-  ensure_installed = {'dockerfile', 'php', 'lua', 'javascript', 'json', 'jsonc', 'python', 'vim', 'bash', 'yaml'},
+  ensure_installed = {
+    'bash',
+    'dockerfile',
+    'javascript',
+    'json',
+    'jsonc',
+    'lua',
+    'php',
+    'python',
+    'vim',
+    'yaml',
+  },
   highlight = {
     enable = true,
   },
