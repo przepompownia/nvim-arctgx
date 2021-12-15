@@ -6,6 +6,12 @@ dap.adapters.php = {
   args = { '/home/arctgx/.vim/pack/bundle/opt/arctgx/bundleConfig/vimspector-config/gadgets/linux/vscode-php-debug/out/phpDebug.js' }
 }
 
+vim.fn.sign_define('DapBreakpoint', {text='●', texthl='IdeBreakpointSign', linehl='', numhl='IdeBreakpointLineNr'})
+vim.fn.sign_define('DapBreakpointCondition', {text='◆', texthl='IdeBreakpointSign', linehl='', numhl='IdeBreakpointLineNr'})
+vim.fn.sign_define('DapBreakpointRejected', {text='R', texthl='IdeCodeWindowCurrentFrameSign', linehl='', numhl='IdeBreakpointLineNr'})
+vim.fn.sign_define('DapLogPoint', {text='L', texthl='IdeCodeWindowCurrentFrameSign', linehl='', numhl='IdeBreakpointLineNr'})
+vim.fn.sign_define('DapStopped', {text='▶', texthl='IdeCodeWindowCurrentFrameSign', linehl='CursorLine', numhl=''})
+
 vim.cmd([[
     nnoremap <silent> <Plug>(ide-debugger-run) :lua require'dap'.continue()<CR>
     nnoremap <silent> <Plug>(ide-debugger-step-over) :lua require'dap'.step_over()<CR>
