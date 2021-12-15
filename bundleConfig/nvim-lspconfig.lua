@@ -101,6 +101,27 @@ require'lspconfig'.diagnosticls.setup{
         'phpstan',
       },
     },
+    formatFiletypes = {
+      php = {
+        'cs-fixer',
+      },
+    },
+    formatters = {
+      ['cs-fixer'] = {
+        sourceName = 'php-cs-fixer',
+        command = 'php-cs-fixer',
+        args = {
+          'fix',
+          '%file', -- with '-' trailing ^M are added
+        },
+        rootPatterns = { 'composer.json', 'composer.lock', 'vendor' },
+        requiredFiles = {'.php-cs-fixer.dist.php', '.php-cs-fixer.php'},
+        debounce = 100,
+        isStdout = false,
+        isStderr = false,
+        doesWriteToFile = true,
+      },
+    },
     linters = {
       phpcs = {
         sourceName = 'phpcs',
