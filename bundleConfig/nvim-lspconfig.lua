@@ -255,5 +255,5 @@ vim.cmd([[
   sign define DiagnosticSignHint text=💡 linehl= texthl=IdeHintSign numhl=IdeLineNrHint
   sign define DiagnosticSignInfo text=🛈  linehl= texthl=IdeInfoSign numhl=IdeLineNrInfo
   sign define DiagnosticSignWarn text=⚠ linehl= texthl=IdeWarningSign numhl=IdeLineNrWarning
-  sign define DiagnosticSignError text=✗ linehl= texthl=IdeErrorSign numhl=IdeLineNrError
+  sign define DiagnosticSignError text= linehl= texthl=IdeErrorSign numhl=IdeLineNrError
 ]])
