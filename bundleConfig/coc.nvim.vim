@@ -101,7 +101,7 @@ function s:defineIDEMaps()
   nmap <Plug>(ide-git-hunk-undo) <Cmd>CocCommand git.chunkUndo<CR>
   nmap <Plug>(ide-git-hunk-print) <Cmd>CocCommand git.chunkInfo<CR>
   nmap <Plug>(ide-list-workspace-symbols) <Cmd>CocList symbols<CR>
-  nmap <Plug>(ide-list-document-symbol) <Cmd>CocList outline<CR>
+  nmap <Plug>(ide-list-document-symbols) <Cmd>CocList outline<CR>
   nmap <Plug>(ide-hover) <Cmd>call CocActionAsync('doHover')<CR>
   nmap <Plug>(ide-action-fold) <Cmd>call CocActionAsync('fold')<CR>
   nmap <Plug>(ide-outline) <Cmd>call CocActionAsync('showOutline', 0)<CR>
