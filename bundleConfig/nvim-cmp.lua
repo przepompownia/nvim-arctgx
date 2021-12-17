@@ -27,6 +27,10 @@ cmp.setup({
   },
   sorting = {
     comparators = {
+      cmp.config.compare.score,
+      cmp.config.compare.offset,
+      cmp.config.compare.sort_text,
+      cmp.config.compare.exact,
       function(...) return cmp_buffer:compare_locality(...) end,
     }
   },
