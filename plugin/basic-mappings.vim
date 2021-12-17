@@ -38,10 +38,10 @@ noremap <S-F3> <ESC>:q!<CR>
 noremap <F15> <ESC>:q!<CR>
 inoremap <S-F3> <C-o>:q!<CR>
 inoremap <F15> <C-o>:q!<CR>
-inoremap <C-Left> <C-o>b
-inoremap <C-Right> <C-o>w
-inoremap <S-Right> <C-o>v
-inoremap <S-Left> <C-o>v
+inoremap <C-Left> <Cmd>normal b<CR>
+inoremap <C-Right> <Cmd>normal w<CR>
+inoremap <S-Right> <Cmd>normal v<CR>
+inoremap <S-Left> <Cmd>normal v<CR>
 noremap <S-Up> <C-y>
 noremap <S-Down> <C-e>
 inoremap <C-z> <C-x><C-o>
