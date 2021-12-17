@@ -14,18 +14,17 @@ inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<CR>"
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
-nnoremap <silent> <A-Up> :wincmd k<CR>
-nnoremap <silent> <A-Down> :wincmd j<CR>
-nnoremap <silent> <A-Left> :wincmd h<CR>
-nnoremap <silent> <A-Right> :wincmd l<CR>
-
 nnoremap g<Left> <C-o>
 nnoremap g<Right> <C-^>
 
-inoremap <silent> <A-Up> <C-o>:wincmd k<CR>
-inoremap <silent> <A-Down> <C-o>:wincmd j<CR>
-inoremap <silent> <A-Left> <C-o>:wincmd h<CR>
-inoremap <silent> <A-Right> <C-o>:wincmd l<CR>
+noremap <silent> <A-Up> <Cmd>wincmd k<CR>
+noremap <silent> <A-Down> <Cmd>wincmd j<CR>
+noremap <silent> <A-Left> <Cmd>wincmd h<CR>
+noremap <silent> <A-Right> <Cmd>wincmd l<CR>
+inoremap <silent> <A-Up> <Cmd>wincmd k<CR>
+inoremap <silent> <A-Down> <Cmd>wincmd j<CR>
+inoremap <silent> <A-Left> <Cmd>wincmd h<CR>
+inoremap <silent> <A-Right> <Cmd>wincmd l<CR>
 inoremap <Insert> <Nop>
 inoremap <C-BS> <Cmd>normal db<CR>
 inoremap <C-Del> <Cmd>normal dw<CR>
