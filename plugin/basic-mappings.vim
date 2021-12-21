@@ -10,9 +10,6 @@ tnoremap <expr> <M-p> '<C-\><C-N>"'.nr2char(getchar()).'pi'
 nnoremap <Tab> <C-w>w
 nnoremap <C-Tab> <Cmd>tabNext<CR>
 inoremap <C-Tab> <Cmd>tabNext<CR>
-inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<CR>"
-inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
 nnoremap g<Left> <C-o>
 nnoremap g<Right> <C-^>
