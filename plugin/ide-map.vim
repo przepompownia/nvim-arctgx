@@ -56,7 +56,6 @@ function s:defineIDEMaps()
 endfunction
 
 function s:defineDebuggerMaps() abort
-  nmap <buffer> <Leader><F5> <Plug>(ide-debugger-run)
   nmap <buffer> <Leader><F6> <Plug>(ide-debugger-close)
   nmap <buffer> <Leader><S-F6> <Plug>(ide-debugger-detach)
   nmap <buffer> <Leader><F7> <Plug>(ide-debugger-step-into)
