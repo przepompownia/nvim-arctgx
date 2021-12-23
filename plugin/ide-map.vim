@@ -94,6 +94,9 @@ nmap ]h <Plug>(ide-git-hunk-next)
 nmap <Leader>ff <Plug>(ide-files-search-operator)
 vmap <Leader>ff <Plug>(ide-files-search-operator)
 
+nmap gx <Plug>(ide-url-open-operator)
+vmap gx <Plug>(ide-url-open-operator)
+
 nmap <Leader>ibb <Plug>(ide-browse-buffers)
 nmap <S-F1> <Plug>(ide-browse-buffers)
 imap <S-F1> <C-o><S-F1>
