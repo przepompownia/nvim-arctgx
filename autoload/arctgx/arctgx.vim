@@ -13,6 +13,7 @@ function! s:listIdeSources() abort
         \ {'source': 'bundleConfig/nvim-cmp.lua', 'action': 'split'},
         \ {'source': 'bundleConfig/fzf.vim', 'action': 'split'},
         \ {'source': 'bundleConfig/vimspector.vim', 'action': 'split'},
+        \ {'source': 'bundleConfig/nvim-dap.lua', 'action': 'split'},
         \ ]
   return map(l:ideSources, {_, item -> {'source': s:arctgxBundleDir . item['source'], 'action': item['action']}})
 endfunction
