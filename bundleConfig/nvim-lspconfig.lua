@@ -60,7 +60,7 @@ local location_handler = function(_, result, ctx, _)
 
     if #result > 1 then
       util.set_qflist(util.locations_to_items(result))
-      api.nvim_command("copen")
+      api.nvim_command('copen')
     end
   else
     tab_drop_location(result)
@@ -71,7 +71,7 @@ vim.lsp.handlers['textDocument/declaration'] = location_handler
 vim.lsp.handlers['textDocument/definition'] = location_handler
 vim.lsp.handlers['textDocument/typeDefinition'] = location_handler
 vim.lsp.handlers['textDocument/implementation'] = location_handler
-vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
+vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(
   vim.lsp.diagnostic.on_publish_diagnostics, {
     virtual_text = false,
     underline = false,
@@ -84,7 +84,7 @@ capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 -- capabilities.textDocument.completion.completionItem.snippetSupport = true
 
 require'lspconfig'.sqls.setup{
-  cmd = {os.getenv('HOME')..'/go/bin/sqls', "-config", os.getenv('HOME')..'/.config/sqls/config.yml'};
+  cmd = {os.getenv('HOME')..'/go/bin/sqls', '-config', os.getenv('HOME')..'/.config/sqls/config.yml'};
   capabilities = capabilities,
   on_attach = arctgx_lsp.on_attach,
 }
@@ -210,15 +210,20 @@ require'lspconfig'.diagnosticls.setup{
 
 -- todo check if path exist
 local sumneko_root_path = os.getenv( 'HOME' )..'/dev/external/lua-language-server'
-local sumneko_binary = sumneko_root_path.."/bin/Linux/lua-language-server"
+local sumneko_binary = sumneko_root_path..'/bin/Linux/lua-language-server'
 
 local runtime_path = vim.split(package.path, ';')
-table.insert(runtime_path, "lua/?.lua")
-table.insert(runtime_path, "lua/?/init.lua")
+table.insert(runtime_path, 'lua/?.lua')
+table.insert(runtime_path, 'lua/?/init.lua')
 
 require'lspconfig'.sumneko_lua.setup {
-  autostart = false,
-  cmd = {sumneko_binary, "-E", sumneko_root_path .. "/main.lua"};
+  autostart = true,
+  cmd = {
+    sumneko_binary,
+    -- '--logpath=/tmp/sumneko_lua.log',
+    '-E',
+    sumneko_root_path .. '/main.lua',
+  };
   capabilities = capabilities,
   on_attach = arctgx_lsp.on_attach,
   settings = {
@@ -231,7 +236,7 @@ require'lspconfig'.sumneko_lua.setup {
         globals = {'vim'},
       },
       workspace = {
-        library = vim.api.nvim_get_runtime_file("", true),
+        library = vim.api.nvim_get_runtime_file('', true),
       },
       telemetry = {
         enable = false,
