@@ -53,9 +53,6 @@ snippet go
 			${0:#staments};;
 		esac
 	done
-# Set SCRIPT_DIR variable to directory script is located.
-snippet sdir
-	SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 snippet root
 	if [ \$(id -u) -ne 0 ]; then exec sudo \$0; fi
 
