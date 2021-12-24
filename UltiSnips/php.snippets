@@ -2,30 +2,11 @@ global !p
 import arctgx.snippets
 endglobal
 
-snippet con "__construct()" b
-public function __construct(
-	${1}
-) {
-} 
-endsnippet
-
 snippet pub2 "Public function" b
-`!p
-if isAppendingPHPDocblockEnabled():
-	snip.rv = wrapByDocblock(getDocblockParamEntry(t[2]))
 `public function ${1:name}(${2}`!p
 snip.rv = getEndOfPSR2MultilineArgsList(t[2])
 `
 	${VISUAL}${5:;}
-}
-endsnippet
-
-# From Ultisnips
-
-snippet pug "Public getter" b
-public function $1(): ${2}
-{
-	return $this->${1:name};
 }
 endsnippet
 
@@ -34,66 +15,4 @@ public function ${2:set}`!p snip.rv = arctgx.snippets.ufcirst(t[1])`($$1): void
 {
 	return $this->${1:name} = $`!p snip.rv = t[1]`;
 }
-endsnippet
-
-snippet pub "Public function" b
-public function ${1:name}(${2}): ${3}
-{
-	${VISUAL}${5:;}
-}
-endsnippet
-
-snippet pro "Protected function" b
-protected function ${1:name}(${2}): ${3}
-{
-	${VISUAL}${5:;}
-}
-endsnippet
-
-snippet pri "Private function" b
-private function ${1:name}(${2}): ${3}
-{
-	${VISUAL}${5:;}
-}
-endsnippet
-
-snippet pubs "Public static function" b
-public static function ${1:name}(${2}): ${3}
-{
-	${VISUAL}${5:;}
-}
-endsnippet
-
-snippet pros "Protected static function" b
-protected static function ${1:name}(${2}): ${3}
-{
-	${VISUAL}${5:;}
-}
-endsnippet
-
-snippet pris "Private static function" b
-private static function ${1:name}(${2}): ${3}
-{
-	${VISUAL}${5:;}
-}
-endsnippet
-
-snippet prv "private variable" b
-private ${1:string} $${2:name}; 
-endsnippet
-
-snippet prc "promoted private property" b
-private ${1:string} $${2:name}, 
-endsnippet
-
-snippet xd "xdebug_break" b
-xdebug_break()
-endsnippet
-
-snippet dv "@var" b
-/** @var ${1} */
-endsnippet
-
-snippet dr "@var" b
-/** @return ${1} */
 endsnippet
