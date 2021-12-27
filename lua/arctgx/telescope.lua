@@ -2,9 +2,6 @@ local grep = require('arctgx/grep')
 
 local extension = {}
 
-function extension.git_grep_command()
-end
-
 function extension.grep(cmd, root, query)
   require('telescope.builtin').live_grep({
     cwd = root,
