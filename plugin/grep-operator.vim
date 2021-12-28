@@ -1,14 +1,12 @@
 lua <<EOF
 _G.arctgx_telescope_git_grep_operator = require('arctgx/telescope').git_grep_operator
+_G.arctgx_telescope_rg_grep_operator = require('arctgx/telescope').rg_grep_operator
 EOF
 
-" Example: <leader>qiw
-nnoremap <leader>q :set operatorfunc=arctgx#grep#grepOperator<cr>g@
-vnoremap <leader>q :<c-u>call arctgx#grep#grepOperator(visualmode())<cr>
-nnoremap <leader>w :set operatorfunc=arctgx#grep#gitGrepOperator<cr>g@
-vnoremap <leader>w :<c-u>call arctgx#grep#gitGrepOperator(visualmode())<cr>
-nnoremap <leader>e :set operatorfunc=v:lua.arctgx_telescope_git_grep_operator<cr>g@
-vnoremap <leader>e :<c-u>call v:lua.arctgx_telescope_git_grep_operator(visualmode())<cr>
+nnoremap <leader>q :set operatorfunc=v:lua.arctgx_telescope_rg_grep_operator<cr>g@
+vnoremap <leader>q :<c-u>call v:lua.arctgx_telescope_rg_grep_operator(visualmode())<cr>
+nnoremap <leader>w :set operatorfunc=v:lua.arctgx_telescope_git_grep_operator<cr>g@
+vnoremap <leader>w :<c-u>call v:lua.arctgx_telescope_git_grep_operator(visualmode())<cr>
 nmap <Plug>(ide-grep-git) <Cmd>GGrep!<CR>
 nmap <Plug>(ide-grep-files) <Cmd>RGrep!<CR>
 

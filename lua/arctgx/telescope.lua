@@ -14,6 +14,14 @@ function extension.grep(cmd, root, query)
   })
 end
 
+function extension.rg_grep_operator(type)
+  return grep.create_operator(
+    extension.grep,
+    grep.rg_grep_command(),
+    git.top(vim.fn.expand('%:p:h'))
+  )(type)
+end
+
 function extension.git_grep_operator(type)
   return grep.create_operator(
     extension.grep,
