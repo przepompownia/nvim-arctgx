@@ -8,6 +8,10 @@ function extension.top(relative_dir)
 
   if exit_code > 0 then
     print(table.concat(errors), '\n')
+    local cwd = vim.loop.cwd()
+    print(string.format('Using cwd (%s)', cwd))
+
+    return cwd
   end
 
   return top[1]

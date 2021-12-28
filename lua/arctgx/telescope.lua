@@ -1,4 +1,5 @@
 local grep = require('arctgx/grep')
+local git = require('arctgx/git')
 
 local extension = {}
 
@@ -17,7 +18,7 @@ function extension.git_grep_operator(type)
   return grep.create_operator(
     extension.grep,
     grep.git_grep_command(),
-    vim.fn.expand('%:p:h')
+    git.top(vim.fn.expand('%:p:h'))
   )(type)
 end
 
