@@ -17,7 +17,7 @@ end
 function extension.rg_grep_operator(type)
   return grep.create_operator(
     extension.grep,
-    grep.rg_grep_command(),
+    grep.rg_grep_command(true, false),
     git.top(vim.fn.expand('%:p:h'))
   )(type)
 end
@@ -25,7 +25,7 @@ end
 function extension.git_grep_operator(type)
   return grep.create_operator(
     extension.grep,
-    grep.git_grep_command(),
+    grep.git_grep_command(true, false),
     git.top(vim.fn.expand('%:p:h'))
   )(type)
 end
