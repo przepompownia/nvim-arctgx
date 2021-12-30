@@ -30,4 +30,20 @@ function extension.git_grep_operator(type)
   )(type)
 end
 
+function extension.rg_grep_operator(query, useFixedStrings, ignoreCase)
+  return extension.grep(
+    grep.rg_grep_command(useFixedStrings, ignoreCase),
+    git.top(vim.fn.expand('%:p:h')),
+    query
+  )
+end
+
+function extension.git_grep_operator(query, useFixedStrings, ignoreCase)
+  return extension.grep(
+    grep.git_grep_command(useFixedStrings, ignoreCase),
+    git.top(vim.fn.expand('%:p:h')),
+    query
+  )
+end
+
 return extension
