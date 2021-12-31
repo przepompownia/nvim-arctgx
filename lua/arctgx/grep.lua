@@ -4,7 +4,6 @@ function extension.git_grep_command(useFixedStrings, ignoreCase)
   local command = {
     'git',
     'grep',
-    '--fixed-strings',
     '--color=never',
     '--line-number',
     '--column',
@@ -24,7 +23,6 @@ end
 function extension.rg_grep_command(useFixedStrings, ignoreCase)
   local command = {
     'rg',
-    '--fixed-strings',
     '--color=never',
     '--line-number',
     '--column',
