@@ -10,5 +10,5 @@ vnoremap <leader>w :<c-u>call v:lua.arctgx_telescope_git_grep_operator(visualmod
 nmap <Plug>(ide-grep-git) <Cmd>GGrep<CR>
 nmap <Plug>(ide-grep-files) <Cmd>RGrep<CR>
 
-command! -nargs=* GGrep lua require('arctgx/telescope').git_grep_operator(<q-args>)
-command! -nargs=* RGrep lua require('arctgx/telescope').rg_grep_operator(<q-args>)
+command! -nargs=* GGrep lua require('arctgx/telescope').git_grep(<q-args>, false, false)
+command! -nargs=* RGrep lua require('arctgx/telescope').rg_grep(<q-args>, false, false)
