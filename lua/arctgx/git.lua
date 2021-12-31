@@ -17,4 +17,8 @@ function extension.top(relative_dir)
   return top[1]
 end
 
+function extension.command_files()
+  return {'git', 'ls-files'}
+end
+
 return extension

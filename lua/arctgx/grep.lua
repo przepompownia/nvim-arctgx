@@ -41,14 +41,4 @@ function extension.rg_grep_command(useFixedStrings, ignoreCase)
   return command
 end
 
-function extension.create_operator(grep_function, cmd, root)
-  return function (type)
-    grep_function(
-      cmd,
-      root,
-      vim.fn['arctgx#operator#getText'](type)
-    )
-  end
-end
-
 return extension
