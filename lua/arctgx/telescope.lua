@@ -1,10 +1,13 @@
 local action_state = require 'telescope.actions.state'
 local base = require('arctgx.base')
 local files = require('arctgx.files')
+local finders = require 'telescope.finders'
 local git = require('arctgx.git')
 local grep = require('arctgx.grep')
+local make_entry = require 'telescope.make_entry'
 local telescope = require('telescope.builtin')
 local transform_mod = require('telescope.actions.mt').transform_mod
+local utils = require 'telescope.utils'
 
 local extension = {}
 
@@ -27,6 +30,8 @@ local customActions = transform_mod({
 
     picker.finder:close()
   end,
+
+  toggleCaseSensibility = function() end,
 })
 
 extension.customActions = customActions
@@ -43,6 +48,21 @@ function extension.create_operator(search_function, cmd, root, title)
 end
 
 function extension.grep(cmd, root, query, title)
+  -- partial implementation to show that live switching works
+  local new_grep_finder = function(new_cmd, prompt_bufnr)
+    local picker = action_state.get_current_picker(prompt_bufnr)
+    local current_query = picker:_get_prompt()
+    table.insert(new_cmd, '--')
+    table.insert(new_cmd, current_query)
+
+    local output = utils.get_os_command_output(new_cmd, root)
+
+    return finders.new_table {
+      results = output,
+      entry_maker = make_entry.gen_from_vimgrep({}),
+    }
+  end
+
   telescope.live_grep({
     cwd = root,
     default_text = query,
@@ -50,9 +70,21 @@ function extension.grep(cmd, root, query, title)
     vimgrep_arguments = cmd,
     prompt_title = title,
     attach_mappings = function(prompt_bufnr, map)
+      customActions.toggleCaseSensibility:enhance {
+        post = function()
+          table.insert(cmd, '--ignore-case')
+
+          action_state.get_current_picker(prompt_bufnr):refresh(
+            new_grep_finder(cmd, prompt_bufnr),
+            { reset_prompt = false }
+          )
+        end,
+      }
 
       map('i', '<CR>', customActions.tabDrop)
       map('n', '<CR>', customActions.tabDrop)
+      map('i', '<A-i>', customActions.toggleCaseSensibility)
+      map('n', '<A-i>', customActions.toggleCaseSensibility)
 
       return true
     end,
