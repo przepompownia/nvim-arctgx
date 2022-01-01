@@ -1,4 +1,5 @@
-local action_set = require 'telescope.actions.set'
+local action_state = require 'telescope.actions.state'
+local base = require('arctgx.base')
 local files = require('arctgx.files')
 local git = require('arctgx.git')
 local grep = require('arctgx.grep')
@@ -9,7 +10,22 @@ local extension = {}
 
 local customActions = transform_mod({
   tabDrop = function(prompt_bufnr)
-    return action_set.edit(prompt_bufnr, 'TabDrop')
+    local picker = action_state.get_current_picker(prompt_bufnr)
+    local multi_selection = picker:get_multi_selection()
+
+    if next(multi_selection) == nil then
+      local selected_entry = picker:get_selection()
+      -- see from_entry.path
+      base.tab_drop(selected_entry.path)
+
+      return
+    end
+
+    for _, entry in ipairs(multi_selection) do
+      base.tab_drop(entry.path)
+    end
+
+    picker.finder:close()
   end,
 })
 
@@ -20,7 +36,7 @@ function extension.create_operator(search_function, cmd, root, title)
     search_function(
       cmd,
       root,
-      vim.fn['arctgx#operator#getText'](type),
+      base.operator_get_text(type),
       title
     )
   end
@@ -33,7 +49,8 @@ function extension.grep(cmd, root, query, title)
     grep_open_files = false,
     vimgrep_arguments = cmd,
     prompt_title = title,
-    attach_mappings = function(_, map)
+    attach_mappings = function(prompt_bufnr, map)
+
       map('i', '<CR>', customActions.tabDrop)
       map('n', '<CR>', customActions.tabDrop)
 
