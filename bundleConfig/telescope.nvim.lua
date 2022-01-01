@@ -30,6 +30,22 @@ _G.arctgx_telescope_rg_grep_operator = arctgx.rg_grep_operator
 _G.arctgx_telescope_files_git_operator = arctgx.files_git_operator
 _G.arctgx_telescope_files_all_operator = arctgx.files_all_operator
 
+vim.api.nvim_add_user_command('GGrep', function(opts)
+  arctgx.git_grep(opts.args, false, false)
+  end,
+  {
+    nargs = '*'
+  }
+)
+
+vim.api.nvim_add_user_command('RGrep', function(opts)
+  arctgx.rg_grep(opts.args, false, false)
+  end,
+  {
+    nargs = '*'
+  }
+)
+
 vim.cmd([[
   nnoremap <leader>q :set operatorfunc=v:lua.arctgx_telescope_rg_grep_operator<cr>g@
   vnoremap <leader>q :<c-u>call v:lua.arctgx_telescope_rg_grep_operator(visualmode())<cr>
@@ -44,9 +60,6 @@ vim.cmd([[
 
   nmap <Plug>(ide-grep-git) <Cmd>GGrep<CR>
   nmap <Plug>(ide-grep-files) <Cmd>RGrep<CR>
-
-  command! -nargs=* GGrep lua require('arctgx/telescope').git_grep(<q-args>, false, false)
-  command! -nargs=* RGrep lua require('arctgx/telescope').rg_grep(<q-args>, false, false)
 
   nmap <Plug>(ide-browse-files) <Cmd>lua require('arctgx/telescope').files_all()<CR>
   nmap <Plug>(ide-browse-gfiles) <Cmd>lua require('arctgx/telescope').files_git()<CR>
