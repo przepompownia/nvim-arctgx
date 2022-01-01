@@ -1,16 +1,8 @@
 local builtin = require('telescope.builtin')
 local actions = require 'telescope.actions'
-local transform_mod = require('telescope.actions.mt').transform_mod
-local action_set = require 'telescope.actions.set'
 local action_layout = require 'telescope.actions.layout'
 local arctgx = require('arctgx.telescope')
 local api = vim.api
-
-local customActions = transform_mod({
-  tabDrop = function(prompt_bufnr)
-    return action_set.edit(prompt_bufnr, 'TabDrop')
-  end,
-})
 
 require('telescope').setup {
   defaults = {
@@ -23,7 +15,7 @@ require('telescope').setup {
         ['<A-Up>'] = actions.preview_scrolling_up,
         ['<A-Down>'] = actions.preview_scrolling_down,
         ['<A-/>'] = action_layout.toggle_preview,
-        ['<CR>'] = customActions.tabDrop,
+        ['<CR>'] = arctgx.customActions.tabDrop,
       },
     },
   },

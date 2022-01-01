@@ -1,9 +1,19 @@
-local grep = require('arctgx.grep')
-local git = require('arctgx.git')
-local telescope = require('telescope.builtin')
+local action_set = require 'telescope.actions.set'
 local files = require('arctgx.files')
+local git = require('arctgx.git')
+local grep = require('arctgx.grep')
+local telescope = require('telescope.builtin')
+local transform_mod = require('telescope.actions.mt').transform_mod
 
 local extension = {}
+
+local customActions = transform_mod({
+  tabDrop = function(prompt_bufnr)
+    return action_set.edit(prompt_bufnr, 'TabDrop')
+  end,
+})
+
+extension.customActions = customActions
 
 function extension.create_operator(search_function, cmd, root, title)
   return function (type)
@@ -63,8 +73,6 @@ end
 function extension.files(cmd, root, query, title)
   telescope.find_files({
     cwd = root,
-    layout_strategy='vertical',
-    layout_config={width=0.99},
     find_command = cmd,
     default_text = query,
     prompt_title = title,
