@@ -1,8 +1,10 @@
+local builtin = require('telescope.builtin')
 local actions = require 'telescope.actions'
 local transform_mod = require('telescope.actions.mt').transform_mod
 local action_set = require 'telescope.actions.set'
 local action_layout = require 'telescope.actions.layout'
-local arctgx = require('arctgx/telescope')
+local arctgx = require('arctgx.telescope')
+local api = vim.api
 
 local customActions = transform_mod({
   tabDrop = function(prompt_bufnr)
@@ -32,12 +34,13 @@ _G.arctgx_telescope_rg_grep_operator = arctgx.rg_grep_operator
 _G.arctgx_telescope_files_git_operator = arctgx.files_git_operator
 _G.arctgx_telescope_files_all_operator = arctgx.files_all_operator
 
-vim.api.nvim_add_user_command('GGrep', function(opts) arctgx.git_grep(opts.args, false, false) end, {nargs = '*'})
-vim.api.nvim_add_user_command('RGrep', function(opts) arctgx.rg_grep(opts.args, false, false) end, {nargs = '*'})
-vim.api.nvim_set_keymap('n', '<Plug>(ide-grep-git)', '', {callback = function() arctgx.git_grep('', false, false) end})
-vim.api.nvim_set_keymap('n', '<Plug>(ide-grep-files)', '', {callback = function() arctgx.rg_grep('', false, false) end})
-vim.api.nvim_set_keymap('n', '<Plug>(ide-browse-files)', '', {callback = function() arctgx.files_all() end})
-vim.api.nvim_set_keymap('n', '<Plug>(ide-browse-gfiles)', '', {callback = function() arctgx.files_git() end})
+api.nvim_add_user_command('GGrep', function(opts) arctgx.git_grep(opts.args, false, false) end, {nargs = '*'})
+api.nvim_add_user_command('RGrep', function(opts) arctgx.rg_grep(opts.args, false, false) end, {nargs = '*'})
+api.nvim_set_keymap('n', '<Plug>(ide-grep-git)', '', {callback = function() arctgx.git_grep('', false, false) end})
+api.nvim_set_keymap('n', '<Plug>(ide-grep-files)', '', {callback = function() arctgx.rg_grep('', false, false) end})
+api.nvim_set_keymap('n', '<Plug>(ide-browse-files)', '', {callback = function() arctgx.files_all() end})
+api.nvim_set_keymap('n', '<Plug>(ide-browse-gfiles)', '', {callback = function() arctgx.files_git() end})
+api.nvim_set_keymap('n', '<Plug>(ide-browse-cmd-history)', '', {callback = function() builtin.command_history() end})
 
 vim.cmd([[
   nnoremap <leader>q :set operatorfunc=v:lua.arctgx_telescope_rg_grep_operator<cr>g@

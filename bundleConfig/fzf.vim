@@ -29,9 +29,9 @@ command! -bang -nargs=* FzfRGrep call arctgx#grep#grep(
       \ )
 
 nmap <Plug>(ide-browse-buffers) <Cmd>call fzf#vim#buffers({}, 0)<CR>
-nmap <Plug>(ide-browse-cmd-history) <Cmd>History:<CR>
 nmap <Plug>(ide-browse-history) <Cmd>call fzf#vim#history(fzf#vim#with_preview(), 1)<CR>
 nmap <Plug>(ide-browse-windows) <Cmd>call fzf#vim#windows()<CR>
 
+" nmap <Plug>(ide-browse-cmd-history) <Cmd>History:<CR>
 " nmap <Plug>(ide-browse-files) <Cmd>Files!<CR>
 " nmap <Plug>(ide-browse-gfiles) <Cmd>GFiles!<CR>
