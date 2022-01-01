@@ -7,6 +7,7 @@ function extension.git_grep_command(useFixedStrings, ignoreCase)
     '--color=never',
     '--line-number',
     '--column',
+    '-I',
   }
 
   if (true == useFixedStrings) then
