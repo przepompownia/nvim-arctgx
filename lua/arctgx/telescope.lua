@@ -22,8 +22,6 @@ function extension.grep(cmd, root, query, title)
     default_text = query,
     grep_open_files = false,
     vimgrep_arguments = cmd,
-    layout_strategy='vertical',
-    layout_config={width=0.99},
     prompt_title = title,
   })
 end

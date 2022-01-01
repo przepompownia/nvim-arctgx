@@ -12,6 +12,8 @@ local customActions = transform_mod({
 
 require('telescope').setup {
   defaults = {
+    layout_strategy = 'vertical',
+    layout_config = { height = 0.99, width = 0.99 },
     mappings = {
       i = {
         ['<C-p>'] = actions.cycle_history_next,
