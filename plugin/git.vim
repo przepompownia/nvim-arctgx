@@ -19,7 +19,7 @@ function! s:completeGFDiff(argLead, CmdLine, CursorPos) abort
 
   let l:reducedList = filter(l:branches, {index, string -> stridx(string, l:parts.pattern) >= 0})
 
-  return map(l:reducedList, {index, branch -> l:parts.lead . branch})
+  return map(l:reducedList, {index, branch -> l:parts.lead .. branch})
 endfunction
 
 function! s:split(range) abort
@@ -34,11 +34,11 @@ function! s:split(range) abort
     endif
     let [l:lead, l:pattern] = split(a:range, l:separators[l:separator], 1)
 
-    return {
-          \ 'lead': l:lead . l:separator,
-          \ 'pattern': l:pattern,
+    return #{
+          \ lead: l:lead .. l:separator,
+          \ pattern: l:pattern,
           \ }
   endfor
 
-  return {'lead': '', 'pattern': a:range}
+  return #{lead: '', pattern: a:range}
 endfunction
