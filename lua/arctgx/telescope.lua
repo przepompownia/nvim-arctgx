@@ -33,6 +33,12 @@ function extension.grep(cmd, root, query, title)
     grep_open_files = false,
     vimgrep_arguments = cmd,
     prompt_title = title,
+    attach_mappings = function(_, map)
+      map('i', '<CR>', customActions.tabDrop)
+      map('n', '<CR>', customActions.tabDrop)
+
+      return true
+    end,
   })
 end
 
@@ -76,6 +82,12 @@ function extension.files(cmd, root, query, title)
     find_command = cmd,
     default_text = query,
     prompt_title = title,
+    attach_mappings = function(_, map)
+      map('i', '<CR>', customActions.tabDrop)
+      map('n', '<CR>', customActions.tabDrop)
+
+      return true
+    end,
   })
 end
 
@@ -83,7 +95,7 @@ function extension.files_git(query)
   extension.files(
     git.command_files(),
     git.top(vim.fn.expand('%:p:h')),
-    query, 
+    query,
     'Files (git)'
   )
 end
