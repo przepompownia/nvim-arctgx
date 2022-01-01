@@ -58,13 +58,14 @@ function extension.git_grep(query, useFixedStrings, ignoreCase)
   )
 end
 
-function extension.files(cmd, root, query)
+function extension.files(cmd, root, query, title)
   telescope.find_files({
     cwd = root,
     layout_strategy='vertical',
     layout_config={width=0.99},
     find_command = cmd,
     default_text = query,
+    prompt_title = title,
   })
 end
 
@@ -72,7 +73,8 @@ function extension.files_git(query)
   extension.files(
     git.command_files(),
     git.top(vim.fn.expand('%:p:h')),
-    query
+    query, 
+    'Files (git)'
   )
 end
 
