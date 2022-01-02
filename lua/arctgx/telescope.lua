@@ -68,11 +68,23 @@ function extension.grep(cmd, root, query, title)
           )
         end,
       }
+      customActions.toggleFixedStrings:enhance {
+        post = function()
+          cmd:switch_fixed_strings()
+
+          action_state.get_current_picker(prompt_bufnr):refresh(
+            new_grep_finder(prompt_bufnr),
+            { reset_prompt = false }
+          )
+        end,
+      }
 
       map('i', '<CR>', customActions.tabDrop)
       map('n', '<CR>', customActions.tabDrop)
       map('i', '<A-i>', customActions.toggleCaseSensibility)
       map('n', '<A-i>', customActions.toggleCaseSensibility)
+      map('i', '<A-f>', customActions.toggleFixedStrings)
+      map('n', '<A-f>', customActions.toggleFixedStrings)
 
       return true
     end,
