@@ -8,8 +8,9 @@ require('telescope').setup {
   defaults = {
     previewer = true,
     preview_cutoff = 1,
-    layout_strategy = 'vertical',
+    layout_strategy = 'horizontal',
     layout_config = { height = 0.99, width = 0.99 },
+    -- borderchars = {'─', '│', '─', '│', '┌', '┐', '┘', '└'},
     mappings = {
       i = {
         ['<C-p>'] = actions.cycle_history_next,
@@ -47,15 +48,4 @@ vim.cmd([[
 
   vmap <Plug>(ide-files-search-operator) :<C-U>call v:lua.arctgx_telescope_files_all_operator(visualmode())<CR>
   nmap <Plug>(ide-files-search-operator) :set operatorfunc=v:lua.arctgx_telescope_files_all_operator<CR>g@
-
-  " nmap <Plug>(ide-browse-buffers) <Cmd>call fzf#vim#buffers({}, 0)<CR>
-  " nmap <Plug>(ide-browse-windows) <Cmd>call fzf#vim#windows()<CR>
 ]])
-
--- lua require('telescope.builtin').find_files({layout_strategy='vertical',layout_config={width=0.99, preview_cutoff=40}, find_command={'git', 'ls-files'}}).get_dropdown({previewer = true})
--- lua require('telescope.builtin').live_grep({cwd = require('telescope.utils').buffer_dir(), default_text = 'ta'})
--- lua require('telescope.builtin').live_grep({cwd = require('telescope.utils').buffer_dir(), default_text = 'ta', grep_open_files = false, vimgrep_arguments = {'git', 'grep', '--fixed-strings', '--color=never', '--line-number', '--column'} })
--- lua require('telescope.builtin').live_grep({cwd = require('telescope.utils').buffer_dir(), default_text = 'ta', grep_open_files = false, vimgrep_arguments = { 'rg', '--color=never', '--no-heading', '--with-filename', '--line-number', '--column', '--smart-case' } })
--- { 'rg', '--color=never', '--no-heading', '--with-filename', '--line-number', '--column', '--smart-case' }
--- lua require('telescope.builtin').live_grep({cwd = require('telescope.utils').buffer_dir(), default_text = 'ta', grep_open_files = false, vimgrep_arguments = {'git', 'grep', '--fixed-strings', '--color=never', '--line-number', '--column'}, layout_strategy='vertical',layout_config={width=0.99, preview_cutoff=40} })
---
