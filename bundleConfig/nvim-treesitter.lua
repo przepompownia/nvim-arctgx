@@ -2,6 +2,7 @@ require'nvim-treesitter.configs'.setup {
   ensure_installed = {
     'bash',
     'dockerfile',
+    'http',
     'javascript',
     'json',
     'jsonc',
@@ -9,6 +10,7 @@ require'nvim-treesitter.configs'.setup {
     'markdown',
     'php',
     'python',
+    'query',
     'vim',
     'yaml',
   },
