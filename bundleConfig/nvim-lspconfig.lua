@@ -1,10 +1,11 @@
+local base = require('arctgx.base')
 local nvim_lsp = require('lspconfig')
 
 local vim = vim
 local api = vim.api
 local log = require 'vim.lsp.log'
 local util = require 'vim.lsp.util'
-local arctgx_lsp = require 'arctgx/lsp'
+local arctgx_lsp = require 'arctgx.lsp'
 
 local function get_line_byte_from_position(bufnr, position)
   -- LSP's line and characters are 0-indexed
@@ -37,7 +38,7 @@ local tab_drop_location = function(location)
   -- vim.fn.settagstack(vim.fn.win_getid(), {items=items}, 't')
 
   --- Jump to new location (adjusting for UTF-16 encoding of characters)
-  api.nvim_command('call arctgx#base#tabDrop("'..vim.uri_to_fname(uri)..'")')
+  base.tab_drop(vim.uri_to_fname(uri))
   local range = location.range or location.targetSelectionRange
   local row = range.start.line
   local col = get_line_byte_from_position(0, range.start)
