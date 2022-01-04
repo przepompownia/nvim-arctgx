@@ -36,6 +36,8 @@ api.nvim_set_keymap('n', '<Plug>(ide-browse-files)', '', {callback = arctgx.file
 api.nvim_set_keymap('n', '<Plug>(ide-browse-gfiles)', '', {callback = arctgx.files_git})
 api.nvim_set_keymap('n', '<Plug>(ide-browse-cmd-history)', '', {callback = builtin.command_history})
 api.nvim_set_keymap('n', '<Plug>(ide-browse-history)', '', {callback = arctgx.oldfiles})
+api.nvim_set_keymap('n', '<Plug>(ide-browse-buffers)', '', {callback = arctgx.buffers})
+-- api.nvim_set_keymap('n', '<Plug>(ide-browse-windows)', '', {callback = arctgx.buffers})
 
 vim.cmd([[
   nnoremap <leader>q :set operatorfunc=v:lua.arctgx_telescope_rg_grep_operator<cr>g@
@@ -48,4 +50,6 @@ vim.cmd([[
 
   vmap <Plug>(ide-files-search-operator) :<C-U>call v:lua.arctgx_telescope_files_all_operator(visualmode())<CR>
   nmap <Plug>(ide-files-search-operator) :set operatorfunc=v:lua.arctgx_telescope_files_all_operator<CR>g@
+  hi TelescopeCaret guifg=#a52626 gui=bold guibg=#8b8d8b
+  hi TelescopeSelection guifg=#f4fff4 gui=bold guibg=#8b8d8b
 ]])

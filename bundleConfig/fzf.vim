@@ -28,5 +28,4 @@ command! -bang -nargs=* FzfRGrep call arctgx#grep#grep(
       \ <bang>0
       \ )
 
-nmap <Plug>(ide-browse-buffers) <Cmd>call fzf#vim#buffers({}, 0)<CR>
 nmap <Plug>(ide-browse-windows) <Cmd>call fzf#vim#windows()<CR>
