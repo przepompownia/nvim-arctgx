@@ -45,6 +45,17 @@ function extension.create_operator(search_function, cmd, root, title)
   end
 end
 
+function extension.oldfiles()
+  telescope.oldfiles({
+    attach_mappings = function(prompt_bufnr, map)
+      map('i', '<CR>', customActions.tabDrop)
+      map('n', '<CR>', customActions.tabDrop)
+
+      return true
+    end,
+  })
+end
+
 function extension.grep(cmd, root, query, title)
   local new_grep_finder = function(prompt_bufnr)
     local picker = action_state.get_current_picker(prompt_bufnr)

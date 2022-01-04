@@ -32,10 +32,10 @@ api.nvim_add_user_command('GGrep', function(opts) arctgx.git_grep(opts.args, fal
 api.nvim_add_user_command('RGrep', function(opts) arctgx.rg_grep(opts.args, false, false) end, {nargs = '*'})
 api.nvim_set_keymap('n', '<Plug>(ide-grep-git)', '', {callback = function() arctgx.git_grep('', false, false) end})
 api.nvim_set_keymap('n', '<Plug>(ide-grep-files)', '', {callback = function() arctgx.rg_grep('', false, false) end})
-api.nvim_set_keymap('n', '<Plug>(ide-browse-files)', '', {callback = function() arctgx.files_all() end})
-api.nvim_set_keymap('n', '<Plug>(ide-browse-gfiles)', '', {callback = function() arctgx.files_git() end})
-api.nvim_set_keymap('n', '<Plug>(ide-browse-cmd-history)', '', {callback = function() builtin.command_history() end})
-api.nvim_set_keymap('n', '<Plug>(ide-browse-history)', '', {callback = function() builtin.oldfiles() end})
+api.nvim_set_keymap('n', '<Plug>(ide-browse-files)', '', {callback = arctgx.files_all})
+api.nvim_set_keymap('n', '<Plug>(ide-browse-gfiles)', '', {callback = arctgx.files_git})
+api.nvim_set_keymap('n', '<Plug>(ide-browse-cmd-history)', '', {callback = builtin.command_history})
+api.nvim_set_keymap('n', '<Plug>(ide-browse-history)', '', {callback = arctgx.oldfiles})
 
 vim.cmd([[
   nnoremap <leader>q :set operatorfunc=v:lua.arctgx_telescope_rg_grep_operator<cr>g@
