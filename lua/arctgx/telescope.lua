@@ -32,6 +32,13 @@ local customActions = transform_mod({
   toggleFixedStrings = function() end,
 })
 
+local default_file_mappings = function(prompt_bufnr, map)
+  map('i', '<CR>', customActions.tabDrop)
+  map('n', '<CR>', customActions.tabDrop)
+
+  return true
+end
+
 extension.customActions = customActions
 
 function extension.create_operator(search_function, cmd, root, title)
@@ -47,12 +54,7 @@ end
 
 function extension.oldfiles()
   telescope.oldfiles({
-    attach_mappings = function(prompt_bufnr, map)
-      map('i', '<CR>', customActions.tabDrop)
-      map('n', '<CR>', customActions.tabDrop)
-
-      return true
-    end,
+    attach_mappings = default_file_mappings,
   })
 end
 
@@ -90,8 +92,7 @@ function extension.grep(cmd, root, query, title)
         end,
       }
 
-      map('i', '<CR>', customActions.tabDrop)
-      map('n', '<CR>', customActions.tabDrop)
+      default_file_mappings(prompt_bufnr, map)
       map('i', '<A-i>', customActions.toggleCaseSensibility)
       map('n', '<A-i>', customActions.toggleCaseSensibility)
       map('i', '<A-f>', customActions.toggleFixedStrings)
