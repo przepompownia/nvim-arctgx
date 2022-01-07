@@ -115,8 +115,9 @@ end
 function extension.rg_grep_operator(type)
   return extension.create_operator(
     extension.grep,
-    grep.new_rg_grep_command(true, false),
-    git.top(vim.fn.expand('%:p:h'))
+    grep:new_rg_grep_command(true, false),
+    git.top(vim.fn.expand('%:p:h')),
+    'Grep (rg)'
   )(type)
 end
 
@@ -124,13 +125,14 @@ function extension.git_grep_operator(type)
   return extension.create_operator(
     extension.grep,
     grep:new_git_grep_command(true, false),
-    git.top(vim.fn.expand('%:p:h'))
+    git.top(vim.fn.expand('%:p:h')),
+    'Grep (git)'
   )(type)
 end
 
 function extension.rg_grep(query, useFixedStrings, ignoreCase)
   return extension.grep(
-    grep.new_rg_grep_command(useFixedStrings, ignoreCase),
+    grep:new_rg_grep_command(useFixedStrings, ignoreCase),
     git.top(vim.fn.expand('%:p:h')),
     query,
     'Grep (rg)'
