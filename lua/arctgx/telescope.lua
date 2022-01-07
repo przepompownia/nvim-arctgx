@@ -1,3 +1,4 @@
+local actions = require 'telescope.actions'
 local action_state = require 'telescope.actions.state'
 local base = require('arctgx.base')
 local files = require('arctgx.files')
@@ -35,6 +36,8 @@ local customActions = transform_mod({
 local default_file_mappings = function(prompt_bufnr, map)
   map('i', '<CR>', customActions.tabDrop)
   map('n', '<CR>', customActions.tabDrop)
+  map('n', '<C-y>', actions.file_edit)
+  map('i', '<C-y>', actions.file_edit)
 
   return true
 end
@@ -54,6 +57,12 @@ end
 
 function extension.oldfiles()
   telescope.oldfiles({
+    attach_mappings = default_file_mappings,
+  })
+end
+
+function extension.buffers()
+  telescope.buffers({
     attach_mappings = default_file_mappings,
   })
 end
