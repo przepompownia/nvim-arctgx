@@ -28,7 +28,6 @@ local tab_drop_location = function(location)
   -- location may be Location or LocationLink
   local uri = location.uri or location.targetUri
   if uri == nil then return end
-  local bufnr = vim.uri_to_bufnr(uri)
   -- Save position in jumplist
   vim.cmd "normal! m'"
 
@@ -47,9 +46,10 @@ local tab_drop_location = function(location)
   return true
 end
 
-local location_handler = function(_, result, ctx, _)
+local function location_handler(_, result, ctx, _)
   if result == nil or vim.tbl_isempty(result) then
     local _ = log.info() and log.info(ctx.method, 'No location found')
+
     return nil
   end
 
@@ -60,7 +60,7 @@ local location_handler = function(_, result, ctx, _)
     tab_drop_location(result[1])
 
     if #result > 1 then
-      util.set_qflist(util.locations_to_items(result))
+      vim.fn.setqflist({}, ' ', {title = 'LSP locations', items = util.locations_to_items(result)})
       api.nvim_command('copen')
     end
   else
