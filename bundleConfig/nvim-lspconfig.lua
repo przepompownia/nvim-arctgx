@@ -56,18 +56,22 @@ local function location_handler(_, result, ctx, _)
   -- textDocument/definition can return Location or Location[]
   -- https://microsoft.github.io/language-server-protocol/specifications/specification-current/#textDocument_definition
 
-  if vim.tbl_islist(result) then
+  if not vim.tbl_islist(result) then
+    tab_drop_location(result)
+
+    return
+  end
+
+  if #result == 1 then
     tab_drop_location(result[1])
 
-    if #result > 1 then
-      vim.fn.setqflist({}, ' ', {title = 'LSP locations', items = util.locations_to_items(result)})
-      api.nvim_command('copen')
-    end
-  else
-    tab_drop_location(result)
+    return
   end
+
+  vim.fn.setqflist({}, ' ', {title = 'LSP locations', items = util.locations_to_items(result)})
+  api.nvim_command('copen')
 end
---see: https://microsoft.github.io/language-server-protocol/specifications/specification-current/#textDocument_declaration
+
 vim.lsp.handlers['textDocument/declaration'] = location_handler
 vim.lsp.handlers['textDocument/definition'] = location_handler
 vim.lsp.handlers['textDocument/typeDefinition'] = location_handler
