@@ -1,25 +1,21 @@
 local api = vim.api
 local lsp = require('vim.lsp')
 local diagnostic = require('vim.diagnostic')
+local keymap = require('vim.keymap')
 
 local M = {
 }
-
-local common_opts = function(fn)
-  return { callback=fn, noremap=true, silent=true }
-end
 
 local print_workspace_folders = function ()
   print(vim.inspect(lsp.buf.list_workspace_folders()))
 end
 
 function M.on_attach(client, bufnr)
-  local function buf_map(mode, lhs, lua_rhs, opts)
+  local function buf_map(modes, lhs, rhs, opts)
     opts = opts or {}
-    opts.callback = lua_rhs
     opts.noremap = opts.noremap or true
     opts.silent = opts.silent or true
-    api.nvim_buf_set_keymap(bufnr, mode, lhs, '', opts)
+    keymap.set(modes, lhs, rhs, opts)
   end
 
   local function buf_set_option(...) api.nvim_buf_set_option(bufnr, ...) end
@@ -29,8 +25,7 @@ function M.on_attach(client, bufnr)
   buf_map('n', '<Plug>(ide-goto-definition)', lsp.buf.definition)
   buf_map('n', '<Plug>(ide-hover)', lsp.buf.hover)
   buf_map('n', '<Plug>(ide-goto-implementation)', lsp.buf.implementation)
-  buf_map('n', '<Plug>(ide-show-signature-help)', lsp.buf.signature_help)
-  buf_map('i', '<Plug>(ide-show-signature-help)', lsp.buf.signature_help)
+  buf_map({'n', 'i'}, '<Plug>(ide-show-signature-help)', lsp.buf.signature_help)
   buf_map('n', '<Plug>(ide-list-workspace-symbols)', lsp.buf.workspace_symbol)
   buf_map('n', '<Plug>(ide-list-document-symbols)', lsp.buf.document_symbol)
   buf_map('n', '<Plug>(ide-action-rename)', lsp.buf.rename)
