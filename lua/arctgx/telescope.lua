@@ -17,7 +17,7 @@ local customActions = transform_mod({
     if next(multi_selection) == nil then
       local selected_entry = picker:get_selection()
       -- see from_entry.path
-      base.tab_drop(selected_entry.path)
+      base.tab_drop(selected_entry.path, selected_entry.lnum, selected_entry.col)
 
       return
     end
