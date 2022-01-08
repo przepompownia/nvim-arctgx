@@ -11,25 +11,34 @@ function! arctgx#base#getBufferDirectory() abort
   return (empty(&buftype) || &buftype ==# 'help') ? expand('%:p:h') : getcwd()
 endfunction
 
-function! s:getTabOfLoadedFile(path) abort
+function! s:getBufnrByPath(path) abort
   let l:filename = fnamemodify(a:path, ':p')
   let l:bufNr = bufnr(l:filename)
-  for l:i in range(tabpagenr('$'))
-    let l:tabnr = l:i + 1
-    if index(tabpagebuflist(l:tabnr), l:bufNr) >= 0
-      return l:tabnr
-    endif
-  endfor
 
-  return v:null
+  return -1 == l:bufNr ? v:null : l:bufNr
+endfunction
+
+function! s:getWinOfLoadedFile(path) abort
+  let l:bufNr = s:getBufnrByPath(a:path)
+
+  if (v:null is l:bufNr)
+    return v:null
+  endif
+
+  let l:winIds = win_findbuf(l:bufNr)
+
+  if empty(l:winIds)
+    return v:null
+  endif
+
+  return l:winIds[0]
 endfunction
 
 function! arctgx#base#tabDrop(path) abort
-  let l:tabNr = s:getTabOfLoadedFile(a:path)
+  let l:winId = s:getWinOfLoadedFile(a:path)
 
-  if v:null isnot# l:tabNr
-    silent execute 'tabnext ' . l:tabNr
-    silent execute 'drop ' . a:path
+  if v:null isnot# l:winId
+    call win_gotoid(l:winId)
     return
   endif
 
