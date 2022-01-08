@@ -18,14 +18,12 @@ function! s:getBufnrByPath(path) abort
   return -1 == l:bufNr ? v:null : l:bufNr
 endfunction
 
-function! s:getWinOfLoadedFile(path) abort
-  let l:bufNr = s:getBufnrByPath(a:path)
-
-  if (v:null is l:bufNr)
+function! s:getFirstWinOfLoadedBuffer(bufNr) abort
+  if (v:null is a:bufNr)
     return v:null
   endif
 
-  let l:winIds = win_findbuf(l:bufNr)
+  let l:winIds = win_findbuf(a:bufNr)
 
   if empty(l:winIds)
     return v:null
@@ -34,17 +32,17 @@ function! s:getWinOfLoadedFile(path) abort
   return l:winIds[0]
 endfunction
 
-function! arctgx#base#tabDrop(path) abort
-  let l:winId = s:getWinOfLoadedFile(a:path)
-
+function! arctgx#base#tabDrop(path, relativeWinNr = v:null) abort
+  let l:winId = s:getFirstWinOfLoadedBuffer(s:getBufnrByPath(a:path))
   if v:null isnot# l:winId
     call win_gotoid(l:winId)
     return
   endif
 
-  let l:curentBufInfo = getbufinfo('%')[0]
+  let l:relativeWinNr = a:relativeWinNr ? a:relativeWinNr : win_getid()
 
-  if l:curentBufInfo.name ==# '' && l:curentBufInfo.changed ==# 0
+  if v:null isnot# l:relativeWinNr && getbufvar(winbufnr(l:relativeWinNr), 'changedtick') <= 2
+    call win_gotoid(l:relativeWinNr)
     silent execute 'edit ' . a:path
     return
   endif
