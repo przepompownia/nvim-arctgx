@@ -62,6 +62,11 @@ endfunction
 
 function! arctgx#base#tabDropToLineAndColumn(path, line = 0, column = 0) abort
   call arctgx#base#tabDrop(a:path)
+
+  if v:null is a:line
+    return
+  endif
+
   call arctgx#base#cursor(a:line, a:column)
 endfunction
 
