@@ -37,11 +37,12 @@ local tab_drop_location = function(location)
   -- vim.fn.settagstack(vim.fn.win_getid(), {items=items}, 't')
 
   --- Jump to new location (adjusting for UTF-16 encoding of characters)
-  base.tab_drop(vim.uri_to_fname(uri))
   local range = location.range or location.targetSelectionRange
   local row = range.start.line
-  local col = get_line_byte_from_position(0, range.start)
-  api.nvim_win_set_cursor(0, {row + 1, col})
+  local path = vim.uri_to_fname(uri)
+
+  local col = get_line_byte_from_position(base.get_bufnr_by_path(path) or vim.fn.bufadd(path), range.start)
+  base.tab_drop(path, row + 1, col + 1)
 
   return true
 end
