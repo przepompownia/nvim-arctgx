@@ -39,9 +39,10 @@ local tab_drop_location = function(location)
   --- Jump to new location (adjusting for UTF-16 encoding of characters)
   local range = location.range or location.targetSelectionRange
   local row = range.start.line
-  local path = vim.uri_to_fname(uri)
+  local bufnr = vim.uri_to_bufnr(uri)
+  local path = vim.api.nvim_buf_get_name(bufnr)
 
-  local col = get_line_byte_from_position(base.get_bufnr_by_path(path) or vim.fn.bufadd(path), range.start)
+  local col = get_line_byte_from_position(bufnr, range.start)
   base.tab_drop(path, row + 1, col + 1)
 
   vim.cmd 'normal zt'
