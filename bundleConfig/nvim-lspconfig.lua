@@ -23,7 +23,7 @@ local function get_line_byte_from_position(bufnr, position)
   return col
 end
 
--- stolen from nvim/**/vim/lsp/util.lua
+-- based on lsp/util.lua
 local tab_drop_location = function(location)
   -- location may be Location or LocationLink
   local uri = location.uri or location.targetUri
@@ -43,6 +43,8 @@ local tab_drop_location = function(location)
 
   local col = get_line_byte_from_position(base.get_bufnr_by_path(path) or vim.fn.bufadd(path), range.start)
   base.tab_drop(path, row + 1, col + 1)
+
+  vim.cmd 'normal zt'
 
   return true
 end
