@@ -32,6 +32,11 @@ function! s:getFirstWinOfLoadedBuffer(bufNr) abort
   return l:winIds[0]
 endfunction
 
+function s:bufferIsFresh(bufnr) abort
+  return '' ==# bufname(a:bufnr) && getbufvar(a:bufnr, 'changedtick') <= 2
+    print(vim.inspect('P1'))
+endfunction
+
 function! arctgx#base#tabDrop(path, relativeWinNr = v:null) abort
   let l:winId = s:getFirstWinOfLoadedBuffer(s:getBufnrByPath(a:path))
   if v:null isnot# l:winId
@@ -41,7 +46,7 @@ function! arctgx#base#tabDrop(path, relativeWinNr = v:null) abort
 
   let l:relativeWinNr = a:relativeWinNr ? a:relativeWinNr : win_getid()
 
-  if v:null isnot# l:relativeWinNr && getbufvar(winbufnr(l:relativeWinNr), 'changedtick') <= 2
+  if s:bufferIsFresh(winbufnr(l:relativeWinNr))
     call win_gotoid(l:relativeWinNr)
     silent execute 'edit ' . a:path
     return
