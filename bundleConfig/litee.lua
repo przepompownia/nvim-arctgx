@@ -1,0 +1,1 @@
+require('litee.lib').setup({})
