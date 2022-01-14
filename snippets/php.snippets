@@ -68,66 +68,53 @@ snippet var "var_export($var)"
     var_export(${1}, true);
 snippet te "throw new Exception()"
     throw new ${1:Exception}("${2:Error Processing Request}");
-
 snippet con "__construct()"
         public function __construct(
             ${1}
         ) {
         } 
-
 snippet pug "Public getter"
         public function $1(): ${2}
         {
             return $this->${1:name};
         }
-
 snippet pub "Public function"
         public function ${1:name}(${2}): ${3}
         {
             ${VISUAL}${4:;}
         }
-
 snippet pro "Protected function"
         protected function ${1:name}(${2}): ${3}
         {
             ${VISUAL}${5:;}
         }
-
 snippet pri "Private function"
         private function ${1:name}(${2}): ${3}
         {
             ${VISUAL}${5:;}
         }
-
 snippet pubs "Public static function"
         public static function ${1:name}(${2}): ${3}
         {
             ${VISUAL}${5:;}
         }
-
 snippet pros "Protected static function"
         protected static function ${1:name}(${2}): ${3}
         {
             ${VISUAL}${5:;}
         }
-
 snippet pris "Private static function"
         private static function ${1:name}(${2}): ${3}
         {
             ${VISUAL}${5:;}
         }
-
 snippet prv "private variable"
         private ${1:string} $${2:name}; 
-
 snippet prc "promoted private property"
         private ${1:string} $${2:name}, 
-
 snippet xd "xdebug_break"
         xdebug_break()
-
 snippet dv "@var"
         /** @var ${1} */
-
 snippet dr "@var"
         /** @return ${1} */
