@@ -1,96 +1,22 @@
-local base = require('arctgx.base')
 local nvim_lsp = require('lspconfig')
 
 local vim = vim
-local api = vim.api
-local log = require 'vim.lsp.log'
-local util = require 'vim.lsp.util'
 local arctgx_lsp = require 'arctgx.lsp'
-
-local function get_line_byte_from_position(bufnr, position)
-  -- LSP's line and characters are 0-indexed
-  -- Vim's line and columns are 1-indexed
-  local col = position.character
-  -- When on the first character, we can ignore the difference between byte and
-  -- character
-  if col > 0 then
-    local line = position.line
-    local lines = api.nvim_buf_get_lines(bufnr, line, line + 1, false)
-    if #lines > 0 then
-      return vim.str_byteindex(lines[1], col)
-    end
-  end
-  return col
-end
-
--- based on lsp/util.lua
-local tab_drop_location = function(location)
-  -- location may be Location or LocationLink
-  local uri = location.uri or location.targetUri
-  if uri == nil then return end
-  -- Save position in jumplist
-  vim.cmd "normal! m'"
-
-  -- Push a new item into tagstack
-  -- local from = {vim.fn.bufnr('%'), vim.fn.line('.'), vim.fn.col('.'), 0}
-  -- local items = {{tagname=vim.fn.expand('<cword>'), from=from}}
-  -- vim.fn.settagstack(vim.fn.win_getid(), {items=items}, 't')
-
-  --- Jump to new location (adjusting for UTF-16 encoding of characters)
-  local range = location.range or location.targetSelectionRange
-  local row = range.start.line
-  local bufnr = vim.uri_to_bufnr(uri)
-  local path = vim.api.nvim_buf_get_name(bufnr)
-
-  local col = get_line_byte_from_position(bufnr, range.start)
-  base.tab_drop(path, row + 1, col + 1)
-
-  vim.cmd 'normal zt'
-
-  return true
-end
-
-local function location_handler(_, result, ctx, _)
-  if result == nil or vim.tbl_isempty(result) then
-    local _ = log.info() and log.info(ctx.method, 'No location found')
-
-    return nil
-  end
-
-  -- textDocument/definition can return Location or Location[]
-  -- https://microsoft.github.io/language-server-protocol/specifications/specification-current/#textDocument_definition
-
-  if not vim.tbl_islist(result) then
-    tab_drop_location(result)
-
-    return
-  end
-
-  if #result == 1 then
-    tab_drop_location(result[1])
-
-    return
-  end
-
-  vim.fn.setqflist({}, ' ', {title = 'LSP locations', items = util.locations_to_items(result)})
-  api.nvim_command('copen')
-end
-
-vim.lsp.handlers['textDocument/declaration'] = location_handler
-vim.lsp.handlers['textDocument/definition'] = location_handler
-vim.lsp.handlers['textDocument/typeDefinition'] = location_handler
-vim.lsp.handlers['textDocument/implementation'] = location_handler
-vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(
-  vim.lsp.diagnostic.on_publish_diagnostics, {
-    virtual_text = false,
-    underline = false,
-  }
-)
--- vim.lsp.set_log_level('debug')
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
--- capabilities.textDocument.completion.completionItem.snippetSupport = true
+capabilities.textDocument.completion.completionItem.snippetSupport = true
+
+require('lspconfig').jsonls.setup {
+  filetypes = { 'json', 'jsonc' },
+  capabilities = capabilities,
+  on_attach = arctgx_lsp.on_attach,
+  settings = {
+    json = {
+      schemas = require('schemastore').json.schemas(),
+    },
+  },
+}
 
 require'lspconfig'.sqls.setup{
   cmd = {os.getenv('HOME')..'/go/bin/sqls', '-config', os.getenv('HOME')..'/.config/sqls/config.yml'};
@@ -99,6 +25,12 @@ require'lspconfig'.sqls.setup{
 }
 
 require'lspconfig'.diagnosticls.setup{
+  -- cmd = {
+    -- '/home/arctgx/dev/external/diagnostic-languageserver/bin/index.js',
+    '--stdio',
+    -- '--log-level',
+    -- '4',
+  -- },
   capabilities = capabilities,
   on_attach = arctgx_lsp.on_attach,
   filetypes = { 'php' },
@@ -187,6 +119,7 @@ require'lspconfig'.diagnosticls.setup{
       phpstan = {
         sourceName = 'phpstan',
         command = 'phpstan',
+        -- command = '/tmp/phpstan.php',
         rootPatterns = { 'phpstan.neon', 'composer.json', 'composer.lock', 'vendor', '.git' },
         debounce = 100,
         args = {
@@ -214,6 +147,27 @@ require'lspconfig'.diagnosticls.setup{
         -- },
       },
     }
+  }
+}
+
+require('lspconfig').yamlls.setup {
+  capabilities = capabilities,
+  on_attach = arctgx_lsp.on_attach,
+  settings = {
+    yaml = {
+      format = {
+        enable = true,
+      },
+      schemaStore = {
+        enable = true,
+      },
+      schemas = {
+        ['https://raw.githubusercontent.com/compose-spec/compose-spec/master/schema/compose-spec.json'] = 'docker-compose.yml',
+        -- ['https://json.schemastore.org/github-workflow.json'] = '/.github/workflows/*',
+        -- ['../path/relative/to/file.yml'] = '/.github/workflows/*',
+        -- ['/path/from/root/of/project'] = '/.github/workflows/*'
+      },
+    },
   }
 }
 
@@ -265,10 +219,3 @@ for _, lsp in ipairs(servers) do
     }
   }
 end
-
-vim.cmd([[
-  sign define DiagnosticSignHint text=💡 linehl= texthl=IdeHintSign numhl=IdeLineNrHint
-  sign define DiagnosticSignInfo text= linehl= texthl=IdeInfoSign numhl=IdeLineNrInfo
-  sign define DiagnosticSignWarn text=⚠ linehl= texthl=IdeWarningSign numhl=IdeLineNrWarning
-  sign define DiagnosticSignError text= linehl= texthl=IdeErrorSign numhl=IdeLineNrError
-]])
