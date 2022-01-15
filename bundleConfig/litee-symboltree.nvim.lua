@@ -1,5 +1,9 @@
 local keymap = require('vim.keymap')
-require('litee.symboltree').setup({
+local state = require('litee.lib.state')
+local symboltree = require('litee.symboltree')
+local vim = vim
+
+symboltree.setup({
   on_open = 'panel',
   map_resize_keys = false,
   icon_set = 'nerd',
@@ -20,4 +24,14 @@ require('litee.symboltree').setup({
   },
 })
 
-keymap.set({'n'}, '<Plug>(ide-outline)', vim.lsp.buf.document_symbol)
+local function toggleSymboltree()
+  local component = state.get_component_state(vim.api.nvim_win_get_tabpage(0), 'symboltree')
+  if nil == component or 0 == #vim.fn.win_findbuf(component.buf) then
+    vim.lsp.buf.document_symbol()
+    return
+  end
+
+  symboltree.close_symboltree()
+end
+
+keymap.set({'n'}, '<Plug>(ide-outline)', toggleSymboltree)
