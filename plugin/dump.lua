@@ -1,6 +1,5 @@
 function dump (value)
   local buf = vim.api.nvim_create_buf(false, false)
-  -- local value = require('litee.lib.state').get_component_state(vim.api.nvim_win_get_tabpage(0), 'symboltree')
 
   local value_string = vim.inspect(value):gsub('<function (%d+)>', '"function %1"'):gsub('<%d+>', '')
 
@@ -12,7 +11,6 @@ function dump (value)
     relative='editor',
     width=120,
     height=40,
-    -- bufpos={0, 0},
     row = 0.9,
     col = 0.9,
     border='rounded',
