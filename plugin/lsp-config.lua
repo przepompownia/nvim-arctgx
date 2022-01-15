@@ -86,9 +86,7 @@ vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(
 )
 -- vim.lsp.set_log_level('debug')
 
-vim.cmd([[
-  sign define DiagnosticSignHint text=💡 linehl= texthl=IdeHintSign numhl=IdeLineNrHint
-  sign define DiagnosticSignInfo text= linehl= texthl=IdeInfoSign numhl=IdeLineNrInfo
-  sign define DiagnosticSignWarn text=⚠ linehl= texthl=IdeWarningSign numhl=IdeLineNrWarning
-  sign define DiagnosticSignError text= linehl= texthl=IdeErrorSign numhl=IdeLineNrError
-]])
+vim.fn.sign_define('DiagnosticSignHint', {text='💡', texthl='IdeHintSign', linehl='', numhl='IdeLineNrHint'})
+vim.fn.sign_define('DiagnosticSignInfo', {text='', texthl='IdeInfoSign', linehl='', numhl='IdeLineNrInfo'})
+vim.fn.sign_define('DiagnosticSignWarn', {text='⚠', texthl='IdeWarningSign', linehl='', numhl='IdeLineNrWarning'})
+vim.fn.sign_define('DiagnosticSignError', {text='', texthl='IdeErrorSign', linehl='', numhl='IdeLineNrError'})
