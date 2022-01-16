@@ -11,7 +11,7 @@ local tab_drop_location = function(location, offset_encoding)
   local uri = location.uri or location.targetUri
   if uri == nil then return end
   if offset_encoding == nil then
-    vim.notify_once('jump_to_location must be called with valid offset encoding', vim.log.levels.WARN)
+    vim.notify_once('tab_drop_location must be called with valid offset encoding', vim.log.levels.WARN)
   end
 
   local range = location.range or location.targetSelectionRange
