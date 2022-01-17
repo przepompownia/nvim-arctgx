@@ -44,13 +44,13 @@ function M.on_attach(client, bufnr)
 
   if client.resolved_capabilities.document_highlight then
     api.nvim_exec([[
-      hi LspReferenceRead cterm=bold ctermbg=red guibg=LightYellow
-      hi LspReferenceText cterm=bold ctermbg=red guibg=LightYellow
-      hi LspReferenceWrite cterm=bold ctermbg=red guibg=LightYellow
-      " highlight link LspDiagnosticsFloatingHint IdeHintSign
+      hi LspReferenceRead cterm=bold ctermbg=red guibg=#E6F4AA
+      hi LspReferenceText cterm=bold ctermbg=red guibg=#F4EDAA
+      hi LspReferenceWrite cterm=bold ctermbg=red guibg=#F4DBAA
       augroup lsp_document_highlight
         autocmd! * <buffer>
         autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
+        " autocmd CursorHoldI <buffer> lua vim.lsp.buf.document_highlight()
         autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
       augroup END
     ]], false)
