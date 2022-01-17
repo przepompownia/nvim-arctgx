@@ -67,12 +67,6 @@ vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(
     underline = false,
   }
 )
-local on_references = vim.lsp.handlers["textDocument/references"]
-vim.lsp.handlers["textDocument/references"] = vim.lsp.with(
-  on_references, {
-    includeDeclaration = false,
-  }
-)
 -- vim.lsp.set_log_level('debug')
 
 vim.fn.sign_define('DiagnosticSignHint', {text='💡', texthl='IdeHintSign', linehl='', numhl='IdeLineNrHint'})
