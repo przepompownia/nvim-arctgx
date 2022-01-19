@@ -10,13 +10,6 @@ require'nvim-treesitter.configs'.setup {
         ['if'] = '@function.inner',
         ['ac'] = '@class.outer',
         ['ic'] = '@class.inner',
-
-        ['iF'] = {
-          python = '(function_definition) @function',
-          cpp = '(function_definition) @function',
-          c = '(function_definition) @function',
-          java = '(method_declaration) @function',
-        },
       },
     },
     move = {
