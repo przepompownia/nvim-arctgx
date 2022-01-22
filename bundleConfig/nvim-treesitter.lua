@@ -10,6 +10,7 @@ require'nvim-treesitter.configs'.setup {
     'make',
     'markdown',
     'php',
+    'phpdoc',
     'python',
     'query',
     'vim',
