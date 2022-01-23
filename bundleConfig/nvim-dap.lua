@@ -1,5 +1,6 @@
 local dap = require 'dap'
 local keymap = require 'vim.keymap'
+local widgets = require('dap.ui.widgets')
 local vim = vim
 
 dap.adapters.php = {
@@ -7,6 +8,13 @@ dap.adapters.php = {
   command = 'node',
   args = { '/home/arctgx/.vim/pack/bundle/opt/arctgx/bundleConfig/vimspector-config/gadgets/linux/vscode-php-debug/out/phpDebug.js' }
 }
+
+local sidebar = widgets.sidebar(widgets.scopes)
+local function toggle_scopes()
+  sidebar.toggle()
+end
+
+vim.api.nvim_add_user_command('DAPWidgetScopes', toggle_scopes, {})
 
 vim.fn.sign_define('DapBreakpoint', {text='●', texthl='IdeBreakpointSign', linehl='', numhl='IdeBreakpointLineNr'})
 vim.fn.sign_define('DapBreakpointCondition', {text='◆', texthl='IdeBreakpointSign', linehl='', numhl='IdeBreakpointLineNr'})
