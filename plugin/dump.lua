@@ -8,13 +8,13 @@ function dump (value)
   vim.api.nvim_buf_set_option(buf, 'filetype', 'lua')
   vim.api.nvim_buf_set_option(buf, 'bufhidden', 'wipe')
   vim.api.nvim_open_win(buf, true, {
-    relative='editor',
-    width=120,
-    height=40,
+    relative = 'editor',
+    width = 120,
+    height = 40,
     row = 0.9,
     col = 0.9,
-    border='rounded',
-    style='minimal',
+    border = 'rounded',
+    style = 'minimal',
   })
 
 end
