@@ -47,9 +47,11 @@ function! arctgx#git#fzf#diff(CmdSerializer, dir, fullscreen, ...) abort
           \ '--prompt', 'Search by query: ',
           \ '--bind', printf('change:reload(%s)', l:interactiveCmdString),
           \ '--bind', 'alt-s:unbind(change,alt-s)+change-prompt(Search by filenames: )+enable-search+clear-query',
+          \ '--bind', 'alt-/:change-preview-window(right,70%|right,135|up,60%,border-horizontal|up,80%,border-horizontal|hidden|)',
+          \ '--preview-window', 'left,50%',
           \ '--preview',
           \ l:previewCmdString,
-          \ '--preview-window', 'right,135',
+          \ '--preview-window', 'right,50%',
           \ ]
         \ }
 
