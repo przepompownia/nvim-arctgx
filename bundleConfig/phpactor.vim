@@ -12,7 +12,10 @@ augroup END
 function s:definePhpactorMaps()
   nnoremap <buffer> <Leader>pm :call phpactor#ContextMenu()<CR>
   nnoremap <buffer> <Leader>pn :call phpactor#Navigate()<CR>
-  " nmap <Plug>(ide-goto-definition) :call phpactor#GotoDefinition()<CR>
-  nnoremap <buffer> <Plug>(ide-class-new) :call phpactor#ClassNew()<CR>
   nnoremap <buffer> <Leader>pfr :call phpactor#FindReferences()<CR>
 endfunction
+
+lua << EOF
+-- todo buffer
+vim.keymap.set('n', '<Plug>(ide-class-new)', require('arctgx.phpactor').class_new)
+EOF
