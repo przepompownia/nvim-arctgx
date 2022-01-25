@@ -26,7 +26,7 @@ local function new_class_from_file(path)
   end
 
   if 1 == vim.fn.filereadable(path) then
-    vim.notify(('File % exist!'):format(path))
+    vim.notify(('File %s exist!'):format(path))
     return
   end
 
