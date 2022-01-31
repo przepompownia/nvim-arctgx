@@ -24,6 +24,8 @@ local customActions = transform_mod({
         picker.original_win_id
       )
 
+      vim.cmd('stopinsert')
+      picker.finder:close()
       return
     end
 
@@ -31,6 +33,7 @@ local customActions = transform_mod({
       base.tab_drop(entry.path)
     end
 
+    vim.cmd('stopinsert')
     picker.finder:close()
   end,
 
