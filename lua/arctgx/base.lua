@@ -3,9 +3,7 @@ local api = vim.api
 local extension = {}
 
 function extension.get_bufnr_by_path(path)
-  local filename = vim.fn.fnamemodify(path, ':p')
-
-  local bufnr = vim.fn.bufnr(filename)
+  local bufnr = vim.fn.bufnr(path)
 
   return -1 ~= bufnr and bufnr or nil
 end
@@ -25,7 +23,9 @@ local function buffer_is_fresh(bufNr)
 end
 
 function extension.tab_drop_path(path, relative_winnr)
-  local bufNr = extension.get_bufnr_by_path(path) or vim.fn.bufadd(path)
+  local filename = vim.fn.fnamemodify(path, ':p')
+
+  local bufNr = extension.get_bufnr_by_path(filename) or vim.fn.bufadd(filename)
   local existing_win_id = extension.get_first_win_id_by_bufnr(bufNr)
 
   if nil ~= existing_win_id then
@@ -43,7 +43,7 @@ function extension.tab_drop_path(path, relative_winnr)
     return
   end
 
-  vim.cmd(('tabedit %s'):format(vim.fn.fnameescape(path)))
+  vim.cmd(('tabedit %s'):format(vim.fn.fnameescape(filename)))
 end
 
 function extension.tab_drop(path, line, column, relative_bufnr)
