@@ -51,9 +51,8 @@ function M.on_attach(client, bufnr)
       hi LspReferenceWrite cterm=bold ctermbg=red guibg=#F4DBAA
       augroup lsp_document_highlight
         autocmd! * <buffer>
-        autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
-        " autocmd CursorHoldI <buffer> lua vim.lsp.buf.document_highlight()
-        autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
+        autocmd CursorHold,CursorHoldI <buffer> lua vim.lsp.buf.document_highlight()
+        autocmd CursorMoved,CursorMovedI <buffer> lua vim.lsp.buf.clear_references()
       augroup END
     ]], false)
   end
