@@ -158,20 +158,8 @@ require('lspconfig').yamlls.setup {
   capabilities = capabilities,
   on_attach = arctgx_lsp.on_attach,
   settings = {
-    yaml = {
-      format = {
-        enable = true,
-      },
-      schemaStore = {
-        enable = true,
-      },
-      schemas = {
-        ['https://raw.githubusercontent.com/compose-spec/compose-spec/master/schema/compose-spec.json'] = 'docker-compose.yml',
-        -- ['https://json.schemastore.org/github-workflow.json'] = '/.github/workflows/*',
-        -- ['../path/relative/to/file.yml'] = '/.github/workflows/*',
-        -- ['/path/from/root/of/project'] = '/.github/workflows/*'
-      },
-    },
+    ['yaml.schemastore.enable'] = true,
+    ['yaml.schemas'] = {
   }
 }
 
