@@ -43,6 +43,9 @@ function M.on_attach(client, bufnr)
   buf_map('n', ']d', diagnostic.goto_next)
   buf_map('n', '<space>q', diagnostic.setloclist)
   buf_map('n', '<space>f', lsp.buf.formatting)
+  if client.resolved_capabilities.document_range_formatting then
+    buf_map('v', '<space>f', lsp.buf.range_formatting)
+  end
 
   if client.resolved_capabilities.document_highlight then
     api.nvim_exec([[
