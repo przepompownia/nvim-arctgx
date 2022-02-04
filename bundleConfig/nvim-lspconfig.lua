@@ -1,5 +1,7 @@
 local arctgx_lsp = require 'arctgx.lsp'
+local configs = require 'lspconfig.configs'
 local nvim_lsp = require('lspconfig')
+local util = require('lspconfig.util')
 local vim = vim
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -22,6 +24,31 @@ require'lspconfig'.lemminx.setup {
   on_attach = arctgx_lsp.on_attach,
 }
 
+configs.phpactor = {
+  default_config = {
+    autostart = true,
+    cmd_env = {
+      XDG_CACHE_HOME = '/tmp'
+    },
+    cmd = {
+      -- 'phpxx',
+      os.getenv('HOME')..'/.vim/pack/bundle/opt/phpactor/bin/phpactor',
+      'language-server',
+      -- '-vvv',
+    },
+    filetypes = { 'php' },
+    root_dir = function(pattern)
+      local cwd = vim.loop.cwd()
+      local root = util.root_pattern('composer.json', '.git')(pattern)
+
+      return util.path.is_descendant(cwd, root) and cwd or root
+    end,
+    init_options = {
+      ['logging.path'] = '/tmp/phpactor.log',
+    },
+  },
+}
+
 require'lspconfig'.sqls.setup{
   cmd = {os.getenv('HOME')..'/go/bin/sqls', '-config', os.getenv('HOME')..'/.config/sqls/config.yml'};
   capabilities = capabilities,
@@ -37,7 +64,9 @@ require'lspconfig'.diagnosticls.setup{
   -- },
   capabilities = capabilities,
   on_attach = arctgx_lsp.on_attach,
-  filetypes = { 'php' },
+  filetypes = {
+    'php',
+  },
   init_options = {
     filetypes = {
       php = {
