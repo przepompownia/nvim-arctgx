@@ -1,5 +1,6 @@
 local dap = require 'dap'
 local keymap = require 'vim.keymap'
+local php = require('arctgx.dap.php')
 local widgets = require('dap.ui.widgets')
 local vim = vim
 
@@ -40,3 +41,4 @@ keymap.set({'n'}, '<Plug>(ide-debugger-run-to-cursor)', dap.run_to_cursor, opts)
 -- nnoremap <silent> <leader>lp :lua require'dap'.set_breakpoint(nil, nil, vim.fn.input('Log point message: '))<CR>
 -- nnoremap <silent> <leader>dr :lua require'dap'.repl.open()<CR>
 -- nnoremap <silent> <leader>dl :lua require'dap'.run_last()<CR>
+dap.configurations.php = { php.default }
