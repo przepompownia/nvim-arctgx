@@ -6,8 +6,9 @@ inoremap <C-q> <C-r>+
 noremap <S-Insert> <MiddleMouse>
 noremap! <S-Insert> <MiddleMouse>
 tnoremap <S-Insert> <C-\><C-N>"*pi
-tnoremap <expr> <M-p> '<C-\><C-N>"'.nr2char(getchar()).'pi'
+tnoremap <expr> <M-p> '<C-\><C-N>"' .. nr2char(getchar()) .. 'pi'
 nnoremap <Tab> <C-w>w
+vnoremap <Tab> <C-w>w
 nnoremap <C-Tab> <Cmd>tabNext<CR>
 inoremap <C-Tab> <Cmd>tabNext<CR>
 
