@@ -1,4 +1,3 @@
-require('dapui').setup({})
 vim.cmd([[
     function s:reloadColors()
       highlight link DapUIVariable Normal
@@ -29,3 +28,38 @@ vim.cmd([[
     nnoremap <silent> <Plug>(ide-debugger-ui-toggle) :lua require'dapui'.toggle()<CR>
     xmap <Plug>(ide-debugger-eval-popup) <Cmd>lua require('dapui').eval()<CR>
 ]])
+require('dapui').setup({
+  mappings = {
+    expand = { '<CR>', '<Right>', '<2-LeftMouse>' },
+    open = 'o',
+    remove = 'd',
+    edit = 'e',
+    repl = 'r',
+  },
+  sidebar = {
+    elements = {
+      {
+        id = 'scopes',
+        size = 0.25,
+      },
+      { id = 'watches', size = 0.25 },
+      { id = 'stacks', size = 0.25 },
+      { id = 'breakpoints', size = 0.25 },
+    },
+    size = 40,
+    position = 'left',
+  },
+  tray = {
+    elements = { 'repl' },
+    size = 10,
+    position = 'bottom',
+  },
+  floating = {
+    max_height = nil,
+    max_width = nil,
+    border = 'single',
+    mappings = {
+      close = { 'q', '<Esc>' },
+    },
+  },
+})
