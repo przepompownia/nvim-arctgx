@@ -1,3 +1,6 @@
+local keymap = require 'vim.keymap'
+local dapui = require('dapui')
+
 vim.cmd([[
     function s:reloadColors()
       highlight link DapUIVariable Normal
@@ -25,10 +28,13 @@ vim.cmd([[
       autocmd ColorScheme *
             \ call s:reloadColors()
     augroup END
-    nnoremap <silent> <Plug>(ide-debugger-ui-toggle) :lua require'dapui'.toggle()<CR>
-    xmap <Plug>(ide-debugger-eval-popup) <Cmd>lua require('dapui').eval()<CR>
 ]])
-require('dapui').setup({
+
+local opts = {silent = true, noremap = true}
+keymap.set({'n'}, '<Plug>(ide-debugger-ui-toggle)', dapui.toggle, opts)
+keymap.set({'x'}, '<Plug>(ide-debugger-eval-popup)', dapui.eval, opts)
+
+dapui.setup({
   mappings = {
     expand = { '<CR>', '<Right>', '<2-LeftMouse>' },
     open = 'o',
