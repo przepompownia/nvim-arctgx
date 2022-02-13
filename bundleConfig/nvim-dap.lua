@@ -12,10 +12,17 @@ dap.adapters.php = {
 
 local sidebar = widgets.sidebar(widgets.scopes)
 local function toggle_scopes()
-  sidebar.toggle()
+  local scopes = widgets.sidebar(widgets.scopes)
+  scopes.toggle()
+end
+
+local function toggle_frames()
+  local frames = widgets.sidebar(widgets.frames)
+  frames.toggle()
 end
 
 vim.api.nvim_add_user_command('DAPWidgetScopes', toggle_scopes, {})
+vim.api.nvim_add_user_command('DAPWidgetFrames', toggle_frames, {})
 
 vim.fn.sign_define('DapBreakpoint', {text='●', texthl='IdeBreakpointSign', linehl='', numhl='IdeBreakpointLineNr'})
 vim.fn.sign_define('DapBreakpointCondition', {text='◆', texthl='IdeBreakpointSign', linehl='', numhl='IdeBreakpointLineNr'})
