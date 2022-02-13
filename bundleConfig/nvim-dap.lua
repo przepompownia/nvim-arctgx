@@ -38,6 +38,7 @@ keymap.set(
 keymap.set({'n'}, '<Plug>(ide-debugger-up-frame)', dap.up, opts)
 keymap.set({'n'}, '<Plug>(ide-debugger-down-frame)', dap.down, opts)
 keymap.set({'n'}, '<Plug>(ide-debugger-run-to-cursor)', dap.run_to_cursor, opts)
+keymap.set({'n'}, '<Plug>(ide-debugger-close)', dap.close, opts)
 -- nnoremap <silent> <leader>lp :lua require'dap'.set_breakpoint(nil, nil, vim.fn.input('Log point message: '))<CR>
 -- nnoremap <silent> <leader>dr :lua require'dap'.repl.open()<CR>
 -- nnoremap <silent> <leader>dl :lua require'dap'.run_last()<CR>
