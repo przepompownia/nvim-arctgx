@@ -6,8 +6,8 @@ local vim = vim
 
 dap.adapters.php = {
   type = 'executable',
-  command = 'node',
-  args = { '/home/arctgx/.vim/pack/bundle/opt/arctgx/bundleConfig/vimspector-config/gadgets/linux/vscode-php-debug/out/phpDebug.js' }
+  command = vim.fn['arctgx#arctgx#getInitialVimDirectory']() .. '/bin/vscode-php-debug',
+  args = { 'run' }
 }
 
 local sidebar = widgets.sidebar(widgets.scopes)
