@@ -44,6 +44,13 @@ cmp.setup({
       c = cmp.mapping.close(),
     }),
     ['<CR>'] = cmp.mapping.confirm({ select = true }),
+    ['<C-s>'] = cmp.mapping.complete({
+      config = {
+        sources = {
+          { name = 'luasnip' }
+        }
+      }
+    }),
   },
   sources = {
     { name = 'nvim_lsp' },
