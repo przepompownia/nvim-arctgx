@@ -3,6 +3,7 @@ local keymap = require 'vim.keymap'
 local php = require('arctgx.dap.php')
 local widgets = require('dap.ui.widgets')
 local vim = vim
+local api = vim.api
 
 dap.adapters.php = {
   type = 'executable',
@@ -50,3 +51,30 @@ keymap.set({'n'}, '<Plug>(ide-debugger-close)', dap.close, opts)
 -- nnoremap <silent> <leader>dr :lua require'dap'.repl.open()<CR>
 -- nnoremap <silent> <leader>dl :lua require'dap'.run_last()<CR>
 dap.configurations.php = { php.default }
+
+local debugWinId = nil
+
+local function openTabForThread(threadId)
+  vim.cmd('tabedit %')
+  debugWinId = vim.fn.win_getid()
+end
+
+dap.listeners.before['event_stopped']['arctgx-dap-tab'] = function(session, body)
+  if nil ~= debugWinId and api.nvim_win_is_valid(debugWinId) then
+    api.nvim_set_current_win(debugWinId)
+    return
+  end
+
+  openTabForThread(nil)
+end
+
+dap.listeners.after['event_thread']['arctgx-dap-tab'] = function(session, body)
+  if body.reason == 'started' then
+    openTabForThread(body.threadId)
+    return
+  end
+  if body.reason == '' then
+  else
+    vim.notify('Reason ' .. body.reason)
+  end
+end
