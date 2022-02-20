@@ -1,11 +1,12 @@
 augroup ideMaps
   autocmd!
-  autocmd FileType * call s:defineIDEMaps()
+  autocmd FileType * call s:defineIDEMaps() |
+        \ call s:defineDebuggerMaps()
   autocmd User IDEDebuggerMapsNeeded call s:defineDebuggerMaps()
 augroup END
 
 function s:isExcludedFromIDEMapping(filetype)
-  let l:excludedFiletypes = ['fern', 'help', 'man', 'dbout']
+  let l:excludedFiletypes = ['fern', 'help', 'man', 'dbout', 'dapui_hover']
 
   return index(l:excludedFiletypes, a:filetype) >= 0
 endfunction
@@ -16,6 +17,7 @@ function s:defineIDEMaps()
   endif
 
   imap <buffer> <C-\>, <Plug>(ide-show-signature-help)
+  nmap <buffer> <Leader>ish <Plug>(ide-show-signature-help)
   imap <buffer> <C-Space> <Plug>(ide-trigger-completion)
   nmap <buffer> <C-]> <Plug>(ide-goto-definition)
   nmap <buffer> gd <Plug>(ide-goto-definition)
@@ -37,14 +39,22 @@ function s:defineIDEMaps()
   nmap <buffer> <Leader>ilf <Plug>(ide-list-document-functions)
   nmap <buffer> <Leader>ilw <Plug>(ide-list-workspace-symbols)
   nmap <buffer> <Leader>irs <Plug>(ide-range-select)
-  xmap <buffer> <Leader>irfi <Plug>(ide-funcobj-i)
-  omap <buffer> <Leader>irfi <Plug>(ide-funcobj-i)
-  xmap <buffer> <Leader>irfa <Plug>(ide-funcobj-a)
-  omap <buffer> <Leader>irfa <Plug>(ide-funcobj-a)
-  xmap <buffer> <Leader>irci <Plug>(ide-classobj-i)
-  omap <buffer> <Leader>irci <Plug>(ide-classobj-i)
-  xmap <buffer> <Leader>irca <Plug>(ide-classobj-a)
-  omap <buffer> <Leader>irca <Plug>(ide-classobj-a)
+  nmap <buffer> ]] <Plug>(ide-move-forward-function-start)
+  nmap <buffer> ][ <Plug>(ide-move-forward-function-end)
+  nmap <buffer> ]m <Plug>(ide-move-forward-class-start)
+  nmap <buffer> ]M <Plug>(ide-move-forward-class-end)
+  nmap <buffer> [[ <Plug>(ide-move-backward-function-start)
+  nmap <buffer> [] <Plug>(ide-move-backward-function-end)
+  nmap <buffer> [m <Plug>(ide-move-backward-class-start)
+  nmap <buffer> [M <Plug>(ide-move-backward-class-end)
+  xmap <buffer> if <Plug>(ide-select-function-inner)
+  xmap <buffer> af <Plug>(ide-select-function-outer)
+  nmap <buffer> <Leader>a <Plug>(ide-parameter-swap-forward)
+  nmap <buffer> <Leader>A <Plug>(ide-parameter-swap-backward)
+  xmap <buffer> ic <Plug>(ide-select-class-inner)
+  omap <buffer> ic <Plug>(ide-select-class-inner)
+  xmap <buffer> ac <Plug>(ide-select-class-outer)
+  omap <buffer> ac <Plug>(ide-select-class-outer)
   nmap <buffer> <Leader>d <Plug>(ide-diagnostic-info)
   nmap <buffer> <Leader>ca <Plug>(ide-codelens-action)
 

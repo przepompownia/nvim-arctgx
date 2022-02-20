@@ -6,39 +6,39 @@ require'nvim-treesitter.configs'.setup {
       lookahead = true,
 
       keymaps = {
-        ['af'] = '@function.outer',
-        ['if'] = '@function.inner',
-        ['ac'] = '@class.outer',
-        ['ic'] = '@class.inner',
+        ['<Plug>(ide-select-function-outer)'] = '@function.outer',
+        ['<Plug>(ide-select-function-inner)'] = '@function.inner',
+        ['<Plug>(ide-select-class-outer)'] = '@class.outer',
+        ['<Plug>(ide-select-class-inner)'] = '@class.inner',
       },
     },
     move = {
       enable = true,
       set_jumps = true,
       goto_next_start = {
-        [']]'] = '@function.outer',
-        [']m'] = '@class.outer',
+        ['<Plug>(ide-move-forward-function-start)'] = '@function.outer',
+        ['<Plug>(ide-move-forward-class-start)'] = '@class.outer',
       },
       goto_next_end = {
-        [']['] = '@function.outer',
-        [']M'] = '@class.outer',
+        ['<Plug>(ide-move-forward-function-end)'] = '@function.outer',
+        ['<Plug>(ide-move-forward-class-end)'] = '@class.outer',
       },
       goto_previous_start = {
-        ['[['] = '@function.outer',
-        ['[m'] = '@class.outer',
+        ['<Plug>(ide-move-backward-function-start)'] = '@function.outer',
+        ['<Plug>(ide-move-backward-class-start)'] = '@class.outer',
       },
       goto_previous_end = {
-        ['[]'] = '@function.outer',
-        ['[M'] = '@class.outer',
+        ['<Plug>(ide-move-backward-function-end)'] = '@function.outer',
+        ['<Plug>(ide-move-backward-class-end)'] = '@class.outer',
       },
     },
     swap = {
       enable = true,
       swap_next = {
-        ['<leader>a'] = '@parameter.inner',
+        ['<Plug>(ide-parameter-swap-forward)'] = '@parameter.inner',
       },
       swap_previous = {
-        ['<leader>A'] = '@parameter.inner',
+        ['<Plug>(ide-parameter-swap-backward)'] = '@parameter.inner',
       },
     },
     lsp_interop = {
