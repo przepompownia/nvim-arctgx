@@ -32,7 +32,7 @@ vim.cmd([[
 
 local opts = {silent = true, noremap = true}
 keymap.set({'n'}, '<Plug>(ide-debugger-ui-toggle)', dapui.toggle, opts)
-keymap.set({'x'}, '<Plug>(ide-debugger-eval-popup)', dapui.eval, opts)
+keymap.set({'x'}, '<Plug>(ide-debugger-eval-popup)', function() dapui.eval(nil, {enter = true, context = 'repl'}) end, opts)
 
 dapui.setup({
   mappings = {
