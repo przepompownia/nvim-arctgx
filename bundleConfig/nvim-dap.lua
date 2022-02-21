@@ -65,6 +65,12 @@ dap.listeners.before['event_stopped']['arctgx-dap-tab'] = function(session, body
     return
   end
 
+  vim.cmd('tabedit %')
+  debugWinId = vim.fn.win_getid()
+  require('dapui').open()
+end
+
+dap.listeners.before['event_stopped']['arctgx-dap-tab'] = function(session, body)
   openTabForThread(nil)
 end
 
