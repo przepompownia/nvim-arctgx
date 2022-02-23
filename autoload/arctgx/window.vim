@@ -17,6 +17,9 @@ function! arctgx#window#onWinClosed(winId) abort
 
   call arctgx#windowhistory#getInstance().remove(a:winId)
   call arctgx#windowhistory#jumpOnTop()
+  if nvim_win_is_valid(a:winId)
+    call nvim_win_close(a:winId, v:true)
+  endif
 endfunction
 
 function! arctgx#window#closePopupForTab() abort
