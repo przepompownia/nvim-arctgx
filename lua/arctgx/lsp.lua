@@ -1,16 +1,14 @@
+local M = {}
 local api = vim.api
 local lsp = require('vim.lsp')
 local diagnostic = require('vim.diagnostic')
 local keymap = require('vim.keymap')
 
-local M = {
-}
-
-local print_workspace_folders = function ()
+local printWorkspaceFolders = function ()
   print(vim.inspect(lsp.buf.list_workspace_folders()))
 end
 
-local function previewLocation(_, result, ctx, _)
+local function previewLocation(_, result, _, _)
   if result == nil or vim.tbl_isempty(result) then
     lsp.log.info(method, 'No location found')
     return nil
@@ -28,7 +26,7 @@ local function peekDefinition()
   return lsp.buf_request(0, 'textDocument/definition', params, previewLocation)
 end
 
-function M.on_attach(client, bufnr)
+function M.onAttach(client, bufnr)
   local function buf_map(modes, lhs, rhs, opts)
     opts = opts or {}
     opts.noremap = opts.noremap or true
@@ -36,9 +34,7 @@ function M.on_attach(client, bufnr)
     keymap.set(modes, lhs, rhs, opts)
   end
 
-  local function buf_set_option(...) api.nvim_buf_set_option(bufnr, ...) end
-
-  buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
+  api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
   buf_map('n', '<Plug>(ide-goto-definition)', lsp.buf.definition)
   buf_map('n', '<Plug>(ide-peek-definition)', peekDefinition)
@@ -52,10 +48,9 @@ function M.on_attach(client, bufnr)
     lsp.buf.references {includeDeclaration = false}
   end)
   buf_map('n', '<Plug>(ide-diagnostic-info)', diagnostic.open_float)
-  buf_map('n', 'gD', lsp.buf.declaration)
   buf_map('n', '<space>wa', lsp.buf.add_workspace_folder)
   buf_map('n', '<space>wr', lsp.buf.remove_workspace_folder)
-  buf_map('n', '<space>wl', print_workspace_folders)
+  buf_map('n', '<space>wl', printWorkspaceFolders)
   buf_map('n', '<space>D', lsp.buf.type_definition)
   buf_map('n', '<space>ca', lsp.buf.code_action)
   buf_map('n', '[d', diagnostic.goto_prev)
@@ -78,6 +73,8 @@ function M.on_attach(client, bufnr)
       augroup END
     ]], false)
   end
+
+  -- vim.notify(('Server %s attached to %s'):format(client.name, api.nvim_buf_get_name(bufnr)))
 end
 
 return M

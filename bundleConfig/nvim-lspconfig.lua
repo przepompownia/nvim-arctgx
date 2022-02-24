@@ -1,6 +1,6 @@
-local arctgx_lsp = require 'arctgx.lsp'
+local arctgxLsp = require 'arctgx.lsp'
 local configs = require 'lspconfig.configs'
-local nvim_lsp = require('lspconfig')
+local lspconfig = require('lspconfig')
 local util = require('lspconfig.util')
 local vim = vim
 
@@ -8,10 +8,10 @@ local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 
-require('lspconfig').jsonls.setup {
+lspconfig.jsonls.setup {
   filetypes = { 'json', 'jsonc' },
   capabilities = capabilities,
-  on_attach = arctgx_lsp.on_attach,
+  on_attach = arctgxLsp.onAttach,
   settings = {
     json = {
       schemas = require('schemastore').json.schemas(),
@@ -19,9 +19,9 @@ require('lspconfig').jsonls.setup {
   },
 }
 
-require'lspconfig'.lemminx.setup {
+lspconfig.lemminx.setup {
   capabilities = capabilities,
-  on_attach = arctgx_lsp.on_attach,
+  on_attach = arctgxLsp.onAttach,
 }
 
 configs.phpactor = {
@@ -49,21 +49,26 @@ configs.phpactor = {
   },
 }
 
-require'lspconfig'.sqls.setup{
-  cmd = {os.getenv('HOME')..'/go/bin/sqls', '-config', os.getenv('HOME')..'/.config/sqls/config.yml'};
+lspconfig.phpactor.setup {
   capabilities = capabilities,
-  on_attach = arctgx_lsp.on_attach,
+  on_attach = arctgxLsp.onAttach,
 }
 
-require'lspconfig'.diagnosticls.setup{
+lspconfig.sqls.setup {
+  cmd = {os.getenv('HOME') .. '/go/bin/sqls', '-config', os.getenv('HOME') .. '/.config/sqls/config.yml'};
+  capabilities = capabilities,
+  on_attach = arctgxLsp.onAttach,
+}
+
+lspconfig.diagnosticls.setup {
   -- cmd = {
-    -- '/home/arctgx/dev/external/diagnostic-languageserver/bin/index.js',
+    -- os.getenv('HOME') .. '/dev/external/diagnostic-languageserver/bin/index.js',
     '--stdio',
     -- '--log-level',
     -- '4',
   -- },
   capabilities = capabilities,
-  on_attach = arctgx_lsp.on_attach,
+  on_attach = arctgxLsp.onAttach,
   filetypes = {
     'php',
   },
@@ -183,9 +188,9 @@ require'lspconfig'.diagnosticls.setup{
   }
 }
 
-require('lspconfig').yamlls.setup {
+lspconfig.yamlls.setup {
   capabilities = capabilities,
-  on_attach = arctgx_lsp.on_attach,
+  on_attach = arctgxLsp.onAttach,
   settings = {
     ['yaml.schemastore.enable'] = true,
     ['yaml.schemas'] = {
@@ -195,31 +200,37 @@ require('lspconfig').yamlls.setup {
 }
 
 -- todo check if path exist
-local sumneko_root_path = os.getenv( 'HOME' )..'/dev/external/lua-language-server'
-local sumneko_binary = sumneko_root_path..'/bin/Linux/lua-language-server'
+-- local sumneko_root_path = os.getenv( 'HOME' ) .. '/dev/external/lua-language-server'
+-- local sumneko_binary = sumneko_root_path .. '/bin/Linux/lua-language-server'
+local sumnekoRoot = os.getenv( 'HOME' ) .. '/dev/external/lua-language-server-releases/2.6.6'
+local sumnekoBinary = sumnekoRoot .. '/bin/lua-language-server'
 
-local runtime_path = vim.split(package.path, ';')
-table.insert(runtime_path, 'lua/?.lua')
-table.insert(runtime_path, 'lua/?/init.lua')
+local runtimePath = vim.split(package.path, ';')
+table.insert(runtimePath, 'lua/?.lua')
+table.insert(runtimePath, 'lua/?/init.lua')
 
-require'lspconfig'.sumneko_lua.setup {
+lspconfig.sumneko_lua.setup {
   autostart = true,
   cmd = {
-    sumneko_binary,
+    sumnekoBinary,
+    '--preview',
     -- '--logpath=/tmp/sumneko_lua.log',
     '-E',
-    sumneko_root_path .. '/main.lua',
+    sumnekoRoot .. '/main.lua',
   };
   capabilities = capabilities,
-  on_attach = arctgx_lsp.on_attach,
+  on_attach = arctgxLsp.onAttach,
   settings = {
     Lua = {
       runtime = {
         version = 'LuaJIT',
-        path = runtime_path,
+        path = runtimePath,
       },
       diagnostics = {
         globals = {'vim'},
+        neededFileStatus = {
+          ['codestyle-check'] = 'any',
+        },
       },
       workspace = {
         library = vim.api.nvim_get_runtime_file('', true),
@@ -234,9 +245,9 @@ require'lspconfig'.sumneko_lua.setup {
 
 local servers = { 'bashls', 'vimls', 'dockerls', 'tsserver' }
 for _, lsp in ipairs(servers) do
-  nvim_lsp[lsp].setup {
+  lspconfig[lsp].setup {
     capabilities = capabilities,
-    on_attach = arctgx_lsp.on_attach,
+    on_attach = arctgxLsp.onAttach,
     flags = {
       debounce_text_changes = 150,
     }
