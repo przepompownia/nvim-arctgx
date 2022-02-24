@@ -10,6 +10,24 @@ local print_workspace_folders = function ()
   print(vim.inspect(lsp.buf.list_workspace_folders()))
 end
 
+local function previewLocation(_, result, ctx, _)
+  if result == nil or vim.tbl_isempty(result) then
+    lsp.log.info(method, 'No location found')
+    return nil
+  end
+  if vim.tbl_islist(result) then
+    print(vim.inspect('islist'))
+    lsp.util.preview_location(result[1])
+    return
+  end
+  lsp.util.preview_location(result)
+end
+
+local function peekDefinition()
+  local params = lsp.util.make_position_params()
+  return lsp.buf_request(0, 'textDocument/definition', params, previewLocation)
+end
+
 function M.on_attach(client, bufnr)
   local function buf_map(modes, lhs, rhs, opts)
     opts = opts or {}
@@ -23,6 +41,7 @@ function M.on_attach(client, bufnr)
   buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
 
   buf_map('n', '<Plug>(ide-goto-definition)', lsp.buf.definition)
+  buf_map('n', '<Plug>(ide-peek-definition)', peekDefinition)
   buf_map('n', '<Plug>(ide-hover)', lsp.buf.hover)
   buf_map('n', '<Plug>(ide-goto-implementation)', lsp.buf.implementation)
   buf_map({'n', 'i'}, '<Plug>(ide-show-signature-help)', lsp.buf.signature_help)
