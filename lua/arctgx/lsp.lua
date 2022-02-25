@@ -27,7 +27,7 @@ local function peekDefinition()
 end
 
 function M.onAttach(client, bufnr)
-  local function buf_map(modes, lhs, rhs, opts)
+  local function bufMap(modes, lhs, rhs, opts)
     opts = opts or {}
     opts.noremap = opts.noremap or true
     opts.silent = opts.silent or true
@@ -36,29 +36,29 @@ function M.onAttach(client, bufnr)
 
   api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
-  buf_map('n', '<Plug>(ide-goto-definition)', lsp.buf.definition)
-  buf_map('n', '<Plug>(ide-peek-definition)', peekDefinition)
-  buf_map('n', '<Plug>(ide-hover)', lsp.buf.hover)
-  buf_map('n', '<Plug>(ide-goto-implementation)', lsp.buf.implementation)
-  buf_map({'n', 'i'}, '<Plug>(ide-show-signature-help)', lsp.buf.signature_help)
-  buf_map('n', '<Plug>(ide-list-workspace-symbols)', lsp.buf.workspace_symbol)
-  buf_map('n', '<Plug>(ide-list-document-symbols)', lsp.buf.document_symbol)
-  buf_map('n', '<Plug>(ide-action-rename)', lsp.buf.rename)
-  buf_map('n', '<Plug>(ide-find-references)', function ()
+  bufMap('n', '<Plug>(ide-goto-definition)', lsp.buf.definition)
+  bufMap('n', '<Plug>(ide-peek-definition)', peekDefinition)
+  bufMap('n', '<Plug>(ide-hover)', lsp.buf.hover)
+  bufMap('n', '<Plug>(ide-goto-implementation)', lsp.buf.implementation)
+  bufMap({'n', 'i'}, '<Plug>(ide-show-signature-help)', lsp.buf.signature_help)
+  bufMap('n', '<Plug>(ide-list-workspace-symbols)', lsp.buf.workspace_symbol)
+  bufMap('n', '<Plug>(ide-list-document-symbols)', lsp.buf.document_symbol)
+  bufMap('n', '<Plug>(ide-action-rename)', lsp.buf.rename)
+  bufMap('n', '<Plug>(ide-find-references)', function ()
     lsp.buf.references {includeDeclaration = false}
   end)
-  buf_map('n', '<Plug>(ide-diagnostic-info)', diagnostic.open_float)
-  buf_map('n', '<space>wa', lsp.buf.add_workspace_folder)
-  buf_map('n', '<space>wr', lsp.buf.remove_workspace_folder)
-  buf_map('n', '<space>wl', printWorkspaceFolders)
-  buf_map('n', '<space>D', lsp.buf.type_definition)
-  buf_map('n', '<space>ca', lsp.buf.code_action)
-  buf_map('n', '[d', diagnostic.goto_prev)
-  buf_map('n', ']d', diagnostic.goto_next)
-  buf_map('n', '<space>q', diagnostic.setloclist)
-  buf_map('n', '<space>f', lsp.buf.formatting)
+  bufMap('n', '<Plug>(ide-diagnostic-info)', diagnostic.open_float)
+  bufMap('n', '<space>wa', lsp.buf.add_workspace_folder)
+  bufMap('n', '<space>wr', lsp.buf.remove_workspace_folder)
+  bufMap('n', '<space>wl', printWorkspaceFolders)
+  bufMap('n', '<space>D', lsp.buf.type_definition)
+  bufMap('n', '<space>ca', lsp.buf.code_action)
+  bufMap('n', '[d', diagnostic.goto_prev)
+  bufMap('n', ']d', diagnostic.goto_next)
+  bufMap('n', '<space>q', diagnostic.setloclist)
+  bufMap('n', '<space>f', lsp.buf.formatting)
   if client.resolved_capabilities.document_range_formatting then
-    buf_map('v', '<space>f', lsp.buf.range_formatting)
+    bufMap('v', '<space>f', lsp.buf.range_formatting)
   end
 
   if client.resolved_capabilities.document_highlight then

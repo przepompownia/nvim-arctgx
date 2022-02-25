@@ -200,8 +200,8 @@ lspconfig.yamlls.setup {
 }
 
 -- todo check if path exist
--- local sumneko_root_path = os.getenv( 'HOME' ) .. '/dev/external/lua-language-server'
--- local sumneko_binary = sumneko_root_path .. '/bin/Linux/lua-language-server'
+-- local sumnekoRoot = os.getenv( 'HOME' ) .. '/dev/external/lua-language-server'
+-- local sumnekoBinary = sumnekoRoot .. '/bin/Linux/lua-language-server'
 local sumnekoRoot = os.getenv( 'HOME' ) .. '/dev/external/lua-language-server-releases/2.6.6'
 local sumnekoBinary = sumnekoRoot .. '/bin/lua-language-server'
 
@@ -213,10 +213,10 @@ lspconfig.sumneko_lua.setup {
   autostart = true,
   cmd = {
     sumnekoBinary,
-    '--preview',
     -- '--logpath=/tmp/sumneko_lua.log',
     '-E',
     sumnekoRoot .. '/main.lua',
+    '--preview',
   };
   capabilities = capabilities,
   on_attach = arctgxLsp.onAttach,
@@ -229,7 +229,7 @@ lspconfig.sumneko_lua.setup {
       diagnostics = {
         globals = {'vim'},
         neededFileStatus = {
-          ['codestyle-check'] = 'any',
+          ['codestyle-check'] = 'Any',
         },
       },
       workspace = {
