@@ -199,10 +199,7 @@ lspconfig.yamlls.setup {
   }
 }
 
--- todo check if path exist
--- local sumnekoRoot = os.getenv( 'HOME' ) .. '/dev/external/lua-language-server'
--- local sumnekoBinary = sumnekoRoot .. '/bin/Linux/lua-language-server'
-local sumnekoRoot = os.getenv( 'HOME' ) .. '/dev/external/lua-language-server-releases/2.6.6'
+local sumnekoRoot = os.getenv( 'HOME' ) .. '/dev/external/lua-language-server'
 local sumnekoBinary = sumnekoRoot .. '/bin/lua-language-server'
 
 local runtimePath = vim.split(package.path, ';')
