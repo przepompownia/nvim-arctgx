@@ -12,6 +12,9 @@ highlight! link DiagnosticHint IdeDiagnosticHint
 highlight! link DiagnosticInfo IdeDiagnosticInfo
 highlight! link DiagnosticWarn IdeDiagnosticWarning
 highlight! link DiagnosticError IdeDiagnosticError
+highlight IdeReferenceRead cterm=bold ctermbg=red guibg=#B3B184
+highlight IdeReferenceText cterm=bold ctermbg=red guibg=#554F12
+highlight IdeReferenceWrite cterm=bold ctermbg=red guibg=#794534
 call arctgx#highlight#highlight('IdeWarningSign', 'SignColumn', 'WarningMsg')
 call arctgx#highlight#highlight('IdeInfoSign', 'SignColumn', '#afffff')
 call arctgx#highlight#highlight('IdeErrorSign', 'SignColumn', '#440000')
