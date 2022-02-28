@@ -74,9 +74,9 @@ function M.onAttach(client, bufnr)
       callback = vim.lsp.buf.clear_references,
     })
     api.nvim_exec([[
-      hi link LspReferenceRead IdeReferenceRead
-      hi link LspReferenceText IdeReferenceText
-      hi link LspReferenceWrite IdeReferenceWrite
+      highlight link LspReferenceRead IdeReferenceRead
+      highlight link LspReferenceText IdeReferenceText
+      highlight link LspReferenceWrite IdeReferenceWrite
     ]], false)
   end
 
