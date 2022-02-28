@@ -4,7 +4,7 @@ local lsp = require('vim.lsp')
 local diagnostic = require('vim.diagnostic')
 local keymap = require('vim.keymap')
 
-local printWorkspaceFolders = function ()
+local printWorkspaceFolders = function()
   print(vim.inspect(lsp.buf.list_workspace_folders()))
 end
 
@@ -25,6 +25,7 @@ local function peekDefinition()
   local params = lsp.util.make_position_params()
   return lsp.buf_request(0, 'textDocument/definition', params, previewLocation)
 end
+api.nvim_create_augroup { name = 'LspDocumentHighlight', clear = true }
 
 function M.onAttach(client, bufnr)
   local function bufMap(modes, lhs, rhs, opts)
@@ -40,12 +41,12 @@ function M.onAttach(client, bufnr)
   bufMap('n', '<Plug>(ide-peek-definition)', peekDefinition)
   bufMap('n', '<Plug>(ide-hover)', lsp.buf.hover)
   bufMap('n', '<Plug>(ide-goto-implementation)', lsp.buf.implementation)
-  bufMap({'n', 'i'}, '<Plug>(ide-show-signature-help)', lsp.buf.signature_help)
+  bufMap({ 'n', 'i' }, '<Plug>(ide-show-signature-help)', lsp.buf.signature_help)
   bufMap('n', '<Plug>(ide-list-workspace-symbols)', lsp.buf.workspace_symbol)
   bufMap('n', '<Plug>(ide-list-document-symbols)', lsp.buf.document_symbol)
   bufMap('n', '<Plug>(ide-action-rename)', lsp.buf.rename)
-  bufMap('n', '<Plug>(ide-find-references)', function ()
-    lsp.buf.references {includeDeclaration = false}
+  bufMap('n', '<Plug>(ide-find-references)', function()
+    lsp.buf.references { includeDeclaration = false }
   end)
   bufMap('n', '<Plug>(ide-diagnostic-info)', diagnostic.open_float)
   bufMap('n', '<space>wa', lsp.buf.add_workspace_folder)
@@ -62,15 +63,22 @@ function M.onAttach(client, bufnr)
   end
 
   if client.resolved_capabilities.document_highlight then
+    api.nvim_create_autocmd {
+      group = 'LspDocumentHighlight',
+      buffer = bufnr,
+      event = {'CursorHold', 'CursorHoldI'},
+      callback = vim.lsp.buf.document_highlight,
+    }
+    api.nvim_create_autocmd {
+      group = 'LspDocumentHighlight',
+      buffer = bufnr,
+      event = {'CursorMoved', 'CursorMovedI'},
+      callback = vim.lsp.buf.clear_references,
+    }
     api.nvim_exec([[
       hi LspReferenceRead cterm=bold ctermbg=red guibg=#E6F4AA
       hi LspReferenceText cterm=bold ctermbg=red guibg=#F4EDAA
       hi LspReferenceWrite cterm=bold ctermbg=red guibg=#F4DBAA
-      augroup lsp_document_highlight
-        autocmd! * <buffer>
-        autocmd CursorHold,CursorHoldI <buffer> lua vim.lsp.buf.document_highlight()
-        autocmd CursorMoved,CursorMovedI <buffer> lua vim.lsp.buf.clear_references()
-      augroup END
     ]], false)
   end
 
