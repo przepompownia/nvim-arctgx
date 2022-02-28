@@ -1,3 +1,5 @@
+local keymap = require('vim.keymap')
+
 require('bqf').setup({
   auto_enable = true,
   preview = {
@@ -30,10 +32,19 @@ require('bqf').setup({
   }
 })
 
-vim.cmd([[
-  augroup BqfMappings
-    autocmd!
-    autocmd FileType qf nmap <buffer> <CR> <Cmd>lua require('bqf.qfwin.handler').open(true, 'TabDrop')<CR>
-    autocmd FileType qf nmap <buffer> <2-LeftMouse> <Cmd>lua require('bqf.qfwin.handler').open(true, 'TabDrop')<CR>
-  augroup END
-]])
+local function tabDropHandler()
+  require('bqf.qfwin.handler').open(true, 'TabDrop')
+end
+
+local function setItemMappings()
+  keymap.set({'n'}, '<2-LeftMouse>', tabDropHandler, {})
+  keymap.set({'n'}, '<CR>', tabDropHandler, {})
+end
+
+vim.api.nvim_create_augroup { name = 'BqfMappings', clear = true }
+vim.api.nvim_create_autocmd {
+  group = 'BqfMappings',
+  event = 'FileType',
+  pattern = 'qf',
+  callback = setItemMappings,
+}
