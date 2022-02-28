@@ -41,10 +41,9 @@ local function setItemMappings()
   keymap.set({'n'}, '<CR>', tabDropHandler, {buffer = true})
 end
 
-vim.api.nvim_create_augroup { name = 'BqfMappings', clear = true }
-vim.api.nvim_create_autocmd {
+vim.api.nvim_create_augroup ('BqfMappings', {clear = true })
+vim.api.nvim_create_autocmd ('FileType', {
   group = 'BqfMappings',
-  event = 'FileType',
   pattern = 'qf',
   callback = setItemMappings,
-}
+})

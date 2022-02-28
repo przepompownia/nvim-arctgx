@@ -25,7 +25,7 @@ local function peekDefinition()
   local params = lsp.util.make_position_params()
   return lsp.buf_request(0, 'textDocument/definition', params, previewLocation)
 end
-api.nvim_create_augroup { name = 'LspDocumentHighlight', clear = true }
+api.nvim_create_augroup ('LspDocumentHighlight', { clear = true })
 
 function M.onAttach(client, bufnr)
   local function bufMap(modes, lhs, rhs, opts)
@@ -63,18 +63,16 @@ function M.onAttach(client, bufnr)
   end
 
   if client.resolved_capabilities.document_highlight then
-    api.nvim_create_autocmd {
+    api.nvim_create_autocmd ({'CursorHold', 'CursorHoldI'}, {
       group = 'LspDocumentHighlight',
       buffer = bufnr,
-      event = {'CursorHold', 'CursorHoldI'},
       callback = vim.lsp.buf.document_highlight,
-    }
-    api.nvim_create_autocmd {
+    })
+    api.nvim_create_autocmd ({'CursorMoved', 'CursorMovedI'}, {
       group = 'LspDocumentHighlight',
       buffer = bufnr,
-      event = {'CursorMoved', 'CursorMovedI'},
       callback = vim.lsp.buf.clear_references,
-    }
+    })
     api.nvim_exec([[
       hi LspReferenceRead cterm=bold ctermbg=red guibg=#E6F4AA
       hi LspReferenceText cterm=bold ctermbg=red guibg=#F4EDAA
