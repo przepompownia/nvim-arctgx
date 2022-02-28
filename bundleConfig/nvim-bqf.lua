@@ -37,8 +37,8 @@ local function tabDropHandler()
 end
 
 local function setItemMappings()
-  keymap.set({'n'}, '<2-LeftMouse>', tabDropHandler, {})
-  keymap.set({'n'}, '<CR>', tabDropHandler, {})
+  keymap.set({'n'}, '<2-LeftMouse>', tabDropHandler, {buffer = true})
+  keymap.set({'n'}, '<CR>', tabDropHandler, {buffer = true})
 end
 
 vim.api.nvim_create_augroup { name = 'BqfMappings', clear = true }
