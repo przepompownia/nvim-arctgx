@@ -1,16 +1,16 @@
-function s:loadCustomHighlight() abort
+function! s:loadCustomHighlight() abort
   if $TERM !~# '-256color$' && &termguicolors == 0
     return
   endif
-  highlight link GitGutterAdd IdeGutterAdd
-  highlight link GitGutterDelete IdeGutterDelete
-  highlight link GitGutterChange IdeGutterChange
-  highlight link GitGutterChangeDelete IdeGutterChangeDelete
+  highlight! link GitGutterAdd IdeGutterAdd
+  highlight! link GitGutterDelete IdeGutterDelete
+  highlight! link GitGutterChange IdeGutterChange
+  highlight! link GitGutterChangeDelete IdeGutterChangeDelete
 endfunction
 
 augroup vimGitgutterCustom
   autocmd!
-  autocmd VimEnter * call s:loadCustomHighlight()
+  autocmd ColorScheme * call s:loadCustomHighlight()
 augroup END
 
 nmap <Plug>(ide-git-hunk-previous) <Plug>(GitGutterPrevHunk)
