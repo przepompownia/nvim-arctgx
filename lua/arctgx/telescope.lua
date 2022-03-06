@@ -3,6 +3,7 @@ local action_state = require 'telescope.actions.state'
 local base = require('arctgx.base')
 local files = require('arctgx.files')
 local git = require('arctgx.git')
+---@class Grep
 local grep = require('arctgx.grep')
 local telescope = require('telescope.builtin')
 local transform_mod = require('telescope.actions.mt').transform_mod
@@ -75,7 +76,10 @@ function extension.buffers()
   })
 end
 
-function extension.grep(cmd, root, query, title)
+---@param cmd Grep
+---@param root string
+---@param query string
+function extension.grep(cmd, root, query)
   local new_grep_finder = function(prompt_bufnr)
     local picker = action_state.get_current_picker(prompt_bufnr)
     return picker.finder
@@ -86,7 +90,7 @@ function extension.grep(cmd, root, query, title)
     default_text = query,
     grep_open_files = false,
     vimgrep_arguments = cmd,
-    prompt_title = title,
+    prompt_title = cmd:status(),
     attach_mappings = function(prompt_bufnr, map)
       customActions.toggleCaseSensibility:enhance {
         post = function()
@@ -94,7 +98,7 @@ function extension.grep(cmd, root, query, title)
 
           action_state.get_current_picker(prompt_bufnr):refresh(
             new_grep_finder(prompt_bufnr),
-            { reset_prompt = false }
+            { reset_prompt = false, prompt_title = cmd:status() }
           )
         end,
       }
@@ -104,7 +108,7 @@ function extension.grep(cmd, root, query, title)
 
           action_state.get_current_picker(prompt_bufnr):refresh(
             new_grep_finder(prompt_bufnr),
-            { reset_prompt = false }
+            { reset_prompt = false, prompt_title = cmd:status() }
           )
         end,
       }
@@ -124,8 +128,7 @@ function extension.rg_grep_operator(type)
   return extension.create_operator(
     extension.grep,
     grep:new_rg_grep_command(true, false),
-    git.top(vim.fn.expand('%:p:h')),
-    'Grep (rg)'
+    git.top(vim.fn.expand('%:p:h'))
   )(type)
 end
 
@@ -133,8 +136,7 @@ function extension.git_grep_operator(type)
   return extension.create_operator(
     extension.grep,
     grep:new_git_grep_command(true, false),
-    git.top(vim.fn.expand('%:p:h')),
-    'Grep (git)'
+    git.top(vim.fn.expand('%:p:h'))
   )(type)
 end
 
@@ -142,8 +144,7 @@ function extension.rg_grep(query, useFixedStrings, ignoreCase)
   return extension.grep(
     grep:new_rg_grep_command(useFixedStrings, ignoreCase),
     git.top(vim.fn.expand('%:p:h')),
-    query,
-    'Grep (rg)'
+    query
   )
 end
 
@@ -151,8 +152,7 @@ function extension.git_grep(query, useFixedStrings, ignoreCase)
   return extension.grep(
     grep:new_git_grep_command(useFixedStrings, ignoreCase),
     git.top(vim.fn.expand('%:p:h')),
-    query,
-    'Grep (git)'
+    query
   )
 end
 
