@@ -95,21 +95,19 @@ function extension.grep(cmd, root, query)
       customActions.toggleCaseSensibility:enhance {
         post = function()
           cmd:switch_case_sensibility()
+          local picker = action_state.get_current_picker(prompt_bufnr)
 
-          action_state.get_current_picker(prompt_bufnr):refresh(
-            new_grep_finder(prompt_bufnr),
-            { reset_prompt = false, prompt_title = cmd:status() }
-          )
+          picker:refresh(new_grep_finder(prompt_bufnr), { reset_prompt = false })
+          picker.prompt_border:change_title(cmd:status())
         end,
       }
       customActions.toggleFixedStrings:enhance {
         post = function()
           cmd:switch_fixed_strings()
+          local picker = action_state.get_current_picker(prompt_bufnr)
 
-          action_state.get_current_picker(prompt_bufnr):refresh(
-            new_grep_finder(prompt_bufnr),
-            { reset_prompt = false, prompt_title = cmd:status() }
-          )
+          picker:refresh(new_grep_finder(prompt_bufnr), { reset_prompt = false })
+          picker.prompt_border:change_title(cmd:status())
         end,
       }
 
