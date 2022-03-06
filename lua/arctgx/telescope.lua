@@ -84,6 +84,12 @@ function extension.grep(cmd, root, query)
     local picker = action_state.get_current_picker(prompt_bufnr)
     return picker.finder
   end
+  local refreshPicker = function(prompt_bufnr, command)
+    local picker = action_state.get_current_picker(prompt_bufnr)
+
+    picker:refresh(new_grep_finder(prompt_bufnr), { reset_prompt = false })
+    picker.prompt_border:change_title(command:status())
+  end
 
   telescope.live_grep({
     cwd = root,
@@ -95,19 +101,13 @@ function extension.grep(cmd, root, query)
       customActions.toggleCaseSensibility:enhance {
         post = function()
           cmd:switch_case_sensibility()
-          local picker = action_state.get_current_picker(prompt_bufnr)
-
-          picker:refresh(new_grep_finder(prompt_bufnr), { reset_prompt = false })
-          picker.prompt_border:change_title(cmd:status())
+          refreshPicker(prompt_bufnr, cmd)
         end,
       }
       customActions.toggleFixedStrings:enhance {
         post = function()
           cmd:switch_fixed_strings()
-          local picker = action_state.get_current_picker(prompt_bufnr)
-
-          picker:refresh(new_grep_finder(prompt_bufnr), { reset_prompt = false })
-          picker.prompt_border:change_title(cmd:status())
+          refreshPicker(prompt_bufnr, cmd)
         end,
       }
 
