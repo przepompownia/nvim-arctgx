@@ -36,6 +36,7 @@ local customActions = transform_mod({
 
     vim.cmd('stopinsert')
     picker.finder:close()
+    vim.api.nvim_do_autocmd('User', {pattern = 'IdeStatusChanged', modeline = false})
   end,
 
   toggleCaseSensibility = function() end,
