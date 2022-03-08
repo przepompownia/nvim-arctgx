@@ -77,33 +77,20 @@ dap.configurations.php = { php.default }
 
 local debugWinId = nil
 
-local function openTabForThread(threadId)
-  vim.cmd('tabedit %')
-  debugWinId = vim.fn.win_getid()
-end
-
-dap.listeners.before['event_stopped']['arctgx-dap-tab'] = function(session, body)
+local function openTabForThread()
   if nil ~= debugWinId and api.nvim_win_is_valid(debugWinId) then
     api.nvim_set_current_win(debugWinId)
     return
   end
 
-  vim.cmd('tabedit %')
+  vim.cmd([[
+    tabedit %
+    setlocal scrolloff=10
+  ]])
   debugWinId = vim.fn.win_getid()
   require('dapui').open()
 end
 
-dap.listeners.before['event_stopped']['arctgx-dap-tab'] = function(session, body)
-  openTabForThread(nil)
-end
-
-dap.listeners.after['event_thread']['arctgx-dap-tab'] = function(session, body)
-  if body.reason == 'started' then
-    openTabForThread(body.threadId)
-    return
-  end
-  if body.reason == '' then
-  else
-    vim.notify('Reason ' .. body.reason)
-  end
+dap.listeners.before['event_stopped']['arctgx-dap-tab'] = function()
+  openTabForThread()
 end
