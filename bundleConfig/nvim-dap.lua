@@ -77,9 +77,32 @@ dap.configurations.php = { php.default }
 
 local debugWinId = nil
 
-local function openTabForThread()
+local function goToDebugWin()
   if nil ~= debugWinId and api.nvim_win_is_valid(debugWinId) then
     api.nvim_set_current_win(debugWinId)
+
+    return true
+  end
+end
+
+local function verboseGoToDebugWin()
+  if goToDebugWin() then
+    return
+  end
+
+  vim.notify('Debug window is not defined yet.')
+end
+
+local function closeDebugWin()
+  if nil == debugWinId then
+    return
+  end
+  local tabNr = api.nvim_tabpage_get_number(api.nvim_win_get_tabpage(debugWinId))
+  vim.cmd('tabclose ' .. tabNr)
+end
+
+local function openTabForThread()
+  if goToDebugWin() then
     return
   end
 
@@ -94,3 +117,6 @@ end
 dap.listeners.before['event_stopped']['arctgx-dap-tab'] = function()
   openTabForThread()
 end
+
+keymap.set({'n'}, '<Plug>(ide-debugger-go-to-view)', verboseGoToDebugWin, opts)
+keymap.set({'n'}, '<Plug>(ide-debugger-close-view)', closeDebugWin, opts)
