@@ -1,5 +1,3 @@
-let g:phpactorBranch = 'develop'
-let g:phpactorQuickfixStrategy = 'phpactor#quickfix#fzf'
 let g:phpactorUseOpenWindows = v:true
 let g:PhpactorRootDirectoryStrategy = {-> get(get(b:, 'project', {}), 'primaryRootPath', g:phpactorInitialCwd)}
 
