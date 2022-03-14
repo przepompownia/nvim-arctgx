@@ -89,6 +89,7 @@ endfunction
 nmap <Leader>hs <Plug>(ide-git-hunk-stage)
 nmap <Leader>g <Plug>(ide-git-status)
 nmap <Leader>gc <Plug>(ide-git-commit)
+nmap <Leader>gb <Plug>(ide-git-blame)
 nmap <Leader>gs <Plug>(ide-git-status)
 nmap <Leader>gl <Plug>(ide-git-log)
 nmap <Leader>gp <Plug>(ide-git-push-all)
