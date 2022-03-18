@@ -4,19 +4,14 @@ local api = vim.api
 
 local extension = {}
 
-local variants = {default = true}
+local variants = {'default'}
 
 function extension.add_variant(variant)
-  variants[variant] = true
+  table.insert(variants, variant)
 end
 
 function extension.get_variants()
-  local keys = {}
-  for key, _ in pairs(variants) do
-    table.insert(keys, key)
-  end
-
-  return keys
+  return variants
 end
 
 local function new_class_from_file(path)
@@ -61,7 +56,7 @@ local function new_class_from_file(path)
         return
       end
     end)
-    vim.notify(('Server not ready, trying %s time'):format(tostring(i)))
+    -- vim.notify(('Server not ready, trying %s time'):format(tostring(i)))
     i = i + 1
   end))
 end
