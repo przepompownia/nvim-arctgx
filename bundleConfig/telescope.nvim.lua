@@ -42,10 +42,10 @@ keymap.set('n', '<Plug>(ide-browse-buffers)', arctgx.buffers)
 -- api.nvim_set_keymap('n', '<Plug>(ide-browse-windows)', arctgx.buffers)
 
 vim.cmd([[
-  nnoremap <leader>q :set operatorfunc=v:lua.arctgx_telescope_rg_grep_operator<cr>g@
-  vnoremap <leader>q :<c-u>call v:lua.arctgx_telescope_rg_grep_operator(visualmode())<cr>
-  nnoremap <leader>w :set operatorfunc=v:lua.arctgx_telescope_git_grep_operator<cr>g@
-  vnoremap <leader>w :<c-u>call v:lua.arctgx_telescope_git_grep_operator(visualmode())<cr>
+  nnoremap <Plug>(ide-grep-string-search-operator) :set operatorfunc=v:lua.arctgx_telescope_rg_grep_operator<cr>g@
+  vnoremap <Plug>(ide-grep-string-search-operator) :<c-u>call v:lua.arctgx_telescope_rg_grep_operator(visualmode())<cr>
+  nnoremap <Plug>(ide-git-string-search-operator) :set operatorfunc=v:lua.arctgx_telescope_git_grep_operator<cr>g@
+  vnoremap <Plug>(ide-git-string-search-operator) :<c-u>call v:lua.arctgx_telescope_git_grep_operator(visualmode())<cr>
 
   vmap <Plug>(ide-git-files-search-operator) :<C-U>call v:lua.arctgx_telescope_files_git_operator(visualmode())<CR>
   nmap <Plug>(ide-git-files-search-operator) :set operatorfunc=v:lua.arctgx_telescope_files_git_operator<CR>g@
