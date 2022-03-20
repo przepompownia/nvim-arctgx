@@ -34,7 +34,7 @@ function extension.tab_drop_path(path, relative_winnr)
     return
   end
 
-  local relative_winnr = relative_winnr or vim.fn.win_getid()
+  relative_winnr = relative_winnr or vim.fn.win_getid()
 
   if buffer_is_fresh(vim.fn.winbufnr(relative_winnr)) then
     api.nvim_win_set_buf(relative_winnr, bufNr)
