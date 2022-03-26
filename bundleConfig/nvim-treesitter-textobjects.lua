@@ -10,6 +10,12 @@ require'nvim-treesitter.configs'.setup {
         ['<Plug>(ide-select-function-inner)'] = '@function.inner',
         ['<Plug>(ide-select-class-outer)'] = '@class.outer',
         ['<Plug>(ide-select-class-inner)'] = '@class.inner',
+        ['al'] = '@block.outer',
+        ['il'] = '@block.inner',
+        ['as'] = '@scope.outer',
+        ['is'] = '@scope.inner',
+        ['ad'] = '@conditional.outer',
+        ['id'] = '@conditional.inner',
       },
     },
     move = {
@@ -45,8 +51,8 @@ require'nvim-treesitter.configs'.setup {
       enable = true,
       border = 'none',
       peek_definition_code = {
-        ['<leader>df'] = '@function.outer',
-        ['<leader>dF'] = '@class.outer',
+        ['<Plug>(ide-peek-definition-ts)'] = '@function.outer',
+        ['<Plug>(ide-peek-definition-class-ts)'] = '@class.outer',
       },
     },
   },

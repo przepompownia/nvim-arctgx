@@ -38,7 +38,7 @@ function M.onAttach(client, bufnr)
   api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
   bufMap('n', '<Plug>(ide-goto-definition)', lsp.buf.definition)
-  bufMap('n', '<Plug>(ide-peek-definition)', peekDefinition)
+  -- bufMap('n', '<Plug>(ide-peek-definition)', peekDefinition)
   bufMap('n', '<Plug>(ide-hover)', lsp.buf.hover)
   bufMap('n', '<Plug>(ide-goto-implementation)', lsp.buf.implementation)
   bufMap({ 'n', 'i' }, '<Plug>(ide-show-signature-help)', lsp.buf.signature_help)
