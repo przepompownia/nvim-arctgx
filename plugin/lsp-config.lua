@@ -61,13 +61,11 @@ vim.lsp.handlers['textDocument/declaration'] = location_handler
 vim.lsp.handlers['textDocument/definition'] = location_handler
 vim.lsp.handlers['textDocument/typeDefinition'] = location_handler
 vim.lsp.handlers['textDocument/implementation'] = location_handler
-vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(
-  vim.lsp.diagnostic.on_publish_diagnostics, {
-    virtual_text = false,
-    underline = false,
-  }
-)
--- vim.lsp.set_log_level('debug')
+vim.diagnostic.config({
+  virtual_text = false,
+  underline = false,
+})
+-- vim.lsp.set_log_level('trace')
 
 vim.fn.sign_define('DiagnosticSignHint', {text='💡', texthl='IdeHintSign', linehl='', numhl='IdeLineNrHint'})
 vim.fn.sign_define('DiagnosticSignInfo', {text='', texthl='IdeInfoSign', linehl='', numhl='IdeLineNrInfo'})
