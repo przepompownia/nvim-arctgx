@@ -10,4 +10,4 @@ nmap <Plug>(ide-git-log) :Glog<CR>
 nmap <Plug>(ide-git-push-all) :Git pushall<CR>
 nmap <Plug>(ide-git-commit) :Git commit<CR>
 nmap <Plug>(ide-git-blame) :Git blame<CR>
-nmap <Plug>(ide-git-stage-write-file) :Gwrite<CR>
+" nmap <Plug>(ide-git-stage-write-file) :Gwrite<CR>
