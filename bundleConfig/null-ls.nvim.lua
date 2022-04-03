@@ -14,11 +14,10 @@ local phpcsArgs = {
   extra_args = {
     '--standard=' .. os.getenv('HOME') .. '/.php-cs-ruleset.xml',
   },
-  -- cwd = phpProjectRoot,
 }
 
 null.setup({
-  debug = true,
+  -- debug = true,
   diagnostics_format = "#{s}: #{m} [#{c}]",
   sources = {
     null.builtins.code_actions.shellcheck,
@@ -31,6 +30,7 @@ null.setup({
       extra_args = {'cleancode,codesize,controversial,design,naming,unusedcode'}
     }),
     null.builtins.diagnostics.phpstan.with({
+      timeout = 10000,
       cwd = phpProjectRoot,
       args = {
         'analyze',
