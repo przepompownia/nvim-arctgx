@@ -1,4 +1,4 @@
-local null_ls = require('null-ls')
+local null = require('null-ls')
 local util = require('lspconfig.util')
 
 local function phpProjectRoot(pattern)
@@ -12,18 +12,43 @@ end
 
 local phpcsArgs = {
   extra_args = {
-    "--standard=" .. os.getenv('HOME') .. '/.php-cs-ruleset.xml',
+    '--standard=' .. os.getenv('HOME') .. '/.php-cs-ruleset.xml',
   },
   -- cwd = phpProjectRoot,
 }
 
-null_ls.setup({
+null.setup({
+  debug = true,
+  diagnostics_format = "#{s}: #{m} [#{c}]",
   sources = {
-    null_ls.builtins.diagnostics.php,
-    null_ls.builtins.formatting.phpcsfixer,
-    null_ls.builtins.formatting.phpcbf.with(phpcsArgs),
-    null_ls.builtins.diagnostics.phpcs.with(phpcsArgs),
-    null_ls.builtins.diagnostics.phpmd,
-    null_ls.builtins.diagnostics.phpstan,
+    null.builtins.code_actions.shellcheck,
+    null.builtins.code_actions.eslint,
+    null.builtins.diagnostics.eslint,
+    null.builtins.diagnostics.jsonlint,
+    null.builtins.diagnostics.php,
+    null.builtins.diagnostics.phpcs.with(phpcsArgs),
+    null.builtins.diagnostics.phpmd.with({
+      extra_args = {'cleancode,codesize,controversial,design,naming,unusedcode'}
+    }),
+    null.builtins.diagnostics.phpstan.with({
+      cwd = phpProjectRoot,
+      args = {
+        'analyze',
+        '--level',
+        'max',
+        '--error-format',
+        'json',
+        '--no-progress',
+        '--no-interaction',
+        -- '--',
+        '$FILENAME',
+      }
+    }),
+    null.builtins.diagnostics.shellcheck,
+    null.builtins.diagnostics.vint,
+    null.builtins.formatting.phpcbf.with(phpcsArgs),
+    null.builtins.formatting.phpcsfixer,
+    null.builtins.formatting.prettier,
+    null.builtins.formatting.shfmt,
   }
 })
