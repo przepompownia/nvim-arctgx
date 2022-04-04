@@ -60,6 +60,7 @@ keymap.set({'n'}, '<Plug>(ide-debugger-step-over)', dap.step_over, opts)
 keymap.set({'n'}, '<Plug>(ide-debugger-step-into)', dap.step_into, opts)
 keymap.set({'n'}, '<Plug>(ide-debugger-step-out)', dap.step_out, opts)
 keymap.set({'n'}, '<Plug>(ide-debugger-toggle-breakpoint)', dap.toggle_breakpoint, opts)
+keymap.set({'n'}, '<Plug>(ide-debugger-clear-breakpoints)', dap.clear_breakpoints, opts)
 keymap.set(
   {'n'},
   '<Plug>(ide-debugger-toggle-breakpoint-conditional)',

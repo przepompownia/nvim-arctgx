@@ -61,6 +61,7 @@ function s:defineIDEMaps()
   nmap <buffer> <Leader><S-F5> <Plug>(ide-debugger-ui-toggle)
   nmap <buffer> <Leader>dt <Plug>(ide-debugger-toggle-breakpoint)
   nmap <buffer> <Leader><S-F10> <Plug>(ide-debugger-toggle-breakpoint-conditional)
+  nmap <buffer> <Leader>db <Plug>(ide-debugger-clear-breakpoints)
 endfunction
 
 function s:defineDebuggerMaps() abort
