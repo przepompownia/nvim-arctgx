@@ -1,4 +1,4 @@
-function dump (value)
+function dump(value)
   local buf = vim.api.nvim_create_buf(false, false)
 
   local value_string = vim.inspect(value):gsub('<function (%d+)>', '"function %1"'):gsub('<%d+>', '')
@@ -10,11 +10,10 @@ function dump (value)
   vim.api.nvim_open_win(buf, true, {
     relative = 'editor',
     width = 120,
-    height = 40,
+    height = math.min(999, #lines),
     row = 0.9,
     col = 0.9,
     border = 'rounded',
     style = 'minimal',
   })
-
 end
