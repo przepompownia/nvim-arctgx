@@ -10,7 +10,7 @@ function dump(value)
   vim.api.nvim_open_win(buf, true, {
     relative = 'editor',
     width = 120,
-    height = math.min(999, #lines),
+    height = #lines,
     row = 0.9,
     col = 0.9,
     border = 'rounded',
