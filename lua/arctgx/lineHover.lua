@@ -40,6 +40,7 @@ lineHover.show = function ()
   end
 
   local bufNr = createBuffer(lineContent)
+
   windowId = api.nvim_open_win(bufNr, false, {
     relative = 'win',
     width = contentWidth,
@@ -48,6 +49,8 @@ lineHover.show = function ()
     style = 'minimal',
     bufpos = {vim.fn.line('.') - 2, 0},
   })
+
+  api.nvim_win_set_option(windowId, 'winhighlight', 'NormalFloat:Normal')
 end
 
 lineHover.enableForWindow = function ()
@@ -55,6 +58,7 @@ lineHover.enableForWindow = function ()
     api.nvim_create_augroup ('ArctgxLineHover', { clear = true })
     api.nvim_create_autocmd ({'CursorHold', 'CursorHoldI'}, {
       group = 'ArctgxLineHover',
+      buffer = bufnr,
       -- buffer = bufnr,
       callback = lineHover.showDelayed,
     })
