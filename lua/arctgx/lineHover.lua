@@ -16,6 +16,8 @@ local function createBuffer(content)
   local bufNr = api.nvim_create_buf(false, false)
   vim.fn.setbufline(bufNr, 1, content)
   api.nvim_buf_set_option(bufNr, 'bufhidden', 'wipe')
+  api.nvim_buf_set_option(bufNr, 'buftype', 'nofile')
+  api.nvim_buf_set_option(bufNr, 'modifable', false)
 
   return bufNr
 end
@@ -54,13 +56,19 @@ lineHover.show = function ()
 end
 
 lineHover.enableForWindow = function ()
-  if vim.fn.has("nvim-0.7") == 1 then
+  if vim.fn.has('nvim-0.7') == 1 then
     api.nvim_create_augroup ('ArctgxLineHover', { clear = true })
     api.nvim_create_autocmd ({'CursorHold', 'CursorHoldI'}, {
       group = 'ArctgxLineHover',
-      buffer = bufnr,
+      buffer = 0,
       -- buffer = bufnr,
       callback = lineHover.showDelayed,
+    })
+    api.nvim_create_autocmd ({'BufLeave', 'TabLeave'}, {
+      group = 'ArctgxLineHover',
+      buffer = 0,
+      -- buffer = bufnr,
+      callback = hideExistingWindow,
     })
   end
 end
