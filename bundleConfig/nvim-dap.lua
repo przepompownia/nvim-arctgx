@@ -17,16 +17,20 @@ dap.configurations.lua = {
     request = 'attach',
     name = 'Attach to running Neovim instance',
     host = function()
-      local value = vim.fn.input('Host [127.0.0.1]: ')
+      local defaultValue = '127.0.0.1'
+      local value = vim.fn.input(('Host [%s]: '):format(defaultValue), defaultValue)
       if value ~= '' then
         return value
       end
-      return '127.0.0.1'
+      return defaultValue
     end,
     port = function()
-      local val = tonumber(vim.fn.input('Port: '))
-      assert(val, 'Please provide a port number')
-      return val
+      local defaultValue = 9004
+      local val = tonumber(vim.fn.input(('Port [%s]: '):format(defaultValue), defaultValue))
+      if val~= '' then
+        return val
+      end
+      return defaultValue
     end,
   }
 }
