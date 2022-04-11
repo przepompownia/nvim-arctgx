@@ -49,8 +49,8 @@ local function toggle_frames()
   frames.toggle()
 end
 
-vim.api.nvim_add_user_command('DAPWidgetScopes', toggle_scopes, {})
-vim.api.nvim_add_user_command('DAPWidgetFrames', toggle_frames, {})
+vim.api.nvim_create_user_command('DAPWidgetScopes', toggle_scopes, {})
+vim.api.nvim_create_user_command('DAPWidgetFrames', toggle_frames, {})
 
 vim.fn.sign_define('DapBreakpoint', {text='●', texthl='IdeBreakpointSign', linehl='', numhl='IdeBreakpointLineNr'})
 vim.fn.sign_define('DapBreakpointCondition', {text='◆', texthl='IdeBreakpointSign', linehl='', numhl='IdeBreakpointLineNr'})
