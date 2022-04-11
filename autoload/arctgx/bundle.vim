@@ -35,7 +35,7 @@ function! arctgx#bundle#loadCustomConfiguration(bundleDir, bundleConfigDir) abor
 endfunction
 
 function! arctgx#bundle#loadSingleCustomConfiguration(bundle, bundleConfigDir) abort
-  let l:bundle = substitute(a:bundle, '\.vim$', '', '')
+  let l:bundle = substitute(a:bundle, '\.\(vim\|lua\)$', '', '')
   let l:config = a:bundleConfigDir . l:bundle
   try
     call arctgx#base#sourceFile(l:config . '.vim')
