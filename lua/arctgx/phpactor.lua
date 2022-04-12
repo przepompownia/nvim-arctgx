@@ -1,6 +1,7 @@
 local base = require 'arctgx.base'
 local vim = vim
 local api = vim.api
+local Float = require 'plenary.window.float'
 
 local extension = {}
 
@@ -42,7 +43,7 @@ local function new_class_from_file(path)
           {
             prompt = '\nSelect variant: ',
           },
-          function (variant)
+          function(variant)
             if nil == variant then
               api.nvim_buf_delete(buf, {})
               vim.notify('aborted')
@@ -50,7 +51,7 @@ local function new_class_from_file(path)
             end
 
             base.tab_drop_path(path)
-            vim.lsp.buf.execute_command({command = 'create_class', arguments = { vim.uri_from_fname(path), variant }})
+            vim.lsp.buf.execute_command({command = 'create_class', arguments = {vim.uri_from_fname(path), variant}})
           end
         )
         return
@@ -64,6 +65,46 @@ end
 function extension.class_new()
   local bufname = api.nvim_buf_get_name(0)
   vim.ui.input({prompt = 'File: ', completion = 'file', default = bufname == '' and vim.loop.cwd() or bufname}, new_class_from_file)
+end
+
+local function showWindow(title, syntax, contents)
+  local out = {};
+  for match in string.gmatch(contents, '[^\n]+') do
+    table.insert(out, match);
+  end
+
+  local float = Float.percentage_range_window(0.6, 0.4, {winblend = 0}, {
+    title = title,
+    topleft = '┌',
+    topright = '┐',
+    top = '─',
+    left = '│',
+    right = '│',
+    botleft = '└',
+    botright = '┘',
+    bot = '─',
+  })
+
+  vim.api.nvim_buf_set_option(float.bufnr, 'filetype', syntax)
+  vim.api.nvim_buf_set_lines(float.bufnr, 0, -1, false, out)
+end
+
+function extension.dumpConfig()
+  local results, _ = vim.lsp.buf_request_sync(0, 'phpactor/debug/config', {['return'] = true})
+  for _, res in pairs(results or {}) do
+    showWindow('Phpactor LSP Configuration', 'json', res['result'])
+  end
+end
+
+function extension.status()
+  local results, _ = vim.lsp.buf_request_sync(0, 'phpactor/status', {['return'] = true})
+  for _, res in pairs(results or {}) do
+    showWindow('Phpactor Status', 'markdown', res['result'])
+  end
+end
+
+function extension.reindex()
+  vim.lsp.buf_notify(0, "phpactor/indexer/reindex",{})
 end
 
 return extension
