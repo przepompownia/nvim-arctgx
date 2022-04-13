@@ -10,7 +10,6 @@ local make_default_opts = function()
   }
 end
 
-
 local make_no_final_sep_opts = function()
   return {
     final_separator = false,
@@ -20,11 +19,11 @@ end
 
 trevj.setup({
   containers = {
-    -- php = {
-    --   array_creation_expression = make_default_opts(),
-    --   list_literal = make_default_opts(),
-    --   formal_parameters = make_default_opts(),
-    --   arguments = make_default_opts(),
-    -- },
+    php = {
+      array_creation_expression = make_default_opts(),
+      list_literal = make_default_opts(),
+      formal_parameters = make_default_opts(),
+      arguments = make_default_opts(),
+    },
   },
 })
