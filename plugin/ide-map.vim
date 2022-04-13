@@ -62,6 +62,7 @@ function s:defineIDEMaps()
   nmap <buffer> <Leader>dt <Plug>(ide-debugger-toggle-breakpoint)
   nmap <buffer> <Leader><S-F10> <Plug>(ide-debugger-toggle-breakpoint-conditional)
   nmap <buffer> <Leader>db <Plug>(ide-debugger-clear-breakpoints)
+  nmap <buffer> gnj <Plug>(ide-revj-at-cursor)
 endfunction
 
 function s:defineDebuggerMaps() abort
