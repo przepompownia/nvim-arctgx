@@ -18,7 +18,9 @@ local function makeRequest(bufnr, opts)
   command:switchNamesOnly()
 
   return function(query)
-    command:setQuery('-S', query)
+    if ('' ~= query) then
+      command:setQuery('-S', query)
+    end
     local job = Job:new({
       args = {unpack(command, 2)},
       sync = true,
@@ -43,7 +45,6 @@ function gdiff.run(opts)
       actions.select_default:replace(function()
         actions.close(prompt_bufnr)
         local selection = action_state.get_selected_entry()
-        print(vim.inspect(selection))
         local result = selection[1]
         base.tab_drop(result)
       end)

@@ -71,7 +71,22 @@ lspconfig.yamlls.setup {
   }
 }
 
-local sumnekoRoot = os.getenv( 'HOME' ) .. '/dev/external/lua-language-server'
+local function getLuaRuntime()
+  --- from nlua.nvim
+  local result = {};
+  for _, path in pairs(vim.api.nvim_list_runtime_paths()) do
+    local luaPath = path .. '/lua/';
+    if vim.fn.isdirectory(luaPath) then
+      result[luaPath] = true
+    end
+  end
+
+  result[vim.fn.expand('$VIMRUNTIME/lua')] = true
+
+  return result;
+end
+
+local sumnekoRoot = os.getenv('HOME') .. '/dev/external/lua-language-server/current'
 local sumnekoBinary = sumnekoRoot .. '/bin/lua-language-server'
 
 local runtimePath = vim.split(package.path, ';')
@@ -95,15 +110,21 @@ lspconfig.sumneko_lua.setup {
         version = 'LuaJIT',
         path = runtimePath,
       },
+      workspace = {
+        library = getLuaRuntime(),
+        maxPreload = 10000,
+        preloadFileSize = 10000,
+        -- library = vim.api.nvim_get_runtime_file('', true),
+        checkThirdParty = false,
+      },
+      completion = {
+        showWord = 'Disable',
+      },
       diagnostics = {
         globals = {'vim'},
         neededFileStatus = {
           ['codestyle-check'] = 'Any',
         },
-      },
-      workspace = {
-        library = vim.api.nvim_get_runtime_file('', true),
-        checkThirdParty = false,
       },
       telemetry = {
         enable = false,
