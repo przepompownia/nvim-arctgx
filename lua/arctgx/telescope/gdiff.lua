@@ -9,12 +9,7 @@ local make_entry   = require('telescope.make_entry')
 local base         = require('arctgx.base')
 local gdiff        = {}
 
-local function makeRequest(bufnr, opts)
-  local command = diff:newCommand(
-    'xx',
-    opts.args or {},
-    opts.cwd or vim.loop.cwd()
-  )
+local function makeRequest(command)
   command:switchNamesOnly()
 
   return function(query)
@@ -33,11 +28,16 @@ local function makeRequest(bufnr, opts)
 end
 
 function gdiff.run(opts)
+  local command = diff:newCommand(
+    'GDiff',
+    opts.args or {},
+    opts.cwd or vim.loop.cwd()
+  )
   opts = opts or {}
   pickers.new(opts, {
     prompt_title = 'GDiff',
     finder = finders.new_dynamic({
-      fn = makeRequest(opts.bufnr, opts),
+      fn = makeRequest(command),
       entry_maker = make_entry.gen_from_file(opts),
     }),
     sorter = conf.generic_sorter(opts),
