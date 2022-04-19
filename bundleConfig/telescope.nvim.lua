@@ -32,6 +32,16 @@ _G.arctgx_telescope_files_all_operator = arctgx.files_all_operator
 
 api.nvim_create_user_command('GGrep', function(opts) arctgx.git_grep(opts.args, false, false) end, {nargs = '*'})
 api.nvim_create_user_command('RGrep', function(opts) arctgx.rg_grep(opts.args, false, false) end, {nargs = '*'})
+api.nvim_create_user_command(
+  'GTDiff',
+  function(opts)
+    gdiff.run({
+      args = opts.fargs,
+      cwd = git.top(vim.fn.expand('%:p:h')),
+    })
+  end,
+  {nargs = '*'}
+)
 keymap.set('n', '<Plug>(ide-grep-git)', function() arctgx.git_grep('', false, false) end)
 keymap.set('n', '<Plug>(ide-grep-files)', function() arctgx.rg_grep('', false, false) end)
 keymap.set('n', '<Plug>(ide-browse-files)', arctgx.files_all)
