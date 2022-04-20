@@ -5,6 +5,7 @@ local action_state     = require 'telescope.actions.state'
 local conf             = require('telescope.config').values
 local Job              = require('plenary.job')
 local diff             = require('arctgx.git.diff')
+local from_entry       = require 'telescope.from_entry'
 local make_entry       = require('telescope.make_entry')
 local base             = require('arctgx.base')
 local buffer_previewer = require('telescope.previewers.buffer_previewer')
