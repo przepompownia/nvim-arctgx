@@ -1,4 +1,4 @@
-local cmp = require'cmp'
+local cmp = require 'cmp'
 local cmp_buffer = require('cmp_buffer')
 local luasnip = require('luasnip')
 
@@ -13,10 +13,10 @@ cmp.setup({
       require('luasnip').lsp_expand(args.body)
     end,
   },
-  mapping = {
-    ['<C-d>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
-    ['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i', 'c' }),
-    ['<Plug>(ide-trigger-completion)'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
+  mapping = cmp.mapping.preset.insert({
+    ['<C-d>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), {'i', 'c'}),
+    ['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(4), {'i', 'c'}),
+    ['<Plug>(ide-trigger-completion)'] = cmp.mapping(cmp.mapping.complete(), {'i', 'c'}),
     ['<Tab>'] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_next_item()
@@ -27,7 +27,7 @@ cmp.setup({
       else
         fallback()
       end
-    end, { 'i', 's' }),
+    end, {'i', 's'}),
 
     ['<S-Tab>'] = cmp.mapping(function(fallback)
       if cmp.visible() then
@@ -37,26 +37,25 @@ cmp.setup({
       else
         fallback()
       end
-    end, { 'i', 's' }),
-    ['<C-y>'] = cmp.mapping.confirm({ select = true }),
+    end, {'i', 's'}),
+    ['<C-y>'] = cmp.mapping.confirm({select = true}),
     ['<C-e>'] = cmp.mapping({
       i = cmp.mapping.abort(),
-      c = cmp.mapping.close(),
     }),
-    ['<CR>'] = cmp.mapping.confirm({ select = true }),
+    ['<CR>'] = cmp.mapping.confirm({select = true}),
     ['<C-s>'] = cmp.mapping.complete({
       config = {
         sources = {
-          { name = 'luasnip' }
+          {name = 'luasnip'}
         }
       }
     }),
-  },
+  }),
   sources = {
-    { name = 'nvim_lsp' },
-    { name = 'luasnip' },
-    { name = 'buffer' },
-    { name = 'path' },
+    {name = 'nvim_lsp'},
+    {name = 'luasnip'},
+    {name = 'buffer'},
+    {name = 'path'},
   },
   sorting = {
     comparators = {
@@ -64,8 +63,10 @@ cmp.setup({
       cmp.config.compare.offset,
       cmp.config.compare.sort_text,
       cmp.config.compare.exact,
+      cmp.config.compare.recently_used,
+      cmp.config.compare.locals,
       function(...) return cmp_buffer:compare_locality(...) end,
     }
   },
-  completion = { completeopt = 'menu,menuone' },
+  completion = {completeopt = 'menu,menuone'},
 })
