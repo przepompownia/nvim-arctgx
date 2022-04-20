@@ -8,6 +8,7 @@ local diff             = require('arctgx.git.diff')
 local make_entry       = require('telescope.make_entry')
 local base             = require('arctgx.base')
 local buffer_previewer = require('telescope.previewers.buffer_previewer')
+local sorters          = require('telescope.sorters')
 local gdiff            = {}
 local putils           = require 'telescope.previewers.utils'
 
@@ -78,7 +79,7 @@ function gdiff.run(opts)
       fn = makeRequest(command),
       entry_maker = make_entry.gen_from_file(opts),
     }),
-    sorter = conf.generic_sorter(opts),
+    sorter = sorters.empty(),
     attach_mappings = function(prompt_bufnr, map)
       actions.select_default:replace(function()
         actions.close(prompt_bufnr)
