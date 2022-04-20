@@ -1,13 +1,15 @@
-local pickers      = require 'telescope.pickers'
-local finders      = require 'telescope.finders'
-local actions      = require 'telescope.actions'
-local action_state = require 'telescope.actions.state'
-local conf         = require('telescope.config').values
-local Job          = require('plenary.job')
-local diff         = require('arctgx.git.diff')
-local make_entry   = require('telescope.make_entry')
-local base         = require('arctgx.base')
-local gdiff        = {}
+local pickers          = require 'telescope.pickers'
+local finders          = require 'telescope.finders'
+local actions          = require 'telescope.actions'
+local action_state     = require 'telescope.actions.state'
+local conf             = require('telescope.config').values
+local Job              = require('plenary.job')
+local diff             = require('arctgx.git.diff')
+local make_entry       = require('telescope.make_entry')
+local base             = require('arctgx.base')
+local buffer_previewer = require('telescope.previewers.buffer_previewer')
+local gdiff            = {}
+local putils           = require 'telescope.previewers.utils'
 
 local function makeRequest(command)
   command:switchNamesOnly()
@@ -25,6 +27,42 @@ local function makeRequest(command)
 
     return job:result()
   end
+end
+
+---Stolen from telescope
+---@param opts table
+---@param command arctgx.git.diff
+---@return table
+local function previewer(opts, command)
+  return buffer_previewer.new_buffer_previewer {
+    title = 'Git File Diff Preview',
+    get_buffer_by_name = function(_, entry)
+      return entry.value
+    end,
+
+    define_preview = function(self, entry, status)
+      if entry.status and (entry.status == '??' or entry.status == 'A ') then
+        local p = from_entry.path(entry, true)
+        if p == nil or p == '' then
+          return
+        end
+        conf.buffer_previewer_maker(p, self.state.bufnr, {
+          bufname = self.state.bufname,
+          winid = self.state.winid,
+        })
+      else
+        local command = command:clone()
+        command:switchNamesOnly(false)
+        command:appendArgument(entry.value)
+        putils.job_maker(command, self.state.bufnr, {
+          value = entry.value,
+          bufname = self.state.bufname,
+          cwd = opts.cwd,
+        })
+        putils.regex_highlighter(self.state.bufnr, 'diff')
+      end
+    end,
+  }
 end
 
 function gdiff.run(opts)
@@ -50,6 +88,7 @@ function gdiff.run(opts)
       end)
       return true
     end,
+    previewer = previewer(opts, command)
   }):find()
 end
 
