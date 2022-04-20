@@ -74,4 +74,13 @@ function Cmd:unsetShortOptionWithValue(option)
   return table.remove(self, key)
 end
 
+function Cmd:appendArgument(value)
+  table.insert(self, value)
+end
+
+---@return arctgx.Cmd
+function Cmd:clone()
+  return vim.deepcopy(self)
+end
+
 return Cmd
