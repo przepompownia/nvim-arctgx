@@ -13,10 +13,9 @@ lineHover.showDelayed = function (debounceTime)
 end
 
 local function createBuffer(content)
-  local bufNr = api.nvim_create_buf(false, false)
+  local bufNr = api.nvim_create_buf(false, true)
   vim.fn.setbufline(bufNr, 1, content)
   api.nvim_buf_set_option(bufNr, 'bufhidden', 'wipe')
-  api.nvim_buf_set_option(bufNr, 'buftype', 'nofile')
   api.nvim_buf_set_option(bufNr, 'modified', false)
 
   return bufNr
@@ -56,6 +55,7 @@ lineHover.show = function ()
 end
 
 lineHover.enableForWindow = function ()
+  vim.notify(api.nvim_buf_get_name(0))
   if vim.fn.has('nvim-0.7') == 1 then
     api.nvim_create_augroup ('ArctgxLineHover', { clear = true })
     api.nvim_create_autocmd ({'CursorHold', 'CursorHoldI'}, {
