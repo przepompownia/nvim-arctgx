@@ -3,10 +3,7 @@ local finders          = require 'telescope.finders'
 local actions          = require 'telescope.actions'
 local action_state     = require 'telescope.actions.state'
 local conf             = require('telescope.config').values
-local from_entry       = require 'telescope.from_entry'
-local make_entry       = require('telescope.make_entry')
 local buffer_previewer = require('telescope.previewers.buffer_previewer')
-local sorters          = require('telescope.sorters')
 
 ---@class arctgx.telescope.windows
 local Windows = {}

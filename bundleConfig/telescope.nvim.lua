@@ -1,5 +1,9 @@
 local action_layout = require 'telescope.actions.layout'
 local actions = require 'telescope.actions'
+local base = require 'arctgx.base'
+local gdiff= require 'arctgx.telescope.gdiff'
+local git = require('arctgx.git')
+local windows = require('arctgx.telescope.windows')
 local api = vim.api
 local arctgx = require('arctgx.telescope')
 local builtin = require('telescope.builtin')
@@ -49,7 +53,7 @@ keymap.set('n', '<Plug>(ide-browse-gfiles)', arctgx.files_git)
 keymap.set('n', '<Plug>(ide-browse-cmd-history)', builtin.command_history)
 keymap.set('n', '<Plug>(ide-browse-history)', arctgx.oldfiles)
 keymap.set('n', '<Plug>(ide-browse-buffers)', arctgx.buffers)
--- api.nvim_set_keymap('n', '<Plug>(ide-browse-windows)', arctgx.buffers)
+keymap.set('n', '<Plug>(ide-browse-windows)', windows.list)
 
 vim.cmd([[
   nnoremap <Plug>(ide-grep-string-search-operator) :set operatorfunc=v:lua.arctgx_telescope_rg_grep_operator<cr>g@
