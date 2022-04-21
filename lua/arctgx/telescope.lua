@@ -65,6 +65,10 @@ function extension.create_operator(search_function, cmd, root, title)
   end
 end
 
+function extension.branches()
+  branches.list({cwd = git.top(vim.fn.expand('%:p:h'))})
+end
+
 function extension.oldfiles()
   telescope.oldfiles({
     attach_mappings = default_file_mappings,

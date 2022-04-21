@@ -57,6 +57,7 @@ keymap.set('n', '<Plug>(ide-browse-cmd-history)', builtin.command_history)
 keymap.set('n', '<Plug>(ide-browse-history)', arctgx.oldfiles)
 keymap.set('n', '<Plug>(ide-browse-buffers)', arctgx.buffers)
 keymap.set('n', '<Plug>(ide-browse-windows)', windows.list)
+keymap.set('n', '<Plug>(ide-git-show-branches)', arctgx.branches)
 
 vim.cmd([[
   nnoremap <Plug>(ide-grep-string-search-operator) :set operatorfunc=v:lua.arctgx_telescope_rg_grep_operator<cr>g@
