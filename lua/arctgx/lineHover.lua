@@ -1,7 +1,7 @@
 local lineHover = {}
 
 local api = vim.api
-local defaultDebounceTime = 300
+local defaultDebounceTime = 0
 local windowId = nil
 
 local timer = vim.loop.new_timer()
@@ -55,22 +55,19 @@ lineHover.show = function ()
 end
 
 lineHover.enableForWindow = function ()
-  vim.notify(api.nvim_buf_get_name(0))
-  if vim.fn.has('nvim-0.7') == 1 then
-    api.nvim_create_augroup ('ArctgxLineHover', { clear = true })
-    api.nvim_create_autocmd ({'CursorHold', 'CursorHoldI'}, {
-      group = 'ArctgxLineHover',
-      buffer = 0,
-      -- buffer = bufnr,
-      callback = lineHover.showDelayed,
-    })
-    api.nvim_create_autocmd ({'BufLeave', 'TabClosed'}, {
-      group = 'ArctgxLineHover',
-      buffer = 0,
-      -- buffer = bufnr,
-      callback = hideExistingWindow,
-    })
-  end
+  api.nvim_create_augroup ('ArctgxLineHover', { clear = true })
+  api.nvim_create_autocmd ({'CursorMoved'}, {
+    group = 'ArctgxLineHover',
+    buffer = 0,
+    callback = function ()
+      lineHover.showDelayed()
+    end
+  })
+  api.nvim_create_autocmd ({'BufLeave', 'TabClosed'}, {
+    group = 'ArctgxLineHover',
+    buffer = 0,
+    callback = hideExistingWindow,
+  })
 end
 
 return lineHover
