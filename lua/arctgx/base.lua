@@ -19,7 +19,7 @@ function extension.get_first_win_id_by_bufnr(bufNr)
 end
 
 local function buffer_is_fresh(bufNr)
-  return '' == api.nvim_buf_get_name(bufNr) and api.nvim_buf_get_changedtick(bufNr) <=2
+  return '' == api.nvim_buf_get_name(bufNr) and api.nvim_buf_get_changedtick(bufNr) <= 2
 end
 
 function extension.tab_drop_path(path, relative_winnr)
@@ -53,11 +53,40 @@ function extension.tab_drop(path, line, column, relative_bufnr)
     return
   end
 
-  api.nvim_win_set_cursor(0, {line, (column or 1) -1})
+  api.nvim_win_set_cursor(0, {line, (column or 1) - 1})
 end
 
 function extension.operator_get_text(type)
   return vim.fn['arctgx#operator#getText'](type)
+end
+
+function extension.getVisualSelection()
+  --- from rcarriga/nvim-dap-ui
+  if vim.fn.mode() ~= 'v' then
+    return
+  end
+  local start = vim.fn.getpos('v')
+  local finish = vim.fn.getpos('.')
+  local lines = extension.getSelection(start, finish)
+
+  return table.concat(lines, '\n')
+end
+
+function extension.getSelection(start, finish)
+  local startLine, startCol = start[2], start[3]
+  local finishLine, finishCol = finish[2], finish[3]
+
+  if startLine > finishLine or (startLine == finishLine and startCol > finishCol) then
+    startLine, startCol, finishLine, finishCol = finishLine, finishCol, startLine, startCol
+  end
+  local lines = vim.fn.getline(startLine, finishLine)
+  if #lines == 0 then
+    return
+  end
+  lines[#lines] = string.sub(lines[#lines], 1, finishCol)
+  lines[1] = string.sub(lines[1], startCol)
+
+  return lines
 end
 
 return extension
