@@ -33,10 +33,11 @@ end
 
 lineHover.show = function ()
   hideExistingWindow()
-  local lineContent = vim.fn.getline('.'):gsub('[^%g* ]+$', '')
-  local contentWidth = vim.fn.strdisplaywidth(lineContent) + 1
+  local fullLine = vim.fn.getline('.')
+  local lineContent = fullLine:gsub('[^%g* ]+$', '')
+  local contentWidth = vim.fn.strdisplaywidth(fullLine)
 
-  if contentWidth < vim.fn.winwidth(0) then
+  if contentWidth < vim.fn.winwidth(0) - vim.fn.getwininfo(vim.api.nvim_get_current_win())[1].textoff then
     return
   end
 
