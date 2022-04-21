@@ -1,7 +1,7 @@
 local action_layout = require 'telescope.actions.layout'
 local actions = require 'telescope.actions'
 local base = require 'arctgx.base'
-local gdiff= require 'arctgx.telescope.gdiff'
+local gdiff = require 'arctgx.telescope.gdiff'
 local git = require('arctgx.git')
 local windows = require('arctgx.telescope.windows')
 local api = vim.api
@@ -14,7 +14,7 @@ require('telescope').setup {
     previewer = true,
     preview_cutoff = 1,
     layout_strategy = 'horizontal',
-    layout_config = { height = 0.99, width = 0.99 },
+    layout_config = {height = 0.99, width = 0.99},
     -- borderchars = {'─', '│', '─', '│', '┌', '┐', '┘', '└'},
     mappings = {
       i = {
@@ -34,8 +34,8 @@ _G.arctgx_telescope_rg_grep_operator = arctgx.rg_grep_operator
 _G.arctgx_telescope_files_git_operator = arctgx.files_git_operator
 _G.arctgx_telescope_files_all_operator = arctgx.files_all_operator
 
-api.nvim_create_user_command('GGrep', function(opts) arctgx.git_grep(opts.args, false, false) end, {nargs = '*'})
-api.nvim_create_user_command('RGrep', function(opts) arctgx.rg_grep(opts.args, false, false) end, {nargs = '*'})
+api.nvim_create_user_command('GGrep', function(opts) arctgx.gitGrep(opts.args, false, false) end, {nargs = '*'})
+api.nvim_create_user_command('RGrep', function(opts) arctgx.rgGrep(opts.args, false, false) end, {nargs = '*'})
 api.nvim_create_user_command(
   'GTDiff',
   function(opts)
@@ -49,27 +49,34 @@ api.nvim_create_user_command(
     complete = vim.fn['arctgx#git#completion#completeGFDiff'],
   }
 )
-keymap.set('n', '<Plug>(ide-grep-git)', function() arctgx.git_grep('', false, false) end)
-keymap.set('n', '<Plug>(ide-grep-files)', function() arctgx.rg_grep('', false, false) end)
-keymap.set('n', '<Plug>(ide-browse-files)', arctgx.files_all)
-keymap.set('n', '<Plug>(ide-browse-gfiles)', arctgx.files_git)
+keymap.set('n', '<Plug>(ide-grep-git)', function() arctgx.gitGrep('', false, false) end)
+keymap.set('n', '<Plug>(ide-grep-files)', function() arctgx.rgGrep('', false, false) end)
+keymap.set('n', '<Plug>(ide-browse-files)', arctgx.filesAll)
+keymap.set('n', '<Plug>(ide-browse-gfiles)', arctgx.filesGit)
 keymap.set('n', '<Plug>(ide-browse-cmd-history)', builtin.command_history)
 keymap.set('n', '<Plug>(ide-browse-history)', arctgx.oldfiles)
 keymap.set('n', '<Plug>(ide-browse-buffers)', arctgx.buffers)
 keymap.set('n', '<Plug>(ide-browse-windows)', windows.list)
 keymap.set('n', '<Plug>(ide-git-show-branches)', arctgx.branches)
+keymap.set('v', '<Plug>(ide-git-string-search-operator)', function()
+  arctgx.gitGrep(base.getVisualSelection(), true)
+end)
+keymap.set('v', '<Plug>(ide-grep-string-search-operator)', function()
+  arctgx.rgGrep(base.getVisualSelection(), true)
+end)
+keymap.set('v', '<Plug>(ide-git-files-search-operator)', function()
+  arctgx.filesGit(base.getVisualSelection(), true)
+end)
+keymap.set('v', '<Plug>(ide-files-search-operator)', function()
+  arctgx.filesAll(base.getVisualSelection(), true)
+end)
 
 vim.cmd([[
   nnoremap <Plug>(ide-grep-string-search-operator) :set operatorfunc=v:lua.arctgx_telescope_rg_grep_operator<cr>g@
-  vnoremap <Plug>(ide-grep-string-search-operator) :<c-u>call v:lua.arctgx_telescope_rg_grep_operator(visualmode())<cr>
   nnoremap <Plug>(ide-git-string-search-operator) :set operatorfunc=v:lua.arctgx_telescope_git_grep_operator<cr>g@
-  vnoremap <Plug>(ide-git-string-search-operator) :<c-u>call v:lua.arctgx_telescope_git_grep_operator(visualmode())<cr>
-
-  vmap <Plug>(ide-git-files-search-operator) :<C-U>call v:lua.arctgx_telescope_files_git_operator(visualmode())<CR>
   nmap <Plug>(ide-git-files-search-operator) :set operatorfunc=v:lua.arctgx_telescope_files_git_operator<CR>g@
-
-  vmap <Plug>(ide-files-search-operator) :<C-U>call v:lua.arctgx_telescope_files_all_operator(visualmode())<CR>
   nmap <Plug>(ide-files-search-operator) :set operatorfunc=v:lua.arctgx_telescope_files_all_operator<CR>g@
+
   hi TelescopeCaret guifg=#a52626 gui=bold guibg=#8b8d8b
   hi TelescopeSelection guifg=#f4fff4 gui=bold guibg=#8b8d8b
 ]])

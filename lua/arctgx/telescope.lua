@@ -7,6 +7,7 @@ local git = require('arctgx.git')
 local grep = require('arctgx.grep')
 local telescope = require('telescope.builtin')
 local transform_mod = require('telescope.actions.mt').transform_mod
+local branches      = require('arctgx.telescope.branches')
 
 local extension = {}
 
@@ -43,7 +44,7 @@ local customActions = transform_mod({
   toggleFixedStrings = function() end,
 })
 
-local default_file_mappings = function(prompt_bufnr, map)
+local defaultFileMappings = function(prompt_bufnr, map)
   map('i', '<CR>', customActions.tabDrop)
   map('n', '<CR>', customActions.tabDrop)
   map('n', '<C-y>', actions.file_edit)
@@ -71,13 +72,13 @@ end
 
 function extension.oldfiles()
   telescope.oldfiles({
-    attach_mappings = default_file_mappings,
+    attach_mappings = defaultFileMappings,
   })
 end
 
 function extension.buffers()
   telescope.buffers({
-    attach_mappings = default_file_mappings,
+    attach_mappings = defaultFileMappings,
   })
 end
 
@@ -116,7 +117,7 @@ function extension.grep(cmd, root, query)
         end,
       }
 
-      default_file_mappings(prompt_bufnr, map)
+      defaultFileMappings(prompt_bufnr, map)
       map('i', '<A-i>', customActions.toggleCaseSensibility)
       map('n', '<A-i>', customActions.toggleCaseSensibility)
       map('i', '<A-f>', customActions.toggleFixedStrings)
@@ -143,7 +144,7 @@ function extension.git_grep_operator(type)
   )(type)
 end
 
-function extension.rg_grep(query, useFixedStrings, ignoreCase)
+function extension.rgGrep(query, useFixedStrings, ignoreCase)
   return extension.grep(
     grep:new_rg_grep_command(useFixedStrings, ignoreCase),
     git.top(vim.fn.expand('%:p:h')),
@@ -151,7 +152,7 @@ function extension.rg_grep(query, useFixedStrings, ignoreCase)
   )
 end
 
-function extension.git_grep(query, useFixedStrings, ignoreCase)
+function extension.gitGrep(query, useFixedStrings, ignoreCase)
   return extension.grep(
     grep:new_git_grep_command(useFixedStrings, ignoreCase),
     git.top(vim.fn.expand('%:p:h')),
@@ -174,7 +175,7 @@ function extension.files(cmd, root, query, title)
   })
 end
 
-function extension.files_git(query)
+function extension.filesGit(query)
   extension.files(
     git.command_files(),
     git.top(vim.fn.expand('%:p:h')),
@@ -201,7 +202,7 @@ function extension.files_all_operator(type)
   )(type)
 end
 
-function extension.files_all(query)
+function extension.filesAll(query)
   extension.files(
     files.command_fdfind_all(),
     git.top(vim.fn.expand('%:p:h')),
