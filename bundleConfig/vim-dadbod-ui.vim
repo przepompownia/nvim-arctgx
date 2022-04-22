@@ -22,7 +22,8 @@ augroup DBUISettings
 
   autocmd FileType dbui
         \ let b:ideTabName = 'DBUI[d]' |
-        \ call s:loadMappings()
+        \ call s:loadMappings() |
+        \ lua require('arctgx.lineHover').enableForWindow()
   " fix for non-dbui sql buffers
   autocmd FileType dbui,dbout,sql nmap <Leader>n <Plug>(dbui-new-query)
   autocmd FileType sql |
