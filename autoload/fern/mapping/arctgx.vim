@@ -21,9 +21,15 @@ function! s:tabDrop(closeAfter) abort
   execute 'bunload ' . l:bufnr
 endfunction
 
+function fern#mapping#arctgx#getCursorNodeDir() abort
+  let l:helper = fern#helper#new()
+  let l:cursorPath = l:helper.sync.get_cursor_node()._path
+  return fnamemodify(l:cursorPath, ':p:h')
+endfunction
+
 function! s:gitTop(reveal) abort
   let l:helper = fern#helper#new()
-  let l:cursorPath = helper.sync.get_cursor_node()._path
+  let l:cursorPath = l:helper.sync.get_cursor_node()._path
   let l:startDirectory = fnamemodify(l:cursorPath, ':p:h')
 
   try
