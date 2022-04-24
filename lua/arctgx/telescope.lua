@@ -132,7 +132,7 @@ function extension.rg_grep_operator(type)
   return extension.create_operator(
     extension.grep,
     grep:new_rg_grep_command(true, false),
-    git.top(vim.fn.expand('%:p:h'))
+    git.top(base.getBufferCwd())
   )(type)
 end
 
@@ -140,14 +140,14 @@ function extension.git_grep_operator(type)
   return extension.create_operator(
     extension.grep,
     grep:new_git_grep_command(true, false),
-    git.top(vim.fn.expand('%:p:h'))
+    git.top(base.getBufferCwd())
   )(type)
 end
 
 function extension.rgGrep(query, useFixedStrings, ignoreCase)
   return extension.grep(
     grep:new_rg_grep_command(useFixedStrings, ignoreCase),
-    git.top(vim.fn.expand('%:p:h')),
+    git.top(base.getBufferCwd()),
     query
   )
 end
@@ -155,7 +155,7 @@ end
 function extension.gitGrep(query, useFixedStrings, ignoreCase)
   return extension.grep(
     grep:new_git_grep_command(useFixedStrings, ignoreCase),
-    git.top(vim.fn.expand('%:p:h')),
+    git.top(base.getBufferCwd()),
     query
   )
 end
@@ -178,7 +178,7 @@ end
 function extension.filesGit(query)
   extension.files(
     git.command_files(),
-    git.top(vim.fn.expand('%:p:h')),
+    git.top(base.getBufferCwd()),
     query,
     'Files (git)'
   )
@@ -188,7 +188,7 @@ function extension.files_git_operator(type)
   return extension.create_operator(
     extension.files,
     git.command_files(),
-    git.top(vim.fn.expand('%:p:h')),
+    git.top(base.getBufferCwd()),
     'Files (git)'
   )(type)
 end
@@ -197,7 +197,7 @@ function extension.files_all_operator(type)
   return extension.create_operator(
     extension.files,
     files.command_fdfind_all(),
-    git.top(vim.fn.expand('%:p:h')),
+    git.top(base.getBufferCwd()),
     'Files (all)'
   )(type)
 end
@@ -205,7 +205,7 @@ end
 function extension.filesAll(query)
   extension.files(
     files.command_fdfind_all(),
-    git.top(vim.fn.expand('%:p:h')),
+    git.top(base.getBufferCwd()),
     query,
     'Files (all)'
   )

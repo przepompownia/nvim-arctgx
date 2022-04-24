@@ -41,7 +41,7 @@ api.nvim_create_user_command(
   function(opts)
     gdiff.run({
       args = opts.fargs,
-      cwd = git.top(vim.fn.expand('%:p:h')),
+      cwd = git.top(base.getBufferCwd()),
     })
   end,
   {

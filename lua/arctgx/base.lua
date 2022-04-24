@@ -92,4 +92,8 @@ function extension.getSelection(start, finish)
   return lines
 end
 
+function extension.getBufferCwd()
+  return vim.fn['arctgx#base#getBufferCwd']()
+end
+
 return extension
