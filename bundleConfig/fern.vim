@@ -60,7 +60,7 @@ let g:fern#disable_drawer_smart_quit = 1
 
 if has('nvim-0.7')
   lua <<EOF
-  local getNodeDir = function()return vim.fn['fern#mapping#arctgx#getCursorNodeDir']() end
+  local getNodeDir = function() return vim.fn['fern#mapping#arctgx#getCursorNodeDir']() end
   local bufferCwdCallback = function(...)
     require('arctgx.base').addBufferCwdCallback(vim.api.nvim_get_current_buf(), getNodeDir)
   end
