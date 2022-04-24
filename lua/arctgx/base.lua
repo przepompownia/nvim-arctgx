@@ -92,8 +92,26 @@ function extension.getSelection(start, finish)
   return lines
 end
 
-function extension.getBufferCwd()
-  return vim.fn['arctgx#base#getBufferCwd']()
+do
+  local bufferCwdCallback = {}
+  function extension.addBufferCwdCallback(bufNr, callback)
+    bufferCwdCallback[bufNr] = callback
+  end
+
+  function extension.getBufferCwd()
+    local callback = bufferCwdCallback[vim.api.nvim_get_current_buf()]
+    if nil ~= callback then
+      return callback()
+    end
+
+    local fileDir = vim.fn.expand('%:p:h')
+
+    if vim.fn.isDirectory(fileDir) then
+      return fileDir
+    end
+
+    return vim.loop.cwd()
+  end
 end
 
 return extension

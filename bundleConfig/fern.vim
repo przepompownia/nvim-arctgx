@@ -56,6 +56,21 @@ let g:fern#renderer#default#expanded_symbol  = '▼ '
 let g:fern#renderer#default#leading          = ' '
 let g:fern#renderer#default#leaf_symbol      = '● '
 let g:fern#renderer#default#root_symbol      = '~ '
+let g:fern#disable_drawer_smart_quit = 1
+
+if has('nvim-0.7')
+  lua <<EOF
+  local getNodeDir = function()return vim.fn['fern#mapping#arctgx#getCursorNodeDir']() end
+  local bufferCwdCallback = function(...)
+    require('arctgx.base').addBufferCwdCallback(vim.api.nvim_get_current_buf(), getNodeDir)
+  end
+  vim.api.nvim_create_autocmd('FileType', {
+    pattern = 'fern',
+    group = 'FernSettings',
+    callback = bufferCwdCallback,
+  })
+EOF
+endif
 
 nnoremap <Plug>(ide-tree-focus-current-file) :<C-u>call FernRevealInGitToplevelIfPossible()<CR>
 

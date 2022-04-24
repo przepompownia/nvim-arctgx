@@ -102,17 +102,3 @@ function! arctgx#base#tabDropToLineAndColumnWithDefaultMapping(path, line = 0, c
 
   call arctgx#base#tabDropToLineAndColumnWithMapping(a:path, l:mapping, a:line, a:column)
 endfunction
-
-function! arctgx#base#getBufferCwd() abort
-  if exists('*b:ArctgxCwdCb')
-    return b:ArctgxCwdCb()
-  endif
-
-  let l:fileDir = expand('%:p:h')
-
-  if isdirectory(l:fileDir)
-    return l:fileDir
-  endif
-
-  return getcwd()
-endfunction
