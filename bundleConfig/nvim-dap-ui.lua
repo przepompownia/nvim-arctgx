@@ -2,32 +2,36 @@ local api = vim.api
 local keymap = require 'vim.keymap'
 local dapui = require('dapui')
 
-api.nvim_create_augroup ('DapUiReloadColors', { clear = true })
+api.nvim_create_augroup('ArctgxDapUi', { clear = true })
 local function reloadColors()
-  api.nvim_exec([[
-    highlight link DapUIVariable Normal
-    highlight DapUIScope guifg=#455284
-    highlight DapUIType guifg=#456519
-    highlight link DapUIValue Normal
-    highlight DapUIModifiedValue guifg=#455284 gui=bold
-    highlight DapUIDecoration guifg=#455284
-    highlight DapUIThread guifg=#A9FF68
-    highlight DapUIStoppedThread guifg=#455284
-    highlight link DapUIFrameName Normal
-    highlight DapUISource guifg=#3E6B00
-    highlight DapUILineNumber guifg=#455284
-    highlight DapUIFloatBorder guifg=#455284
-    highlight DapUIWatchesEmpty guifg=#666666
-    highlight DapUIWatchesValue guifg=#A9FF68
-    highlight DapUIWatchesError guifg=#8E2E28
-    highlight DapUIBreakpointsPath guifg=#455284
-    highlight DapUIBreakpointsInfo guifg=#A9FF68
-    highlight DapUIBreakpointsCurrentLine guifg=#A9FF68 gui=bold
-    highlight link DapUIBreakpointsLine DapUILineNumber
-  ]], false)
+  local highlights = {
+    DapUIVariable = {link = 'Normal'},
+    DapUIValue = {link = 'Normal'},
+    DapUIFrameName = {link = 'Normal'},
+    DapUIBreakpointsLine = {link = 'DapUILineNumber'},
+    DapUIScope = {fg = '#455284'},
+    DapUIType = {fg = '#456519'},
+    DapUIModifiedValue = {fg = '#455284'},
+    DapUIDecoration = {fg = '#455284'},
+    DapUIThread = {fg = '#A9FF68'},
+    DapUIStoppedThread = {fg = '#455284'},
+    DapUISource = {fg = '#3E6B00'},
+    DapUILineNumber = {fg = '#455284'},
+    DapUIFloatBorder = {fg = '#455284'},
+    DapUIWatchesEmpty = {fg = '#666666'},
+    DapUIWatchesValue = {fg = '#A9FF68'},
+    DapUIWatchesError = {fg = '#8E2E28'},
+    DapUIBreakpointsPath = {fg = '#455284'},
+    DapUIBreakpointsInfo = {fg = '#A9FF68'},
+    DapUIBreakpointsCurrentLine = {fg = '#A9FF68', bold = 1},
+  }
+
+  for name, def in pairs(highlights) do
+    api.nvim_set_hl(0, name, def)
+  end
 end
-api.nvim_create_autocmd ({'ColorScheme'}, {
-  group = 'DapUiReloadColors',
+api.nvim_create_autocmd({'ColorScheme'}, {
+  group = 'ArctgxDapUi',
   callback = reloadColors,
 })
 

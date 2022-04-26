@@ -38,7 +38,7 @@ function M.onAttach(client, bufnr)
   api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
   bufMap('n', '<Plug>(ide-goto-definition)', lsp.buf.definition)
-  -- bufMap('n', '<Plug>(ide-peek-definition)', peekDefinition)
+  bufMap('n', '<Plug>(ide-peek-definition)', peekDefinition)
   bufMap('n', '<Plug>(ide-hover)', lsp.buf.hover)
   bufMap('n', '<Plug>(ide-goto-implementation)', lsp.buf.implementation)
   bufMap({ 'n', 'i' }, '<Plug>(ide-show-signature-help)', lsp.buf.signature_help)
@@ -75,11 +75,14 @@ function M.onAttach(client, bufnr)
       buffer = bufnr,
       callback = vim.lsp.buf.clear_references,
     })
-    api.nvim_exec([[
-      highlight link LspReferenceRead IdeReferenceRead
-      highlight link LspReferenceText IdeReferenceText
-      highlight link LspReferenceWrite IdeReferenceWrite
-    ]], false)
+    local hlMap = {
+      LspReferenceRead = 'IdeReferenceRead',
+      LspReferenceText = 'IdeReferenceText',
+      LspReferenceWrite = 'IdeReferenceWrite',
+    }
+    for key, value in pairs(hlMap) do
+      api.nvim_set_hl(0, key, {link = value})
+    end
   end
 
   -- vim.notify(('Server %s attached to %s'):format(client.name, api.nvim_buf_get_name(bufnr)))
