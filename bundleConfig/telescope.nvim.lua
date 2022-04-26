@@ -70,13 +70,12 @@ end)
 keymap.set('v', '<Plug>(ide-files-search-operator)', function()
   arctgx.filesAll(base.getVisualSelection(), true)
 end)
+api.nvim_set_hl(0, 'TelescopeCaret', {fg = '#a52626', bg = '#8b8d8b', bold = true})
+api.nvim_set_hl(0, 'TelescopeSelection', {fg = '#f4fff4', bg = '#8b8d8b', bold = true})
 
 vim.cmd([[
   nnoremap <Plug>(ide-grep-string-search-operator) :set operatorfunc=v:lua.arctgx_telescope_rg_grep_operator<cr>g@
   nnoremap <Plug>(ide-git-string-search-operator) :set operatorfunc=v:lua.arctgx_telescope_git_grep_operator<cr>g@
   nmap <Plug>(ide-git-files-search-operator) :set operatorfunc=v:lua.arctgx_telescope_files_git_operator<CR>g@
   nmap <Plug>(ide-files-search-operator) :set operatorfunc=v:lua.arctgx_telescope_files_all_operator<CR>g@
-
-  hi TelescopeCaret guifg=#a52626 gui=bold guibg=#8b8d8b
-  hi TelescopeSelection guifg=#f4fff4 gui=bold guibg=#8b8d8b
 ]])
