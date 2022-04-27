@@ -14,6 +14,7 @@ require'nvim-treesitter.configs'.setup {
     'phpdoc',
     'python',
     'query',
+    'teal',
     'todotxt',
     'vim',
     'yaml',
