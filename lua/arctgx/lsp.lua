@@ -59,12 +59,12 @@ function M.onAttach(client, bufnr)
   bufMap('n', '[d', diagnostic.goto_prev)
   bufMap('n', ']d', diagnostic.goto_next)
   bufMap('n', '<space>q', diagnostic.setloclist)
-  bufMap('n', '<space>f', lsp.buf.formatting)
-  if client.resolved_capabilities.document_range_formatting then
+  bufMap('n', '<space>f', lsp.buf.format)
+  if false ~= client.server_capabilities.documentRangeFormattingProvider then
     bufMap('v', '<space>f', lsp.buf.range_formatting)
   end
 
-  if client.resolved_capabilities.document_highlight then
+  if false ~= client.server_capabilities.documentHighlightProvider then
     api.nvim_create_autocmd ({'CursorHold', 'CursorHoldI'}, {
       group = 'LspDocumentHighlight',
       buffer = bufnr,
