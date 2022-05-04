@@ -2,12 +2,20 @@ local cmp = require 'cmp'
 local cmp_buffer = require('cmp_buffer')
 local luasnip = require('luasnip')
 
-local has_words_before = function()
+local hasWordsBefore = function()
   local line, col = unpack(vim.api.nvim_win_get_cursor(0))
   return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match('%s') == nil
 end
 
 cmp.setup({
+  formatting = {
+    format = function(entry, vim_item)
+      if 'nvim_lsp' == entry.source.name and 'phpactor' == entry.source.source.client.name then
+        vim_item.menu = entry.completion_item.detail
+      end
+      return vim_item
+    end
+  },
   snippet = {
     expand = function(args)
       require('luasnip').lsp_expand(args.body)
@@ -22,7 +30,7 @@ cmp.setup({
         cmp.select_next_item()
       elseif luasnip.expand_or_jumpable() then
         luasnip.expand_or_jump()
-      elseif has_words_before() then
+      elseif hasWordsBefore() then
         cmp.complete()
       else
         fallback()
