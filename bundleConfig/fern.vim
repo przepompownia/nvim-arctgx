@@ -47,6 +47,7 @@ augroup FernSettings
   autocmd!
   autocmd FileType fern autocmd BufEnter,WinEnter <buffer> stopinsert
   autocmd FileType fern call s:defineMappings() |
+        \ setlocal nonumber
         \ let b:ideTabName = 'Fern'
 augroup END
 
