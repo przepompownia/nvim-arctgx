@@ -64,32 +64,21 @@ function extension.operator_get_text(type)
 end
 
 function extension.getVisualSelection()
-  --- from rcarriga/nvim-dap-ui
   if vim.fn.mode() ~= 'v' then
     return
   end
   local start = vim.fn.getpos('v')
   local finish = vim.fn.getpos('.')
-  local lines = extension.getSelection(start, finish)
-
-  return table.concat(lines, '\n')
-end
-
-function extension.getSelection(start, finish)
   local startLine, startCol = start[2], start[3]
   local finishLine, finishCol = finish[2], finish[3]
 
   if startLine > finishLine or (startLine == finishLine and startCol > finishCol) then
     startLine, startCol, finishLine, finishCol = finishLine, finishCol, startLine, startCol
   end
-  local lines = vim.fn.getline(startLine, finishLine)
-  if #lines == 0 then
-    return
-  end
-  lines[#lines] = string.sub(lines[#lines], 1, finishCol)
-  lines[1] = string.sub(lines[1], startCol)
 
-  return lines
+  local lines = api.nvim_buf_get_text(0, startLine -1, startCol - 1, finishLine -1, finishCol, {})
+
+  return table.concat(lines, '\n')
 end
 
 do
