@@ -11,49 +11,44 @@ local branches      = require('arctgx.telescope.branches')
 
 local extension = {}
 
+local function tabDropEntry(entry, winId)
+  base.tab_drop(entry.path, entry.lnum, entry.col, winId)
+
+  vim.cmd('stopinsert')
+  vim.api.nvim_exec_autocmds('User', {pattern = 'IdeStatusChanged', modeline = false})
+end
+
 local customActions = transform_mod({
   tabDrop = function(prompt_bufnr)
     local picker = action_state.get_current_picker(prompt_bufnr)
+    local winId = picker.original_win_id
     local multi_selection = picker:get_multi_selection()
+    actions.close(prompt_bufnr)
 
     if next(multi_selection) == nil then
       local selected_entry = picker:get_selection()
-      -- see from_entry.path
-      base.tab_drop(
-        selected_entry.path,
-        selected_entry.lnum,
-        selected_entry.col,
-        picker.original_win_id
-      )
-
-      vim.cmd('stopinsert')
-      picker.finder:close()
+      tabDropEntry(selected_entry, winId)
       return
     end
 
     for _, entry in ipairs(multi_selection) do
-      base.tab_drop(entry.path)
+      tabDropEntry(entry, winId)
     end
-
-    vim.cmd('stopinsert')
-    picker.finder:close()
-    vim.api.nvim_exec_autocmds('User', {pattern = 'IdeStatusChanged', modeline = false})
   end,
 
   toggleCaseSensibility = function() end,
   toggleFixedStrings = function() end,
 })
 
+extension.customActions = customActions
+
 local defaultFileMappings = function(prompt_bufnr, map)
-  map('i', '<CR>', customActions.tabDrop)
-  map('n', '<CR>', customActions.tabDrop)
+  actions.select_default:replace(customActions.tabDrop)
   map('n', '<C-y>', actions.file_edit)
   map('i', '<C-y>', actions.file_edit)
 
   return true
 end
-
-extension.customActions = customActions
 
 function extension.create_operator(search_function, cmd, root, title)
   return function (type)
@@ -86,6 +81,7 @@ end
 ---@param root string
 ---@param query string
 function extension.grep(cmd, root, query)
+  -- vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<C-\\><C-N>", true, true, true), "v", true)
   local new_grep_finder = function(prompt_bufnr)
     local picker = action_state.get_current_picker(prompt_bufnr)
     return picker.finder
