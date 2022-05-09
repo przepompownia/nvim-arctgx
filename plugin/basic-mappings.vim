@@ -27,6 +27,7 @@ inoremap <Insert> <Nop>
 cmap <C-BS> <C-w>
 inoremap <C-BS> <Cmd>normal db<CR>
 inoremap <C-Del> <Cmd>normal dw<CR>
+cnoremap <C-Del> <S-Right><C-w>
 noremap Q <Nop>
 inoremap <F2> <Cmd>update<CR>
 noremap <F2> <Cmd>update<CR>
