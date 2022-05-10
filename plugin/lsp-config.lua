@@ -1,5 +1,3 @@
-local handlers = require 'arctgx.lsp.handlers'
-
 vim.diagnostic.config({
   virtual_text = false,
   underline = false,
