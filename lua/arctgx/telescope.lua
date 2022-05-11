@@ -18,15 +18,15 @@ local function tabDropEntry(entry, winId)
   vim.api.nvim_exec_autocmds('User', {pattern = 'IdeStatusChanged', modeline = false})
 end
 
-local customActions = transform_mod({
-  tabDrop = function(prompt_bufnr)
-    local picker = action_state.get_current_picker(prompt_bufnr)
+function extension.tabDrop(promptBufnr)
+    local picker = action_state.get_current_picker(promptBufnr)
     local winId = picker.original_win_id
     local multi_selection = picker:get_multi_selection()
-    actions.close(prompt_bufnr)
+    actions.close(promptBufnr)
 
     if next(multi_selection) == nil then
       local selected_entry = picker:get_selection()
+      print(vim.inspect(selected_entry))
       tabDropEntry(selected_entry, winId)
       return
     end
@@ -34,7 +34,10 @@ local customActions = transform_mod({
     for _, entry in ipairs(multi_selection) do
       tabDropEntry(entry, winId)
     end
-  end,
+end
+
+local customActions = transform_mod({
+  tabDrop = extension.tabDrop,
 
   toggleCaseSensibility = function() end,
   toggleFixedStrings = function() end,

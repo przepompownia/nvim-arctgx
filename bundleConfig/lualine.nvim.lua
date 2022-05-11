@@ -13,7 +13,8 @@ require('lualine').setup({
     lualine_c = {
       {
         'filename',
-        fmt = formatFilename,
+        -- modification mark
+        -- fmt = formatFilename,
       }
     },
   },
