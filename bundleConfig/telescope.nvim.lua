@@ -82,5 +82,12 @@ end)
 keymap.set('n', '<Plug>(ide-files-search-operator)', function ()
   base.runOperator('v:lua.arctgx_telescope_files_all_operator')
 end)
-api.nvim_set_hl(0, 'TelescopeCaret', {fg = '#a52626', bg = '#8b8d8b', bold = true})
-api.nvim_set_hl(0, 'TelescopeSelection', {fg = '#f4fff4', bg = '#8b8d8b', bold = true})
+local function reloadColors()
+  api.nvim_set_hl(0, 'TelescopeCaret', {fg = '#a52626', bg = '#8b8d8b', bold = true, default = false})
+  api.nvim_set_hl(0, 'TelescopeSelection', {fg = '#f4fff4', bg = '#8b8d8b', bold = true, default = false})
+end
+api.nvim_create_augroup('ArctgxTelescope', { clear = true })
+api.nvim_create_autocmd({'ColorScheme'}, {
+  group = 'ArctgxTelescope',
+  callback = reloadColors,
+})
