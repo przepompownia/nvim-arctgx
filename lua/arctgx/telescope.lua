@@ -7,7 +7,8 @@ local git = require('arctgx.git')
 local grep = require('arctgx.grep')
 local telescope = require('telescope.builtin')
 local transform_mod = require('telescope.actions.mt').transform_mod
-local branches      = require('arctgx.telescope.branches')
+local branches = require('arctgx.telescope.branches')
+local utils = require 'telescope.utils'
 
 local extension = {}
 
@@ -15,32 +16,36 @@ local function tabDropEntry(entry, winId)
   base.tab_drop(entry.path, entry.lnum, entry.col, winId)
 
   vim.cmd('stopinsert')
-  vim.api.nvim_exec_autocmds('User', {pattern = 'IdeStatusChanged', modeline = false})
+  vim.api.nvim_exec_autocmds('User',
+    {pattern = 'IdeStatusChanged', modeline = false})
 end
 
 function extension.tabDrop(promptBufnr)
-    local picker = action_state.get_current_picker(promptBufnr)
-    local winId = picker.original_win_id
-    local multi_selection = picker:get_multi_selection()
-    actions.close(promptBufnr)
+  local selection = action_state.get_selected_entry()
+  if selection == nil then
+    utils.__warn_no_selection 'actions.tabDrop'
+    return
+  end
 
-    if next(multi_selection) == nil then
-      local selected_entry = picker:get_selection()
-      print(vim.inspect(selected_entry))
-      tabDropEntry(selected_entry, winId)
-      return
-    end
+  local picker = action_state.get_current_picker(promptBufnr)
+  local winId = picker.original_win_id
+  local multi_selection = picker:get_multi_selection()
+  actions.close(promptBufnr)
 
-    for _, entry in ipairs(multi_selection) do
-      tabDropEntry(entry, winId)
-    end
+  if next(multi_selection) == nil then
+    local selected_entry = picker:get_selection()
+    tabDropEntry(selected_entry, winId)
+    return
+  end
+
+  for _, entry in ipairs(multi_selection) do tabDropEntry(entry, winId) end
 end
 
 local customActions = transform_mod({
   tabDrop = extension.tabDrop,
 
   toggleCaseSensibility = function() end,
-  toggleFixedStrings = function() end,
+  toggleFixedStrings = function() end
 })
 
 extension.customActions = customActions
@@ -54,13 +59,8 @@ local defaultFileMappings = function(prompt_bufnr, map)
 end
 
 function extension.create_operator(search_function, cmd, root, title)
-  return function (type)
-    search_function(
-      cmd,
-      root,
-      base.operator_get_text(type),
-      title
-    )
+  return function(type)
+    search_function(cmd, root, base.operator_get_text(type), title)
   end
 end
 
@@ -69,15 +69,11 @@ function extension.branches()
 end
 
 function extension.oldfiles()
-  telescope.oldfiles({
-    attach_mappings = defaultFileMappings,
-  })
+  telescope.oldfiles({attach_mappings = defaultFileMappings})
 end
 
 function extension.buffers()
-  telescope.buffers({
-    attach_mappings = defaultFileMappings,
-  })
+  telescope.buffers({attach_mappings = defaultFileMappings})
 end
 
 ---@param cmd Grep
@@ -92,7 +88,7 @@ function extension.grep(cmd, root, query)
   local refreshPicker = function(prompt_bufnr, command)
     local picker = action_state.get_current_picker(prompt_bufnr)
 
-    picker:refresh(new_grep_finder(prompt_bufnr), { reset_prompt = false })
+    picker:refresh(new_grep_finder(prompt_bufnr), {reset_prompt = false})
     picker.prompt_border:change_title(command:status())
   end
 
@@ -107,13 +103,13 @@ function extension.grep(cmd, root, query)
         post = function()
           cmd:switch_case_sensibility()
           refreshPicker(prompt_bufnr, cmd)
-        end,
+        end
       }
       customActions.toggleFixedStrings:enhance {
         post = function()
           cmd:switch_fixed_strings()
           refreshPicker(prompt_bufnr, cmd)
-        end,
+        end
       }
 
       defaultFileMappings(prompt_bufnr, map)
@@ -123,40 +119,31 @@ function extension.grep(cmd, root, query)
       map('n', '<A-f>', customActions.toggleFixedStrings)
 
       return true
-    end,
+    end
   })
 end
 
 function extension.rg_grep_operator(type)
-  return extension.create_operator(
-    extension.grep,
+  return extension.create_operator(extension.grep,
     grep:new_rg_grep_command(true, false),
-    git.top(base.getBufferCwd())
-  )(type)
+    git.top(base.getBufferCwd()))(type)
 end
 
 function extension.git_grep_operator(type)
-  return extension.create_operator(
-    extension.grep,
+  return extension.create_operator(extension.grep,
     grep:new_git_grep_command(true, false),
-    git.top(base.getBufferCwd())
-  )(type)
+    git.top(base.getBufferCwd()))(type)
 end
 
 function extension.rgGrep(query, useFixedStrings, ignoreCase)
-  return extension.grep(
-    grep:new_rg_grep_command(useFixedStrings, ignoreCase),
-    git.top(base.getBufferCwd()),
-    query
-  )
+  return extension.grep(grep:new_rg_grep_command(useFixedStrings, ignoreCase),
+    git.top(base.getBufferCwd()), query)
 end
 
 function extension.gitGrep(query, useFixedStrings, ignoreCase)
   return extension.grep(
     grep:new_git_grep_command(useFixedStrings, ignoreCase),
-    git.top(base.getBufferCwd()),
-    query
-  )
+    git.top(base.getBufferCwd()), query)
 end
 
 function extension.files(cmd, root, query, title)
@@ -170,44 +157,31 @@ function extension.files(cmd, root, query, title)
       map('n', '<CR>', customActions.tabDrop)
 
       return true
-    end,
+    end
   })
 end
 
 function extension.filesGit(query)
-  extension.files(
-    git.command_files(),
-    git.top(base.getBufferCwd()),
-    query,
-    'Files (git)'
-  )
+  extension.files(git.command_files(), git.top(base.getBufferCwd()), query,
+    'Files (git)')
 end
 
 function extension.files_git_operator(type)
-  return extension.create_operator(
-    extension.files,
-    git.command_files(),
-    git.top(base.getBufferCwd()),
-    'Files (git)'
-  )(type)
+  return extension.create_operator(extension.files, git.command_files(),
+    git.top(base.getBufferCwd()), 'Files (git)')(
+    type)
 end
 
 function extension.files_all_operator(type)
-  return extension.create_operator(
-    extension.files,
+  return extension.create_operator(extension.files,
     files.command_fdfind_all(),
-    git.top(base.getBufferCwd()),
-    'Files (all)'
-  )(type)
+    git.top(base.getBufferCwd()), 'Files (all)')(
+    type)
 end
 
 function extension.filesAll(query)
-  extension.files(
-    files.command_fdfind_all(),
-    git.top(base.getBufferCwd()),
-    query,
-    'Files (all)'
-  )
+  extension.files(files.command_fdfind_all(), git.top(base.getBufferCwd()),
+    query, 'Files (all)')
 end
 
 return extension
