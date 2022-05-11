@@ -35,8 +35,9 @@ require('lualine').setup({
         -- end,
         active = function ()
           return {
-            fg = '#37660C',
-            bg = '#989898',
+            fg = '#719D00',
+            bg = '#bebebe',
+            gui = 'bold',
             -- link =
           }
         end,
