@@ -21,28 +21,31 @@ require('lualine').setup({
   -- inactive_sections = {
   -- },
   tabline = {
-    lualine_a = {{
-      'tabs',
-      mode = 2,
-      max_length = vim.o.columns,
-      tabs_color = {
-        -- inactive = function ()
-        --   return {
-        --     fg = '#37660C',
-        --     bg = '#989898',
-        --     -- link =
-        --   }
-        -- end,
-        active = function ()
-          return {
-            fg = '#719D00',
-            bg = '#bebebe',
-            gui = 'bold',
-            -- link =
-          }
-        end,
+    lualine_a = {
+      {
+        'tabs',
+        mode = 2,
+        max_length = vim.o.columns,
+        tabs_color = {
+          inactive = function ()
+            return {
+              fg = '#888888',
+              bg = '#bebebe',
+              gui = 'bold',
+              -- link =
+            }
+          end,
+          active = function ()
+            return {
+              fg = '#a7a7a7',
+              bg = '#ffffff',
+              gui = 'bold',
+              -- link =
+            }
+          end,
+        },
+        fmt = formatFilename,
       },
-      fmt = formatFilename,
-    }},
+    },
   }
 })
