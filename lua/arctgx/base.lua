@@ -103,4 +103,13 @@ do
   end
 end
 
+function extension.feedKeys(input)
+  api.nvim_feedkeys(api.nvim_replace_termcodes(input, true, false, true), 'n', false)
+end
+
+function extension.runOperator(operatorFuncAsString)
+  api.nvim_set_option('operatorfunc', operatorFuncAsString)
+  extension.feedKeys('g@')
+end
+
 return extension
