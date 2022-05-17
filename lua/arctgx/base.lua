@@ -53,6 +53,8 @@ function extension.tab_drop(path, line, column, relative_bufnr)
     return
   end
 
+  vim.cmd("normal! m'")
+
   local ok, result = pcall(api.nvim_win_set_cursor, 0, {line, (column or 1) - 1})
   if not ok then
     vim.notify(('%s: line %s, col %s'):format(result, line, column), vim.log.levels.WARN, { title = 'tab drop' })
