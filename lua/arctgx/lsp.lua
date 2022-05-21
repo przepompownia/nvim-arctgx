@@ -62,6 +62,26 @@ function M.onAttach(client, bufnr)
     for key, value in pairs(hlMap) do
       api.nvim_set_hl(0, key, {link = value})
     end
+    api.nvim_create_autocmd({'LspDetach'}, {
+      group = 'LspDocumentHighlight',
+      buffer = bufnr,
+      callback = function (args)
+        vim.notify('Detached')
+        local supported = false
+        vim.lsp.for_each_buffer_client(args.buf, function (client, client_id)
+          if client.supports_method('textDocument/documentHighlight') then
+            vim.notify(client.name .. ' supports method')
+            method_supported = true
+          end
+        end)
+        if not supported then
+          api.nvim_clear_autocmds {
+            group = 'LspDocumentHighlight',
+            buffer = args.buf,
+          }
+        end
+      end,
+    })
   end
 
   -- vim.notify(('Server %s attached to %s'):format(client.name, api.nvim_buf_get_name(bufnr)))
