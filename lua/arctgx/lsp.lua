@@ -66,11 +66,10 @@ function M.onAttach(client, bufnr)
       group = 'LspDocumentHighlight',
       buffer = bufnr,
       callback = function (args)
-        vim.notify('Detached')
+        vim.lsp.buf.clear_references()
         local supported = false
         vim.lsp.for_each_buffer_client(args.buf, function (client, client_id)
           if client.supports_method('textDocument/documentHighlight') then
-            vim.notify(client.name .. ' supports method')
             method_supported = true
           end
         end)
