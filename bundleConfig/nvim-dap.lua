@@ -78,7 +78,41 @@ keymap.set({'n'}, '<Plug>(ide-debugger-close)', dap.close, opts)
 -- nnoremap <silent> <leader>lp :lua require'dap'.set_breakpoint(nil, nil, vim.fn.input('Log point message: '))<CR>
 -- nnoremap <silent> <leader>dr :lua require'dap'.repl.open()<CR>
 -- nnoremap <silent> <leader>dl :lua require'dap'.run_last()<CR>
-dap.configurations.php = { php.default }
+dap.configurations.php = {php.default}
+local ideDAPSessionActive = ''
+
+dap.listeners.after['event_initialized']['arctgx'] = function(session, body)
+  api.nvim_exec_autocmds('User', {pattern = 'IdeStatusChanged', modeline = false})
+  ideDAPSessionActive = 'L'
+end
+
+dap.listeners.after['event_stopped']['arctgx'] = function(session, body)
+  api.nvim_exec_autocmds('User', {pattern = 'IdeStatusChanged', modeline = false})
+  ideDAPSessionActive = 'S'
+end
+
+dap.listeners.after['event_exited']['arctgx'] = function(session, body)
+  api.nvim_exec_autocmds('User', {pattern = 'IdeStatusChanged', modeline = false})
+  print('Exited')
+  ideDAPSessionActive = 'E'
+end
+dap.listeners.after['event_thread']['arctgx'] = function(session, body)
+  api.nvim_exec_autocmds('User', {pattern = 'IdeStatusChanged', modeline = false})
+  if body.reason == 'exited' then
+    print('Thread ' .. body.threadId .. ' exited')
+    ideDAPSessionActive = 'X'
+  end
+end
+dap.listeners.before['disconnect']['arctgx'] = function(session, body)
+  api.nvim_exec_autocmds('User', {pattern = 'IdeStatusChanged', modeline = false})
+  vim.notify('Disconnected')
+  ideDAPSessionActive = 'D'
+end
+dap.listeners.after['event_terminated']['arctgx'] = function(session, body)
+  api.nvim_exec_autocmds('User', {pattern = 'IdeStatusChanged', modeline = false})
+  vim.notify('Terminated')
+  ideDAPSessionActive = 'T'
+end
 
 local debugWinId = nil
 
@@ -125,3 +159,7 @@ end
 
 keymap.set({'n'}, '<Plug>(ide-debugger-go-to-view)', verboseGoToDebugWin, opts)
 keymap.set({'n'}, '<Plug>(ide-debugger-close-view)', closeDebugWin, opts)
+
+require('arctgx.widgets').addDebugHook(function ()
+  return dap.session() and ('⛧' ..  ' ' .. ideDAPSessionActive) or '-'
+end)
