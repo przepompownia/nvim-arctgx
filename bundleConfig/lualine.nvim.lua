@@ -1,3 +1,4 @@
+local widgets = require "arctgx.widgets"
 local function formatFilename(name)
   return name:gsub('[.][^.]+$', '')
 end
@@ -47,5 +48,17 @@ require('lualine').setup({
         fmt = formatFilename,
       },
     },
+    lualine_z = {
+      {widgets.renderDebug},
+    }
   }
+})
+
+vim.api.nvim_create_augroup('ArctgxLualine', {clear = true})
+vim.api.nvim_create_autocmd('User', {
+  group = 'ArctgxLualine',
+  pattern = 'IdeStatusChanged',
+  callback = function ()
+    vim.api.nvim_cmd({cmd = 'redrawtabline'}, {})
+  end,
 })
