@@ -99,12 +99,5 @@ let g:lightline = {
         \ 'filename': 'arctgx#ide#displayFileNameInTab',
         \ 'modified': 'lightline#tab#modified',
         \ 'readonly': 'lightline#tab#readonly',
-        \ 'tabnum': 'arctgx#ide#getCurrentTabpage',
-        \ 'listen': 'arctgx#ide#test' },
-      \ 'tabline': {
-        \ 'left': [ [ 'tabs' ] ],
-          \ 'right': [ [ 'listen' ] ],
-          \ }
+        \ 'tabnum': 'lightline#tab#tabnum' }
       \ }
-
-let g:lightline.component_expand = { 'tabs': 'lightline#tabs', 'listen': 'arctgx#ide#test' }
