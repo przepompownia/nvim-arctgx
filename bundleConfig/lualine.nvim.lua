@@ -1,6 +1,10 @@
 local widgets = require "arctgx.widgets"
+local arctgxString = require('arctgx.string')
+
 local function formatFilename(name)
-  return name:gsub('[.][^.]+$', '')
+  local name = name:gsub('[.][^.]+$', '')
+
+  return arctgxString.shorten(name, 8)
 end
 
 require('lualine').setup({
