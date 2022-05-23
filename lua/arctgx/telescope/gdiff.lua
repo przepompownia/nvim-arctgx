@@ -13,11 +13,17 @@ local putils = require 'telescope.previewers.utils'
 
 local gdiff = {}
 
+---@param command arctgx.git.diff
+---@return function
 local function makeRequest(command)
   command:switchNamesOnly()
 
   return function(query)
-    if ('' ~= query) then command:setQuery('-S', query) end
+    if ('' ~= query) then
+      command:setQuery('-S', query)
+    else
+      command:unsetShortOptionWithValue('-S')
+    end
     local job = Job:new({
       args = {unpack(command, 2)},
       sync = true,
