@@ -141,6 +141,7 @@ imap <S-F12> <C-o><S-F12>
 nmap <Leader>igg <Plug>(ide-grep-git)
 nmap <Leader>igf <Plug>(ide-grep-files)
 nmap <Leader>m <Plug>(ide-tree-focus-current-file)
+nnoremap <Leader>iwb <Plug>(ide-write-backup)
 
 nmap <Esc> <Plug>(ide-close-popup)
 
