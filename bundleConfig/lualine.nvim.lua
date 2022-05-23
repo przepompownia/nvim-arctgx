@@ -53,7 +53,10 @@ require('lualine').setup({
       },
     },
     lualine_z = {
-      {widgets.renderDebug},
+      {
+        widgets.renderDebug,
+        max_length = 10,
+      },
     }
   }
 })
