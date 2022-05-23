@@ -7,6 +7,8 @@ local function formatFilename(name)
   return arctgxString.shorten(name, 8)
 end
 
+local debugWidgetLength = 4
+
 require('lualine').setup({
   options = {
     disabled_filetypes = {
@@ -30,7 +32,7 @@ require('lualine').setup({
       {
         'tabs',
         mode = 2,
-        max_length = vim.o.columns,
+        max_length = vim.o.columns - debugWidgetLength - 1,
         tabs_color = {
           inactive = function ()
             return {
@@ -55,7 +57,7 @@ require('lualine').setup({
     lualine_z = {
       {
         widgets.renderDebug,
-        max_length = 10,
+        max_length = debugWidgetLength,
       },
     }
   }
