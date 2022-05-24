@@ -70,7 +70,7 @@ function M.onAttach(client, bufnr)
         local supported = false
         vim.lsp.for_each_buffer_client(args.buf, function (client, client_id)
           if client.supports_method('textDocument/documentHighlight') then
-            supported = true
+            supported = (client_id ~= args.client_id)
           end
         end)
         if not supported then
