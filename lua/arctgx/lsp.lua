@@ -69,16 +69,19 @@ function M.onAttach(client, bufnr)
         vim.lsp.buf.clear_references()
         local supported = false
         vim.lsp.for_each_buffer_client(args.buf, function (client, client_id)
-          if client.supports_method('textDocument/documentHighlight') then
-            supported = (client_id ~= args.client_id)
+          if (client_id ~= args.client_id) and client.supports_method('textDocument/documentHighlight') then
+            supported = true
           end
         end)
-        if not supported then
-          api.nvim_clear_autocmds {
-            group = 'LspDocumentHighlight',
-            buffer = args.buf,
-          }
+
+        if supported then
+          return
         end
+
+        api.nvim_clear_autocmds {
+          group = 'LspDocumentHighlight',
+          buffer = args.buf,
+        }
       end,
     })
   end
