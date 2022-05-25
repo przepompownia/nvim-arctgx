@@ -40,6 +40,11 @@ function Buf.definitionInPlace()
   request('textDocument/definition', params)
 end
 
+function Buf.implementation()
+  local params = util.make_position_params()
+  request('textDocument/implementation', params, handlers.tabDropLocationHandler)
+end
+
 function Buf.typeDefinition()
   local params = util.make_position_params()
   request('textDocument/typeDefinition', params, handlers.tabDropLocationHandler)
