@@ -60,7 +60,10 @@ vim.fn.sign_define('DapStopped', {text='▶', texthl='IdeCodeWindowCurrentFrameS
 
 local opts = {silent = true, noremap = true}
 keymap.set({'n'}, '<Plug>(ide-debugger-run)', dap.continue, opts)
-keymap.set({'n'}, '<Plug>(ide-debugger-step-over)', dap.step_over, opts)
+keymap.set({'n'}, '<Plug>(ide-debugger-step-over)', function()
+  dap.step_over()
+  vim.cmd([[silent! call repeat#set("\<Plug>(ide-debugger-step-over)", -1)]])
+end, opts)
 keymap.set({'n'}, '<Plug>(ide-debugger-step-into)', dap.step_into, opts)
 keymap.set({'n'}, '<Plug>(ide-debugger-step-out)', dap.step_out, opts)
 keymap.set({'n'}, '<Plug>(ide-debugger-toggle-breakpoint)', dap.toggle_breakpoint, opts)
