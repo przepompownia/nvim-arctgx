@@ -65,6 +65,9 @@ cmp.setup({
     {name = 'buffer'},
     {name = 'path'},
   },
+  confirmation = {
+    default_behavior = cmp.ConfirmBehavior.Replace,
+  },
   sorting = {
     comparators = {
       cmp.config.compare.score,
