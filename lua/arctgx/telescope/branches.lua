@@ -12,10 +12,11 @@ local function listBranches(cwd)
   local list = vim.fn['arctgx#git#listBranches'](cwd, true)
   local result = {}
   for _, entry in ipairs(list) do
-    local branch, desc = unpack(vim.split(entry, ';'))
+    local head, branch, desc = unpack(vim.split(entry, ';'))
     table.insert(result, {
       branch = branch,
       desc = desc,
+      head = head,
     })
   end
 
@@ -23,7 +24,7 @@ local function listBranches(cwd)
 end
 
 local function makeEntry(entry)
-  local display = ('%s %s'):format(entry.branch, entry.desc)
+  local display = ('%s %s %s'):format(entry.head, entry.branch, entry.desc)
   return {
     value = entry,
     display = display,

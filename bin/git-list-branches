@@ -12,7 +12,7 @@ format() {
     strip="$1"
     tail="$2"
 
-    printf "%%(committerdate:unix);%%(refname:strip=%s)%s" "${strip}" "${tail}"
+    printf "%%(committerdate:unix);%%(HEAD);%%(refname:strip=%s)%s" "${strip}" "${tail}"
     # echo "%(committerdate:unix);%(refname:strip=${strip});%(committerdate:relative);%(authorname);%(authoremail);%(subject)"
 }
 
@@ -21,6 +21,6 @@ format() {
     "${scriptDir}/git-list-local-branches" "$(format 2 "${tail% }")"
     "${scriptDir}/git-list-remote-branches" "$(format 3 "${tail% }")"
 } | \
-    sort --field-separator=';' --key=2,2 --unique | \
+    sort --field-separator=';' --key=3,3 --unique | \
     sort --field-separator=';' --numeric-sort --key=1 | \
     cut --delimiter=';' --fields=2-
