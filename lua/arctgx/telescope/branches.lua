@@ -1,3 +1,4 @@
+local api = vim.api
 local pickers          = require 'telescope.pickers'
 local finders          = require 'telescope.finders'
 local actions          = require 'telescope.actions'
@@ -30,14 +31,25 @@ local function makeEntry(entry)
   }
 end
 
+local function notifySwitchedToBranch(j, exitCode)
+  if 0 ~= exitCode then
+    return
+  end
+  vim.schedule(function ()
+    api.nvim_cmd({cmd = 'checktime'}, {})
+    api.nvim_exec_autocmds('User', {pattern = 'IdeStatusChanged', modeline = false})
+  end)
+end
+
 local function runJob(branch, cwd, noHooks)
-  local args = {'-C', cwd, '-c', 'core.hooksPath=', 'checkout', branch}
+  local args = {'-C', cwd, '-c', 'core.hooksPath=', 'switch', branch}
   local job = Job:new({
     args = args,
     sync = true,
     command = 'git',
+    on_exit = notifySwitchedToBranch,
   })
-  job:sync()
+  job:start()
 
   return job:result()
 end
