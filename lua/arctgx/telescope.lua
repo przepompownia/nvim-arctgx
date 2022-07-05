@@ -54,6 +54,8 @@ local defaultFileMappings = function(prompt_bufnr, map)
   actions.select_default:replace(customActions.tabDrop)
   map('n', '<C-y>', actions.file_edit)
   map('i', '<C-y>', actions.file_edit)
+  map('i', '<A-u>', actions.to_fuzzy_refine)
+  map('n', '<A-u>', actions.to_fuzzy_refine)
 
   return true
 end
