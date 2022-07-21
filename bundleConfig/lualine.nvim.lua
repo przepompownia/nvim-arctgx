@@ -32,7 +32,9 @@ require('lualine').setup({
       {
         'tabs',
         mode = 2,
-        max_length = vim.o.columns - debugWidgetLength - 1,
+        max_length = function ()
+          return vim.o.columns - debugWidgetLength - 1
+        end,
         tabs_color = {
           inactive = function ()
             return {
