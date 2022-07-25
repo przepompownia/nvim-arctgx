@@ -57,7 +57,7 @@ function s:defineIDEMaps()
   nmap <buffer> <Leader>ii <Plug>(ide-diagnostic-info)
   nmap <buffer> <Leader>ca <Plug>(ide-codelens-action)
 
-  nmap <buffer> <F6> <Plug>(ide-outline)
+  nmap <buffer> <F6> <Plug>(ide-list-document-symbols)
   nmap <buffer> <Leader>dr <Plug>(ide-debugger-run)
   nmap <buffer> <Leader><S-F5> <Plug>(ide-debugger-ui-toggle)
   nmap <buffer> <Leader>dt <Plug>(ide-debugger-toggle-breakpoint)
