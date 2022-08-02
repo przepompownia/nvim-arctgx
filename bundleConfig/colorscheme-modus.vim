@@ -1,3 +1,5 @@
+let g:modus_dim_inactive_window = 0
+
 function! s:loadColorscheme(background) abort
   if $TERM !~# '-256color$' && &termguicolors == 0
     return
