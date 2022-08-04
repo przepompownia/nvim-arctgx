@@ -8,14 +8,6 @@ local hasWordsBefore = function()
 end
 
 cmp.setup({
-  formatting = {
-    format = function(entry, vim_item)
-      if 'nvim_lsp' == entry.source.name and 'phpactor' == entry.source.source.client.name then
-        vim_item.menu = entry.completion_item.detail
-      end
-      return vim_item
-    end
-  },
   snippet = {
     expand = function(args)
       require('luasnip').lsp_expand(args.body)
