@@ -71,5 +71,13 @@ cmp.setup({
       function(...) return cmp_buffer:compare_locality(...) end,
     }
   },
-  completion = {completeopt = 'menu,menuone'},
+  completion = {
+    completeopt = 'menu,menuone',
+  },
+})
+
+cmp.setup.filetype({ 'php' }, {
+  completion = {
+    keyword_pattern = [[\%(\d\+\%(\.\d\+\)\?\|\h\w*\)]],
+  }
 })
