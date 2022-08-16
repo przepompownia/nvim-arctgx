@@ -90,17 +90,15 @@ local function showWindow(title, syntax, contents)
 end
 
 function extension.dumpConfig()
-  local results, _ = vim.lsp.buf_request_sync(0, 'phpactor/debug/config', {['return'] = true})
-  for _, res in pairs(results or {}) do
-    showWindow('Phpactor LSP Configuration', 'json', res['result'])
-  end
+  vim.lsp.buf_request(0, 'phpactor/debug/config', {['return'] = true}, function (_, result)
+    showWindow('Phpactor LSP Configuration', 'json', result)
+  end)
 end
 
 function extension.status()
-  local results, _ = vim.lsp.buf_request_sync(0, 'phpactor/status', {['return'] = true})
-  for _, res in pairs(results or {}) do
-    showWindow('Phpactor Status', 'markdown', res['result'])
-  end
+  vim.lsp.buf_request(0, 'phpactor/status', {['return'] = true}, function (_, result)
+    showWindow('Phpactor Status', 'markdown', result)
+  end)
 end
 
 function extension.reindex()
