@@ -74,6 +74,11 @@ cmp.setup({
   completion = {
     completeopt = 'menu,menuone',
   },
+  window = {
+    documentation = {
+      max_width = 80,
+    },
+  },
 })
 
 cmp.setup.filetype({ 'php' }, {
