@@ -2,7 +2,7 @@ require('telescope').load_extension('notify')
 vim.notify = require('notify')
 require('notify').setup({
   -- Animation style (see below for details)
-  stages = 'fade_in_slide_out',
+  stages = 'static',
 
   -- Function called when a new window is opened, use for changing win settings/config
   on_open = nil,
