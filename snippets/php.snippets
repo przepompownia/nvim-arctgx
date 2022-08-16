@@ -118,3 +118,12 @@ snippet dv "@var"
         /** @var ${1} */
 snippet dr "@var"
         /** @return ${1} */
+snippet ycc "Yii controller PHP8 constructor"
+        public function __construct(
+            string $$id,
+            Module $$module,
+            private $${1}
+            array $$config = [],
+        ) {
+            parent::__construct($$id, $$module, $$config);
+        }
