@@ -7,14 +7,6 @@ snippet <?
     ${0:${VISUAL}}
 snippet dst "declare(strict_types=1)"
     declare(strict_types=${1:1});
-snippet t.
-    $this->
-snippet =?:
-    $${1:foo} = ${2:true} ? ${3:a} : ${0};
-snippet ?:
-    ${1:true} ? ${2:a} : ${0}
-snippet t "$retVal = (condition) ? a : b"
-    $${1:retVal} = (${2:condition}) ? ${3:a} : ${4:b};
 snippet wh "while (condition) { ... }"
     while (${1:/* condition */}) {
         ${0:${VISUAL}}
@@ -80,8 +72,7 @@ snippet pug "Public getter"
         }
 snippet pub "Public function"
         public function ${1:name}(${2}): ${3}
-        {
-            ${VISUAL}${4:;}
+        {${VISUAL}
         }
 snippet pro "Protected function"
         protected function ${1:name}(${2}): ${3}
@@ -120,10 +111,10 @@ snippet dr "@var"
         /** @return ${1} */
 snippet ycc "Yii controller PHP8 constructor"
         public function __construct(
-            string $$id,
-            Module $$module,
-            private $${1}
-            array $$config = [],
+            string \$id,
+            Module \$module,
+            private ${1:} \$${2:name}
+            array \$config = [],
         ) {
-            parent::__construct($$id, $$module, $$config);
+            parent::__construct(\$id, \$module, \$config);
         }
