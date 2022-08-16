@@ -40,6 +40,7 @@ set isfname-==
 set modeline modelines=5
 
 set diffopt+=vertical
+set jumpoptions+=view
 if has('folding')
   set foldlevelstart=99
 
