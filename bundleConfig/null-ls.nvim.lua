@@ -31,6 +31,7 @@ null.setup({
     }),
     null.builtins.diagnostics.phpstan.with({
       timeout = 10000,
+      debounce = 3000,
       cwd = phpProjectRoot,
       args = {
         'analyze',
