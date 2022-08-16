@@ -109,7 +109,6 @@ lspconfig.sumneko_lua.setup {
     Lua = {
       runtime = {
         version = 'LuaJIT',
-        path = runtimePath,
       },
       workspace = {
         library = getLuaRuntime(),
@@ -120,6 +119,7 @@ lspconfig.sumneko_lua.setup {
       },
       completion = {
         showWord = 'Disable',
+        postfix = '.',
       },
       diagnostics = {
         globals = {'vim'},
@@ -129,6 +129,10 @@ lspconfig.sumneko_lua.setup {
       },
       telemetry = {
         enable = false,
+      },
+      window = {
+        progressBar = false,
+        statusBar = false,
       },
     },
   },
