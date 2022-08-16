@@ -76,7 +76,7 @@ snippet con "__construct()"
 snippet pug "Public getter"
         public function $1(): ${2}
         {
-            return $this->${1:name};
+            return \$this->${1:name};
         }
 snippet pub "Public function"
         public function ${1:name}(${2}): ${3}
