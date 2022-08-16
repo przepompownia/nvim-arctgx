@@ -60,7 +60,7 @@ snippet foreachk "foreach ($var as $key => $value) { .. }"
 snippet try "try { ... } catch (Exception $e) { ... }"
     try {
         ${0:${VISUAL}}
-    } catch (${1:Exception} ${2:error}) {
+    } catch (${1:Exception} \$${2:error}) {
     }
 snippet vd
     var_dump(${0});
