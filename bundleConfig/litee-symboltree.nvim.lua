@@ -6,7 +6,6 @@ local vim = vim
 symboltree.setup({
   on_open = 'panel',
   map_resize_keys = false,
-  icon_set = 'nerd',
   keymaps = {
     hide = '<Esc>',
     expand = '<Right>',
