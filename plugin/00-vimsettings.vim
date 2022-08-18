@@ -12,6 +12,8 @@ if has('mouse')
   set mouse=a
 endif
 
+set mousemodel=extend
+
 set backspace=indent,eol,start
 
 set softtabstop=-1 " the value of 'shiftwidth' is used
