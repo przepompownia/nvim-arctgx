@@ -6,7 +6,7 @@ augroup ideMaps
 augroup END
 
 function s:isExcludedFromIDEMapping(filetype)
-  let l:excludedFiletypes = ['fern', 'help', 'man', 'dbout', 'dapui_hover']
+  let l:excludedFiletypes = ['fern', 'help', 'man', 'dbout', 'dapui_hover', 'fugitive']
 
   return index(l:excludedFiletypes, a:filetype) >= 0
 endfunction
