@@ -9,7 +9,7 @@ local api = vim.api
 dap.adapters.php = {
   type = 'executable',
   command = vim.fn['arctgx#arctgx#getInitialVimDirectory']() .. '/bin/vscode-php-debug',
-  args = { 'run' }
+  args = {'run'}
 }
 
 dap.configurations.lua = {
