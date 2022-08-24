@@ -53,11 +53,11 @@ end
 vim.api.nvim_create_user_command('DAPWidgetScopes', toggle_scopes, {})
 vim.api.nvim_create_user_command('DAPWidgetFrames', toggle_frames, {})
 
-vim.fn.sign_define('DapBreakpoint', {text='●', texthl='IdeBreakpointSign', linehl='', numhl='IdeBreakpointLineNr'})
-vim.fn.sign_define('DapBreakpointCondition', {text='◆', texthl='IdeBreakpointSign', linehl='', numhl='IdeBreakpointLineNr'})
-vim.fn.sign_define('DapBreakpointRejected', {text='R', texthl='IdeCodeWindowCurrentFrameSign', linehl='', numhl='IdeBreakpointLineNr'})
-vim.fn.sign_define('DapLogPoint', {text='L', texthl='IdeCodeWindowCurrentFrameSign', linehl='', numhl='IdeBreakpointLineNr'})
-vim.fn.sign_define('DapStopped', {text='▶', texthl='IdeCodeWindowCurrentFrameSign', linehl='CursorLine', numhl=''})
+vim.fn.sign_define('DapBreakpoint', {text = '●', texthl = 'IdeBreakpointSign', linehl = '', numhl = 'IdeBreakpointLineNr'})
+vim.fn.sign_define('DapBreakpointCondition', {text = '◆', texthl = 'IdeBreakpointSign', linehl = '', numhl = 'IdeBreakpointLineNr'})
+vim.fn.sign_define('DapBreakpointRejected', {text = 'R', texthl = 'IdeCodeWindowCurrentFrameSign', linehl = '', numhl = 'IdeBreakpointLineNr'})
+vim.fn.sign_define('DapLogPoint', {text = 'L', texthl = 'IdeCodeWindowCurrentFrameSign', linehl = '', numhl = 'IdeBreakpointLineNr'})
+vim.fn.sign_define('DapStopped', {text = '▶', texthl = 'IdeCodeWindowCurrentFrameSign', linehl = 'CursorLine', numhl = ''})
 
 local opts = {silent = true, noremap = true}
 keymap.set({'n'}, '<Plug>(ide-debugger-run)', function ()
