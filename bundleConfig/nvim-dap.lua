@@ -14,6 +14,31 @@ dap.adapters.php = {
 
 local bashdbDir = os.getenv('HOME') .. '/.vim/tools/bash-debug/'
 
+---@param defaultValue any
+---@param promptTemplate string
+---@param valueConversionCallback function|nil
+---@return any
+local function getInput(defaultValue, promptTemplate, valueConversionCallback)
+  local value = vim.fn.input(promptTemplate:format(defaultValue), defaultValue)
+  if '' == value then
+    return defaultValue
+  end
+
+  if nil == valueConversionCallback then
+    return value
+  end
+
+  return valueConversionCallback(value)
+end
+
+local function splitToArgs(input)
+  local result = {}
+  for param in string.gmatch(input, "%S+") do
+    table.insert(result, param)
+  end
+  return result
+end
+
 dap.adapters.bashdb = {
   type = 'executable',
   command = 'node',
@@ -25,8 +50,12 @@ dap.configurations.sh = {
     type = 'bashdb',
     request = 'launch',
     name = 'Launch bash',
-    program = '${file}',
-    args = {},
+    program = function ()
+      return getInput(vim.fn.bufname(), 'Executable to debug [%s]: ')
+    end,
+    args = function ()
+      return getInput('', 'Params [%s]: ', splitToArgs)
+    end,
     env = {},
     pathBash = '/usr/bin/bash',
     pathBashdb = bashdbDir .. 'extension/bashdb_dir/bashdb',
