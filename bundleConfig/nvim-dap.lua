@@ -12,6 +12,33 @@ dap.adapters.php = {
   args = {'run'}
 }
 
+local bashdbDir = os.getenv('HOME') .. '/.vim/tools/bash-debug/'
+
+dap.adapters.bashdb = {
+  type = 'executable',
+  command = 'node',
+  args = {bashdbDir .. 'extension/out/bashDebug.js'}
+}
+
+dap.configurations.sh = {
+  {
+    type = 'bashdb',
+    request = 'launch',
+    name = 'Launch bash',
+    program = '${file}',
+    args = {},
+    env = {},
+    pathBash = '/usr/bin/bash',
+    pathBashdb = bashdbDir .. 'extension/bashdb_dir/bashdb',
+    pathBashdbLib = bashdbDir .. 'extension/bashdb_dir',
+    pathCat = 'cat',
+    pathMkfifo = 'mkfifo',
+    pathPkill = 'pkill',
+    cwd = '${workspaceFolder}',
+    terminalKind = 'integrated',
+  }
+}
+
 dap.configurations.lua = {
   {
     type = 'nlua',
