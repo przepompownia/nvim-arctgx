@@ -17,9 +17,10 @@ local bashdbDir = os.getenv('HOME') .. '/.vim/tools/bash-debug/'
 ---@param defaultValue any
 ---@param promptTemplate string
 ---@param valueConversionCallback function|nil
+---@param completion string|nil
 ---@return any
-local function getInput(defaultValue, promptTemplate, valueConversionCallback)
-  local value = vim.fn.input(promptTemplate:format(defaultValue), defaultValue)
+local function getInput(defaultValue, promptTemplate, completion, valueConversionCallback)
+  local value = vim.fn.input(promptTemplate:format(defaultValue), defaultValue, completion)
   if '' == value then
     return defaultValue
   end
@@ -51,10 +52,10 @@ dap.configurations.sh = {
     request = 'launch',
     name = 'Launch bash',
     program = function ()
-      return getInput(vim.fn.bufname(), 'Executable to debug [%s]: ')
+      return getInput(vim.fn.bufname(), 'Executable to debug [%s]: ', 'file')
     end,
     args = function ()
-      return getInput('', 'Params [%s]: ', splitToArgs)
+      return getInput('', 'Params [%s]: ', 'file', splitToArgs)
     end,
     env = {},
     pathBash = '/usr/bin/bash',
