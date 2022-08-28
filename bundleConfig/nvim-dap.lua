@@ -12,7 +12,7 @@ dap.adapters.php = {
   args = {'run'}
 }
 
-local bashdbDir = os.getenv('HOME') .. '/.vim/tools/bash-debug/'
+local bashdbDir = vim.fn['arctgx#arctgx#getInitialVimDirectory']() .. '/tools/bash-debug/'
 
 ---@param defaultValue any
 ---@param promptTemplate string
