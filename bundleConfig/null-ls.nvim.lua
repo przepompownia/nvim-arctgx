@@ -19,6 +19,7 @@ local phpcsArgs = {
 null.setup({
   -- debug = true,
   diagnostics_format = "#{s}: #{m} [#{c}]",
+  update_in_insert = false,
   sources = {
     null.builtins.code_actions.shellcheck,
     null.builtins.code_actions.eslint,
