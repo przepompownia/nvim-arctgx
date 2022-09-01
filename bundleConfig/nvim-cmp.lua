@@ -19,6 +19,7 @@ cmp.setup({
     ['<Plug>(ide-trigger-completion)'] = cmp.mapping(cmp.mapping.complete(), {'i', 'c'}),
     ['<Tab>'] = cmp.mapping(function(fallback)
       if cmp.visible() then
+        print 'visible'
         cmp.select_next_item()
       elseif luasnip.expand_or_jumpable() then
         luasnip.expand_or_jump()
@@ -76,9 +77,11 @@ cmp.setup({
     completeopt = 'menu,menuone',
   },
   window = {
-    documentation = {
-      max_width = 80,
-    },
+    completion = cmp.config.window.bordered(),
+    documentation = cmp.config.window.bordered(),
+    -- documentation = {
+      -- max_width = 80,
+    -- },
   },
 })
 
