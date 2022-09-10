@@ -30,7 +30,7 @@ set noshowmatch
 
 set matchpairs+=<:>
 set spell
-set spelloptions+=camel
+set spelloptions+=camel,noplainbuffer
 set splitbelow
 set splitright
 set noequalalways
