@@ -72,7 +72,6 @@ set grepprg=grep\ --with-filename\ --extended-regexp\ --no-messages\ --color=nev
 if has('nvim')
   set signcolumn=auto:1-9
 endif
-let g:loaded_netrwPlugin = 1
 
 " set tags=./tags;/
 set tags=
