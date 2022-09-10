@@ -1,8 +1,5 @@
 scriptencoding utf-8
 
-if has('syntax')
-  syntax on
-endif
 filetype plugin indent on
 
 let g:mapleader=','
