@@ -32,7 +32,8 @@ set noruler
 set noshowmatch
 
 set matchpairs+=<:>
-set spelllang=pl
+set spell
+se spelloptions+=camel
 set splitbelow
 set splitright
 set noequalalways
