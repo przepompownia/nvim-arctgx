@@ -29,7 +29,7 @@ set noruler
 set noshowmatch
 
 set matchpairs+=<:>
-set spell
+set nospell
 set spelloptions+=camel,noplainbuffer
 set splitbelow
 set splitright
