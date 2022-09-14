@@ -46,4 +46,4 @@ function! s:openNewQuery() abort
   exe "normal \<Plug>(DBUI_SelectLine)"
 endfunction
 
-nmap <Plug>(ide-db-ui-toggle) <Cmd>DBUIToggle<CR>
+nmap <Plug>(ide-db-ui-toggle) <Cmd>tab DBUI<CR>
