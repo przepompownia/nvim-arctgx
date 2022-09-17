@@ -70,6 +70,7 @@ function extension.branches()
   branches.list({cwd = git.top(base.getBufferCwd())})
 end
 
+---@param onlyCwd boolean
 function extension.oldfiles(onlyCwd)
   telescope.oldfiles({
     only_cwd = onlyCwd or false,
