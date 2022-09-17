@@ -10,6 +10,7 @@ local buffer_previewer = require('telescope.previewers.buffer_previewer')
 local sorters = require('telescope.sorters')
 local arctgx = require('arctgx.telescope')
 local putils = require 'telescope.previewers.utils'
+local telescope = require 'arctgx.telescope'
 
 local gdiff = {}
 
@@ -78,10 +79,7 @@ function gdiff.run(opts)
       entry_maker = make_entry.gen_from_file(opts)
     }),
     sorter = sorters.empty(),
-    attach_mappings = function(promptBufnr, map)
-      actions.select_default:replace(arctgx.tabDrop)
-      return true
-    end,
+    attach_mappings = telescope.defaultFileMappings,
     previewer = previewer(opts, command)
   }):find()
 end
