@@ -70,8 +70,11 @@ function extension.branches()
   branches.list({cwd = git.top(base.getBufferCwd())})
 end
 
-function extension.oldfiles()
-  telescope.oldfiles({attach_mappings = defaultFileMappings})
+function extension.oldfiles(onlyCwd)
+  telescope.oldfiles({
+    only_cwd = onlyCwd or false,
+    attach_mappings = defaultFileMappings,
+  })
 end
 
 function extension.buffers()
