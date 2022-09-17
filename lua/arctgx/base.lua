@@ -97,7 +97,7 @@ do
 
     local fileDir = vim.fn.expand('%:p:h')
 
-    if vim.fn.isdirectory(fileDir) then
+    if 1 == vim.fn.isdirectory(fileDir) then
       return fileDir
     end
 
