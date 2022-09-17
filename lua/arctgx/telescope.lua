@@ -50,7 +50,7 @@ local customActions = transform_mod({
 
 extension.customActions = customActions
 
-local defaultFileMappings = function(prompt_bufnr, map)
+function extension.defaultFileMappings(prompt_bufnr, map)
   actions.select_default:replace(customActions.tabDrop)
   map('n', '<C-y>', actions.file_edit)
   map('i', '<C-y>', actions.file_edit)
@@ -74,12 +74,12 @@ end
 function extension.oldfiles(onlyCwd)
   telescope.oldfiles({
     only_cwd = onlyCwd or false,
-    attach_mappings = defaultFileMappings,
+    attach_mappings = extension.defaultFileMappings,
   })
 end
 
 function extension.buffers()
-  telescope.buffers({attach_mappings = defaultFileMappings})
+  telescope.buffers({attach_mappings = extension.defaultFileMappings})
 end
 
 ---@param cmd Grep
@@ -118,7 +118,7 @@ function extension.grep(cmd, root, query)
         end
       }
 
-      defaultFileMappings(prompt_bufnr, map)
+      extension.defaultFileMappings(prompt_bufnr, map)
       map('i', '<A-i>', customActions.toggleCaseSensibility)
       map('n', '<A-i>', customActions.toggleCaseSensibility)
       map('i', '<A-f>', customActions.toggleFixedStrings)
