@@ -77,7 +77,7 @@ local function getLuaRuntime()
   local result = {};
   for _, path in pairs(vim.api.nvim_list_runtime_paths()) do
     local luaPath = path .. '/lua/';
-    if vim.fn.isdirectory(luaPath) then
+    if 1 == vim.fn.isdirectory(luaPath) then
       result[luaPath] = true
     end
   end
