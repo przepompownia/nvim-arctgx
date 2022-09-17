@@ -67,7 +67,7 @@ function extension.create_operator(search_function, cmd, root, title)
 end
 
 function extension.branches()
-  branches.list({cwd = git.top(vim.fn.expand('%:p:h'))})
+  branches.list({cwd = git.top(base.getBufferCwd())})
 end
 
 function extension.oldfiles()
