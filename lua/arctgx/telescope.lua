@@ -158,12 +158,7 @@ function extension.files(cmd, root, query, title)
     find_command = cmd,
     default_text = query,
     prompt_title = title,
-    attach_mappings = function(_, map)
-      map('i', '<CR>', customActions.tabDrop)
-      map('n', '<CR>', customActions.tabDrop)
-
-      return true
-    end
+    attach_mappings = extension.defaultFileMappings,
   })
 end
 
