@@ -71,31 +71,31 @@ snippet pug "Public getter"
             return \$this->${1:name};
         }
 snippet pub "Public function"
-        public function ${1:name}(${2}): ${3}
+        public function ${1:name}(${2}): ${3:void}
         {${VISUAL}
         }
 snippet pro "Protected function"
-        protected function ${1:name}(${2}): ${3}
+        protected function ${1:name}(${2}): ${3:void}
         {
             ${VISUAL}${5:;}
         }
 snippet pri "Private function"
-        private function ${1:name}(${2}): ${3}
+        private function ${1:name}(${2}): ${3:void}
         {
             ${VISUAL}${5:;}
         }
 snippet pubs "Public static function"
-        public static function ${1:name}(${2}): ${3}
+        public static function ${1:name}(${2}): ${3:void}
         {
             ${VISUAL}${5:;}
         }
 snippet pros "Protected static function"
-        protected static function ${1:name}(${2}): ${3}
+        protected static function ${1:name}(${2}): ${3:void}
         {
             ${VISUAL}${5:;}
         }
 snippet pris "Private static function"
-        private static function ${1:name}(${2}): ${3}
+        private static function ${1:name}(${2}): ${3:void}
         {
             ${VISUAL}${5:;}
         }
