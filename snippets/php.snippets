@@ -58,8 +58,8 @@ snippet vd
     var_dump(${0});
 snippet var "var_export($var)"
     var_export(${1}, true);
-snippet te "throw new Exception()"
-    throw new ${1:Exception}("${2:Error Processing Request}");
+snippet th "throw new Exception()"
+    throw new ${1:Exception}(${2});
 snippet con "__construct()"
         public function __construct(
             ${1}
