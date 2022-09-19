@@ -1,5 +1,6 @@
 local null = require('null-ls')
 local util = require('lspconfig.util')
+local sources = require('null-ls.sources')
 
 local function phpProjectRoot(pattern)
   local cwd = vim.loop.cwd()
