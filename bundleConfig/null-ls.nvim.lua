@@ -25,7 +25,23 @@ null.setup({
     null.builtins.code_actions.eslint,
     null.builtins.diagnostics.eslint,
     null.builtins.diagnostics.jsonlint,
-    null.builtins.diagnostics.php,
+    null.builtins.diagnostics.php.with({
+      check_exit_code = function (code)
+        vim.schedule(function ()
+          local filter = {name = 'phpmd'}
+          local phpmd = sources.get(filter)
+          if {} == phpmd then
+            return
+          end
+
+          if 0 == code and true == phpmd[1]._disabled then
+            sources.enable(filter)
+            return
+          end
+          sources.disable(filter)
+        end)
+      end
+    }),
     null.builtins.diagnostics.phpcs.with(phpcsArgs),
     null.builtins.diagnostics.phpmd.with({
       extra_args = {'cleancode,codesize,controversial,design,naming,unusedcode'}
