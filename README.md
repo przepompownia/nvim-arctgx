@@ -1,1 +1,1 @@
-# vim-arctgx - personal vim configuration
+# vim-arctgx - personal Neovim configuration
