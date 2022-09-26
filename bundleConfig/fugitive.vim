@@ -6,7 +6,7 @@ augroup FugitiveConfig
   autocmd FileType git,fugitiveblame,fugitive nmap <buffer> q :q<CR>
 augroup end
 nmap <Plug>(ide-git-status) :G<CR><C-w>33+
-nmap <Plug>(ide-git-log) :Glog<CR>
+nmap <Plug>(ide-git-log) :Gllog<CR>
 nmap <Plug>(ide-git-push-all) :Git pushall<CR>
 nmap <Plug>(ide-git-commit) :Git commit<CR>
 nmap <Plug>(ide-git-blame) :Git blame<CR>
