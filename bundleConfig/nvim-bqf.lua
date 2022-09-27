@@ -11,6 +11,10 @@ require('bqf').setup({
       local ret = true
       local filename = vim.api.nvim_buf_get_name(bufnr)
       local fsize = vim.fn.getfsize(filename)
+
+      if vim.startswith(filename, 'fugitive://') then
+        return false
+      end
       -- file size greater than 100k can't be previewed automatically
       if fsize > 100 * 1024 then
         ret = false
