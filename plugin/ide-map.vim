@@ -130,7 +130,6 @@ nmap <Leader>ibh <Plug>(ide-browse-history)
 nmap <F4> <Plug>(ide-browse-history)
 imap <F4> <C-o><F4>
 nmap ,<F4> <Plug>(ide-browse-history-in-cwd)
-imap ,<F4> <C-o><Plug>(ide-browse-history-in-cwd)
 nmap <S-F4> <Plug>(ide-git-show-branches)
 imap <S-F4> <C-o><S-F4>
 nmap <F5> <Plug>(ide-db-ui-toggle)
