@@ -112,6 +112,11 @@ imap <S-F2> <C-o><S-F2>
 nmap [h <Plug>(ide-git-hunk-previous)
 nmap ]h <Plug>(ide-git-hunk-next)
 
+nmap <Leader>t <Plug>(treesitter-init-selection)
+vmap <Leader>] <Plug>(treesitter-node-incremental)
+vmap <Leader>[ <Plug>(treesitter-node-decremental)
+vmap <Leader>] <Plug>(treesitter-scope-incremental)
+
 nmap <Leader>ff <Plug>(ide-files-search-operator)
 vmap <Leader>ff <Plug>(ide-files-search-operator)
 
