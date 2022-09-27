@@ -7,7 +7,7 @@ endfunction
 let g:test#custom_transformations = {'xdebug': function('s:xdebugWrapper')}
 " Set in local .exrc
 " let g:test#transformation = 'xdebug'
-augroup VimTest
-  autocmd!
-  autocmd FileType php nmap <buffer> <Leader>t :TestNearest<CR>
-augroup end
+" augroup VimTest
+"   autocmd!
+"   autocmd FileType php nmap <buffer> <Leader>t :TestNearest<CR>
+" augroup end
