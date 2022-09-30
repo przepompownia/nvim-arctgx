@@ -17,6 +17,18 @@ require('lualine').setup({
     },
   },
   sections = {
+    lualine_b = {
+      {
+        'branch',
+        on_click = function (numberOfClicks, button, modifiers)
+          if 'r' == button then
+            telescope.branches()
+          end
+        end
+      },
+      'diff',
+      'diagnostics',
+    },
     lualine_c = {
       {
         'filename',
