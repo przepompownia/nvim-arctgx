@@ -3,7 +3,7 @@ local arctgxString = require('arctgx.string')
 local telescope = require('arctgx.telescope')
 
 local function formatFilename(name)
-  local name = name:gsub('[.][^.]+$', '')
+  name = name:gsub('[.][^.]+$', '')
 
   return arctgxString.shorten(name, 8)
 end
