@@ -1,6 +1,6 @@
 local widgets = require "arctgx.widgets"
 local arctgxString = require('arctgx.string')
-local telescope    = require('arctgx.telescope')
+local telescope = require('arctgx.telescope')
 
 local function formatFilename(name)
   local name = name:gsub('[.][^.]+$', '')
