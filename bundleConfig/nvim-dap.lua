@@ -225,7 +225,7 @@ local function openTabForThread()
     setlocal scrolloff=10
   ]])
   debugWinId = vim.fn.win_getid()
-  dapui.open()
+  dapui.open({})
 end
 
 dap.listeners.before['event_stopped']['arctgx-dap-tab'] = function()
