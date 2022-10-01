@@ -211,7 +211,7 @@ local function closeDebugWin()
     return
   end
   local tabNr = api.nvim_tabpage_get_number(api.nvim_win_get_tabpage(debugWinId))
-  dapui.close()
+  dapui.close({})
   vim.cmd('tabclose ' .. tabNr)
 end
 
