@@ -22,7 +22,7 @@ align_call_args = false
 # if true, all function define params will align to first param
 align_function_define_params = true
 # if true, format like this "local t = { 1, 2, 3 }"
-keep_one_space_between_table_and_bracket = true
+keep_one_space_between_table_and_bracket = false
 # if indent_style is tab, this option is invalid
 align_table_field_to_first_field = false
 # if true, ormat like this "local t <const> = 1"
@@ -85,6 +85,6 @@ function_name_define_style = camel_case
 local_function_name_define_style = camel_case
 table_field_name_define_style = camel_case
 global_variable_name_define_style = camel_case|upper_camel_case
-module_name_define_style = same('M')|same(filename, camel_case)
+module_name_define_style = same('M')|same(filename, camel_case)|same(filename, pascal_case)
 require_module_name_style = same(camel_case)
 class_name_define_style = same(filename, camel_case)
