@@ -3,6 +3,7 @@ nnoremap i <Cmd>call arctgx#arctgx#insertWithInitialIndentation('i')<CR>
 nnoremap a <Cmd>call arctgx#arctgx#insertWithInitialIndentation('a')<CR>
 xnoremap <C-Insert> "*y
 inoremap <C-q> <C-r>+
+nnoremap <Leader>fcc <Cmd>let @+ = expand('%:.')<CR>
 noremap <S-Insert> <MiddleMouse>
 noremap! <S-Insert> <MiddleMouse>
 tnoremap <S-Insert> <C-\><C-N>"*pi
