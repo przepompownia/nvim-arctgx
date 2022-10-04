@@ -65,6 +65,14 @@ local keyToPlugMappings = {
   ['<Leader>ii'] = {rhs = '<Plug>(ide-diagnostic-info)', modes = {'n'}},
   ['<Leader>ca'] = {rhs = '<Plug>(ide-codelens-action)', modes = {'n'}},
 
+  ['<Leader>t'] = {rhs = '<Plug>(treesitter-init-selection)', modes = {'n'}},
+  ['<Leader>]'] = {rhs = '<Plug>(treesitter-node-incremental)', modes = {'v'}},
+  ['<Leader>['] = {rhs = '<Plug>(treesitter-node-decremental)', modes = {'v'}},
+  ['<Leader><Leader>]'] = {rhs = '<Plug>(treesitter-scope-incremental)', modes = {'v'}},
+
+}
+
+local globalMappings = {
   ['<Leader>hs'] = {rhs = '<Plug>(ide-git-hunk-stage)', repeatable = false, modes = {'n'}},
   ['<Leader>g'] = {rhs = '<Plug>(ide-git-status)', repeatable = false, modes = {'n'}},
   ['<Leader>gc'] = {rhs = '<Plug>(ide-git-commit)', repeatable = false, modes = {'n'}},
@@ -82,18 +90,13 @@ local keyToPlugMappings = {
   ['<Leader>hB'] = {rhs = '<Plug>(ide-git-blame-toggle-virtual)', repeatable = false, modes = {'n'}},
   ['<Leader>hd'] = {rhs = '<Plug>(ide-git-diffthis)', repeatable = false, modes = {'n'}},
   ['<Leader>hD'] = {rhs = '<Plug>(ide-git-diffthis-previous)', repeatable = false, modes = {'n'}},
-
   ['<Leader>fg'] = {rhs = '<Plug>(ide-git-files-search-operator)', repeatable = false, modes = {'n', 'v'}},
+
   ['<Leader>q'] = {rhs = '<Plug>(ide-grep-string-search-operator)', repeatable = false, modes = {'v', 'n'}},
   ['<Leader>w'] = {rhs = '<Plug>(ide-git-string-search-operator)', repeatable = false, modes = {'v', 'n'}},
   ['<S-F2>'] = {rhs = '<Plug>(ide-git-stage-write-file)', repeatable = false, modes = {'n'}},
   ['[h'] = {rhs = '<Plug>(ide-git-hunk-previous)', repeatable = false, modes = {'n'}},
   [']h'] = {rhs = '<Plug>(ide-git-hunk-next)', repeatable = false, modes = {'n'}},
-
-  ['<Leader>t'] = {rhs = '<Plug>(treesitter-init-selection)', modes = {'n'}},
-  ['<Leader>]'] = {rhs = '<Plug>(treesitter-node-incremental)', modes = {'v'}},
-  ['<Leader>['] = {rhs = '<Plug>(treesitter-node-decremental)', modes = {'v'}},
-  ['<Leader><Leader>]'] = {rhs = '<Plug>(treesitter-scope-incremental)', modes = {'v'}},
 
   ['<Leader>ff'] = {rhs = '<Plug>(ide-files-search-operator)', modes = {'n', 'v'}},
 
@@ -137,6 +140,7 @@ local insertModeLhsDuplications = {
   ['<S-F12>'] = {rhs = '<C-o><S-F12>', modes = {'i'}},
 }
 keymap.loadKeyToPlugMappings(insertModeLhsDuplications)
+keymap.loadKeyToPlugMappings(globalMappings)
 
 api.nvim_create_augroup('IdeMapsLua', {clear = true})
 api.nvim_create_autocmd({'FileType'}, {
