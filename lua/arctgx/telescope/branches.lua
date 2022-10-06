@@ -13,7 +13,7 @@ local function listBranches(cwd)
   local result = {}
   for _, entry in ipairs(list) do
     local head, branch, desc = unpack(vim.split(entry, ';'))
-    table.insert(result, {
+    table.insert(result, 1, {
       branch = branch,
       desc = desc,
       head = head,
@@ -64,7 +64,7 @@ function Branches.list(opts)
       entry_maker = makeEntry,
     }),
     sorter = conf.generic_sorter(opts),
-    attach_mappings = function(prompt_bufnr, map)
+    attach_mappings = function(prompt_bufnr)
       actions.select_default:replace(function()
         actions.close(prompt_bufnr)
         local selection = action_state.get_selected_entry()
