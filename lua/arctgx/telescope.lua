@@ -1,4 +1,4 @@
-local actions = require 'telescope.actions'
+local actions = require('telescope.actions')
 local action_state = require 'telescope.actions.state'
 local base = require('arctgx.base')
 local files = require('arctgx.files')
@@ -66,8 +66,8 @@ function extension.create_operator(search_function, cmd, root, title)
   end
 end
 
-function extension.branches()
-  branches.list({cwd = git.top(base.getBufferCwd())})
+function extension.branches(opts)
+  branches.list(vim.tbl_deep_extend('keep', opts or {}, {cwd = git.top(base.getBufferCwd())}))
 end
 
 ---@param onlyCwd boolean
