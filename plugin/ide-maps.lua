@@ -60,8 +60,8 @@ local keyToPlugMappings = {
   ['af'] = {rhs = '<Plug>(ide-select-function-outer)', modes = {'x'}},
   ['<Leader>a'] = {rhs = '<Plug>(ide-parameter-swap-forward)', repeatable = true, modes = {'n'}},
   ['<Leader>A'] = {rhs = '<Plug>(ide-parameter-swap-backward)', repeatable = true, modes = {'n'}},
-  ['ic'] = {rhs = '<Plug>(ide-select-class-inner)', modes = {'x', 'o'}},
-  ['ac'] = {rhs = '<Plug>(ide-select-class-outer)', modes = {'x', 'o'}},
+  ['iC'] = {rhs = '<Plug>(ide-select-class-inner)', modes = {'x', 'o'}},
+  ['aC'] = {rhs = '<Plug>(ide-select-class-outer)', modes = {'x', 'o'}},
   ['<Leader>ii'] = {rhs = '<Plug>(ide-diagnostic-info)', modes = {'n'}},
   ['<Leader>ca'] = {rhs = '<Plug>(ide-codelens-action)', modes = {'n'}},
 
