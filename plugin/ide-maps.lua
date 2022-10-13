@@ -82,6 +82,7 @@ local globalMappings = {
   ['<Leader>gp'] = {rhs = '<Plug>(ide-git-push-all)', repeatable = false, modes = {'n'}},
   ['<Leader>hu'] = {rhs = '<Plug>(ide-git-hunk-undo-stage)', repeatable = false, modes = {'n'}},
   ['<Leader>hr'] = {rhs = '<Plug>(ide-git-hunk-reset)', repeatable = false, modes = {'n'}},
+  ['<Leader>hv'] = {rhs = '<Plug>(ide-git-hunk-visual-selection)', repeatable = false, modes = {'n'}},
   ['<Leader>hR'] = {rhs = '<Plug>(ide-git-buffer-reset)', repeatable = false, modes = {'n'}},
   ['<Leader>hp'] = {rhs = '<Plug>(ide-git-hunk-print)', repeatable = false, modes = {'n'}},
   ['<Leader>ht'] = {rhs = '<Plug>(ide-git-highlight-toggle)', repeatable = false, modes = {'n'}},

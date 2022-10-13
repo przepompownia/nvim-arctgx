@@ -33,6 +33,7 @@ require('gitsigns').setup {
     map('n', '<Plug>(ide-git-diffthis)', gs.diffthis)
     map('n', '<Plug>(ide-git-diffthis-previous)', function() gs.diffthis('~') end)
     map('n', '<Plug>(ide-git-toggle-deleted)', gs.toggle_deleted)
+    map('n', '<Plug>(ide-git-hunk-visual-selection)', gs.select_hunk)
 
     -- Text object
     map({'o', 'x'}, 'ih', ':<C-U>Gitsigns select_hunk<CR>')
