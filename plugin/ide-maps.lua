@@ -35,7 +35,7 @@ local keyToPlugMappings = {
   ['<C-]>'] = {rhs = '<Plug>(ide-goto-definition)', modes = {'n'}},
   ['gd'] = {rhs = '<Plug>(ide-goto-definition)', modes = {'n'}},
   ['gyd'] = {rhs = '<Plug>(ide-goto-definition-in-place)', modes = {'n'}},
-  ['gD'] = {rhs = '<Plug>(ide-peek-definition)', modes = {'n'}},
+  ['gD'] = {rhs = '<Plug>(ide-peek-definition-ts)', modes = {'n'}},
   ['<C-LeftMouse>'] = {rhs = '<Plug>(ide-goto-definition)', modes = {'n'}},
   ['g<LeftMouse>'] = {rhs = '<Plug>(ide-goto-definition)', modes = {'n'}},
   ['<Leader>icn'] = {rhs = '<Plug>(ide-class-new)', modes = {'n'}},
