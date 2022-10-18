@@ -7,7 +7,7 @@ function extension.top(relative_dir)
   local top, exit_code, errors = utils.get_os_command_output(cmd, relative_dir)
 
   if exit_code > 0 then
-    print(table.concat(errors), '\n')
+    print(table.concat(errors, '\n'))
     local cwd = vim.loop.cwd()
     print(string.format('Using cwd (%s)', cwd))
 

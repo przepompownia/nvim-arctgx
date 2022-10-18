@@ -5,6 +5,7 @@ local actions          = require 'telescope.actions'
 local action_state     = require 'telescope.actions.state'
 local conf             = require('telescope.config').values
 local Job              = require('plenary.job')
+local utils            = require('telescope.utils')
 
 local Branches = {}
 
@@ -32,7 +33,14 @@ local function makeEntry(entry)
   }
 end
 
-local function notifySwitchedToBranch(j, exitCode)
+local function switchToBranch(branch, cwd, noHooks)
+  local cmd = {'git', '-c', 'core.hooksPath=', 'switch', branch}
+  local stdout, exitCode, stderr = utils.get_os_command_output(cmd, cwd)
+
+  if {} ~= stderr then
+    vim.notify(table.concat(stderr, '\n'), vim.log.levels.WARN)
+  end
+
   if 0 ~= exitCode then
     return
   end
@@ -40,19 +48,6 @@ local function notifySwitchedToBranch(j, exitCode)
     api.nvim_cmd({cmd = 'checktime'}, {})
     api.nvim_exec_autocmds('User', {pattern = 'IdeStatusChanged', modeline = false})
   end)
-end
-
-local function runJob(branch, cwd, noHooks)
-  local args = {'-C', cwd, '-c', 'core.hooksPath=', 'switch', branch}
-  local job = Job:new({
-    args = args,
-    sync = true,
-    command = 'git',
-    on_exit = notifySwitchedToBranch,
-  })
-  job:start()
-
-  return job:result()
 end
 
 function Branches.list(opts)
@@ -69,7 +64,7 @@ function Branches.list(opts)
         actions.close(prompt_bufnr)
         local selection = action_state.get_selected_entry()
         local branch = selection.value.branch
-        runJob(branch, opts.cwd)
+        switchToBranch(branch, opts.cwd)
       end)
       return true
     end,
