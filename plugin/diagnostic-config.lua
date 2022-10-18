@@ -2,7 +2,6 @@ vim.diagnostic.config({
   virtual_text = false,
   underline = false,
 })
--- vim.lsp.set_log_level('trace')
 
 vim.fn.sign_define('DiagnosticSignHint', {text = '💡', texthl = 'IdeHintSign', linehl = '', numhl = 'IdeLineNrHint'})
 vim.fn.sign_define('DiagnosticSignInfo', {text = '', texthl = 'IdeInfoSign', linehl = '', numhl = 'IdeLineNrInfo'})
