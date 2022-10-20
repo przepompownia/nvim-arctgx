@@ -1,6 +1,7 @@
 require'nvim-treesitter.configs'.setup {
   ensure_installed = {
     'bash',
+    'diff',
     'dockerfile',
     'help',
     'http',
