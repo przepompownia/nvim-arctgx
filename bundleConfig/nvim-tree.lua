@@ -80,5 +80,6 @@ end
 -- icons
 -- cursorline
 -- line hover
+-- shell on node dir
 
 keymap.set({'n'}, '<Plug>(ide-tree-focus-current-file', focusOnFile)
