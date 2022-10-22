@@ -1,9 +1,7 @@
 local npairs = require('nvim-autopairs')
 local Rule = require('nvim-autopairs.rule')
-local cmp_autopairs = require('nvim-autopairs.completion.cmp')
-local cmp = require('cmp')
-local cond = require('nvim-autopairs.conds')
-local ts_conds = require('nvim-autopairs.ts-conds')
+local okCmp, cmp = pcall(require, 'cmp')
+local okTs, _ = pcall(require, 'nvim-treesitter.parsers')
 local treesitter = require('arctgx.treesitter')
 
 npairs.setup {
@@ -22,18 +20,25 @@ for start, _ in pairs(existingRules) do
   npairs.remove_rule(start)
 end
 
-local function isAfterTypeInPhpDocblock()
-  local captures = treesitter.getCapturesBeforeCursor(0)
-  if not vim.tbl_contains(captures, 'comment') then
-    return false
+if okTs then
+  local _, cond = pcall(require, 'nvim-autopairs.conds')
+  local ts_conds = require('nvim-autopairs.ts-conds')
+  local function isAfterTypeInPhpDocblock()
+    local captures = treesitter.getCapturesBeforeCursor(0)
+    if not vim.tbl_contains(captures, 'comment') then
+      return false
+    end
+
+    return vim.tbl_contains(captures, 'type')
   end
 
-  return vim.tbl_contains(captures, 'type')
+  npairs.add_rules({
+    existingRules['`']:with_pair(cond.not_filetypes({ 'sql', 'mysql' })),
+    Rule('<', '>', 'php'):with_pair(isAfterTypeInPhpDocblock),
+  })
 end
 
-npairs.add_rules({
-  existingRules['`']:with_pair(cond.not_filetypes({ 'sql', 'mysql' })),
-  Rule('<', '>', 'php'):with_pair(isAfterTypeInPhpDocblock),
-})
-
-cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done({ map_char = { tex = '' } }))
+if okCmp then
+  local cmp_autopairs = require('nvim-autopairs.completion.cmp')
+  cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done({ map_char = { tex = '' } }))
+end
