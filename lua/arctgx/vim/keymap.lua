@@ -4,6 +4,10 @@ local keymap = require('vim.keymap')
 
 local extension = {}
 
+function extension.feedKeys(sequence)
+  vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(sequence, true, false, true), 'n', false)
+end
+
 local function repeatSeq(sequence)
   pcall(vim.fn['repeat#set'], sequence, -1)
 end

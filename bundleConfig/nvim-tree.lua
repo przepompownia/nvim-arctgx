@@ -3,10 +3,11 @@ local treeapi = require('nvim-tree.api')
 local git = require('arctgx.git')
 local base = require('arctgx.base')
 local ntApi = require('nvim-tree.api')
+local arctgxKeymap = require('arctgx.vim.keymap')
 
 require('nvim-tree').setup({
   on_attach = function(bufnr)
-    print(bufnr)
+    -- print(bufnr)
     -- vim.wo.cursorline = 1
     local inject_node = require('nvim-tree.utils').inject_node
 
@@ -23,12 +24,14 @@ require('nvim-tree').setup({
     vim.keymap.set(
       'n',
       '<Right>',
-      inject_node(function(node)
-        if node.nodes then
-          require('nvim-tree.lib').expand_or_collapse(node)
+      function ()
+        local node = require("nvim-tree.lib").get_node_at_cursor()
+        if nil == node.nodes then
+          return arctgxKeymap.feedKeys('<Right>')
         end
-      end),
-      {buffer = bufnr, noremap = true}
+        require('nvim-tree.lib').expand_or_collapse(node)
+      end,
+      {buffer = bufnr}
     )
     vim.keymap.set(
       'n',
