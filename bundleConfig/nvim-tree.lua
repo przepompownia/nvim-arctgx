@@ -14,9 +14,11 @@ require('nvim-tree').setup({
       'n',
       '<CR>',
       inject_node(function(node)
-        if 1 == vim.fn.isdirectory(node.absolute_path) then
+        if nil == node.nodes then
           base.tab_drop_path(node.absolute_path)
+          return
         end
+        require('nvim-tree.lib').expand_or_collapse(node)
       end),
       {buffer = bufnr, noremap = true}
     )
