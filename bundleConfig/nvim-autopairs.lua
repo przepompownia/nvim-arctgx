@@ -22,7 +22,6 @@ end
 
 if okTs then
   local _, cond = pcall(require, 'nvim-autopairs.conds')
-  local ts_conds = require('nvim-autopairs.ts-conds')
   local function isAfterTypeInPhpDocblock()
     local captures = treesitter.getCapturesBeforeCursor(0)
     if not vim.tbl_contains(captures, 'comment') then
