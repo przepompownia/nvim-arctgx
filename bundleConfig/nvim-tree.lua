@@ -7,7 +7,6 @@ local arctgxKeymap = require('arctgx.vim.keymap')
 
 require('nvim-tree').setup({
   on_attach = function(bufnr)
-    -- print(bufnr)
     -- vim.wo.cursorline = 1
     local inject_node = require('nvim-tree.utils').inject_node
 
@@ -39,18 +38,14 @@ require('nvim-tree').setup({
       ntApi.node.navigate.parent_close,
       {buffer = bufnr, noremap = true}
     )
+    vim.keymap.set(
+      'n',
+      '<Tab>',
+      '<C-w>w',
+      {buffer = bufnr, noremap = true}
+    )
   end,
   sort_by = 'case_insensitive',
-  view = {
-    mappings = {
-      list = {
-        {
-          key = '<Tab>',
-          action = '',
-        },
-      },
-    },
-  },
   renderer = {
     group_empty = true,
     icons = {
@@ -62,11 +57,11 @@ require('nvim-tree').setup({
           arrow_closed = '▶',
           arrow_open = '▼',
           default = '',
-          open = ' ',
-          empty = '',
-          empty_open = '',
-          symlink = '',
-          symlink_open = '',
+          open = '',
+          empty = '',
+          empty_open = '',
+          symlink = '',
+          symlink_open = '',
         },
       },
     },
