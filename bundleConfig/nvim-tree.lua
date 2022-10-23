@@ -93,3 +93,7 @@ end
 -- shell on node dir
 
 keymap.set({'n'}, '<Plug>(ide-tree-focus-current-file', focusOnFile)
+vim.api.nvim_create_autocmd({'FileType'}, {
+  pattern = 'NvimTree',
+  callback = require('arctgx.lineHover').enableForWindow,
+})
