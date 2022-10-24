@@ -57,9 +57,11 @@ require('nvim-tree').setup({
   end,
   view = {
     signcolumn = 'no',
+    -- adaptive_size = true,
   },
   sort_by = 'case_insensitive',
   renderer = {
+    full_name = true,
     group_empty = true,
     icons = {
       git_placement = 'after',
@@ -92,7 +94,3 @@ end
 -- shell on node dir
 
 keymap.set({'n'}, '<Plug>(ide-tree-focus-current-file', focusOnFile)
-vim.api.nvim_create_autocmd({'FileType'}, {
-  pattern = 'NvimTree',
-  callback = require('arctgx.lineHover').enableForWindow,
-})
