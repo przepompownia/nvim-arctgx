@@ -118,3 +118,14 @@ snippet ycc "Yii controller PHP8 constructor"
         ) {
             parent::__construct(\$id, \$module, \$config);
         }
+snippet ycbef "Yii controller before action"
+		public function beforeAction(\$action)
+		{
+			${1}
+
+			return parent::beforeAction(\$action);
+		}
+snippet yca "Yii web action"
+    public function action${1:Index}(${2:string} \$${3:slug}): Response
+    {
+    }
