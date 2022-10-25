@@ -11,6 +11,7 @@ end
 local debugWidgetLength = 4
 
 require('lualine').setup({
+  extensions = {'nvim-tree'},
   options = {
     disabled_filetypes = {
       'fern',
