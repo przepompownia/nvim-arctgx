@@ -26,7 +26,7 @@ function extension.loadKeyToPlugMappings(mappings, bufnr)
       keymap.set({ mode }, lhs, function()
         local internalSeq = vim.api.nvim_replace_termcodes(mapping.rhs, true, false, true)
         vim.api.nvim_feedkeys(internalSeq, mode, false)
-        if true == mapping.repeatable then
+        if mode ~= 'i' and true == mapping.repeatable then
           repeatSeq(internalSeq)
         end
       end, opts or {})
