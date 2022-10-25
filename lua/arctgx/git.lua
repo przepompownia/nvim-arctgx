@@ -2,14 +2,18 @@ local utils = require 'telescope.utils'
 
 local extension = {}
 
-function extension.top(relative_dir)
+function extension.top(relativeDir)
   local cmd = {'git', 'rev-parse', '--show-toplevel'}
-  local top, exit_code, errors = utils.get_os_command_output(cmd, relative_dir)
+  local top, exit_code, errors = utils.get_os_command_output(cmd, relativeDir)
 
   if exit_code > 0 then
-    print(table.concat(errors or {}, '\n'))
+    -- vim.notify(table.concat(errors or {}, '\n'), vim.log.levels.ERROR)
     local cwd = vim.loop.cwd()
-    print(string.format('Using cwd (%s)', cwd))
+    vim.notify(string.format(
+      'Cannot recognize git top level directory for %s. Using CWD (%s)',
+      relativeDir,
+      cwd
+    ), vim.log.levels.INFO)
 
     return cwd
   end
