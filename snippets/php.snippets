@@ -129,3 +129,15 @@ snippet yca "Yii web action"
     public function action${1:Index}(${2:string} \$${3:slug}): Response
     {
     }
+snippet ycbeh "Yii controller behaviors method"
+    public function behaviors(): array
+    {
+        return [
+            'verbs' => [
+                'class' => VerbFilter::class,
+                'actions' => [
+                    '${1:action-name}' => ['${2:GET}'],
+                ],
+            ],
+        ];
+    }
