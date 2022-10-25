@@ -1,6 +1,5 @@
 local keymap = require('vim.keymap')
 local treeapi = require('nvim-tree.api')
-local tree = require('nvim-tree')
 local git = require('arctgx.git')
 local base = require('arctgx.base')
 local arctgxKeymap = require('arctgx.vim.keymap')
