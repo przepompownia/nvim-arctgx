@@ -1,8 +1,8 @@
 local keymap = require('vim.keymap')
 local treeapi = require('nvim-tree.api')
+local tree = require('nvim-tree')
 local git = require('arctgx.git')
 local base = require('arctgx.base')
-local ntApi = require('nvim-tree.api')
 local arctgxKeymap = require('arctgx.vim.keymap')
 
 vim.g.loaded_netrw = 1
@@ -51,7 +51,7 @@ require('nvim-tree').setup({
     vim.keymap.set(
       'n',
       '<Left>',
-      ntApi.node.navigate.parent_close,
+      treeapi.node.navigate.parent_close,
       {buffer = bufnr, noremap = true}
     )
   end,
@@ -83,14 +83,19 @@ require('nvim-tree').setup({
     },
   },
   filters = {dotfiles = true},
+  git = {
+    ignore = false,
+  },
 })
 
 local function focusOnFile()
-  treeapi.tree.toggle(true, false, git.top(vim.fs.dirname(vim.api.nvim_buf_get_name(0))))
+  local bufName = vim.api.nvim_buf_get_name(0)
+  treeapi.tree.open(git.top(vim.fs.dirname(bufName)))
+  treeapi.tree.find_file(bufName)
 end
 
 -- @todo
 -- cursorline
 -- shell on node dir
 
-keymap.set({'n'}, '<Plug>(ide-tree-focus-current-file', focusOnFile)
+keymap.set({'n'}, '<Plug>(ide-tree-focus-current-file)', focusOnFile)
