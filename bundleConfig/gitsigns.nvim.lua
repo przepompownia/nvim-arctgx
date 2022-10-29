@@ -27,6 +27,7 @@ require('gitsigns').setup {
     map('n', '<Plug>(ide-git-hunk-undo-stage)', gs.undo_stage_hunk)
     map('n', '<Plug>(ide-git-buffer-reset)', gs.reset_buffer)
     map('n', '<Plug>(ide-git-hunk-print)', gs.preview_hunk)
+    map('n', '<Plug>(ide-git-hunk-print-inline)', gs.preview_hunk_inline)
     map('n', '<Plug>(ide-git-blame-line)', function() gs.blame_line{full=true} end)
     map('n', '<Plug>(ide-git-blame-toggle-virtual)', gs.toggle_current_line_blame)
     map('n', '<Plug>(ide-git-highlight-toggle)', gs.toggle_linehl)
