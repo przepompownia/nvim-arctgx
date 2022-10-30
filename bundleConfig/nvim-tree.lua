@@ -81,7 +81,9 @@ require('nvim-tree').setup({
       },
     },
   },
-  filters = {dotfiles = true},
+  filters = {
+    dotfiles = false,
+  },
   git = {
     ignore = false,
   },
@@ -90,6 +92,8 @@ require('nvim-tree').setup({
 local function focusOnFile()
   local bufName = vim.api.nvim_buf_get_name(0)
   treeapi.tree.open(git.top(vim.fs.dirname(bufName)))
+  -- treeapi.tree.toggle_hidden_filter()
+  treeapi.live_filter.clear()
   treeapi.tree.find_file(bufName)
 end
 
