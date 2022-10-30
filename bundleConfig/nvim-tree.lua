@@ -20,7 +20,6 @@ require('nvim-tree').setup({
     },
   },
   on_attach = function(bufnr)
-    -- vim.wo.cursorline = 1
     local inject_node = require('nvim-tree.utils').inject_node
 
     vim.keymap.set(
@@ -40,7 +39,7 @@ require('nvim-tree').setup({
       'n',
       '<Right>',
       function ()
-        local node = require('nvim-tree.lib').get_node_at_cursor()
+        local node = treeapi.tree.get_node_under_cursor()
         if nil == node.nodes then
           return arctgxKeymap.feedKeys('<Right>')
         end
