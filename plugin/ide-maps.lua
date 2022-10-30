@@ -129,19 +129,22 @@ local globalMappings = {
   ['<Esc>'] = {rhs = '<Plug>(ide-close-popup)'},
 }
 
----@type KeyToPlugMappings
-local insertModeLhsDuplications = {
-  ['<F1>'] = {rhs = '<C-o><F1>', modes = {'i'}},
-  ['<F4>'] = {rhs = '<C-o><F4>', modes = {'i'}},
-  ['<F11>'] = {rhs = '<C-o><F11>', modes = {'i'}},
-  ['<F12>'] = {rhs = '<C-o><F12>', modes = {'i'}},
-  ['<S-F1>'] = {rhs = '<C-o><S-F1>', modes = {'i'}},
-  ['<S-F2>'] = {rhs = '<C-o><S-F2>', repeatable = false, modes = {'i'}},
-  ['<S-F4>'] = {rhs = '<C-o><S-F4>', modes = {'i'}},
-  ['<S-F11>'] = {rhs = '<C-o><S-F11>', modes = {'i'}},
-  ['<S-F12>'] = {rhs = '<C-o><S-F12>', modes = {'i'}},
+local sequencesToReuseInInsertMode = {
+  '<F1>',
+  '<F4>',
+  '<F11>',
+  '<F12>',
+  '<S-F1>',
+  '<S-F2>',
+  '<S-F4>',
+  '<S-F11>',
+  '<S-F12>',
 }
-keymap.loadKeyToPlugMappings(insertModeLhsDuplications)
+
+for _, sequence in ipairs(sequencesToReuseInInsertMode) do
+  vim.api.nvim_cmd({cmd = 'inoremap', args = { sequence, '<C-o>' .. sequence }}, {})
+end
+
 keymap.loadKeyToPlugMappings(globalMappings)
 
 api.nvim_create_augroup('IdeMapsLua', {clear = true})
