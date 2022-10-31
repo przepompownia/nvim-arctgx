@@ -19,9 +19,8 @@ cmp.setup({
     ['<Plug>(ide-trigger-completion)'] = cmp.mapping(cmp.mapping.complete(), {'i', 'c'}),
     ['<Tab>'] = cmp.mapping(function(fallback)
       if cmp.visible() then
-        print 'visible'
         cmp.select_next_item()
-      elseif luasnip.expand_or_jumpable() then
+      elseif luasnip.expand_or_locally_jumpable() then
         luasnip.expand_or_jump()
       elseif hasWordsBefore() then
         cmp.complete()
