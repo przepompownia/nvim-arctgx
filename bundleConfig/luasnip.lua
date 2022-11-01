@@ -1,6 +1,7 @@
 require('luasnip.loaders.from_snipmate').load()
+local lsp = require('vim.lsp')
 
-local ls = require"luasnip"
+local ls = require 'luasnip'
 local s = ls.snippet
 -- local sn = ls.snippet_node
 -- local isn = ls.indent_snippet_node
@@ -10,7 +11,7 @@ local i = ls.insert_node
 -- local c = ls.choice_node
 -- local d = ls.dynamic_node
 -- local r = ls.restore_node
--- local events = require("luasnip.util.events")
+local events = require("luasnip.util.events")
 
 ls.add_snippets('lua', {
   s('lvd', {
@@ -22,3 +23,41 @@ ls.add_snippets('lua', {
     t('print(debug.traceback())'),
   })
 })
+
+ls.add_snippets('php', {
+  s(
+    {
+      trig = 'yca',
+      dscr = 'Yii web action',
+    },
+    {
+      t('public function action'),
+      i(1, 'Index'),
+      t('('),
+      i(2, 'string'),
+      t(' $'),
+      i(3, 'slug'),
+      t('): '),
+      i(4, 'Response'),
+      t({'', '{', '}'}),
+    },
+    {
+      callbacks = {
+        [-1] = {
+          [events.leave] = function(snippet, event_args)
+            local node = ls.session.event_node
+            if (node.pos == 4) then
+              vim.api.nvim_cmd({cmd = 'stopinsert'}, {})
+              lsp.buf.code_action()
+            end
+          end
+        }
+      }
+    })
+})
+
+
+-- ls.config.set_config({
+--   region_check_events = 'InsertEnter',
+--   delete_check_events = 'InsertLeave'
+-- })
