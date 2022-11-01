@@ -43,13 +43,10 @@ ls.add_snippets('php', {
     },
     {
       callbacks = {
-        [-1] = {
-          [events.leave] = function(snippet, event_args)
-            local node = ls.session.event_node
-            if (node.pos == 4) then
+        [4] = {
+          [events.leave] = function()
               vim.api.nvim_cmd({cmd = 'stopinsert'}, {})
               lsp.buf.code_action()
-            end
           end
         }
       }
