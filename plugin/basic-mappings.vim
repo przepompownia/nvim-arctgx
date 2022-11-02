@@ -2,6 +2,7 @@ scriptencoding utf-8
 nnoremap i <Cmd>call arctgx#arctgx#insertWithInitialIndentation('i')<CR>
 nnoremap a <Cmd>call arctgx#arctgx#insertWithInitialIndentation('a')<CR>
 xnoremap <C-Insert> "*y
+xnoremap <C-S-Insert> "+y
 inoremap <C-q> <C-r>+
 nnoremap <Leader>fcc <Cmd>let @+ = expand('%:.')<CR>
 noremap <S-Insert> <MiddleMouse>
