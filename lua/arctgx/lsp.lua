@@ -31,14 +31,14 @@ function M.onAttach(client, bufnr)
     function() lsp.buf.references {includeDeclaration = false} end)
   bufMap('n', '<Plug>(ide-diagnostic-info)',
     function() diagnostic.open_float({border = 'rounded'}) end)
-  bufMap('n', '<space>wa', lsp.buf.add_workspace_folder)
-  bufMap('n', '<space>wr', lsp.buf.remove_workspace_folder)
-  bufMap('n', '<space>wl', buf.workspaceFolders)
-  bufMap({'v', 'n'}, '<space>ca', lsp.buf.code_action)
-  bufMap('n', '[d', diagnostic.goto_prev)
-  bufMap('n', ']d', diagnostic.goto_next)
+  bufMap('n', '<Plug>(ide-workspace-folder-add)', lsp.buf.add_workspace_folder)
+  bufMap('n', '<Plug>(ide-workspace-folder-remove)', lsp.buf.remove_workspace_folder)
+  bufMap('n', '<Plug>(ide-workspace-folder-list)', buf.workspaceFolders)
+  bufMap({'v', 'n'}, '<Plug>(ide-code-action)', lsp.buf.code_action)
+  bufMap('n', '<Plug>(ide-diagnostic-goto-previous)', diagnostic.goto_prev)
+  bufMap('n', '<Plug>(ide-diagnostic-goto-next)', diagnostic.goto_next)
   bufMap('n', '<space>q', diagnostic.setloclist)
-  bufMap({'n', 'v'}, '<space>f', function() return lsp.buf.format({async = true}) end)
+  bufMap({'n', 'v'}, '<Plug>(ide-format-with-all-formatters)', function() return lsp.buf.format({async = true}) end)
 
   if client.server_capabilities.documentHighlightProvider then
     api.nvim_create_autocmd({'CursorMoved', 'CursorMovedI'}, {
