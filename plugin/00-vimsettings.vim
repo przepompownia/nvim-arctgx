@@ -39,7 +39,7 @@ set eadirection=hor
 set isfname-==
 set modeline modelines=5
 
-set diffopt+=vertical
+set diffopt+=vertical,linematch:60
 set jumpoptions+=view
 if has('folding')
   set foldlevelstart=99
