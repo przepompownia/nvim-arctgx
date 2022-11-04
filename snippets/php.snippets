@@ -72,32 +72,27 @@ snippet pug "Public getter"
         }
 snippet pub "Public function"
         public function ${1:name}(${2}): ${3:void}
-        {${VISUAL}
+        {${0}
         }
 snippet pro "Protected function"
         protected function ${1:name}(${2}): ${3:void}
-        {
-            ${VISUAL}${5:;}
+        {${0}
         }
 snippet pri "Private function"
         private function ${1:name}(${2}): ${3:void}
-        {
-            ${VISUAL}${5:;}
+        {${0}
         }
 snippet pubs "Public static function"
         public static function ${1:name}(${2}): ${3:void}
-        {
-            ${VISUAL}${5:;}
+        {${0}
         }
 snippet pros "Protected static function"
-        protected static function ${1:name}(${2}): ${3:void}
-        {
+        {${0}
             ${VISUAL}${5:;}
         }
 snippet pris "Private static function"
         private static function ${1:name}(${2}): ${3:void}
-        {
-            ${VISUAL}${5:;}
+        {${0}
         }
 snippet prv "private variable"
         private ${1:string} $${2:name}; 
