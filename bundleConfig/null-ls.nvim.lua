@@ -47,16 +47,25 @@ null.setup({
         '--no-interaction',
         -- '--',
         '$FILENAME',
-      }
+      },
     }),
     null.builtins.diagnostics.shellcheck,
     null.builtins.diagnostics.vint,
     null.builtins.formatting.phpcbf.with(phpcsArgs),
     null.builtins.formatting.phpcsfixer.with({cwd = phpProjectRoot}),
-    null.builtins.formatting.prettier,
+    -- null.builtins.formatting.prettier.with({
+    --   extra_filetypes = {
+    --     'php',
+    --   },
+    -- }),
+    -- null.builtins.formatting.prettier_d_slim.with({
+    --   extra_filetypes = {
+    --     'php',
+    --   },
+    -- }),
     null.builtins.formatting.shfmt,
     null.builtins.formatting.stylua,
-  }
+  },
 })
 
 -- https://github.com/jose-elias-alvarez/null-ls.nvim/discussions/236
