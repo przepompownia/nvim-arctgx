@@ -2,6 +2,7 @@ local null = require('null-ls')
 local generators = require('null-ls.generators')
 local methods = require('null-ls.methods')
 local util = require('lspconfig.util')
+local base = require('arctgx.base')
 local api = vim.api
 
 local function phpProjectRoot(pattern)
@@ -59,41 +60,42 @@ null.setup({
 })
 
 -- https://github.com/jose-elias-alvarez/null-ls.nvim/discussions/236
-local chooseFormatter = function()
-    local bufnr = vim.api.nvim_get_current_buf()
-    local filetype = vim.api.nvim_buf_get_option(bufnr, 'filetype')
+local chooseFormatter = function(range)
+  local bufnr = vim.api.nvim_get_current_buf()
+  local filetype = vim.api.nvim_buf_get_option(bufnr, 'filetype')
 
-    local method = methods.internal.FORMATTING
-    local available = generators.get_available(filetype, method)
-    local formatters = {}
+  local method = methods.internal.FORMATTING
+  local available = generators.get_available(filetype, method)
+  local formatters = {}
 
-    for _, formatter in ipairs(available) do
-        formatters[formatter.opts.command] = formatter
-        formatter._disabled = true
+  for _, formatter in ipairs(available) do
+    formatters[formatter.opts.command] = formatter
+  end
+
+  local onSelect = function(selected)
+    if not selected then
+      return
     end
 
-    local selectedFormatter
-    local onSelect = function(selected)
-        if not selected then
-            return
-        end
-
-        selectedFormatter = formatters[selected]
+    for command, formatter in ipairs(formatters) do
+      formatter._disabled = command ~= selected or nil
     end
 
-    local choices = vim.tbl_keys(formatters)
-    table.sort(choices)
-    vim.ui.select(choices, { prompt = 'Run formatter: ' }, onSelect)
+    -- pcall(vim.lsp.buf.format, { name = 'null-ls' })
+    vim.lsp.buf.format({name = 'null-ls', range = range})
 
-    if selectedFormatter then
-        selectedFormatter._disabled = nil
-        pcall(vim.lsp.buf.format, { name = 'null-ls' })
+    for _, formatter in ipairs(formatters) do
+      formatter._disabled = nil
     end
+  end
 
-    for _, formatter in ipairs(available) do
-        formatter._disabled = nil
-    end
+  local choices = vim.tbl_keys(formatters)
+  table.sort(choices)
+  vim.ui.select(choices, {prompt = 'Run formatter: '}, onSelect)
 end
 
-vim.keymap.set({'n', 'v'}, '<Plug>(ide-format-with-selected-formatter)', chooseFormatter)
+vim.keymap.set({'n'}, '<Plug>(ide-format-with-selected-formatter)', chooseFormatter)
+vim.keymap.set({'v'}, '<Plug>(ide-format-with-selected-formatter)', function ()
+  chooseFormatter(base.getVisualSelectionRange())
+end)
 api.nvim_create_user_command('NullLsSelectFormatter', chooseFormatter, {nargs = '*'})
