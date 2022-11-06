@@ -65,18 +65,36 @@ function extension.operator_get_text(type)
   return vim.fn['arctgx#operator#getText'](type)
 end
 
-function extension.getVisualSelection()
-  if vim.fn.mode() ~= 'v' then
+local function getVisualSelectionParams()
+  if not vim.tbl_contains({'v', 'V'}, vim.fn.mode()) then
     return
   end
   local start = vim.fn.getpos('v')
   local finish = vim.fn.getpos('.')
   local startLine, startCol = start[2], start[3]
   local finishLine, finishCol = finish[2], finish[3]
-
-  if startLine > finishLine or (startLine == finishLine and startCol > finishCol) then
-    startLine, startCol, finishLine, finishCol = finishLine, finishCol, startLine, startCol
+  if vim.fn.mode() == 'V' then
+    startCol = 1
+    finishCol = 2^31 - 1
   end
+  if startLine > finishLine or (startLine == finishLine and startCol > finishCol) then
+    return finishLine, finishCol, startLine, startCol
+  end
+
+  return startLine, startCol, finishLine, finishCol
+end
+
+function extension.getVisualSelectionRange()
+  local startLine, startCol, finishLine, finishCol = getVisualSelectionParams()
+
+  return {
+    ['start'] = { startLine, startCol - 1 },
+    ['end'] = { finishLine, finishCol - 1 },
+  }
+end
+
+function extension.getVisualSelection()
+  local startLine, startCol, finishLine, finishCol = getVisualSelectionParams()
 
   local lines = api.nvim_buf_get_text(0, startLine -1, startCol - 1, finishLine -1, finishCol, {})
 
