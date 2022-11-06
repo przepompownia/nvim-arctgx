@@ -52,10 +52,8 @@ extension.customActions = customActions
 
 function extension.defaultFileMappings(prompt_bufnr, map)
   actions.select_default:replace(customActions.tabDrop)
-  map('n', '<C-y>', actions.file_edit)
-  map('i', '<C-y>', actions.file_edit)
-  map('i', '<A-u>', actions.to_fuzzy_refine)
-  map('n', '<A-u>', actions.to_fuzzy_refine)
+  map({'i', 'n'}, '<C-y>', actions.file_edit)
+  map({'i', 'n'}, '<A-u>', actions.to_fuzzy_refine)
 
   return true
 end
@@ -119,10 +117,8 @@ function extension.grep(cmd, root, query)
       }
 
       extension.defaultFileMappings(prompt_bufnr, map)
-      map('i', '<A-i>', customActions.toggleCaseSensibility)
-      map('n', '<A-i>', customActions.toggleCaseSensibility)
-      map('i', '<A-f>', customActions.toggleFixedStrings)
-      map('n', '<A-f>', customActions.toggleFixedStrings)
+      map({'i', 'n'}, '<A-i>', customActions.toggleCaseSensibility)
+      map({'i', 'n'}, '<A-f>', customActions.toggleFixedStrings)
 
       return true
     end
