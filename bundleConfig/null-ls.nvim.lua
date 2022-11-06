@@ -27,6 +27,7 @@ null.setup({
   sources = {
     null.builtins.code_actions.shellcheck,
     null.builtins.code_actions.eslint,
+    null.builtins.diagnostics.twigcs,
     null.builtins.diagnostics.eslint,
     null.builtins.diagnostics.jsonlint,
     null.builtins.diagnostics.phpcs.with(phpcsArgs),
