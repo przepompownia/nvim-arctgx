@@ -80,14 +80,14 @@ local keyToPlugMappings = {
 }
 
 local globalMappings = {
-  ['<Leader>hs'] = {rhs = '<Plug>(ide-git-hunk-stage)', repeatable = false, modes = {'n'}},
+  ['<Leader>hs'] = {rhs = '<Plug>(ide-git-hunk-stage)', repeatable = false, modes = {'n', 'v'}},
   ['<Leader>g'] = {rhs = '<Plug>(ide-git-status)', repeatable = false, modes = {'n'}},
   ['<Leader>gc'] = {rhs = '<Plug>(ide-git-commit)', repeatable = false, modes = {'n'}},
   ['<Leader>gb'] = {rhs = '<Plug>(ide-git-blame)', repeatable = false, modes = {'n'}},
   ['<Leader>gs'] = {rhs = '<Plug>(ide-git-status)', repeatable = false, modes = {'n'}},
   ['<Leader>gl'] = {rhs = '<Plug>(ide-git-log)', repeatable = false, modes = {'n'}},
   ['<Leader>gp'] = {rhs = '<Plug>(ide-git-push-all)', repeatable = false, modes = {'n'}},
-  ['<Leader>hu'] = {rhs = '<Plug>(ide-git-hunk-undo-stage)', repeatable = false, modes = {'n'}},
+  ['<Leader>hu'] = {rhs = '<Plug>(ide-git-hunk-undo-stage)', repeatable = false, modes = {'n', 'v'}},
   ['<Leader>hr'] = {rhs = '<Plug>(ide-git-hunk-reset)', repeatable = false, modes = {'n'}},
   ['<Leader>hv'] = {rhs = '<Plug>(ide-git-hunk-visual-selection)', repeatable = false, modes = {'n'}},
   ['<Leader>hR'] = {rhs = '<Plug>(ide-git-buffer-reset)', repeatable = false, modes = {'n'}},
