@@ -41,7 +41,7 @@ local function new_class_from_file(path)
         vim.ui.select(
           extension.get_variants(),
           {
-            prompt = '\nSelect variant: ',
+            prompt = 'Select variant: ',
           },
           function(variant)
             if nil == variant then
