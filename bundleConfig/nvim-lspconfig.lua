@@ -5,7 +5,10 @@ local util = require('lspconfig.util')
 local vim = vim
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
+cmpNvimLspOk, cmpNvimLsp = pcall('require', 'cmp_nvim_lsp')
+if cmpNvimLspOk then
+  capabilities = cmpNvimLsp.default_capabilities(capabilities)
+end
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 
 lspconfig.jsonls.setup {
