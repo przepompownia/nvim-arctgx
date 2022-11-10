@@ -19,6 +19,7 @@ require'nvim-treesitter.configs'.setup {
     'sql',
     'teal',
     'todotxt',
+    'toml',
     'twig',
     'vim',
     'yaml',
