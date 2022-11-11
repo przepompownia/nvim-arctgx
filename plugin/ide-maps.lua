@@ -67,9 +67,9 @@ local keyToPlugMappings = {
   ['<Leader>ii'] = {rhs = '<Plug>(ide-diagnostic-info)', modes = {'n'}},
   ['[d'] = {rhs = '<Plug>(ide-diagnostic-goto-previous)', modes = {'n'}},
   [']d'] = {rhs = '<Plug>(ide-diagnostic-goto-next)', modes = {'n'}},
-  ['<Leader>wfa'] = {rhs = '<Plug>(ide-workspace-folder-add)', modes = {'n'}},
-  ['<Leader>wfd'] = {rhs = '<Plug>(ide-workspace-folder-remove)', modes = {'n'}},
-  ['<Leader>wfl'] = {rhs = '<Plug>(ide-workspace-folder-list)', modes = {'n'}},
+  ['<Leader>sfa'] = {rhs = '<Plug>(ide-workspace-folder-add)', modes = {'n'}},
+  ['<Leader>sfd'] = {rhs = '<Plug>(ide-workspace-folder-remove)', modes = {'n'}},
+  ['<Leader>sfl'] = {rhs = '<Plug>(ide-workspace-folder-list)', modes = {'n'}},
   ['<Leader>ca'] = {rhs = '<Plug>(ide-code-action)', modes = {'n'}},
 
   ['<Leader>t'] = {rhs = '<Plug>(treesitter-init-selection)', modes = {'n'}},
