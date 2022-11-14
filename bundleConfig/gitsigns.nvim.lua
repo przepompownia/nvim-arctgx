@@ -24,7 +24,7 @@ require('gitsigns').setup {
     map({'n', 'v'}, '<Plug>(ide-git-hunk-stage)', ':Gitsigns stage_hunk<CR>')
     map({'n', 'v'}, '<Plug>(ide-git-hunk-reset)', ':Gitsigns reset_hunk<CR>')
     map('n', '<Plug>(ide-git-stage-write-file)', gs.stage_buffer)
-    map('n', '<Plug>(ide-git-hunk-undo-stage)', gs.undo_stage_hunk)
+    map({'n', 'v'}, '<Plug>(ide-git-hunk-undo-stage)', gs.undo_stage_hunk)
     map('n', '<Plug>(ide-git-buffer-reset)', gs.reset_buffer)
     map('n', '<Plug>(ide-git-hunk-print)', gs.preview_hunk)
     map('n', '<Plug>(ide-git-hunk-print-inline)', gs.preview_hunk_inline)
