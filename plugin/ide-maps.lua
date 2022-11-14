@@ -10,7 +10,7 @@ local keyToPlugMappings = {
   ['<Leader>dq'] = {rhs = '<Plug>(ide-debugger-close)'},
   ['<Leader><S-F6>'] = {rhs = '<Plug>(ide-debugger-detach)'},
   ['<Leader><F9>'] = {rhs = '<Plug>(ide-debugger-run-to-cursor)', repeatable = false},
-  ['<Leader><Leader>p'] = {
+  ['<Leader>dp'] = {
     rhs = '<Plug>(ide-debugger-eval-popup)',
     repeatable = false,
     modes = {'n', 'x'},
