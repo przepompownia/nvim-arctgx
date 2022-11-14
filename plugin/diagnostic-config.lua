@@ -28,6 +28,8 @@ vim.diagnostic.handlers.signs = {
     origSignsHandler.show(ns, bufnr, filteredDiagnostics, opts)
   end,
   hide = function(_, bufnr)
-    origSignsHandler.hide(ns, bufnr)
+    if vim.api.nvim_buf_is_valid(bufnr) then
+      origSignsHandler.hide(ns, bufnr)
+    end
   end,
 }
