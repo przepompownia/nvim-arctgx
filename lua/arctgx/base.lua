@@ -132,4 +132,13 @@ function extension.runOperator(operatorFuncAsString)
   extension.feedKeys('g@')
 end
 
+---@param keywordChars table<string>
+---@param callback function
+function extension.withAppendedToKeyword(keywordChars, callback)
+  local isKeyword = vim.opt.iskeyword:get()
+  vim.opt.iskeyword:append(keywordChars)
+  callback()
+  vim.opt.iskeyword = isKeyword
+end
+
 return extension

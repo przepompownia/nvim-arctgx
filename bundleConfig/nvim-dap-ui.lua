@@ -1,6 +1,7 @@
 local api = vim.api
 local keymap = require 'vim.keymap'
 local dapui = require('dapui')
+local base  = require('arctgx.base')
 
 api.nvim_create_augroup('ArctgxDapUi', { clear = true })
 local function reloadColors()
@@ -37,7 +38,15 @@ api.nvim_create_autocmd({'ColorScheme'}, {
 
 local opts = {silent = true, noremap = true}
 keymap.set({'n'}, '<Plug>(ide-debugger-ui-toggle)', dapui.toggle, opts)
-keymap.set({'x'}, '<Plug>(ide-debugger-eval-popup)', function() dapui.eval(nil, {enter = true, context = 'repl'}) end, opts)
+keymap.set({'n', 'x'}, '<Plug>(ide-debugger-eval-popup)', function()
+  local keywordChars = {}
+  if vim.tbl_contains({'php', 'sh'}, vim.bo.ft) then
+    keywordChars = {'$'}
+  end
+  base.withAppendedToKeyword(keywordChars, function ()
+    dapui.eval(nil, {enter = true, context = 'repl'})
+  end)
+end, opts)
 
 dapui.setup({
   mappings = {
