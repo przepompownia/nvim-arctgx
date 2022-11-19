@@ -62,15 +62,14 @@ function extension.tab_drop(path, line, column, relative_bufnr)
 end
 
 function extension.operator_get_text(type)
-  return vim.fn['arctgx#operator#getText'](type)
+  if 'char' == type then
+    return extension.getTextBetweenMarks('\'[', '\']')
+  end
 end
 
-local function getVisualSelectionParams()
-  if not vim.tbl_contains({'v', 'V'}, vim.fn.mode()) then
-    return
-  end
-  local start = vim.fn.getpos('v')
-  local finish = vim.fn.getpos('.')
+function extension.getRangeBetweenMarks(mark1, mark2)
+  local start = vim.fn.getpos(mark1)
+  local finish = vim.fn.getpos(mark2)
   local startLine, startCol = start[2], start[3]
   local finishLine, finishCol = finish[2], finish[3]
   if vim.fn.mode() == 'V' then
@@ -84,8 +83,20 @@ local function getVisualSelectionParams()
   return startLine, startCol, finishLine, finishCol
 end
 
+function extension.getTextBetweenMarks(mark1, mark2)
+  local startLine, startCol, finishLine, finishCol = extension.getRangeBetweenMarks(mark1, mark2)
+
+  local lines = api.nvim_buf_get_text(0, startLine -1, startCol - 1, finishLine -1, finishCol, {})
+
+  return table.concat(lines, '\n')
+end
+
 function extension.getVisualSelectionRange()
-  local startLine, startCol, finishLine, finishCol = getVisualSelectionParams()
+  if not vim.tbl_contains({'v', 'V'}, vim.fn.mode()) then
+    return
+  end
+
+  local startLine, startCol, finishLine, finishCol = extension.getRangeBetweenMarks('v', '.')
 
   return {
     ['start'] = { startLine, startCol - 1 },
@@ -94,11 +105,11 @@ function extension.getVisualSelectionRange()
 end
 
 function extension.getVisualSelection()
-  local startLine, startCol, finishLine, finishCol = getVisualSelectionParams()
+  if not vim.tbl_contains({'v', 'V'}, vim.fn.mode()) then
+    return
+  end
 
-  local lines = api.nvim_buf_get_text(0, startLine -1, startCol - 1, finishLine -1, finishCol, {})
-
-  return table.concat(lines, '\n')
+  return extension.getTextBetweenMarks('v', '.')
 end
 
 do
