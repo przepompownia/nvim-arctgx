@@ -1,6 +1,5 @@
 local api = vim.api
 vim.g.modus_dim_inactive_window = 0
-vim.cmd.colorscheme "oxocarbon"
 api.nvim_create_augroup('ColorschemeLoading', {clear = true})
 api.nvim_create_autocmd('OptionSet', {
   group = 'ColorschemeLoading',
