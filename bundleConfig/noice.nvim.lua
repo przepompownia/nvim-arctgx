@@ -1,6 +1,9 @@
 require('noice').setup({
   messages = {
+    view = 'mini',
     view_search = false,
+    view_error = 'mini',
+    view_warn = 'mini',
   },
   lsp = {
     override = {
