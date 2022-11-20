@@ -18,4 +18,9 @@ require('noice').setup({
       enabled = false,
     }
   },
+  views = {
+    mini = {
+      timeout = 3000,
+    },
+  },
 })
