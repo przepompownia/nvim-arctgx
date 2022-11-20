@@ -55,6 +55,11 @@ function extension.tab_drop(path, line, column, relative_bufnr)
 
   vim.cmd("normal! m'")
 
+  -- Push a new item into tagstack
+  local from = { vim.fn.bufnr('%'), vim.fn.line('.'), vim.fn.col('.'), 0 }
+  local items = { { tagname = vim.fn.expand('<cword>'), from = from } }
+  vim.fn.settagstack(vim.fn.win_getid(), { items = items }, 't')
+
   local ok, result = pcall(api.nvim_win_set_cursor, 0, {line, (column or 1) - 1})
   if not ok then
     vim.notify(('%s: line %s, col %s'):format(result, line, column), vim.log.levels.WARN, { title = 'tab drop' })
@@ -139,7 +144,7 @@ function extension.feedKeys(input)
 end
 
 function extension.runOperator(operatorFuncAsString)
-  api.nvim_set_option('operatorfunc', operatorFuncAsString)
+  vim.o.operatorfunc = operatorFuncAsString
   extension.feedKeys('g@')
 end
 

@@ -29,11 +29,6 @@ require('telescope').setup {
   },
 }
 
-_G.arctgx_telescope_git_grep_operator = arctgx.git_grep_operator
-_G.arctgx_telescope_rg_grep_operator = arctgx.rg_grep_operator
-_G.arctgx_telescope_files_git_operator = arctgx.files_git_operator
-_G.arctgx_telescope_files_all_operator = arctgx.files_all_operator
-
 api.nvim_create_user_command('GGrep', function(opts) arctgx.gitGrep(opts.args, false, false) end, {nargs = '*'})
 api.nvim_create_user_command('RGrep', function(opts) arctgx.rgGrep(opts.args, false, false) end, {nargs = '*'})
 api.nvim_create_user_command(
@@ -71,17 +66,18 @@ end)
 keymap.set('v', '<Plug>(ide-files-search-operator)', function()
   arctgx.filesAll(base.getVisualSelection(), true)
 end)
+
 keymap.set('n', '<Plug>(ide-git-string-search-operator)', function ()
-  base.runOperator('v:lua.arctgx_telescope_git_grep_operator')
+  base.runOperator("v:lua.require'arctgx.telescope'.git_grep_operator")
 end)
 keymap.set('n', '<Plug>(ide-grep-string-search-operator)', function ()
-  base.runOperator('v:lua.arctgx_telescope_rg_grep_operator')
+  base.runOperator("v:lua.require'arctgx.telescope'.rg_grep_operator")
 end)
 keymap.set('n', '<Plug>(ide-git-files-search-operator)', function ()
-  base.runOperator('v:lua.arctgx_telescope_files_git_operator')
+  base.runOperator("v:lua.require'arctgx.telescope'.files_git_operator")
 end)
 keymap.set('n', '<Plug>(ide-files-search-operator)', function ()
-  base.runOperator('v:lua.arctgx_telescope_files_all_operator')
+  base.runOperator("v:lua.require'arctgx.telescope'.files_all_operator")
 end)
 local function reloadColors()
   api.nvim_set_hl(0, 'TelescopeCaret', {fg = '#a52626', bg = '#8b8d8b', bold = true, default = false})
