@@ -3,7 +3,9 @@ scriptencoding utf-8
 filetype plugin indent on
 
 let g:mapleader=','
-let g:bundle_dirs = [expand(g:initialVimDirectory . '/pack/bundle/opt')]
+if empty(get(g:, 'bundle_dirs', v:null))
+  throw 'Set optional extension directory (g:bundle_dirs) before'
+endif
 
 if has('mouse')
   set mouse=a
