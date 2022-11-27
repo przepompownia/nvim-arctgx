@@ -13,9 +13,9 @@ local utils = require 'telescope.utils'
 local extension = {}
 
 local function tabDropEntry(entry, winId)
-  base.tab_drop(entry.path, entry.lnum, entry.col, winId)
-
   vim.cmd('stopinsert')
+  base.tab_drop(entry.filename, entry.lnum, entry.col, winId)
+
   vim.api.nvim_exec_autocmds('User',
     {pattern = 'IdeStatusChanged', modeline = false})
 end
@@ -33,8 +33,8 @@ function extension.tabDrop(promptBufnr)
   actions.close(promptBufnr)
 
   if next(multi_selection) == nil then
-    local selected_entry = picker:get_selection()
-    tabDropEntry(selected_entry, winId)
+    local selectedEntry = picker:get_selection()
+    tabDropEntry(selectedEntry, winId)
     return
   end
 
