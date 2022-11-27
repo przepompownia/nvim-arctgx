@@ -29,6 +29,7 @@ let &showbreak='> '
 
 set noruler
 set noshowmatch
+set shortmess+=C
 
 set matchpairs+=<:>
 set nospell
