@@ -28,7 +28,9 @@ local keyToPlugMappings = {
   },
   ['<Leader>db'] = {rhs = '<Plug>(ide-debugger-clear-breakpoints)', modes = {'n'}},
 
-  ['gnj'] = {rhs = '<Plug>(ide-revj-at-cursor)', modes = {'n'}},
+  ['[oj'] = {rhs = '<Plug>(ide-toggle-split-lines-at-cursor)', modes = {'n'}},
+  [']oj'] = {rhs = '<Plug>(ide-toggle-join-lines-at-cursor)', modes = {'n'}},
+  ['yoj'] = {rhs = '<Plug>(ide-toggle-split-join-lines-at-cursor)', modes = {'n'}, repeatable = true},
   ['<C-\\>,'] = {rhs = '<Plug>(ide-show-signature-help)', modes = {'i'}},
   ['<Leader>ish'] = {rhs = '<Plug>(ide-show-signature-help)', modes = {'n'}},
   ['<C-Space>'] = {rhs = '<Plug>(ide-trigger-completion)', modes = {'i'}},

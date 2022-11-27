@@ -1,7 +1,7 @@
 local keymap = require 'vim.keymap'
 local trevj = require('trevj')
 
-keymap.set({'n'}, '<Plug>(ide-revj-at-cursor)', trevj.format_at_cursor, {})
+keymap.set({'n'}, '<Plug>(ide-toggle-split-join-lines-at-cursor)', trevj.format_at_cursor, {})
 
 local make_default_opts = function()
   return {
