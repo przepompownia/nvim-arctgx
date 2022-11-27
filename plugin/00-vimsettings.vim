@@ -30,6 +30,7 @@ let &showbreak='> '
 set noruler
 set noshowmatch
 set shortmess+=C
+set complete-=t
 
 set matchpairs+=<:>
 set nospell
