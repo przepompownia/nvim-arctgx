@@ -1,6 +1,7 @@
 local widgets = require "arctgx.widgets"
 local arctgxString = require('arctgx.string')
 local telescope = require('arctgx.telescope')
+local nord = require('lualine.themes.nord')
 
 local function formatFilename(name)
   name = name:gsub('[.][^.]+$', '')
@@ -54,20 +55,24 @@ require('lualine').setup({
         end,
         tabs_color = {
           inactive = function ()
-            return {
-              fg = '#888888',
-              bg = '#bebebe',
-              gui = 'bold',
-              -- link =
-            }
+            if vim.opt.bg:get() == 'light' then
+              return {
+                fg = '#888888',
+                bg = '#bebebe',
+                gui = 'bold',
+              }
+            end
+            return nord.inactive.c
           end,
           active = function ()
-            return {
-              fg = '#a7a7a7',
-              bg = '#ffffff',
-              gui = 'bold',
-              -- link =
-            }
+            if vim.opt.bg:get() == 'light' then
+              return {
+                fg = '#a7a7a7',
+                bg = '#ffffff',
+                gui = 'bold',
+              }
+            end
+            return nord.normal.c
           end,
         },
         fmt = formatFilename,
