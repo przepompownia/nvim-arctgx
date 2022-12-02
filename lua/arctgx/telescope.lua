@@ -13,11 +13,11 @@ local utils = require 'telescope.utils'
 local extension = {}
 
 local function tabDropEntry(entry, winId)
+  local path = entry.path or vim.fn.expand(entry.filename)
   vim.cmd('stopinsert')
-  base.tab_drop(entry.filename, entry.lnum, entry.col, winId)
+  base.tab_drop(path, entry.lnum, entry.col, winId)
 
-  vim.api.nvim_exec_autocmds('User',
-    {pattern = 'IdeStatusChanged', modeline = false})
+  vim.api.nvim_exec_autocmds('User', {pattern = 'IdeStatusChanged', modeline = false})
 end
 
 function extension.tabDrop(promptBufnr)
@@ -29,16 +29,16 @@ function extension.tabDrop(promptBufnr)
 
   local picker = action_state.get_current_picker(promptBufnr)
   local winId = picker.original_win_id
-  local multi_selection = picker:get_multi_selection()
+  local multiSelection = picker:get_multi_selection()
   actions.close(promptBufnr)
 
-  if next(multi_selection) == nil then
+  if next(multiSelection) == nil then
     local selectedEntry = picker:get_selection()
     tabDropEntry(selectedEntry, winId)
     return
   end
 
-  for _, entry in ipairs(multi_selection) do tabDropEntry(entry, winId) end
+  for _, entry in ipairs(multiSelection) do tabDropEntry(entry, winId) end
 end
 
 local customActions = transform_mod({
@@ -126,26 +126,35 @@ function extension.grep(cmd, root, query)
 end
 
 function extension.rg_grep_operator(type)
-  return extension.create_operator(extension.grep,
+  return extension.create_operator(
+    extension.grep,
     grep:new_rg_grep_command(true, false),
-    git.top(base.getBufferCwd()))(type)
+    git.top(base.getBufferCwd())
+  )(type)
 end
 
 function extension.git_grep_operator(type)
-  return extension.create_operator(extension.grep,
+  return extension.create_operator(
+    extension.grep,
     grep:new_git_grep_command(true, false),
-    git.top(base.getBufferCwd()))(type)
+    git.top(base.getBufferCwd())
+  )(type)
 end
 
 function extension.rgGrep(query, useFixedStrings, ignoreCase)
-  return extension.grep(grep:new_rg_grep_command(useFixedStrings, ignoreCase),
-    git.top(base.getBufferCwd()), query)
+  return extension.grep(
+    grep:new_rg_grep_command(useFixedStrings, ignoreCase),
+    git.top(base.getBufferCwd()),
+    query
+  )
 end
 
 function extension.gitGrep(query, useFixedStrings, ignoreCase)
   return extension.grep(
     grep:new_git_grep_command(useFixedStrings, ignoreCase),
-    git.top(base.getBufferCwd()), query)
+    git.top(base.getBufferCwd()),
+    query
+  )
 end
 
 function extension.files(cmd, root, query, title)
