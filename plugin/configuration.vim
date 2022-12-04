@@ -31,6 +31,7 @@ augroup END
 augroup AfterVimEnter
   autocmd!
   autocmd VimEnter * ++nested set background=light
+  autocmd VimEnter * :clearjumps
 augroup END
 
 command! -complete=packadd -nargs=1 Packadd call arctgx#bundle#packadd(<q-args>, s:bundleConfigDir)
