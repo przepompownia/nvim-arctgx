@@ -67,6 +67,7 @@ null.setup({
     -- }),
     null.builtins.formatting.shfmt,
     null.builtins.formatting.stylua,
+    null.builtins.formatting.xmllint,
   },
 })
 
