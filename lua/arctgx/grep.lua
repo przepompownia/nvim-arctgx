@@ -16,14 +16,26 @@ function extension:index_of(element)
   end
 end
 
-function extension:switch(x)
-  local key = self:index_of(x)
+function extension:switch(option)
+  local key = self:index_of(option)
   if key then
     table.remove(self, key)
     return
   end
 
-  table.insert(self, x)
+  table.insert(self, option)
+end
+
+function extension:switchWithRequiredValue(option, value)
+  local key = self:index_of(option)
+  if key then
+    table.remove(self, key)
+    table.remove(self, key)
+    return
+  end
+
+  table.insert(self, option)
+  table.insert(self, value)
 end
 
 ---@return string
@@ -31,6 +43,7 @@ function extension:status()
   local settings = {}
   table.insert(settings, self:index_of('--fixed-strings') and 'Fixed strings' or 'Regex')
   table.insert(settings, 'Case ' .. (self:index_of('--ignore-case') and 'insensitive' or 'sensitive'))
+  table.insert(settings, (self:index_of('--max-count=1') and 'Only first result' or nil))
   return ('%s: %s'):format(self.name, table.concat(settings, ', '))
 end
 
@@ -40,6 +53,10 @@ end
 
 function extension:switch_case_sensibility()
   self:switch('--ignore-case')
+end
+
+function extension:switch_only_first_result()
+  self:switchWithRequiredValue('--max-count', 1)
 end
 
 function extension:new_command(name, commandTable, useFixedStrings, ignoreCase)

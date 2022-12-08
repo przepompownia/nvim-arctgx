@@ -45,7 +45,8 @@ local customActions = transform_mod({
   tabDrop = extension.tabDrop,
 
   toggleCaseSensibility = function() end,
-  toggleFixedStrings = function() end
+  toggleFixedStrings = function() end,
+  toggleOnlyFirstResult = function() end
 })
 
 extension.customActions = customActions
@@ -115,10 +116,17 @@ function extension.grep(cmd, root, query)
           refreshPicker(prompt_bufnr, cmd)
         end
       }
+      customActions.toggleOnlyFirstResult:enhance {
+        post = function()
+          cmd:switch_only_first_result()
+          refreshPicker(prompt_bufnr, cmd)
+        end
+      }
 
       extension.defaultFileMappings(prompt_bufnr, map)
       map({'i', 'n'}, '<A-i>', customActions.toggleCaseSensibility)
       map({'i', 'n'}, '<A-f>', customActions.toggleFixedStrings)
+      map({'i', 'n'}, '<A-o>', customActions.toggleOnlyFirstResult)
 
       return true
     end
