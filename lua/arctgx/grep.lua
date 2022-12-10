@@ -43,7 +43,7 @@ function extension:status()
   local settings = {}
   table.insert(settings, self:index_of('--fixed-strings') and 'Fixed strings' or 'Regex')
   table.insert(settings, 'Case ' .. (self:index_of('--ignore-case') and 'insensitive' or 'sensitive'))
-  table.insert(settings, (self:index_of('--max-count=1') and 'Only first result' or nil))
+  table.insert(settings, (self:index_of('--max-count') and 'Only first result' or nil))
   return ('%s: %s'):format(self.name, table.concat(settings, ', '))
 end
 

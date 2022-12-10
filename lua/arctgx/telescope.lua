@@ -6,6 +6,8 @@ local git = require('arctgx.git')
 ---@class Grep
 local grep = require('arctgx.grep')
 local telescope = require('telescope.builtin')
+local finders = require "telescope.finders"
+local make_entry = require "telescope.make_entry"
 local transform_mod = require('telescope.actions.mt').transform_mod
 local branches = require('arctgx.telescope.branches')
 local utils = require 'telescope.utils'
@@ -85,7 +87,29 @@ end
 ---@param root string
 ---@param query string
 function extension.grep(cmd, root, query)
+  local opts = {
+    cwd = root,
+    default_text = query,
+    grep_open_files = false,
+    vimgrep_arguments = cmd,
+    prompt_title = cmd:status(),
+  }
   -- vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<C-\\><C-N>", true, true, true), "v", true)
+  opts.finder = finders.new_job(function(prompt)
+    if not prompt or prompt == "" then
+      return nil
+    end
+
+    local search_dirs = opts.search_dirs
+    local search_list = {}
+
+    if search_dirs then
+      search_list = search_dirs
+    end
+
+    return vim.tbl_flatten { cmd, "--", prompt, search_list }
+    end, opts.entry_maker or make_entry.gen_from_vimgrep(opts), opts.max_results, opts.cwd)
+
   local new_grep_finder = function(prompt_bufnr)
     local picker = action_state.get_current_picker(prompt_bufnr)
     return picker.finder
@@ -97,13 +121,7 @@ function extension.grep(cmd, root, query)
     picker.prompt_border:change_title(command:status())
   end
 
-  telescope.live_grep({
-    cwd = root,
-    default_text = query,
-    grep_open_files = false,
-    vimgrep_arguments = cmd,
-    prompt_title = cmd:status(),
-    attach_mappings = function(prompt_bufnr, map)
+  opts.attach_mappings = function(prompt_bufnr, map)
       customActions.toggleCaseSensibility:enhance {
         post = function()
           cmd:switch_case_sensibility()
@@ -130,7 +148,8 @@ function extension.grep(cmd, root, query)
 
       return true
     end
-  })
+
+  telescope.live_grep(opts)
 end
 
 function extension.rg_grep_operator(type)
