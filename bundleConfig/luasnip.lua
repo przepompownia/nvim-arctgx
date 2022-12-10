@@ -50,6 +50,18 @@ ls.add_snippets('php', {
           end
         }
       }
+    }),
+  s(
+    {
+      trig = 'prc',
+      dscr = 'promoted private property',
+    },
+    {
+      t('private '),
+      i(1, 'string'),
+      t(' $'),
+      i(2, 'name'),
+      t(',')
     })
 })
 
