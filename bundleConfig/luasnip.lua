@@ -3,13 +3,13 @@ local lsp = require('vim.lsp')
 
 local ls = require 'luasnip'
 local s = ls.snippet
--- local sn = ls.snippet_node
+local sn = ls.snippet_node
 -- local isn = ls.indent_snippet_node
 local t = ls.text_node
 local i = ls.insert_node
 -- local f = ls.function_node
 -- local c = ls.choice_node
--- local d = ls.dynamic_node
+local d = ls.dynamic_node
 -- local r = ls.restore_node
 local events = require("luasnip.util.events")
 
@@ -60,7 +60,13 @@ ls.add_snippets('php', {
       t('private '),
       i(1, 'string'),
       t(' $'),
-      i(2, 'name'),
+      d(2, function (args)
+        local type = args[1] and args[1][1] or 'name'
+        local lcfirst = (type:gsub("^%u", string.lower))
+        return sn(nil, {
+          i(1, lcfirst)
+        })
+      end, {1}),
       t(',')
     })
 })
