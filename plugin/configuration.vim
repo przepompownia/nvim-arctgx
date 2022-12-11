@@ -30,7 +30,7 @@ augroup END
 
 augroup AfterVimEnter
   autocmd!
-  autocmd VimEnter * ++nested set background=light
+  autocmd VimEnter * ++nested set background=dark
   autocmd VimEnter * :clearjumps
 augroup END
 
