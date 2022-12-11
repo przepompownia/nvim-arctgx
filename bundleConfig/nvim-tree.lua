@@ -10,7 +10,6 @@ vim.g.loaded_netrwPlugin = 1
 require('nvim-tree').setup({
   hijack_cursor = true,
   remove_keymaps = {'<Tab>'},
-  create_in_closed_folder = true,
   actions = {
     change_dir = {
       enable = false,
