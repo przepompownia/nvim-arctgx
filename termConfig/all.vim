@@ -1,13 +1,13 @@
-if has('nvim')
-  augroup ArctgxNvimTermCursor
-    autocmd!
-    autocmd ColorScheme,VimEnter,VimResume *
-          \ hi Cursor guifg=red guibg=#888888 |
-          \ hi Cursor2 guifg=red guibg=#000000 |
-          \ set guicursor=n-v-c:block-Cursor/lCursor,i-ci-ve:ver25-Cursor2/lCursor2,r-cr:hor20,o:hor50
-  augroup END
-  finish
-endif
+" if has('nvim')
+"   augroup ArctgxNvimTermCursor
+"     autocmd!
+"     autocmd ColorScheme,VimEnter,VimResume *
+"           \ hi Cursor guifg=red guibg=#888888 |
+"           \ hi Cursor2 guifg=red guibg=#000000 |
+"           \ set guicursor=n-v-c:block-Cursor/lCursor,i-ci-ve:ver25-Cursor2/lCursor2,r-cr:hor20,o:hor50
+"   augroup END
+"   finish
+" endif
 
 " solid underscore
 let &t_SI .= "\<Esc>[4 q"
