@@ -16,6 +16,8 @@ require'nvim-treesitter.configs'.setup {
         ['is'] = '@statement.inner',
         ['ac'] = '@call.outer',
         ['ic'] = '@call.inner',
+        ['ap'] = '@parameter.outer',
+        ['ip'] = '@parameter.inner',
       },
       selection_modes = {
         ['@function.outer'] = 'V',
