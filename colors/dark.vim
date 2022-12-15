@@ -1,5 +1,5 @@
 highlight IdeFloating guibg=#808080 guifg=bg
-highlight link NormalFloat IdeFloating
+" highlight link NormalFloat IdeFloating
 highlight IdeDiagnosticError guibg=#440000
 highlight IdeDiagnosticWarning guibg=#442200
 highlight IdeDiagnosticInfo guibg=#345588
@@ -8,10 +8,10 @@ highlight IdeErrorFloat guibg=NONE guifg=#442200
 highlight IdeHintFloat guibg=NONE guifg=#cc88dd
 highlight IdeWarningFloat guibg=NONE guifg=#ff8800
 highlight IdeInfoFloat guibg=NONE guifg=#afffff
-highlight! link DiagnosticHint IdeDiagnosticHint
-highlight! link DiagnosticInfo IdeDiagnosticInfo
-highlight! link DiagnosticWarn IdeDiagnosticWarning
-highlight! link DiagnosticError IdeDiagnosticError
+" highlight! link DiagnosticHint IdeDiagnosticHint
+" highlight! link DiagnosticInfo IdeDiagnosticInfo
+" highlight! link DiagnosticWarn IdeDiagnosticWarning
+" highlight! link DiagnosticError IdeDiagnosticError
 highlight IdeReferenceRead cterm=bold ctermbg=red guibg=#5B532C
 highlight IdeReferenceText cterm=bold ctermbg=red guibg=#2C3C5B
 highlight IdeReferenceWrite cterm=bold ctermbg=red guibg=#4B281D
