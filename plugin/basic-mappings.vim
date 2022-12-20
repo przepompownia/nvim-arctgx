@@ -53,9 +53,9 @@ inoremap <C-z> <C-x><C-o>
 noremap ]q <Cmd>cnext<CR>
 noremap [q <Cmd>cprev<CR>
 noremap <Leader>co <Cmd>copen<CR>
-noremap / /\c
+nnoremap / /\c
 noremap <Leader>/ /
-noremap ? ?\c
+nnoremap ? ?\c
 nnoremap <Leader>= ggVG=
 nnoremap <Leader>hls <Cmd>let @/ = ''<CR>
 nmap <silent> <Leader>` <Plug>(jump-last-tab)
