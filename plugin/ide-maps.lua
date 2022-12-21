@@ -8,6 +8,7 @@ local keyToPlugMappings = {
   ['<Leader>di'] = {rhs = '<Plug>(ide-debugger-step-into)', repeatable = true},
   ['<Leader>do'] = {rhs = '<Plug>(ide-debugger-step-out)', repeatable = true},
   ['<Leader>dq'] = {rhs = '<Plug>(ide-debugger-close)'},
+  ['<Leader>dQ'] = {rhs = '<Plug>(ide-debugger-clean)'},
   ['<Leader><S-F6>'] = {rhs = '<Plug>(ide-debugger-detach)'},
   ['<Leader><F9>'] = {rhs = '<Plug>(ide-debugger-run-to-cursor)', repeatable = false},
   ['<Leader>dp'] = {

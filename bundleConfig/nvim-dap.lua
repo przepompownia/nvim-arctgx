@@ -134,6 +134,16 @@ keymap.set({'n'}, '<Plug>(ide-debugger-run-to-cursor)', dap.run_to_cursor, opts)
 keymap.set({'n'}, '<Plug>(ide-debugger-close)', dap.close, opts)
 keymap.set(
   {'n'},
+  '<Plug>(ide-debugger-clean)',
+  function()
+    dap.close()
+    dap.clear_breakpoints()
+    api.nvim_exec_autocmds('User', {pattern = 'DAPClean', modeline = false})
+  end,
+  opts
+)
+keymap.set(
+  {'n'},
   '<Plug>(ide-debugger-add-log-breakpoint)',
   function() dap.set_breakpoint(nil, nil, vim.fn.input('Log point message: ')) end,
   opts
