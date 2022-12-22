@@ -5,6 +5,10 @@ require('noice').setup({
     view_error = 'mini',
     view_warn = 'mini',
   },
+  notify = {
+    enabled = true,
+    view = 'mini',
+  },
   lsp = {
     override = {
       -- ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
@@ -20,7 +24,12 @@ require('noice').setup({
   },
   views = {
     mini = {
-      timeout = 3000,
+      timeout = 5000,
     },
   },
 })
+
+vim.keymap.set('c', '<A-CR>', function()
+  require('noice').redirect(vim.fn.getcmdline())
+  vim.api.nvim_input('<esc>')
+end, { desc = 'Redirect Cmdline' })
