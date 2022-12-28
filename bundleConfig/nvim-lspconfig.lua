@@ -49,6 +49,7 @@ configs.phpactor = {
     init_options = {
       ['logging.path'] = '/tmp/phpactor.log',
       ['completion_worse.completor.keyword.enabled'] = true,
+      ['phpunit.enabled'] = true,
     },
   },
 }
