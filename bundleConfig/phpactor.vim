@@ -15,5 +15,5 @@ endfunction
 
 lua << EOF
 -- todo buffer
-vim.keymap.set('n', '<Plug>(ide-class-new)', require('arctgx.phpactor').class_new)
+vim.keymap.set('n', '<Plug>(ide-class-new)', require('arctgx.phpactor').classNew)
 EOF
