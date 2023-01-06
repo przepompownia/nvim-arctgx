@@ -1,5 +1,6 @@
 local extension = {}
 
+---@todo hook names
 local hooks = {
   save = {
     ---@type table<function>
@@ -19,9 +20,13 @@ local function appendHook(hook, event, when)
   table.insert(hooks[event][when], hook)
 end
 
-local function runHook(event, when)
+local function runHooks(event, when)
   for _, hook in ipairs(hooks[event][when]) do
-    hook()
+    if false == hook() then
+      vim.notify('Cannot run hook.', vim.log.levels.WARN)
+
+      return false
+    end
   end
 end
 
@@ -31,7 +36,7 @@ function extension.appendBeforeSaveHook(hook)
 end
 
 function extension.runBeforeSaveHooks()
-  runHook('save', 'before')
+  return runHooks('save', 'before')
 end
 
 return extension
