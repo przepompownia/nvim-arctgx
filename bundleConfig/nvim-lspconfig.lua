@@ -97,6 +97,11 @@ local runtimePath = vim.split(package.path, ';')
 table.insert(runtimePath, 'lua/?.lua')
 table.insert(runtimePath, 'lua/?/init.lua')
 
+local neodevOk, neodev = pcall(require, 'neodev')
+if neodevOk then
+  neodev.setup({})
+end
+
 lspconfig.sumneko_lua.setup {
   autostart = true,
   capabilities = capabilities,
