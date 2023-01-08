@@ -9,5 +9,6 @@ require('possession').setup {
   plugins = {
     nvim_tree = false,
     delete_hidden_buffers = false,
+    close_windows = false,
   },
 }
