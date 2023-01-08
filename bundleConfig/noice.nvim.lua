@@ -20,12 +20,18 @@ require('noice').setup({
     },
     hover = {
       enabled = false,
-    }
+      view = nil,
+      ---@type NoiceViewOptions
+      opts = {},
+    },
   },
   views = {
     mini = {
       timeout = 5000,
     },
+  },
+  presets = {
+    lsp_doc_border = true,
   },
 })
 
