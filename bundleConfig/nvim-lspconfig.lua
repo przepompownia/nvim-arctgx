@@ -4,6 +4,8 @@ local lspconfig = require('lspconfig')
 local util = require('lspconfig.util')
 local vim = vim
 
+require('lspconfig.ui.windows').default_options.border = 'rounded'
+
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 cmpNvimLspOk, cmpNvimLsp = pcall('require', 'cmp_nvim_lsp')
 if cmpNvimLspOk then
