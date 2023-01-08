@@ -1,5 +1,6 @@
 local keymap = require 'vim.keymap'
 local dapTab = require 'dap-tab'
+local session= require 'arctgx.session'
 local api = vim.api
 
 local opts = {silent = true, noremap = true}
@@ -15,3 +16,5 @@ api.nvim_create_autocmd('User', {
 })
 
 dapTab.setup()
+
+session.appendBeforeSaveHook('dap-tab - close debug window', dapTab.closeDebugWin)
