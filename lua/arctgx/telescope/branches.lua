@@ -38,7 +38,7 @@ local function switchToBranch(branch, cwd, noHooks)
   local stdout, exitCode, stderr = utils.get_os_command_output(cmd, cwd)
 
   if {} ~= stderr then
-    vim.notify(table.concat(stderr, '\n'), vim.log.levels.WARN)
+    vim.notify(table.concat(stderr, '\n'), vim.log.levels.INFO)
   end
 
   if 0 ~= exitCode then
