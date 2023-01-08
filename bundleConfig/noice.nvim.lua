@@ -17,6 +17,17 @@ require('noice').setup({
     },
     signature = {
       enabled = false,
+      auto_open = {
+        enabled = true,
+        trigger = true,
+        luasnip = true,
+        throttle = 50,
+      },
+      view = nil, -- {
+      ---@type NoiceViewOptions
+      -- opts = {
+      --   win_options = { border = 'rounded' },
+      -- },
     },
     hover = {
       enabled = false,
