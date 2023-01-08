@@ -93,22 +93,12 @@ local function getLuaRuntime()
   return result;
 end
 
-local sumnekoRoot = os.getenv('HOME') .. '/dev/external/lua-language-server/current'
-local sumnekoBinary = sumnekoRoot .. '/bin/lua-language-server'
-
 local runtimePath = vim.split(package.path, ';')
 table.insert(runtimePath, 'lua/?.lua')
 table.insert(runtimePath, 'lua/?/init.lua')
 
 lspconfig.sumneko_lua.setup {
   autostart = true,
-  cmd = {
-    sumnekoBinary,
-    -- '--logpath=/tmp/sumneko_lua.log',
-    '-E',
-    sumnekoRoot .. '/main.lua',
-    '--preview',
-  };
   capabilities = capabilities,
   on_attach = arctgxLsp.onAttach,
   settings = {
