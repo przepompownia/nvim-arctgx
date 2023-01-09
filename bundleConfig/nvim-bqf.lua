@@ -40,14 +40,15 @@ local function tabDropHandler()
   require('bqf.qfwin.handler').open(true, 'TabDrop')
 end
 
-local function setItemMappings()
+local function configureWindow()
   keymap.set({'n'}, '<2-LeftMouse>', tabDropHandler, {buffer = true})
   keymap.set({'n'}, '<CR>', tabDropHandler, {buffer = true})
+  vim.wo.cursorline = true
 end
 
 vim.api.nvim_create_augroup ('BqfMappings', {clear = true })
 vim.api.nvim_create_autocmd ('FileType', {
   group = 'BqfMappings',
   pattern = 'qf',
-  callback = setItemMappings,
+  callback = configureWindow,
 })
