@@ -1,8 +1,11 @@
+local api = vim.api
 local keymap = require('vim.keymap')
 local treeapi = require('nvim-tree.api')
 local git = require('arctgx.git')
 local base = require('arctgx.base')
 local arctgxKeymap = require('arctgx.vim.keymap')
+local session      = require('arctgx.session')
+local window       = require('arctgx.window')
 
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
@@ -101,3 +104,9 @@ end
 -- shell on node dir
 
 keymap.set({'n'}, '<Plug>(ide-tree-focus-current-file)', focusOnFile)
+
+session.appendBeforeSaveHook('Close nvim-tree instances', function ()
+  window.forEachWindowWithBufFileType('NvimTree', function (winId)
+    api.nvim_win_close(winId, false)
+  end)
+end)
