@@ -22,7 +22,7 @@ end
 
 local function runHooks(event, when)
   for _, hook in ipairs(hooks[event][when]) do
-    vim.notify(('Running "%s %s" session hook "%s".'):format(when, event, hook.name), vim.log.levels.INFO)
+    vim.notify(('Running "%s %s" session hook "%s".'):format(when, event, hook.name), vim.log.levels.DEBUG)
     if false == hook.callback() then
       vim.notify(('Cannot run "%s %s" hook "%s".'):format(when, event, hook.name), vim.log.levels.WARN)
 

@@ -1,7 +1,8 @@
 local lineHover = require 'arctgx.lineHover'
 local session   = require 'arctgx.session'
-
+local window    = require 'arctgx.window'
 local api = vim.api
+
 local function bufferNameGenerator(opts)
   local time = vim.fn.strftime('%Y-%m-%d-%T')
   local tableName = function (name)
@@ -74,24 +75,8 @@ end
 vim.keymap.set('n', '<Plug>(dbui-new-query)', newQuery, {})
 
 session.appendBeforeSaveHook('Close tabs with DBUI', function ()
-  local function closeTabForDbuiBuffer(bufId)
-    if not api.nvim_buf_is_valid(bufId) then
-      return
-    end
-    if api.nvim_buf_get_option(bufId, 'filetype') ~= 'dbui' then
-      return
-    end
-    for _, winId in ipairs(vim.fn.win_findbuf(bufId)) do
-      if not api.nvim_win_is_valid(winId) then
-        return
-      end
-
-      local tabNr = api.nvim_tabpage_get_number(api.nvim_win_get_tabpage(winId))
-      vim.cmd.tabclose(tabNr)
-    end
-  end
-
-  for _, bufId in ipairs(api.nvim_list_bufs()) do
-    closeTabForDbuiBuffer(bufId)
-  end
+  window.forEachWindowWithBufFileType('dbui', function (winId)
+    local tabNr = api.nvim_tabpage_get_number(api.nvim_win_get_tabpage(winId))
+    vim.cmd.tabclose(tabNr)
+  end)
 end)
