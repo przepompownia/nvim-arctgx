@@ -1,4 +1,6 @@
 require('gitsigns').setup {
+  _signs_staged_enable = true,
+  _refresh_staged_on_update = true,
   on_attach = function(bufnr)
     local gs = package.loaded.gitsigns
 
