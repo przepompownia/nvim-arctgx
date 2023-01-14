@@ -132,7 +132,6 @@ lspconfig.sumneko_lua.setup {
         enable = false,
       },
       window = {
-        progressBar = false,
         statusBar = false,
       },
     },
