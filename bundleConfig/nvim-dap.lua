@@ -7,11 +7,11 @@ local api = vim.api
 
 dap.adapters.php = {
   type = 'executable',
-  command = vim.fn['arctgx#arctgx#getInitialVimDirectory']() .. '/bin/vscode-php-debug',
+  command = vim.env['XDG_CONFIG_HOME'] .. '/bin/vscode-php-debug',
   args = {'run'}
 }
 
-local bashdbDir = vim.fn['arctgx#arctgx#getInitialVimDirectory']() .. '/tools/bash-debug/'
+local bashdbDir = vim.env['XDG_CONFIG_HOME'] .. '/tools/bash-debug/'
 
 ---@param defaultValue any
 ---@param promptTemplate string
