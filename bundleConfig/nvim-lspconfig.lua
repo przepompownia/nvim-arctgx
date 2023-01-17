@@ -99,7 +99,12 @@ table.insert(runtimePath, 'lua/?/init.lua')
 
 local neodevOk, neodev = pcall(require, 'neodev')
 if neodevOk then
-  neodev.setup({})
+  neodev.setup({
+    override = function (root_dir, options)
+      -- vim.notify('Neodev root_dir: ' .. root_dir, vim.log.levels.INFO)
+      options.plugins = true
+    end
+  })
 end
 
 lspconfig.sumneko_lua.setup {
@@ -112,7 +117,7 @@ lspconfig.sumneko_lua.setup {
         version = 'LuaJIT',
       },
       workspace = {
-        library = getLuaRuntime(),
+        -- library = getLuaRuntime(),
         maxPreload = 10000,
         preloadFileSize = 10000,
         -- library = vim.api.nvim_get_runtime_file('', true),
