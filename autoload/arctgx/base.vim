@@ -7,10 +7,6 @@ function! arctgx#base#sourceFile(path) abort
   execute 'source ' . a:path
 endfunction
 
-function! arctgx#base#getBufferDirectory() abort
-  return (empty(&buftype) || &buftype ==# 'help') ? expand('%:p:h') : getcwd()
-endfunction
-
 function! arctgx#base#tabDropToLineAndColumnWithMapping(path, mapping, line = 0, column = 0) abort
   let l:path = a:path
 
