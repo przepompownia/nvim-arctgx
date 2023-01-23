@@ -1,5 +1,5 @@
 function arctgx#highlight#highlight(hlID, background, foreground) abort
-  if (has('nvim') && empty(nvim_list_uis()))
+  if (empty(nvim_list_uis()))
     return
   endif
 

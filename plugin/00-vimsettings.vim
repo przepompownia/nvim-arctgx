@@ -7,10 +7,7 @@ if empty(get(g:, 'bundle_dirs', v:null))
   throw 'Set optional extension directory (g:bundle_dirs) before'
 endif
 
-if has('mouse')
-  set mouse=a
-endif
-
+set mouse=a
 set mousemodel=extend
 
 set backspace=indent,eol,start
@@ -74,9 +71,7 @@ set sessionoptions-=help
 set sessionoptions-=folds
 set sessionoptions-=buffers
 set grepprg=grep\ --with-filename\ --extended-regexp\ --no-messages\ --color=never\ --binary-files=without-match\ --exclude-dir=.svn\ --exclude-dir=.git\ --line-number
-if has('nvim')
-  set signcolumn=auto:1-9
-endif
+set signcolumn=auto:1-9
 
 " set tags=./tags;/
 set tags=

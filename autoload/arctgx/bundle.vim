@@ -40,9 +40,6 @@ function! arctgx#bundle#loadSingleCustomConfiguration(bundle, bundleConfigDir) a
   try
     call arctgx#base#sourceFile(l:config . '.vim')
   catch /^Config \/.* does not exist\.$/
-    if !has('nvim')
-      return
-    endif
     try
       call arctgx#base#sourceFile(l:config . '.lua')
     catch /^Config \/.* does not exist\.$/

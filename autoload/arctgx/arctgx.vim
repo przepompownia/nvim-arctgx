@@ -39,10 +39,6 @@ endfunction
 
 function! arctgx#arctgx#openShell(directory) abort
   botright new
-  if !has('nvim')
-    call term_start(&shell, {'cwd': a:directory, 'term_finish': 'close', 'curwin': 1})
-    return
-  endif
 
   call termopen(&shell, {'cwd': a:directory})
 endfunction
