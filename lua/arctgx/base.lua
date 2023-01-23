@@ -1,4 +1,3 @@
-local vim = vim
 local api = vim.api
 local extension = {}
 
@@ -64,6 +63,28 @@ function extension.tab_drop(path, line, column, relative_bufnr)
   if not ok then
     vim.notify(('%s: line %s, col %s'):format(result, line, column), vim.log.levels.WARN, { title = 'tab drop' })
   end
+end
+
+---comment
+---@param path string
+---@param mapping table<string, string>
+---@param line integer
+---@param column integer
+function extension.tabDropToLineAndColumnWithMapping(path, mapping, line, column)
+  local translateRemotePath = function ()
+    for remotePath, localPath in pairs(mapping) do
+      if vim.startswith(path, remotePath) then
+        return path:gsub('^' .. remotePath, localPath)
+      end
+    end
+
+    return path
+  end
+  extension.tab_drop(translateRemotePath(), line, column)
+end
+
+function extension.tabDropToLineAndColumnWithDefaultMapping(path, line, column)
+  extension.tabDropToLineAndColumnWithMapping(path, vim.g.projectPathMappings, line, column)
 end
 
 function extension.operator_get_text(type)
