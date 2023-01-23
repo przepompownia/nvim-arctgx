@@ -21,20 +21,6 @@ function! s:setIdeCurrentGitHead(bufnr, value) abort
   doautocmd <nomodeline> User IdeStatusChanged
 endfunction
 
-function! arctgx#ide#getCurrentFunction() abort
-  let l:funcname = get(b:, 'ideCurrentFunction', '')
-
-  if empty(l:funcname)
-    return ''
-  endif
-
-  return printf('[::%s]', l:funcname)
-endfunction
-
-function! arctgx#ide#showLocation() abort
-  return arctgx#ide#bufname() . arctgx#ide#getCurrentFunction()
-endfunction
-
 function! arctgx#ide#showIsLastUsedWindow() abort
   return winnr() is winnr('#') ? ' [LW]' : ''
 endfunction
