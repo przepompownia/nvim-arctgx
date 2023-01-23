@@ -1,5 +1,6 @@
--- local api = vim.api
+local api = vim.api
 local dap = require('dap')
+local virtualText = require('nvim-dap-virtual-text')
 
 ---@param variable any
 ---@param buf any
@@ -12,7 +13,7 @@ local function skipDisplayingVariable(variable, buf)
   return false
 end
 
-require("nvim-dap-virtual-text").setup {
+virtualText.setup {
   enabled = true,
   enabled_commands = true,
   highlight_changed_variables = true,
@@ -35,3 +36,10 @@ require("nvim-dap-virtual-text").setup {
     return variable.name .. ': ' .. variable.value
   end,
 }
+
+local augroup = api.nvim_create_augroup('ArctgxDapVirtualText', {clear = true})
+api.nvim_create_autocmd('User', {
+  group = augroup,
+  pattern = 'DAPClean',
+  callback = virtualText.refresh,
+})

@@ -8,9 +8,9 @@ local opts = {silent = true, noremap = true}
 keymap.set({'n'}, '<Plug>(ide-debugger-go-to-view)', dapTab.verboseGoToDebugWin, opts)
 keymap.set({'n'}, '<Plug>(ide-debugger-close-view)', dapTab.closeDebugWin, opts)
 
-api.nvim_create_augroup('ArctgxDapTab', {clear = true})
+local augroup = api.nvim_create_augroup('ArctgxDapTab', {clear = true})
 api.nvim_create_autocmd('User', {
-  group = 'ArctgxDapTab',
+  group = augroup,
   pattern = 'DAPClean',
   callback = dapTab.closeDebugWin,
 })
