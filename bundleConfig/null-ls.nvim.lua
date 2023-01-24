@@ -52,7 +52,6 @@ null.setup({
       },
     }),
     null.builtins.diagnostics.shellcheck,
-    null.builtins.diagnostics.vint,
     null.builtins.formatting.lua_format,
     null.builtins.formatting.phpcbf.with(phpcsArgs),
     null.builtins.formatting.phpcsfixer.with({cwd = phpProjectRoot}),
