@@ -36,6 +36,7 @@ null.setup({
       extra_args = {'cleancode,codesize,controversial,design,naming,unusedcode'}
     }),
     null.builtins.diagnostics.phpstan.with({
+      temp_dir = '/tmp',
       timeout = 10000,
       debounce = 3000,
       cwd = phpProjectRoot,
