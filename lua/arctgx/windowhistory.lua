@@ -85,7 +85,7 @@ function WindowHistory.jumpOnTop()
 end
 
 function WindowHistory.jumpBack()
-  vim.api.nvim_set_current_win(history:previous())
+  api.nvim_set_current_win(history:previous())
 end
 
 function WindowHistory.getInstance()
@@ -94,6 +94,15 @@ function WindowHistory.getInstance()
   end
 
   return history
+end
+
+function WindowHistory.debug()
+  local historyWithNames = {}
+  for _, winId in ipairs(history) do
+    historyWithNames[winId] = api.nvim_buf_get_name(api.nvim_win_get_buf(winId))
+  end
+
+  return historyWithNames
 end
 
 return WindowHistory
