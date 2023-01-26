@@ -19,6 +19,7 @@ local keyToPlugMappings = {
   ['<Leader>dk'] = {rhs = '<Plug>(ide-debugger-up-frame)', repeatable = true},
   ['<Leader>dj'] = {rhs = '<Plug>(ide-debugger-down-frame)', repeatable = true},
   ['<Leader>dw'] = {rhs = '<Plug>(ide-debugger-go-to-view)'},
+  ['<Leader>dW'] = {rhs = '<Plug>(ide-debugger-ui-add-to-watch)'},
   ['<Leader>dc'] = {rhs = '<Plug>(ide-debugger-close-view)'},
   ['<F6>'] = {rhs = '<Plug>(ide-list-document-symbols)', modes = {'n'}},
   ['<Leader><S-F5>'] = {rhs = '<Plug>(ide-debugger-ui-toggle)', modes = {'n'}},
