@@ -31,12 +31,24 @@ local function reloadColors()
     api.nvim_set_hl(0, name, def)
   end
 end
+
 api.nvim_create_autocmd({'ColorScheme'}, {
   group = 'ArctgxDapUi',
   callback = reloadColors,
 })
 
+local function watchExpression(expression)
+  dapui.elements.watches.add(expression)
+end
+
+api.nvim_create_user_command('DAW', function (opts)
+  watchExpression(opts.args)
+end , {nargs = 1, desc = 'DAP UI: add expression to watch'})
+
 local opts = {silent = true, noremap = true}
+keymap.set('x', '<Plug>(ide-debugger-ui-add-to-watch)', function ()
+  watchExpression(base.getVisualSelection())
+end)
 keymap.set({'n'}, '<Plug>(ide-debugger-ui-toggle)', dapui.toggle, opts)
 keymap.set({'n', 'x'}, '<Plug>(ide-debugger-eval-popup)', function()
   local keywordChars = {}
