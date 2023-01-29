@@ -30,6 +30,7 @@ inoremap <silent> <A-Down> <Cmd>wincmd j<CR>
 inoremap <silent> <A-Left> <Cmd>wincmd h<CR>
 inoremap <silent> <A-Right> <Cmd>wincmd l<CR>
 inoremap <Insert> <Nop>
+imap  <C-BS>
 cmap <C-BS> <C-w>
 inoremap <C-BS> <Cmd>normal db<CR>
 inoremap <C-Del> <Cmd>normal dw<CR>
