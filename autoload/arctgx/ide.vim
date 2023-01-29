@@ -1,10 +1,5 @@
 scriptencoding utf-8
 
-function! arctgx#ide#bufname() abort
-  let l:freeSpace = winwidth(0) - 96
-  return arctgx#string#tail(fnamemodify(bufname(), ':r'), l:freeSpace)
-endfunction
-
 function! arctgx#ide#getCurrentGitHead() abort
   let l:head = get(b:, 'ideCurrentGitHead', '')
 
