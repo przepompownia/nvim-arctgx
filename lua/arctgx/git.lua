@@ -47,19 +47,58 @@ function extension.branches(gitDir, withRelativeDate)
 
   local function trimHead(text)
     text = vim.fn.trim(text)
-    if #text > 0 then
-      return text
+    if #text == 0 then
+      return nil
     end
-    return nil
+    return text
   end
 
   for _, entry in ipairs(list) do
     local head, branch, desc = unpack(vim.split(entry, ';'))
     table.insert(result, 1, {
       branch = branch,
-      desc = vim.fn.trim(desc),
+      desc = desc,
       head = trimHead(head)
     })
+  end
+
+  return result
+end
+
+---@todo switch to local
+---@param range string
+---@return {lead: string, part: string}
+function extension.splitRange(range)
+  local separators = {
+    ['..'] = '\\.\\.',
+    ['...'] = '\\.\\.\\.',
+  }
+  for separator, separatorPattern in pairs(separators) do
+    local separatorStart, separatorEnd = range:find(separator, 1, true)
+    if nil ~= separatorStart then
+      local lead, part = unpack(vim.fn.split(range, separatorPattern, 1))
+      return {
+        lead = lead .. separator,
+        part = part,
+      }
+    end
+  end
+
+  return {
+    lead = '',
+    part = range,
+  }
+end
+
+function extension.matchBranchesToRange(topDir, range)
+  local branches = extension.branches(topDir, false)
+  local split = extension.splitRange(range)
+  local result = {}
+
+  for _, branch in pairs(branches) do
+    if branch.branch:find(split.part, 1, true) then
+      table.insert(result, split.lead .. branch.branch)
+    end
   end
 
   return result

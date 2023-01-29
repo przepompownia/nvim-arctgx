@@ -41,7 +41,9 @@ api.nvim_create_user_command(
   end,
   {
     nargs = '*',
-    complete = vim.fn['arctgx#git#completion#completeGFDiff'],
+    complete = function (argLead, _, _)
+      return git.matchBranchesToRange(git.top(base.getBufferCwd()), argLead)
+    end,
   }
 )
 keymap.set('n', '<Plug>(ide-grep-git)', function() arctgx.gitGrep('', false, false) end)
