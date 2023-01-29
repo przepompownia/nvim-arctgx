@@ -41,7 +41,7 @@ function Branches.list(opts)
   pickers.new(opts, {
     prompt_title = 'Git branches',
     finder = finders.new_table({
-      results = git.branches(opts.cwd),
+      results = git.branches(opts.cwd, true, true),
       entry_maker = makeEntry,
     }),
     sorter = conf.generic_sorter(opts),

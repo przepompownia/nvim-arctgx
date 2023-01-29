@@ -27,9 +27,13 @@ function extension.command_files()
 end
 
 ---@return table<int, {branch: string, desc: string, head: string?}>
-function extension.branches(gitDir, withRelativeDate)
+function extension.branches(gitDir, withRelativeDate, keepEmpty)
   local binDir = vim.loop.fs_realpath(vim.fs.dirname(debug.getinfo(1,'S').source:sub(2)) .. '/../../bin')
   local command = {binDir .. '/git-list-branches', gitDir}
+  local emptyValue = nil
+  if true == keepEmpty then
+    emptyValue = ''
+  end
 
   if true ~= withRelativeDate then
     table.insert(command, 1)
@@ -57,8 +61,8 @@ function extension.branches(gitDir, withRelativeDate)
     local head, branch, desc = unpack(vim.split(entry, ';'))
     table.insert(result, 1, {
       branch = branch,
-      desc = desc,
-      head = trimHead(head)
+      desc = desc or emptyValue,
+      head = trimHead(head) or emptyValue
     })
   end
 
