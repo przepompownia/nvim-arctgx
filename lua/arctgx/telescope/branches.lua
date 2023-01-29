@@ -6,23 +6,9 @@ local action_state     = require 'telescope.actions.state'
 local conf             = require('telescope.config').values
 local Job              = require('plenary.job')
 local utils            = require('telescope.utils')
+local git              = require('arctgx.git')
 
 local Branches = {}
-
-local function listBranches(cwd)
-  local list = vim.fn['arctgx#git#listBranches'](cwd, true)
-  local result = {}
-  for _, entry in ipairs(list) do
-    local head, branch, desc = unpack(vim.split(entry, ';'))
-    table.insert(result, 1, {
-      branch = branch,
-      desc = desc,
-      head = head,
-    })
-  end
-
-  return result
-end
 
 local function makeEntry(entry)
   local display = ('%s %s %s'):format(entry.head, entry.branch, entry.desc)
@@ -55,7 +41,7 @@ function Branches.list(opts)
   pickers.new(opts, {
     prompt_title = 'Git branches',
     finder = finders.new_table({
-      results = listBranches(opts.cwd),
+      results = git.branches(opts.cwd),
       entry_maker = makeEntry,
     }),
     sorter = conf.generic_sorter(opts),
