@@ -18,9 +18,6 @@ function arctgx#term#loadConfiguration(configDir)
     colorscheme desert
   endif
 
-  if $TERM =~ '-256color'
-    call s:loadSingleConfig(a:configDir, '256color')
-  endif
   if !empty($TMUX)
     call s:loadSingleConfig(a:configDir, 'tmux')
   endif
