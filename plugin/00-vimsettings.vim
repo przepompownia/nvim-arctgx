@@ -47,7 +47,6 @@ if has('folding')
 
   set foldcolumn=1
 
-  set foldtext=arctgx#fold#foldText()
 endif
 
 set number
