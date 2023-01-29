@@ -11,12 +11,14 @@ require('gitsigns').setup {
     end
 
     map('n', ']c', function()
+      pcall(vim.fn['repeat#set'], ']c', -1)
       if vim.wo.diff then return ']c' end
       vim.schedule(function() gs.next_hunk() end)
       return '<Ignore>'
     end, {expr=true})
 
     map('n', '[c', function()
+      pcall(vim.fn['repeat#set'], '[c', -1)
       if vim.wo.diff then return '[c' end
       vim.schedule(function() gs.prev_hunk() end)
       return '<Ignore>'
