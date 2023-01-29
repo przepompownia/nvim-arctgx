@@ -1,5 +1,5 @@
 function! arctgx#git#completion#completeGFDiff(argLead, CmdLine, CursorPos) abort
-  let l:gitDir = arctgx#git#getWorkspaceRoot(expand('%:p:h'))
+  let l:gitDir = v:lua.require'arctgx.git'.top(expand('%:p:h'))
   let l:branches = reverse(arctgx#git#listBranches(l:gitDir, v:false))
   let l:parts = s:split(a:argLead)
 
