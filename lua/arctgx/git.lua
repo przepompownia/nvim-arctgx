@@ -65,10 +65,9 @@ function extension.branches(gitDir, withRelativeDate)
   return result
 end
 
----@todo switch to local
 ---@param range string
 ---@return {lead: string, part: string}
-function extension.splitRange(range)
+local function splitRange(range)
   local separators = {
     ['..'] = '\\.\\.',
     ['...'] = '\\.\\.\\.',
@@ -92,7 +91,7 @@ end
 
 function extension.matchBranchesToRange(topDir, range)
   local branches = extension.branches(topDir, false)
-  local split = extension.splitRange(range)
+  local split = splitRange(range)
   local result = {}
 
   for _, branch in pairs(branches) do
