@@ -28,7 +28,3 @@ function! arctgx#ide#createDefaultTabname(bufnr) abort
 
   return l:bufname !=# '' ? v:lua.require'arctgx.string'.shorten(l:bufname, 8) : '[No Name]'
 endfunction
-
-function! s:errorHandler(params, jobId, output, ...) abort
-  return v:null
-endfunction
