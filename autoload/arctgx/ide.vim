@@ -7,7 +7,7 @@ function! arctgx#ide#getCurrentGitHead() abort
     return ''
   endif
 
-  return printf('%s', arctgx#string#shorten(pathshorten(l:head), 11))
+  return v:lua.require'arctgx.string'.shorten(pathshorten(l:head), 11)
 endfunction
 
 function! s:setIdeCurrentGitHead(bufnr, value) abort
@@ -42,7 +42,7 @@ endfunction
 function! arctgx#ide#createDefaultTabname(bufnr) abort
   let l:bufname = expand('#'. a:bufnr .':p:t:r')
 
-  return l:bufname !=# '' ? arctgx#string#shorten(l:bufname, 8) : '[No Name]'
+  return l:bufname !=# '' ? v:lua.require'arctgx.string'.shorten(l:bufname, 8) : '[No Name]'
 endfunction
 
 function! arctgx#ide#recognizeGitHeadsInTab() abort
