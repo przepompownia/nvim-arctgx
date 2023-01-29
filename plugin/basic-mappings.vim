@@ -59,5 +59,4 @@ noremap <Leader>/ /
 nnoremap ? ?\c
 nnoremap <Leader>= ggVG=
 nnoremap <Leader>hls <Cmd>let @/ = ''<CR>
-nmap <silent> <Leader>` <Plug>(jump-last-tab)
 set pastetoggle=<Nop>
