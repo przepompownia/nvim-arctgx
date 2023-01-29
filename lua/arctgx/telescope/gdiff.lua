@@ -1,6 +1,5 @@
 local pickers = require 'telescope.pickers'
 local finders = require 'telescope.finders'
-local actions = require 'telescope.actions'
 local conf = require('telescope.config').values
 local Job = require('plenary.job')
 local diff = require('arctgx.git.diff')
@@ -8,7 +7,6 @@ local from_entry = require 'telescope.from_entry'
 local make_entry = require('telescope.make_entry')
 local buffer_previewer = require('telescope.previewers.buffer_previewer')
 local sorters = require('telescope.sorters')
-local arctgx = require('arctgx.telescope')
 local putils = require 'telescope.previewers.utils'
 local telescope = require 'arctgx.telescope'
 
