@@ -1,5 +1,6 @@
 require'nvim-treesitter.configs'.setup {
   ensure_installed = {
+    'awk',
     'bash',
     'diff',
     'dockerfile',
@@ -9,6 +10,7 @@ require'nvim-treesitter.configs'.setup {
     'git_rebase',
     'help',
     'http',
+    'ini',
     'javascript',
     'jq',
     'json5',
