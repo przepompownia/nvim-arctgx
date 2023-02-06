@@ -50,17 +50,17 @@ require'nvim-treesitter.configs'.setup {
 }
 
 -- -- require 'nvim-treesitter.install'.compilers = { 'clang' }
-local parserConfig = require 'nvim-treesitter.parsers'.get_parser_configs()
-parserConfig.php = {
-  install_info = {
-    url = '~/dev/external/tree-sitter-php',
-    files = {'src/parser.c', 'src/scanner.cc'},
-    branch = 'array',
-    generate_requires_npm = false,
-    requires_generate_from_grammar = false,
-  },
-  filetype = 'php', -- if filetype does not match the parser name
-}
+-- local parserConfig = require 'nvim-treesitter.parsers'.get_parser_configs()
+-- parserConfig.php = {
+--   install_info = {
+--     url = '~/dev/external/tree-sitter-php',
+--     files = {'src/parser.c', 'src/scanner.cc'},
+--     branch = 'array',
+--     generate_requires_npm = false,
+--     requires_generate_from_grammar = false,
+--   },
+--   filetype = 'php', -- if filetype does not match the parser name
+-- }
 
 vim.opt.foldmethod='expr'
 vim.opt.foldexpr='nvim_treesitter#foldexpr()'
