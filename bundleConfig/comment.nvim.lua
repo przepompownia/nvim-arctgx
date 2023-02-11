@@ -3,7 +3,7 @@ local cmapi = require('Comment.api')
 local function createPrehook()
   local res, comment = pcall(require, 'ts_context_commentstring.integrations.comment_nvim')
 
-  if not comment then
+  if not res then
     return nil
   end
 
