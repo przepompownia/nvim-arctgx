@@ -31,7 +31,9 @@ vim.go.eadirection = 'hor'
 vim.opt.isfname:remove('=')
 
 vim.opt.diffopt:append('vertical')
-vim.opt.diffopt:append('linematch:60')
+if 1 == vim.fn.has('nvim-0.9') then
+  vim.opt.diffopt:append('linematch:60')
+end
 vim.opt.jumpoptions:append('view')
 
 vim.go.foldlevelstart = 99
