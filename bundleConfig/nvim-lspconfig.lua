@@ -107,7 +107,7 @@ if neodevOk then
   })
 end
 
-lspconfig.sumneko_lua.setup {
+lspconfig.lua_ls.setup {
   autostart = true,
   capabilities = capabilities,
   on_attach = arctgxLsp.onAttach,
