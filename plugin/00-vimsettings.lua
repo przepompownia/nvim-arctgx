@@ -15,7 +15,7 @@ vim.go.updatetime = 300
 vim.o.showbreak = '> '
 vim.go.showmatch = false
 
-if vim.fn.has('nvim-0.9') then
+if 1 == vim.fn.has('nvim-0.9') then
   vim.opt.shortmess:append('C')
 end
 
