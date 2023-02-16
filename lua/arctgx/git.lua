@@ -26,6 +26,24 @@ function extension.command_files()
   return {'git', 'ls-files'}
 end
 
+function extension.isTracked(path, gitDir, workTree)
+  local args = {
+    '--git-dir', gitDir,
+    '--work-tree', workTree,
+    'ls-files',
+    '--error-unmatch',
+    path,
+  }
+  local job = Job:new({
+    command = 'git',
+    args = args,
+    sync = true,
+  })
+  local _, exitCode = job:sync()
+
+  return 0 == exitCode
+end
+
 ---@return table<int, {branch: string, desc: string, head: string?}>
 function extension.branches(gitDir, withRelativeDate, keepEmpty)
   local binDir = vim.loop.fs_realpath(vim.fs.dirname(debug.getinfo(1,'S').source:sub(2)) .. '/../../bin')
