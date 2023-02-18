@@ -56,16 +56,16 @@ lineHover.show = function ()
 end
 
 lineHover.enableForWindow = function ()
-  api.nvim_create_augroup ('ArctgxLineHover', { clear = true })
+  local augroup = api.nvim_create_augroup ('ArctgxLineHover', { clear = true })
   api.nvim_create_autocmd ({'CursorMoved'}, {
-    group = 'ArctgxLineHover',
+    group = augroup,
     buffer = 0,
     callback = function ()
       lineHover.showDelayed()
     end
   })
   api.nvim_create_autocmd ({'BufLeave', 'TabClosed'}, {
-    group = 'ArctgxLineHover',
+    group = augroup,
     buffer = 0,
     callback = hideExistingWindow,
   })

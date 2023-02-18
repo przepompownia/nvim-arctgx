@@ -1,7 +1,7 @@
 local api = vim.api
-api.nvim_create_augroup('ColorschemeLoading', {clear = true})
+local augroup = api.nvim_create_augroup('ColorschemeLoading', {clear = true})
 api.nvim_create_autocmd('OptionSet', {
-  group = 'ColorschemeLoading',
+  group = augroup,
   pattern = 'background',
   nested = true,
   callback = function ()

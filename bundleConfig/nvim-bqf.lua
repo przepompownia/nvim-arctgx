@@ -46,9 +46,9 @@ local function configureWindow()
   vim.wo.cursorline = true
 end
 
-vim.api.nvim_create_augroup ('BqfMappings', {clear = true })
+local augroup = vim.api.nvim_create_augroup ('BqfMappings', {clear = true })
 vim.api.nvim_create_autocmd ('FileType', {
-  group = 'BqfMappings',
+  group = augroup,
   pattern = 'qf',
   callback = configureWindow,
 })

@@ -26,9 +26,9 @@ vim.g.db_ui_table_helpers = {
 }
 vim.g.db_ui_force_echo_notifications = 1
 
-api.nvim_create_augroup('DBUISettings', {clear = true})
+local augroup = api.nvim_create_augroup('DBUISettings', {clear = true})
 api.nvim_create_autocmd('FileType', {
-  group = 'DBUISettings',
+  group = augroup,
   pattern = 'dbui',
   callback = function ()
     vim.b.ideTabName = 'DBUI[d]'
@@ -38,14 +38,14 @@ api.nvim_create_autocmd('FileType', {
   end
 })
 api.nvim_create_autocmd('FileType', {
-  group = 'DBUISettings',
+  group = augroup,
   pattern = {'dbui', 'dbout', 'sql'},
   callback = function ()
     vim.keymap.set('n', '<Leader>n', '<Plug>(dbui-new-query)<CR>', {buffer = 0})
   end
 })
 api.nvim_create_autocmd('FileType', {
-  group = 'DBUISettings',
+  group = augroup,
   pattern = {'sql', 'mysql'},
   callback = function ()
     if vim.b.dbui_db_key_name ~=nil then
@@ -54,7 +54,7 @@ api.nvim_create_autocmd('FileType', {
   end
 })
 api.nvim_create_autocmd('FileType', {
-  group = 'DBUISettings',
+  group = augroup,
   pattern = 'dbout',
   callback = function ()
     vim.b.ideTabName = 'DBUI[o]'

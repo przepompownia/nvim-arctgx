@@ -87,9 +87,9 @@ require('lualine').setup({
   }
 })
 
-vim.api.nvim_create_augroup('ArctgxLualine', {clear = true})
+local augroup = vim.api.nvim_create_augroup('ArctgxLualine', {clear = true})
 vim.api.nvim_create_autocmd('User', {
-  group = 'ArctgxLualine',
+  group = augroup,
   pattern = 'IdeStatusChanged',
   callback = function ()
     vim.api.nvim_cmd({cmd = 'redrawtabline'}, {})

@@ -5,7 +5,7 @@ local diagnostic = require('vim.diagnostic')
 local keymap = require('vim.keymap')
 local buf = require('arctgx.lsp.buf')
 
-api.nvim_create_augroup('LspDocumentHighlight', {clear = true})
+local augroup = api.nvim_create_augroup('LspDocumentHighlight', {clear = true})
 
 function M.onAttach(client, bufnr)
   local function bufMap(modes, lhs, rhs, opts)
@@ -60,7 +60,7 @@ function M.onAttach(client, bufnr)
       api.nvim_set_hl(0, key, {link = value})
     end
     api.nvim_create_autocmd({'LspDetach'}, {
-      group = 'LspDocumentHighlight',
+      group = augroup,
       buffer = bufnr,
       callback = function (args)
         vim.lsp.buf.clear_references()
@@ -76,7 +76,7 @@ function M.onAttach(client, bufnr)
         end
 
         api.nvim_clear_autocmds {
-          group = 'LspDocumentHighlight',
+          group = augroup,
           buffer = args.buf,
         }
       end,

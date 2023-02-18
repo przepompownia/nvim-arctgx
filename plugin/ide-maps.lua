@@ -158,9 +158,9 @@ end
 
 keymap.loadKeyToPlugMappings(globalMappings)
 
-api.nvim_create_augroup('IdeMapsLua', {clear = true})
+local augroup = api.nvim_create_augroup('IdeMapsLua', {clear = true})
 api.nvim_create_autocmd({'FileType'}, {
-  group = 'IdeMapsLua',
+  group = augroup,
   callback = function(params)
     local excludedFiletypes = {'fern', 'help', 'man', 'dbout', 'dapui_hover', 'fugitive'}
     if vim.tbl_contains(excludedFiletypes, params.match) then
