@@ -59,3 +59,4 @@ vim.opt.sessionoptions:remove('folds')
 vim.opt.signcolumn = 'auto:1-9'
 vim.opt.tags = ''
 vim.opt.listchars = 'eol:$,tab:>-,trail:~,extends:>,precedes:<'
+vim.opt.pastetoggle = '<Nop>'

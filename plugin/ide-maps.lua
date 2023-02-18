@@ -83,6 +83,7 @@ local keyToPlugMappings = {
 
 }
 
+---@type KeyToPlugMappings
 local globalMappings = {
   ['<Leader>hs'] = {rhs = '<Plug>(ide-git-hunk-stage)', repeatable = false, modes = {'n', 'v'}},
   ['<Leader>g'] = {rhs = '<Plug>(ide-git-status)', repeatable = false, modes = {'n'}},
