@@ -21,7 +21,7 @@ local esc = vim.api.nvim_replace_termcodes(
 for _, lhs in ipairs({'<C-/>', '<C-_>'}) do
   vim.keymap.set({'n', 'i'}, lhs, function ()
     cmapi.toggle.linewise.current()
-    vim.api.nvim_feedkeys('j', 'n', false)
+    vim.cmd.normal 'j'
   end)
 
   vim.keymap.set('x', lhs, function()
