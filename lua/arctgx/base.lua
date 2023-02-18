@@ -1,13 +1,13 @@
 local api = vim.api
-local extension = {}
+local base = {}
 
-function extension.get_bufnr_by_path(path)
+function base.get_bufnr_by_path(path)
   local bufnr = vim.fn.bufnr(path)
 
   return -1 ~= bufnr and bufnr or nil
 end
 
-function extension.get_first_win_id_by_bufnr(bufNr)
+function base.get_first_win_id_by_bufnr(bufNr)
   if nil == bufNr then
     return nil
   end
@@ -21,11 +21,11 @@ local function buffer_is_fresh(bufNr)
   return '' == api.nvim_buf_get_name(bufNr) and api.nvim_buf_get_changedtick(bufNr) <= 2
 end
 
-function extension.tab_drop_path(path, relative_winnr)
+function base.tab_drop_path(path, relative_winnr)
   local filename = vim.fn.fnamemodify(path, ':p')
 
-  local bufNr = extension.get_bufnr_by_path(filename) or vim.fn.bufadd(filename)
-  local existing_win_id = extension.get_first_win_id_by_bufnr(bufNr)
+  local bufNr = base.get_bufnr_by_path(filename) or vim.fn.bufadd(filename)
+  local existing_win_id = base.get_first_win_id_by_bufnr(bufNr)
 
   if nil ~= existing_win_id then
     api.nvim_set_current_win(existing_win_id)
@@ -45,8 +45,8 @@ function extension.tab_drop_path(path, relative_winnr)
   vim.cmd(('tabedit %s'):format(vim.fn.fnameescape(filename)))
 end
 
-function extension.tab_drop(path, line, column, relative_bufnr)
-  extension.tab_drop_path(path, relative_bufnr)
+function base.tab_drop(path, line, column, relative_bufnr)
+  base.tab_drop_path(path, relative_bufnr)
 
   if nil == line then
     return
@@ -70,7 +70,7 @@ end
 ---@param mapping table<string, string>
 ---@param line integer
 ---@param column integer
-function extension.tabDropToLineAndColumnWithMapping(path, mapping, line, column)
+function base.tabDropToLineAndColumnWithMapping(path, mapping, line, column)
   local translateRemotePath = function ()
     for remotePath, localPath in pairs(mapping) do
       if vim.startswith(path, remotePath) then
@@ -80,20 +80,20 @@ function extension.tabDropToLineAndColumnWithMapping(path, mapping, line, column
 
     return path
   end
-  extension.tab_drop(translateRemotePath(), line, column)
+  base.tab_drop(translateRemotePath(), line, column)
 end
 
-function extension.tabDropToLineAndColumnWithDefaultMapping(path, line, column)
-  extension.tabDropToLineAndColumnWithMapping(path, vim.g.projectPathMappings, line, column)
+function base.tabDropToLineAndColumnWithDefaultMapping(path, line, column)
+  base.tabDropToLineAndColumnWithMapping(path, vim.g.projectPathMappings, line, column)
 end
 
-function extension.operator_get_text(type)
+function base.operator_get_text(type)
   if 'char' == type then
-    return extension.getTextBetweenMarks('\'[', '\']')
+    return base.getTextBetweenMarks('\'[', '\']')
   end
 end
 
-function extension.getRangeBetweenMarks(mark1, mark2)
+function base.getRangeBetweenMarks(mark1, mark2)
   local start = vim.fn.getpos(mark1)
   local finish = vim.fn.getpos(mark2)
   local startLine, startCol = start[2], start[3]
@@ -109,20 +109,20 @@ function extension.getRangeBetweenMarks(mark1, mark2)
   return startLine, startCol, finishLine, finishCol
 end
 
-function extension.getTextBetweenMarks(mark1, mark2)
-  local startLine, startCol, finishLine, finishCol = extension.getRangeBetweenMarks(mark1, mark2)
+function base.getTextBetweenMarks(mark1, mark2)
+  local startLine, startCol, finishLine, finishCol = base.getRangeBetweenMarks(mark1, mark2)
 
   local lines = api.nvim_buf_get_text(0, startLine -1, startCol - 1, finishLine -1, finishCol, {})
 
   return table.concat(lines, '\n')
 end
 
-function extension.getVisualSelectionRange()
+function base.getVisualSelectionRange()
   if not vim.tbl_contains({'v', 'V'}, vim.fn.mode()) then
     return
   end
 
-  local startLine, startCol, finishLine, finishCol = extension.getRangeBetweenMarks('v', '.')
+  local startLine, startCol, finishLine, finishCol = base.getRangeBetweenMarks('v', '.')
 
   return {
     ['start'] = { startLine, startCol - 1 },
@@ -130,21 +130,21 @@ function extension.getVisualSelectionRange()
   }
 end
 
-function extension.getVisualSelection()
+function base.getVisualSelection()
   if not vim.tbl_contains({'v', 'V'}, vim.fn.mode()) then
     return
   end
 
-  return extension.getTextBetweenMarks('v', '.')
+  return base.getTextBetweenMarks('v', '.')
 end
 
 do
   local bufferCwdCallback = {}
-  function extension.addBufferCwdCallback(bufNr, callback)
+  function base.addBufferCwdCallback(bufNr, callback)
     bufferCwdCallback[bufNr] = callback
   end
 
-  function extension.getBufferCwd()
+  function base.getBufferCwd()
     local callback = bufferCwdCallback[vim.api.nvim_get_current_buf()]
     if nil ~= callback then
       return callback()
@@ -160,22 +160,36 @@ do
   end
 end
 
-function extension.feedKeys(input)
+function base.feedKeys(input)
   api.nvim_feedkeys(api.nvim_replace_termcodes(input, true, false, true), 'n', false)
 end
 
-function extension.runOperator(operatorFuncAsString)
+function base.runOperator(operatorFuncAsString)
   vim.o.operatorfunc = operatorFuncAsString
-  extension.feedKeys('g@')
+  base.feedKeys('g@')
 end
 
 ---@param keywordChars table<string>
 ---@param callback function
-function extension.withAppendedToKeyword(keywordChars, callback)
+function base.withAppendedToKeyword(keywordChars, callback)
   local isKeyword = vim.opt.iskeyword:get()
   vim.opt.iskeyword:append(keywordChars)
   callback()
   vim.opt.iskeyword = isKeyword
 end
 
-return extension
+function base.insertWithInitialIndentation(modeCharacter)
+  vim.validate {modeCharacter = {modeCharacter, function (char)
+    return vim.tbl_contains({'a', 'i'}, char)
+  end}}
+
+  api.nvim_feedkeys(modeCharacter, 'n', false)
+
+  if '' == vim.opt.indentexpr:get() then
+    return
+  end
+
+  api.nvim_feedkeys(api.nvim_replace_termcodes('<C-f>', true, false, true), 'n', false)
+end
+
+return base

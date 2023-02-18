@@ -68,17 +68,3 @@ function! arctgx#arctgx#reloadIDEMaps() abort
 
   wincmd w
 endfunction
-
-function! arctgx#arctgx#insertWithInitialIndentation(modeCharacter) abort
-  if a:modeCharacter !=# 'a' && a:modeCharacter !=# 'i'
-    throw 'Only "i" and "a" are allowed to enter Insert mode this way'
-  endif
-
-  call feedkeys(a:modeCharacter, 'n')
-
-  if empty(&indentexpr)
-    return
-  endif
-
-  call feedkeys("\<C-f>", 'n')
-endfunction

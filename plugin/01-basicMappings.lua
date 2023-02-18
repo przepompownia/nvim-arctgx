@@ -1,4 +1,5 @@
 local keymap = require 'arctgx.vim.keymap'
+local base   = require 'arctgx.base'
 
 ---@type KeyToPlugMappings
 local mapToKeySequenceList = {
@@ -24,3 +25,6 @@ local mapToKeySequenceList = {
   ['<S-Down>'] = {rhs = '<C-e>', modes = {'n'}},
 }
 keymap.loadKeyToPlugMappings(mapToKeySequenceList)
+
+vim.keymap.set('n', 'i', function() base.insertWithInitialIndentation('i') end)
+vim.keymap.set('n', 'a', function() base.insertWithInitialIndentation('a') end)

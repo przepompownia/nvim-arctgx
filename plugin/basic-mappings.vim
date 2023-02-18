@@ -3,8 +3,6 @@ scriptencoding utf-8
 for i in range(1, 12)
   execute 'map <F' .. (12 + i) .. '> <S-F' .. i .. '>'
 endfor
-nnoremap i <Cmd>call arctgx#arctgx#insertWithInitialIndentation('i')<CR>
-nnoremap a <Cmd>call arctgx#arctgx#insertWithInitialIndentation('a')<CR>
 nnoremap <Leader>fcc <Cmd>let @+ = expand('%:.')<CR>
 tnoremap <expr> <M-p> '<C-\><C-N>"' .. nr2char(getchar()) .. 'pi'
 nnoremap <C-Tab> <Cmd>tabNext<CR>
