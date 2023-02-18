@@ -2,6 +2,7 @@ local api = vim.api
 
 local augroup = api.nvim_create_augroup('FugitiveConfig', {clear = true})
 api.nvim_create_autocmd('BufReadPost', {
+  group = augroup,
   pattern = 'fugitive://*',
   callback = function (params)
     api.nvim_buf_set_option(params.buf, 'bufhidden', 'delete')
@@ -9,12 +10,14 @@ api.nvim_create_autocmd('BufReadPost', {
 })
 api.nvim_create_autocmd('User', {
   pattern = 'FugitiveChanged',
+  group = augroup,
   callback = function (params)
     api.nvim_exec_autocmds('User', {pattern = 'ChangeIdeStatus', modeline = false})
   end
 })
 api.nvim_create_autocmd('FileType', {
   pattern = 'gitcommit',
+  group = augroup,
   callback = function (params)
     vim.cmd([[
       inoremap <buffer> <F3> <C-\><C-n>:q<CR>
@@ -23,6 +26,7 @@ api.nvim_create_autocmd('FileType', {
 })
 api.nvim_create_autocmd('FileType', {
   pattern = {'git', 'fugitiveblame', 'fugitive'},
+  group = augroup,
   callback = function (params)
    vim.keymap.set('n', 'q', vim.cmd.quit)
   end
