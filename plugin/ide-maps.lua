@@ -155,6 +155,3 @@ api.nvim_create_autocmd({'FileType'}, {
     keymap.loadKeyToPlugMappings(keyToPlugMappings, params.buf)
   end,
 })
-
-api.nvim_create_user_command('IDEMapsEdit', vim.fn['arctgx#arctgx#editIDEMaps'], {})
-api.nvim_create_user_command('IDEMapsReload', vim.fn['arctgx#arctgx#reloadIDEMaps'], {})

@@ -5,17 +5,6 @@ endfunction
 " vint: next-line -ProhibitUnusedVariable
 let s:arctgxBundleDir = simplify(fnamemodify(expand('<sfile>:p:h:h:h'), ':p'))
 
-function! s:listIdeSources() abort
-  let l:ideSources = [
-        \ {'source': 'plugin/ide-maps.lua', 'action': 'edit'},
-        \ {'source': 'lua/arctgx/lsp.lua', 'action': 'vsplit'},
-        \ {'source': 'bundleConfig/nvim-lspconfig.lua', 'action': 'split'},
-        \ {'source': 'bundleConfig/nvim-cmp.lua', 'action': 'split'},
-        \ {'source': 'bundleConfig/nvim-dap.lua', 'action': 'split'},
-        \ ]
-  return map(l:ideSources, {_, item -> {'source': s:arctgxBundleDir . item['source'], 'action': item['action']}})
-endfunction
-
 function! arctgx#arctgx#enablePrivateMode() abort
   set history=0
   set nobackup
@@ -35,30 +24,4 @@ function! arctgx#arctgx#sudowq() abort
   endif
   exe 'w !sudo tee % > /dev/null'
   exe 'e!'
-endfunction
-
-function! arctgx#arctgx#editIDEMaps() abort
-  tabnew
-  let l:ideSources = s:listIdeSources()
-  for l:item in l:ideSources
-    if (!filereadable(l:item['source']))
-      continue
-    endif
-    let l:action = l:item['action']
-    execute printf('%s %s', l:action, l:item['source'])
-  endfor
-
-  wincmd w
-endfunction
-
-function! arctgx#arctgx#reloadIDEMaps() abort
-  let l:ideSources = s:listIdeSources()
-  for l:item in l:ideSources
-    if (!filereadable(l:item['source']))
-      continue
-    endif
-    execute 'source ' l:item['source']
-  endfor
-
-  wincmd w
 endfunction
