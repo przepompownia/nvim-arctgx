@@ -1,5 +1,5 @@
 local cmp = require 'cmp'
-local cmp_buffer = require('cmp_buffer')
+local cmpBuffer = require('cmp_buffer')
 local luasnip = require('luasnip')
 
 local hasWordsBefore = function()
@@ -69,7 +69,7 @@ cmp.setup({
       cmp.config.compare.exact,
       cmp.config.compare.recently_used,
       cmp.config.compare.locals,
-      function(...) return cmp_buffer:compare_locality(...) end,
+      function(...) return cmpBuffer:compare_locality(...) end,
     }
   },
   completion = {

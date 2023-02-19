@@ -141,22 +141,6 @@ local globalMappings = {
   ['<Esc>'] = {rhs = '<Plug>(ide-close-popup)'},
 }
 
-local sequencesToReuseInInsertMode = {
-  '<F1>',
-  '<F4>',
-  '<F11>',
-  '<F12>',
-  '<S-F1>',
-  '<S-F2>',
-  '<S-F4>',
-  '<S-F11>',
-  '<S-F12>',
-}
-
-for _, sequence in ipairs(sequencesToReuseInInsertMode) do
-  vim.api.nvim_cmd({cmd = 'inoremap', args = { sequence, '<C-o>' .. sequence }}, {})
-end
-
 keymap.loadKeyToPlugMappings(globalMappings)
 
 local augroup = api.nvim_create_augroup('IdeMapsLua', {clear = true})
