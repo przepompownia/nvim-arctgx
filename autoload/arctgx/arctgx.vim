@@ -37,12 +37,6 @@ function! arctgx#arctgx#sudowq() abort
   exe 'e!'
 endfunction
 
-function! arctgx#arctgx#openShell(directory) abort
-  botright new
-
-  call termopen(&shell, {'cwd': a:directory})
-endfunction
-
 function! arctgx#arctgx#editIDEMaps() abort
   tabnew
   let l:ideSources = s:listIdeSources()

@@ -16,5 +16,13 @@ vim.api.nvim_create_autocmd('TermClose', {
 })
 
 vim.api.nvim_create_user_command('Shell', function ()
-  vim.fn['arctgx#arctgx#openShell'](vim.fn.fnamemodify(vim.fn.bufname(''), ':h'))
+  local cwd = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(0), ':h')
+  vim.notify(cwd)
+  vim.cmd.new({mods = {split = 'botright'}})
+  vim.fn.termopen(
+    vim.opt.shell:get(),
+    {
+      cwd = cwd,
+    }
+  )
 end, {})
