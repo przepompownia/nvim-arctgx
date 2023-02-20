@@ -28,12 +28,6 @@ require('bqf').setup({
     ptogglemode = 'z,',
     stoggleup = '',
   },
-  filter = {
-    fzf = {
-      action_for = {['<CR>'] = 'TabDrop'},
-      extra_opts = {'--bind', 'ctrl-o:toggle-all', '--prompt', '> '}
-    }
-  }
 })
 
 local function tabDropHandler()
