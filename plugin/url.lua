@@ -1,0 +1,8 @@
+local base = require('arctgx.base')
+local url  = require('arctgx.url')
+vim.keymap.set('n', '<Plug>(ide-url-open-operator)', function ()
+  base.runOperator("v:lua.require'arctgx.url'.openWithOperator")
+end)
+vim.keymap.set('v', '<Plug>(ide-url-open-operator)', function ()
+  url.open(base.getVisualSelection())
+end)
