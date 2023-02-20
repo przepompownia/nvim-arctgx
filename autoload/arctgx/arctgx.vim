@@ -1,10 +1,3 @@
-function! arctgx#arctgx#getInitialVimDirectory() abort
-  return get(g:, 'initialVimDirectory', expand('~/.vim'))
-endfunction
-
-" vint: next-line -ProhibitUnusedVariable
-let s:arctgxBundleDir = simplify(fnamemodify(expand('<sfile>:p:h:h:h'), ':p'))
-
 function! arctgx#arctgx#enablePrivateMode() abort
   set history=0
   set nobackup
