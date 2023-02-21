@@ -19,17 +19,9 @@ function arctgx#term#loadConfiguration(configDir)
     colorscheme desert
   endif
 
-  if !empty($TMUX)
-    call s:loadSingleConfig(a:configDir, 'tmux')
-  endif
-
   if $TERM == 'nvim'
     set guicursor=n-v-c:block-Cursor/lCursor-blinkon0,i-ci:ver25-Cursor/lCursor,r-cr:hor20-Cursor/lCursor
     map ® <A-.>
     map  <C-/>
-  endif
-
-  if $TERM =~ 'rxvt-unicode$'
-    call s:loadSingleConfig(a:configDir, 'rxvt-unicode')
   endif
 endfunction
