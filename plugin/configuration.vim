@@ -1,12 +1,3 @@
-function! s:configureHighlight(background) abort
-  let l:path = simplify(fnamemodify(printf(
-        \ '%s/../colors/%s.lua',
-        \ s:path,
-        \ a:background
-        \ ), ':p'))
-  call arctgx#base#sourceFile(l:path)
-endfunction
-
 function s:loadTermConfiguration(configDir)
   let &t_SI .= "\<Esc>[4 q"
   let &t_EI .= "\<Esc>[2 q"
@@ -36,21 +27,6 @@ try
   call arctgx#bundle#loadCustomConfigurations(g:bundle_dirs, s:bundleConfigDir)
   set termguicolors
   call s:loadTermConfiguration(s:path . '/../termConfig')
-  call s:configureHighlight(&background)
 catch /^Vim\%((\a\+)\)\=:E117/
   echomsg v:exception
 endtry
-
-augroup ConfigureHighlight
-  autocmd!
-  autocmd ColorScheme *
-        \ call s:configureHighlight(&background)
-augroup END
-
-augroup AfterVimEnter
-  autocmd!
-  autocmd VimEnter * ++nested set background=dark
-  autocmd VimEnter * :clearjumps
-augroup END
-
-command! -complete=packadd -nargs=1 Packadd call arctgx#bundle#packadd(<q-args>, s:bundleConfigDir)
