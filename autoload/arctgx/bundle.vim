@@ -18,12 +18,6 @@ function! arctgx#bundle#listAllBundles(bundleDir) abort
   return l:all_plugins
 endfunction
 
-function! arctgx#bundle#isEnabled(bundle, bundleDir) abort
-  let l:rtp = split(&runtimepath, ',')
-  let l:absoluteBundlePath = expand(a:bundleDir.'/'.a:bundle)
-  return index(l:rtp, l:absoluteBundlePath) >= 0 && isdirectory(l:absoluteBundlePath)
-endfunction
-
 function! arctgx#bundle#loadSingleCustomConfiguration(bundle, bundleConfigDir) abort
   let l:bundle = substitute(a:bundle, '\.\(lua\)$', '', '')
   let l:config = a:bundleConfigDir . l:bundle

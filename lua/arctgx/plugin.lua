@@ -6,16 +6,13 @@ function plugin.loadCustomConfiguration(pluginDirs, pluginConfigDir)
   end
 end
 
-local function isEnabled(pluginName, pluginDir)
-end
-
 function plugin.loadSingleConfiguration(pluginDir, pluginConfigDir)
   if 0 == vim.fn.isdirectory(pluginDir) then
     return
   end
 
   for _, pluginName in ipairs(vim.fn['arctgx#bundle#listAllBundles'](pluginDir)) do
-    if 1 == vim.fn['arctgx#bundle#isEnabled'](pluginName, pluginDir) then
+    if vim.tbl_contains(vim.opt.runtimepath:get(), vim.loop.fs_realpath(pluginDir .. '/' .. pluginName)) then
       vim.fn['arctgx#bundle#loadSingleCustomConfiguration'](pluginName, pluginConfigDir)
     end
   end
