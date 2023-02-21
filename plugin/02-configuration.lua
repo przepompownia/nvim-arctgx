@@ -14,6 +14,10 @@ local function configureHighlight()
   dofile(path)
 end
 
+if vim.tbl_isempty(vim.g.pluginDirs) then
+  vim.notify('Empty vim.g.pluginDirs', vim.log.levels.ERROR)
+end
+
 plugin.loadCustomConfiguration(vim.g.pluginDirs, pluginConfigDir)
 
 api.nvim_create_autocmd('ColorScheme', {

@@ -24,19 +24,6 @@ function! arctgx#bundle#isEnabled(bundle, bundleDir) abort
   return index(l:rtp, l:absoluteBundlePath) >= 0 && isdirectory(l:absoluteBundlePath)
 endfunction
 
-function! arctgx#bundle#loadCustomConfiguration(bundleDir, bundleConfigDir) abort
-  if !isdirectory(a:bundleConfigDir)
-    return
-  endif
-
-  for l:bundle in arctgx#bundle#listAllBundles(a:bundleDir)
-    if !arctgx#bundle#isEnabled(l:bundle, a:bundleDir)
-      continue
-    endif
-    call arctgx#bundle#loadSingleCustomConfiguration(l:bundle, a:bundleConfigDir)
-  endfor
-endfunction
-
 function! arctgx#bundle#loadSingleCustomConfiguration(bundle, bundleConfigDir) abort
   let l:bundle = substitute(a:bundle, '\.\(lua\)$', '', '')
   let l:config = a:bundleConfigDir . l:bundle

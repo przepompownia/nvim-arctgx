@@ -18,8 +18,6 @@ function s:loadTermConfiguration()
   endif
 endfunction
 
-let s:path = expand('<sfile>:p:h')
-let s:bundleConfigDir = simplify(s:path . '/../bundleConfig/')
 let g:bundle_dirs = get(g:, 'bundle_dirs', [])
 try
   if empty(g:bundle_dirs)
