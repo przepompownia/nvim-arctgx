@@ -1,12 +1,3 @@
-function s:loadSingleConfig(configDir, config)
-  let l:config = expand(a:configDir .'/'. a:config.'.vim')
-  try
-    call arctgx#base#sourceFile(l:config)
-  catch
-    echom v:exception
-  endtry
-endfunction
-
 function arctgx#term#loadConfiguration(configDir)
   let &t_SI .= "\<Esc>[4 q"
   let &t_EI .= "\<Esc>[2 q"
