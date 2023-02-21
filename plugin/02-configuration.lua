@@ -37,5 +37,6 @@ api.nvim_create_autocmd('VimEnter', {
 })
 
 api.nvim_create_user_command('Packadd', function (opts)
-  vim.fn['arctgx#bundle#packadd'](opts.args, bundleConfigDir)
+  vim.fn['arctgx#bundle#loadSingleCustomConfiguration'](opts.args, bundleConfigDir)
+  vim.cmd.packadd(opts.args)
 end, {nargs = 1, complete = 'packadd'})
