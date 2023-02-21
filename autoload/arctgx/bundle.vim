@@ -44,15 +44,11 @@ function! arctgx#bundle#loadCustomConfiguration(bundleDir, bundleConfigDir) abor
 endfunction
 
 function! arctgx#bundle#loadSingleCustomConfiguration(bundle, bundleConfigDir) abort
-  let l:bundle = substitute(a:bundle, '\.\(vim\|lua\)$', '', '')
+  let l:bundle = substitute(a:bundle, '\.\(lua\)$', '', '')
   let l:config = a:bundleConfigDir . l:bundle
   try
-    call s:sourceFile(l:config . '.vim')
+    call s:sourceFile(l:config . '.lua')
   catch /^Config \/.* does not exist\.$/
-    try
-      call s:sourceFile(l:config . '.lua')
-    catch /^Config \/.* does not exist\.$/
-      " echom v:exception
-    endtry
+    " echom v:exception
   endtry
 endfunction
