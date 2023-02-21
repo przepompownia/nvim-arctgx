@@ -8,7 +8,8 @@ function s:loadSingleConfig(configDir, config)
 endfunction
 
 function arctgx#term#loadConfiguration(configDir)
-  call s:loadSingleConfig(a:configDir, 'all')
+  let &t_SI .= "\<Esc>[4 q"
+  let &t_EI .= "\<Esc>[2 q"
 
   if exists('g:GuiLoaded') || has('gui_running')
     return
