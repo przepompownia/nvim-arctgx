@@ -24,12 +24,6 @@ function! arctgx#bundle#isEnabled(bundle, bundleDir) abort
   return index(l:rtp, l:absoluteBundlePath) >= 0 && isdirectory(l:absoluteBundlePath)
 endfunction
 
-function! arctgx#bundle#loadCustomConfigurations(bundleDirs, bundleConfigDir) abort
-  for l:dir in a:bundleDirs
-    call arctgx#bundle#loadCustomConfiguration(l:dir, a:bundleConfigDir)
-  endfor
-endfunction
-
 function! arctgx#bundle#loadCustomConfiguration(bundleDir, bundleConfigDir) abort
   if !isdirectory(a:bundleConfigDir)
     return

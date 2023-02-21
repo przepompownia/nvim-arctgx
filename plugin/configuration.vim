@@ -1,4 +1,4 @@
-function s:loadTermConfiguration(configDir)
+function s:loadTermConfiguration()
   let &t_SI .= "\<Esc>[4 q"
   let &t_EI .= "\<Esc>[2 q"
 
@@ -9,6 +9,7 @@ function s:loadTermConfiguration(configDir)
   if $TERM == 'linux'
     colorscheme desert
   endif
+  " vim.keymap.set('i', '', '<C-BS>')
 
   if $TERM == 'nvim'
     set guicursor=n-v-c:block-Cursor/lCursor-blinkon0,i-ci:ver25-Cursor/lCursor,r-cr:hor20-Cursor/lCursor
@@ -24,9 +25,9 @@ try
   if empty(g:bundle_dirs)
     throw 'Empty g:bundle_dirs'
   endif
-  call arctgx#bundle#loadCustomConfigurations(g:bundle_dirs, s:bundleConfigDir)
+
   set termguicolors
-  call s:loadTermConfiguration(s:path . '/../termConfig')
+  call s:loadTermConfiguration()
 catch /^Vim\%((\a\+)\)\=:E117/
   echomsg v:exception
 endtry

@@ -1,6 +1,7 @@
+local plugin = require 'arctgx.plugin'
 local api = vim.api
 local configDir = vim.fn.expand('<sfile>:p:h')
-local bundleConfigDir = vim.fn.simplify(configDir .. '/../bundleConfig/')
+local pluginConfigDir = vim.fn.simplify(configDir .. '/../bundleConfig/')
 
 local augroupHighlight = api.nvim_create_augroup('ConfigureHighlight', {clear = true})
 local augroupAfterVimEnter = api.nvim_create_augroup('AfterVimEnter', {clear = true})
@@ -12,6 +13,8 @@ local function configureHighlight()
   ))
   dofile(path)
 end
+
+plugin.loadCustomConfiguration(vim.g.pluginDirs, pluginConfigDir)
 
 api.nvim_create_autocmd('ColorScheme', {
   group = augroupHighlight,
@@ -37,6 +40,6 @@ api.nvim_create_autocmd('VimEnter', {
 })
 
 api.nvim_create_user_command('Packadd', function (opts)
-  vim.fn['arctgx#bundle#loadSingleCustomConfiguration'](opts.args, bundleConfigDir)
+  vim.fn['arctgx#bundle#loadSingleCustomConfiguration'](opts.args, pluginConfigDir)
   vim.cmd.packadd(opts.args)
 end, {nargs = 1, complete = 'packadd'})
