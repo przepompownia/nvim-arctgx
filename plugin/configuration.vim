@@ -1,6 +1,6 @@
 function! s:configureHighlight(background) abort
   let l:path = simplify(fnamemodify(printf(
-        \ '%s/../colors/%s.vim',
+        \ '%s/../colors/%s.lua',
         \ s:path,
         \ a:background
         \ ), ':p'))

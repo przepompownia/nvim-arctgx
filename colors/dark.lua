@@ -1,0 +1,38 @@
+do
+  local api = vim.api
+  local highlights = {
+    IdeFloating = {bg='#808080'},
+    IdeDiagnosticError = {bg='#440000'},
+    IdeDiagnosticWarning = {bg='#442200'},
+    IdeDiagnosticInfo = {bg='#345588'},
+    IdeDiagnosticHint = {bg='#884499'},
+    IdeErrorFloat = {bg=NONE, fg='#442200'},
+    IdeHintFloat = {bg=NONE, fg='#cc88dd'},
+    IdeWarningFloat = {bg=NONE, fg='#ff8800'},
+    IdeInfoFloat = {bg=NONE, fg='#afffff'},
+    IdeReferenceRead = {bg='#5B532C'},
+    IdeReferenceText = {bg='#2C3C5B'},
+    IdeReferenceWrite = {bg='#4B281D'},
+    IdeBreakpointSign = {fg='#1212ff'},
+    IdeInfoSign = {fg = '#afffff'},
+    IdeWarningSign = {fg = api.nvim_get_hl_by_name('WarningMsg', true).background},
+    IdeHintSign = {fg = '#884499'},
+    IdeErrorSign = {fg = '#440000'},
+    IdeBreakpointLineNr = {link = 'IdeBreakpointSign'},
+    IdeCodeWindowCurrentFrameSign = {fg = '#440000'},
+    IdeCodeWindowCurrentFrameLineNr = {link = 'IdeCodeWindowCurrentFrameSign'},
+    IdeGutterAdd = {fg = '#008800'},
+    IdeGutterChange = {fg = '#000088'},
+    IdeGutterDelete = {fg = '#880000'},
+    IdeGutterTopDelete = {fg = '#880000'},
+    IdeGutterChangeDelete = {fg = '#884400'},
+    IdeLineNrHint = {link = 'IdeHintSign'},
+    IdeLineNrInfo = {link = 'IdeInfoSign'},
+    IdeLineNrWarning = {link = 'IdeWarningSign'},
+    IdeLineNrError = {link = 'IdeErrorSign'},
+  }
+
+  for name, def in pairs(highlights) do
+    vim.api.nvim_set_hl(0, name, def)
+  end
+end
