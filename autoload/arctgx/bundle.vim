@@ -1,12 +1,3 @@
-function! s:sourceFile(path) abort
-  if !filereadable(a:path)
-    throw printf('Config %s does not exist.', a:path)
-    return
-  endif
-
-  execute 'source ' . a:path
-endfunction
-
 function! arctgx#bundle#listAllBundles(bundleDir) abort
   let l:all_plugins = []
   let l:plugin_paths = globpath(a:bundleDir, '*', 1, 1)
@@ -16,14 +7,4 @@ function! arctgx#bundle#listAllBundles(bundleDir) abort
   endfor
 
   return l:all_plugins
-endfunction
-
-function! arctgx#bundle#loadSingleCustomConfiguration(bundle, bundleConfigDir) abort
-  let l:bundle = substitute(a:bundle, '\.\(lua\)$', '', '')
-  let l:config = a:bundleConfigDir . l:bundle
-  try
-    call s:sourceFile(l:config . '.lua')
-  catch /^Config \/.* does not exist\.$/
-    " echom v:exception
-  endtry
 endfunction

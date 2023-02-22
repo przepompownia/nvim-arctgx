@@ -2,20 +2,23 @@ local plugin = {}
 
 function plugin.loadCustomConfiguration(pluginDirs, pluginConfigDir)
   for _, pluginDir in ipairs(pluginDirs) do
-    plugin.loadSingleConfiguration(pluginDir, pluginConfigDir)
+    for _, pluginName in ipairs(vim.fn['arctgx#bundle#listAllBundles'](pluginDir)) do
+      if vim.tbl_contains(vim.opt.runtimepath:get(), vim.loop.fs_realpath(pluginDir .. '/' .. pluginName)) then
+        plugin.loadSingleConfiguration(pluginName, pluginConfigDir)
+      end
+    end
   end
 end
 
-function plugin.loadSingleConfiguration(pluginDir, pluginConfigDir)
-  if 0 == vim.fn.isdirectory(pluginDir) then
+function plugin.loadSingleConfiguration(pluginName, pluginConfigDir)
+  local pluginFilePath = vim.loop.fs_realpath(pluginConfigDir .. '/' .. pluginName:gsub('%.lua$', '') .. '.lua')
+
+  if nil == pluginFilePath then
+    -- vim.notify(('Config %s does not exist'):format(pluginName))
     return
   end
 
-  for _, pluginName in ipairs(vim.fn['arctgx#bundle#listAllBundles'](pluginDir)) do
-    if vim.tbl_contains(vim.opt.runtimepath:get(), vim.loop.fs_realpath(pluginDir .. '/' .. pluginName)) then
-      vim.fn['arctgx#bundle#loadSingleCustomConfiguration'](pluginName, pluginConfigDir)
-    end
-  end
+  dofile(pluginFilePath)
 end
 
 return plugin
