@@ -8,13 +8,6 @@ api.nvim_create_autocmd('BufReadPost', {
     api.nvim_buf_set_option(params.buf, 'bufhidden', 'delete')
   end
 })
-api.nvim_create_autocmd('User', {
-  pattern = 'FugitiveChanged',
-  group = augroup,
-  callback = function (params)
-    api.nvim_exec_autocmds('User', {pattern = 'ChangeIdeStatus', modeline = false})
-  end
-})
 api.nvim_create_autocmd('FileType', {
   pattern = 'gitcommit',
   group = augroup,
