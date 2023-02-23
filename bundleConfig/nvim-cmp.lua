@@ -1,6 +1,4 @@
 local cmp = require 'cmp'
-local cmpBuffer = require('cmp_buffer')
-local luasnip = require('luasnip')
 
 local hasWordsBefore = function()
   local line, col = unpack(vim.api.nvim_win_get_cursor(0))
@@ -14,10 +12,11 @@ cmp.setup({
     end,
   },
   mapping = cmp.mapping.preset.insert({
-    ['<C-d>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), {'i', 'c'}),
-    ['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(4), {'i', 'c'}),
-    ['<Plug>(ide-trigger-completion)'] = cmp.mapping(cmp.mapping.complete(), {'i', 'c'}),
+    ['<C-d>'] = cmp.mapping.scroll_docs(-4),
+    ['<C-f>'] = cmp.mapping.scroll_docs(4),
+    ['<Plug>(ide-trigger-completion)'] = cmp.mapping.complete({}),
     ['<Tab>'] = cmp.mapping(function(fallback)
+      local luasnip = require('luasnip')
       if cmp.visible() then
         cmp.select_next_item()
       elseif luasnip.expand_or_locally_jumpable() then
@@ -40,9 +39,7 @@ cmp.setup({
       end
     end, {'i', 's'}),
     ['<C-y>'] = cmp.mapping.confirm({select = true}),
-    ['<C-e>'] = cmp.mapping({
-      i = cmp.mapping.abort(),
-    }),
+    ['<C-e>'] = cmp.mapping.abort(),
     ['<CR>'] = cmp.mapping.confirm({select = true}),
     ['<C-s>'] = cmp.mapping.complete({
       config = {
@@ -69,7 +66,7 @@ cmp.setup({
       cmp.config.compare.exact,
       cmp.config.compare.recently_used,
       cmp.config.compare.locals,
-      function(...) return cmpBuffer:compare_locality(...) end,
+      function(...) return require('cmp_buffer'):compare_locality(...) end,
     }
   },
   completion = {
