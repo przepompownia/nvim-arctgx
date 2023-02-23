@@ -14,6 +14,8 @@ local function configureHighlight()
   dofile(path)
 end
 
+vim.go.termguicolors = true
+
 if vim.tbl_isempty(vim.g.pluginDirs) then
   vim.notify('Empty vim.g.pluginDirs', vim.log.levels.ERROR)
 end
