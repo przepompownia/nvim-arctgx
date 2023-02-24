@@ -1,7 +1,3 @@
-if nil == vim.g.bundle_dirs then
-  error('Set optional extension directory (g:bundle_dirs) before')
-end
-
 vim.g.mapleader = ','
 vim.go.mouse = 'a'
 vim.go.mousemodel = 'extend'
