@@ -192,4 +192,15 @@ function base.insertWithInitialIndentation(modeCharacter)
   api.nvim_feedkeys(api.nvim_replace_termcodes('<C-f>', true, false, true), 'n', false)
 end
 
+function base.enablePrivateMode()
+  vim.opt_global.history = 0
+  vim.opt_global.backup = false
+  vim.opt_global.modeline = false
+  vim.opt_global.shelltemp = false
+  vim.opt_global.swapfile = false
+  vim.opt_global.undofile = false
+  vim.opt_global.writebackup = false
+  vim.opt.shada = nil
+end
+
 return base
