@@ -1,6 +1,5 @@
-local widgets = require "arctgx.widgets"
+local widgets = require 'arctgx.widgets'
 local arctgxString = require('arctgx.string')
-local telescope = require('arctgx.telescope')
 local nord = require('lualine.themes.nord')
 
 local function formatFilename(name)
@@ -28,7 +27,7 @@ require('lualine').setup({
         'branch',
         on_click = function (numberOfClicks, button, modifiers)
           if 'r' == button then
-            telescope.branches()
+            require('arctgx.telescope').branches()
           end
         end
       },
