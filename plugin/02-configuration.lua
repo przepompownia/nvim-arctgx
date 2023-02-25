@@ -1,7 +1,7 @@
 local plugin = require 'arctgx.plugin'
 local api = vim.api
 local configDir = vim.fn.expand('<sfile>:p:h')
-local pluginConfigDir = vim.fn.simplify(configDir .. '/../bundleConfig/')
+local pluginConfigDir = vim.fn.simplify(configDir .. '/../pluginConfigs/')
 
 local augroupHighlight = api.nvim_create_augroup('ConfigureHighlight', {clear = true})
 local augroupAfterVimEnter = api.nvim_create_augroup('AfterVimEnter', {clear = true})
