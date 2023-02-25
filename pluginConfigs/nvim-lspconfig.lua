@@ -37,7 +37,7 @@ configs.phpactor = {
     },
     cmd = {
       -- 'phpxx',
-      vim.fn.stdpath('config')..'/pack/bundle/opt/phpactor/bin/phpactor',
+      vim.fn.exepath('phpactor')
       'language-server',
       -- '-vvv',
     },
