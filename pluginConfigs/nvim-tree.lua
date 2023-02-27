@@ -36,6 +36,12 @@ require('nvim-tree').setup({
     )
     vim.keymap.set(
       'n',
+      'q',
+      vim.cmd.quit,
+      {buffer = bufnr}
+    )
+    vim.keymap.set(
+      'n',
       '<Right>',
       function ()
         local node = require('nvim-tree.api').tree.get_node_under_cursor()
