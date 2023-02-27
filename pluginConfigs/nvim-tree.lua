@@ -19,12 +19,12 @@ require('nvim-tree').setup({
     },
   },
   on_attach = function(bufnr)
-    local inject_node = require('nvim-tree.utils').inject_node
+    local injectNode = require('nvim-tree.utils').inject_node
 
     vim.keymap.set(
       'n',
       '<CR>',
-      inject_node(function(node)
+      injectNode(function(node)
         if nil == node.nodes then
           require('nvim-tree.api').tree.close()
           base.tab_drop_path(node.absolute_path)
