@@ -1,7 +1,9 @@
 local base = require('arctgx.base')
 local neogit = require('neogit')
 
-neogit.setup {}
+neogit.setup {
+  disable_builtin_notifications = true,
+}
 
 local function getTopDir()
   return require('arctgx.git').top(base.getBufferCwd())
