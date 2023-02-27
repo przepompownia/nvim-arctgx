@@ -1,7 +1,6 @@
 local api = vim.api
 local keymap = require('vim.keymap')
 local base = require('arctgx.base')
-local arctgxKeymap = require('arctgx.vim.keymap')
 local session = require('arctgx.session')
 
 vim.g.loaded_netrw = 1
@@ -46,7 +45,7 @@ require('nvim-tree').setup({
       function ()
         local node = require('nvim-tree.api').tree.get_node_under_cursor()
         if nil == node.nodes then
-          return arctgxKeymap.feedKeys('<Right>')
+          return require('arctgx.vim.keymap').feedKeys('<Right>')
         end
         require('nvim-tree.lib').expand_or_collapse(node)
       end,
