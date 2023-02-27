@@ -3,6 +3,7 @@ local neogit = require('neogit')
 
 neogit.setup {
   disable_builtin_notifications = true,
+  disable_commit_confirmation = true,
 }
 
 local function getTopDir()
