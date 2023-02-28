@@ -23,7 +23,7 @@ local function findValidId(callback)
 end
 
 function WindowHistory.jumpOnTop()
-  local top = findValidId(function() history:top() end)
+  local top = findValidId(function() return history:top() end)
   if nil == top then
     return
   end
