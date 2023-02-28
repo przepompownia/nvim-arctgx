@@ -138,6 +138,7 @@ lspconfig.lua_ls.setup {
       },
       window = {
         statusBar = false,
+        progressBar = false,
       },
     },
   },
