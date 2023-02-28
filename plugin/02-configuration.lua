@@ -45,6 +45,13 @@ api.nvim_create_autocmd('VimEnter', {
   end,
 })
 
+vim.api.nvim_create_autocmd('UIEnter', {
+  once = true,
+  callback = function(args)
+    require 'arctgx.ginit'
+  end
+})
+
 api.nvim_create_user_command('Packadd', function (opts)
   vim.cmd.packadd(opts.args)
   plugin.loadSingleConfiguration(opts.args, pluginConfigDir)
