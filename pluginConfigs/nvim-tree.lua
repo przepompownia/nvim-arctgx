@@ -18,6 +18,7 @@ require('nvim-tree').setup({
     },
   },
   on_attach = function(bufnr)
+    require('nvim-tree.keymap').default_on_attach(bufnr)
     local injectNode = require('nvim-tree.utils').inject_node
 
     vim.keymap.set(
@@ -32,12 +33,6 @@ require('nvim-tree').setup({
         require('nvim-tree.lib').expand_or_collapse(node)
       end),
       {buffer = bufnr, noremap = true}
-    )
-    vim.keymap.set(
-      'n',
-      'q',
-      vim.cmd.quit,
-      {buffer = bufnr}
     )
     vim.keymap.set(
       'n',
