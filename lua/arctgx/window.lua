@@ -44,10 +44,6 @@ function extension.onWinEnter()
   if isPopup(winId) then
     return
   end
-
-  -- local bufId = api.nvim_win_get_buf(winId)
-  -- print(('History: adding window for %s buffer %s (id: %s)'):format(api.nvim_buf_get_option(bufId, 'filetype'), api.nvim_buf_get_name(bufId), bufId))
-  -- print(vim.inspect(api.nvim_win_get_config(winId)))
   windowhistory.getInstance():putOnTop(winId)
 end
 
@@ -56,12 +52,8 @@ function extension.onWinClosed(winId)
     return
   end
 
-  vim.notify(('Removed window for buffer %s'):format(api.nvim_buf_get_name(api.nvim_win_get_buf(winId))))
   windowhistory.getInstance():remove(winId)
   windowhistory.jumpOnTop()
-  -- if api.nvim_win_is_valid() then
-  --   api.nvim_win_close(winId, true)
-  -- end
 end
 
 return extension
