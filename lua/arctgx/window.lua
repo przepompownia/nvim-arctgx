@@ -4,7 +4,7 @@ local api = vim.api
 local extension = {}
 
 ---@param filetype string
----@param callback fun(winId: int): any
+---@param callback fun(winId: integer): any
 function extension.forEachWindowWithBufFileType(filetype, callback)
   local function runWithBuffer(winId)
     if not api.nvim_win_is_valid(winId) then
