@@ -11,7 +11,7 @@ end
 
 ---comment
 ---@param callback function:integer
----@return unknown
+---@return integer?
 local function findValidId(callback)
   local winId = callback()
   while nil ~= winId and not api.nvim_win_is_valid(winId) do
@@ -45,7 +45,11 @@ end
 function WindowHistory.debug()
   local historyWithNames = {}
   for _, winId in ipairs(history) do
-    historyWithNames[winId] = api.nvim_buf_get_name(api.nvim_win_get_buf(winId))
+    if api.nvim_win_is_valid(winId) then
+      historyWithNames[winId] = api.nvim_buf_get_name(api.nvim_win_get_buf(winId))
+    else
+      history:remove(winId)
+    end
   end
 
   return historyWithNames
