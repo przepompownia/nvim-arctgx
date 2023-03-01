@@ -97,10 +97,6 @@ local function focusOnFile()
   treeapi.tree.find_file(bufName)
 end
 
--- @todo
--- cursorline
--- shell on node dir
-
 keymap.set({'n'}, '<Plug>(ide-tree-focus-current-file)', focusOnFile)
 
 session.appendBeforeSaveHook('Close nvim-tree instances', function ()
