@@ -33,6 +33,7 @@ end
 vim.opt.jumpoptions:append('view')
 
 vim.go.foldlevelstart = 99
+vim.wo.foldcolumn = 'auto'
 vim.wo.number = 1
 vim.wo.numberwidth = 1
 vim.go.winminheight = 0
