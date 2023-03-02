@@ -26,10 +26,6 @@ do
     IdeGutterDelete = {fg = '#880000'},
     IdeGutterTopDelete = {fg = '#880000'},
     IdeGutterChangeDelete = {fg = '#884400'},
-    IdeLineNrHint = {link = 'IdeHintSign'},
-    IdeLineNrInfo = {link = 'IdeInfoSign'},
-    IdeLineNrWarning = {link = 'IdeWarningSign'},
-    IdeLineNrError = {link = 'IdeErrorSign'},
   }
 
   for name, def in pairs(highlights) do
