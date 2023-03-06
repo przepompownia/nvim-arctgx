@@ -18,7 +18,8 @@ require('nvim-tree').setup({
     },
   },
   on_attach = function(bufnr)
-    require('nvim-tree.keymap').default_on_attach(bufnr)
+    local treeapi = require('nvim-tree.api')
+    treeapi.config.mappings.default_on_attach(bufnr)
     local injectNode = require('nvim-tree.utils').inject_node
 
     vim.keymap.set(
@@ -26,7 +27,7 @@ require('nvim-tree').setup({
       '<CR>',
       injectNode(function(node)
         if nil == node.nodes then
-          require('nvim-tree.api').tree.close()
+          treeapi.tree.close()
           base.tab_drop_path(node.absolute_path)
           return
         end
@@ -38,7 +39,7 @@ require('nvim-tree').setup({
       'n',
       '<Right>',
       function ()
-        local node = require('nvim-tree.api').tree.get_node_under_cursor()
+        local node = treeapi.tree.get_node_under_cursor()
         if nil == node.nodes then
           return require('arctgx.vim.keymap').feedKeys('<Right>')
         end
@@ -49,7 +50,7 @@ require('nvim-tree').setup({
     vim.keymap.set(
       'n',
       '<Left>',
-      require('nvim-tree.api').node.navigate.parent_close,
+      treeapi.node.navigate.parent_close,
       {buffer = bufnr, noremap = true}
     )
   end,
