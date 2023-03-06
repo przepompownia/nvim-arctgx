@@ -7,6 +7,18 @@ local buf = require('arctgx.lsp.buf')
 
 local augroup = api.nvim_create_augroup('LspDocumentHighlight', {clear = true})
 
+function M.defaultClientCapabilities()
+  local capabilities = lsp.protocol.make_client_capabilities()
+  capabilities.workspace.didChangeWatchedFiles.dynamicRegistration = true
+  local cmpNvimLspOk, cmpNvimLsp = pcall(require, 'cmp_nvim_lsp')
+  if cmpNvimLspOk then
+    capabilities = vim.tbl_deep_extend('force', capabilities, cmpNvimLsp.default_capabilities(capabilities))
+  end
+  capabilities.textDocument.completion.completionItem.snippetSupport = true
+
+  return capabilities
+end
+
 function M.onAttach(client, bufnr)
   local function bufMap(modes, lhs, rhs, opts)
     opts = opts or {}

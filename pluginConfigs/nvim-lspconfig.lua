@@ -6,12 +6,7 @@ local vim = vim
 
 require('lspconfig.ui.windows').default_options.border = 'rounded'
 
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-local cmpNvimLspOk, cmpNvimLsp = pcall(require, 'cmp_nvim_lsp')
-if cmpNvimLspOk then
-  capabilities = cmpNvimLsp.default_capabilities(capabilities)
-end
-capabilities.textDocument.completion.completionItem.snippetSupport = true
+local capabilities = arctgxLsp.defaultClientCapabilities()
 
 lspconfig.jsonls.setup {
   filetypes = { 'json', 'jsonc' },
