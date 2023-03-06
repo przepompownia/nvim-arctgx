@@ -1,6 +1,6 @@
 local M = {}
 local api = vim.api
-local lsp = require('vim.lsp')
+local lsp = vim.lsp
 local diagnostic = require('vim.diagnostic')
 local keymap = require('vim.keymap')
 local buf = require('arctgx.lsp.buf')
@@ -9,7 +9,9 @@ local augroup = api.nvim_create_augroup('LspDocumentHighlight', {clear = true})
 
 function M.defaultClientCapabilities()
   local capabilities = lsp.protocol.make_client_capabilities()
-  capabilities.workspace.didChangeWatchedFiles.dynamicRegistration = true
+  if capabilities.workspace.didChangeWatchedFiles then
+    capabilities.workspace.didChangeWatchedFiles.dynamicRegistration = true
+  end
   local cmpNvimLspOk, cmpNvimLsp = pcall(require, 'cmp_nvim_lsp')
   if cmpNvimLspOk then
     capabilities = vim.tbl_deep_extend('force', capabilities, cmpNvimLsp.default_capabilities(capabilities))
