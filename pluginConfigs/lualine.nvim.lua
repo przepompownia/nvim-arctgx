@@ -1,11 +1,13 @@
-local widgets = require 'arctgx.widgets'
-local arctgxString = require('arctgx.string')
 local nord = require('lualine.themes.nord')
 
 local function formatFilename(name)
+  if 0 == #name then
+    return ''
+  end
+
   name = name:gsub('[.][^.]+$', '')
 
-  return arctgxString.shorten(name, 8)
+  return require('arctgx.string').shorten(name, 8)
 end
 
 local debugWidgetLength = 4
@@ -79,7 +81,7 @@ require('lualine').setup({
     },
     lualine_z = {
       {
-        widgets.renderDebug,
+        require('arctgx.widgets').renderDebug,
         max_length = debugWidgetLength,
       },
     }
