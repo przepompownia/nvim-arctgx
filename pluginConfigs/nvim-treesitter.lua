@@ -23,6 +23,7 @@ require'nvim-treesitter.configs'.setup {
     'php',
     'phpdoc',
     'python',
+    'regex',
     'query',
     'sql',
     'teal',
