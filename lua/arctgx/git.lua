@@ -31,18 +31,25 @@ function extension.push(relativeDir, remoteRepo)
   local stdout = {}
   local stderr = {}
 
+  local function printMessages(data, logLevel)
+    if 0 == #data then
+      return
+    end
+
+    local out = table.concat(data, '\n')
+    vim.notify(('%s: %s'):format(remoteRepo, out), logLevel)
+  end
+
   local job = createJob(relativeDir, {'push', remoteRepo}, {
-    on_stdout = function (error, data, self)
+    on_stdout = function (_, data, _)
       table.insert(stdout, data)
     end,
-    on_stderr = function (error, data, self)
+    on_stderr = function (_, data, _)
       table.insert(stderr, data)
     end,
     on_exit = function ()
-      local out = table.concat(stdout, '\n')
-      local err = table.concat(stderr, '\n')
-      vim.notify(('%s: %s'):format(remoteRepo, out), vim.log.levels.INFO)
-      vim.notify(('%s: %s'):format(remoteRepo, err), vim.log.levels.WARN)
+      printMessages(stdout, vim.log.levels.INFO)
+      printMessages(stderr, vim.log.levels.WARN)
     end
   })
 
