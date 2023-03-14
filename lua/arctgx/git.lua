@@ -30,6 +30,7 @@ end
 function extension.push(relativeDir, remoteRepo)
   local stdout = {}
   local stderr = {}
+  local logLevel = vim.log.levels.INFO
 
   local function printMessages(data, logLevel)
     if 0 == #data then
@@ -47,9 +48,13 @@ function extension.push(relativeDir, remoteRepo)
     on_stderr = function (_, data, _)
       table.insert(stderr, data)
     end,
-    on_exit = function ()
-      printMessages(stdout, vim.log.levels.INFO)
-      printMessages(stderr, vim.log.levels.WARN)
+    on_exit = function (_, exitCode, _)
+      if 0 < exitCode then
+        logLevel = vim.log.levels.ERROR
+      end
+
+      printMessages(stdout, logLevel)
+      printMessages(stderr, logLevel)
     end
   })
 
