@@ -1,11 +1,11 @@
 local extension = {}
 
-local function createJob(relativeDir, gitArgs)
-  return require('plenary.job'):new({
+local function createJob(relativeDir, gitArgs, jobOpts)
+  return require('plenary.job'):new(vim.tbl_deep_extend("force", {
     command = 'git',
     cwd = relativeDir,
     args = gitArgs,
-  })
+  }, jobOpts or {}))
 end
 
 function extension.top(relativeDir)
@@ -25,6 +25,35 @@ function extension.remote(relativeDir, gitRemoteOpts)
   local out, _ = job:result()
 
   return out
+end
+
+function extension.push(relativeDir, remoteRepo)
+  local stdout = {}
+  local stderr = {}
+
+  local job = createJob(relativeDir, {'push', remoteRepo}, {
+    on_stdout = function (error, data, self)
+      table.insert(stdout, data)
+    end,
+    on_stderr = function (error, data, self)
+      table.insert(stderr, data)
+    end,
+    on_exit = function ()
+      local out = table.concat(stdout, '\n')
+      local err = table.concat(stderr, '\n')
+      vim.notify(('%s: %s'):format(remoteRepo, out), vim.log.levels.INFO)
+      vim.notify(('%s: %s'):format(remoteRepo, err), vim.log.levels.WARN)
+    end
+  })
+
+  job:start()
+end
+
+function extension.pushToAllRemoteRepos(relativeDir)
+  local repos = extension.remote(relativeDir)
+  for _, repo in ipairs(repos) do
+    extension.push(relativeDir, repo)
+  end
 end
 
 function extension.pushall(relativeDir)
