@@ -52,7 +52,7 @@ function base.tab_drop(path, line, column, relative_bufnr)
     return
   end
 
-  vim.cmd("normal! m'")
+  vim.cmd.normal({bang = true, args = {"m'"}})
 
   -- Push a new item into tagstack
   local from = { vim.fn.bufnr('%'), vim.fn.line('.'), vim.fn.col('.'), 0 }
