@@ -42,7 +42,7 @@ function base.tab_drop_path(path, relative_winnr)
     return
   end
 
-  vim.cmd(('tabedit %s'):format(vim.fn.fnameescape(filename)))
+  vim.cmd.tabedit(filename)
 end
 
 function base.tab_drop(path, line, column, relative_bufnr)
