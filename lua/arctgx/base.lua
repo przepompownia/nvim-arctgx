@@ -72,7 +72,7 @@ end
 ---@param column integer
 function base.tabDropToLineAndColumnWithMapping(path, mapping, line, column)
   local translateRemotePath = function ()
-    for remotePath, localPath in pairs(mapping) do
+    for remotePath, localPath in pairs(mapping or {}) do
       if vim.startswith(path, remotePath) then
         return path:gsub('^' .. remotePath, localPath)
       end
