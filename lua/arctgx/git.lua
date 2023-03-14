@@ -1,12 +1,37 @@
-local Job = require('plenary.job')
-
 local extension = {}
 
+local function createJob(relativeDir, gitArgs)
+  return require('plenary.job'):new({
+    command = 'git',
+    cwd = relativeDir,
+    args = gitArgs,
+  })
+end
+
 function extension.top(relativeDir)
+  local job = createJob(relativeDir, {'rev-parse', '--show-toplevel'})
+  job:sync()
+
+  local out, _ = job:result()
+
+  return out[1] or relativeDir
+end
+
+function extension.remote(relativeDir, gitRemoteOpts)
+  local job = createJob(relativeDir, {'remote', unpack(gitRemoteOpts or {})})
+
+  job:sync()
+
+  local out, _ = job:result()
+
+  return out
+end
+
+function extension.pushall(relativeDir)
   local job = require('plenary.job'):new({
     command = 'git',
     cwd = relativeDir,
-    args = {'rev-parse', '--show-toplevel'},
+    args = {'pushall'},
   })
 
   return job:sync()[1] or relativeDir
@@ -24,7 +49,7 @@ function extension.isTracked(path, gitDir, workTree)
     '--error-unmatch',
     path,
   }
-  local job = Job:new({
+  local job = require('plenary.job'):new({
     command = 'git',
     args = args,
     sync = true,
@@ -47,7 +72,7 @@ function extension.branches(gitDir, withRelativeDate, keepEmpty)
     table.insert(command, 1)
   end
 
-  local job = Job:new({
+  local job = require('plenary.job'):new({
     args = {unpack(command, 2)},
     sync = true,
     command = command[1]
