@@ -31,9 +31,6 @@ end)
 vim.keymap.set('n', '<Plug>(ide-git-log)', function ()
   vim.cmd.Gllog()
 end)
-vim.keymap.set('n', '<Plug>(ide-git-push-all)', function ()
-  vim.cmd.Git {'pushall'}
-end)
 vim.keymap.set('n', '<Plug>(ide-git-commit)', function ()
   vim.cmd.Git {'commit'}
 end)
