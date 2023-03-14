@@ -1,8 +1,6 @@
 local action_layout = require 'telescope.actions.layout'
 local actions = require 'telescope.actions'
 local base = require 'arctgx.base'
-local gdiff = require 'arctgx.telescope.gdiff'
-local git = require('arctgx.git')
 local windows = require('arctgx.telescope.windows')
 local api = vim.api
 local arctgx = require('arctgx.telescope')
@@ -34,14 +32,15 @@ api.nvim_create_user_command('RGrep', function(opts) arctgx.rgGrep(opts.args, fa
 api.nvim_create_user_command(
   'GTDiff',
   function(opts)
-    gdiff.run({
+    require('arctgx.telescope.gdiff').run({
       args = opts.fargs,
-      cwd = git.top(base.getBufferCwd()),
+      cwd = require('arctgx.git').top(base.getBufferCwd()),
     })
   end,
   {
     nargs = '*',
     complete = function (argLead, _, _)
+      local git = require('arctgx.git')
       return git.matchBranchesToRange(git.top(base.getBufferCwd()), argLead)
     end,
   }
