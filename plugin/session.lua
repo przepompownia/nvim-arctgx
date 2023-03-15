@@ -1,8 +1,7 @@
 local api = vim.api
-local session = require 'arctgx.session'
 
 local function mksessionCmd(opts)
-  if false == session.runBeforeSaveHooks() then
+  if false == require('arctgx.session').runBeforeSaveHooks() then
     return
   end
   local ok, out = pcall(api.nvim_cmd, {cmd = 'mks', bang = opts.bang, args = opts.fargs}, {})
