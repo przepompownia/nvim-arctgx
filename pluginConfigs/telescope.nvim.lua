@@ -11,7 +11,6 @@ require('telescope').setup {
     preview_cutoff = 1,
     layout_strategy = 'horizontal',
     layout_config = {height = 0.99, width = 0.99},
-    -- borderchars = {'─', '│', '─', '│', '┌', '┐', '┘', '└'},
     mappings = {
       i = {
         ['<C-p>'] = actions.cycle_history_next,
