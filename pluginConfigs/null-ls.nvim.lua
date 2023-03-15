@@ -4,7 +4,7 @@ local api = vim.api
 
 local function phpProjectRoot(pattern)
   local cwd = vim.loop.cwd()
-  local root = util.root_pattern('composer.json', '.git')(pattern.bufname)
+  local root = require('lspconfig.util').root_pattern('composer.json', '.git')(pattern.bufname)
 
   -- returned = util.path.is_descendant(cwd, root) and cwd or root
   -- print(vim.inspect(util.path.is_descendant(cwd, root)))
