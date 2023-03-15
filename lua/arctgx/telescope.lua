@@ -1,16 +1,5 @@
-local actions = require('telescope.actions')
-local action_state = require 'telescope.actions.state'
 local base = require('arctgx.base')
-local files = require('arctgx.files')
 local git = require('arctgx.git')
----@class Grep
-local grep = require('arctgx.grep')
-local telescope = require('telescope.builtin')
-local finders = require "telescope.finders"
-local make_entry = require "telescope.make_entry"
-local transform_mod = require('telescope.actions.mt').transform_mod
-local branches = require('arctgx.telescope.branches')
-local utils = require 'telescope.utils'
 
 local extension = {}
 
@@ -23,15 +12,17 @@ local function tabDropEntry(entry, winId)
 end
 
 function extension.tabDrop(promptBufnr)
+  local action_state = require 'telescope.actions.state'
   local selection = action_state.get_selected_entry()
   if selection == nil then
-    utils.__warn_no_selection 'actions.tabDrop'
+    require('telescope.utils').__warn_no_selection 'actions.tabDrop'
     return
   end
 
   local picker = action_state.get_current_picker(promptBufnr)
   local winId = picker.original_win_id
   local multiSelection = picker:get_multi_selection()
+  local actions = require('telescope.actions')
   actions.close(promptBufnr)
 
   if next(multiSelection) == nil then
@@ -43,7 +34,7 @@ function extension.tabDrop(promptBufnr)
   for _, entry in ipairs(multiSelection) do tabDropEntry(entry, winId) end
 end
 
-local customActions = transform_mod({
+local customActions = require('telescope.actions.mt').transform_mod({
   tabDrop = extension.tabDrop,
 
   toggleCaseSensibility = function() end,
@@ -54,6 +45,7 @@ local customActions = transform_mod({
 extension.customActions = customActions
 
 function extension.defaultFileMappings(prompt_bufnr, map)
+  local actions = require('telescope.actions')
   actions.select_default:replace(customActions.tabDrop)
   map({'i', 'n'}, '<C-y>', actions.file_edit)
   map({'i', 'n'}, '<A-u>', actions.to_fuzzy_refine)
@@ -68,25 +60,26 @@ function extension.create_operator(search_function, cmd, root, title)
 end
 
 function extension.branches(opts)
-  branches.list(vim.tbl_deep_extend('keep', opts or {}, {cwd = git.top(base.getBufferCwd())}))
+  require('arctgx.telescope.branches').list(vim.tbl_deep_extend('keep', opts or {}, {cwd = git.top(base.getBufferCwd())}))
 end
 
 ---@param onlyCwd boolean
 function extension.oldfiles(onlyCwd)
-  telescope.oldfiles({
+  require('telescope.builtin').oldfiles({
     only_cwd = onlyCwd or false,
     attach_mappings = extension.defaultFileMappings,
   })
 end
 
 function extension.buffers()
-  telescope.buffers({attach_mappings = extension.defaultFileMappings})
+  require('telescope.builtin').buffers({attach_mappings = extension.defaultFileMappings})
 end
 
 ---@param cmd Grep
 ---@param root string
 ---@param query string
 function extension.grep(cmd, root, query)
+  local action_state = require 'telescope.actions.state'
   local opts = {
     cwd = root,
     default_text = query,
@@ -95,7 +88,7 @@ function extension.grep(cmd, root, query)
     prompt_title = cmd:status(),
   }
   -- vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<C-\\><C-N>", true, true, true), "v", true)
-  opts.finder = finders.new_job(function(prompt)
+  opts.finder = require('telescope.finders').new_job(function(prompt)
     if not prompt or prompt == "" then
       return nil
     end
@@ -108,7 +101,7 @@ function extension.grep(cmd, root, query)
     end
 
     return vim.tbl_flatten { cmd, "--", prompt, search_list }
-    end, opts.entry_maker or make_entry.gen_from_vimgrep(opts), opts.max_results, opts.cwd)
+  end, opts.entry_maker or require('telescope.make_entry').gen_from_vimgrep(opts), opts.max_results, opts.cwd)
 
   local new_grep_finder = function(prompt_bufnr)
     local picker = action_state.get_current_picker(prompt_bufnr)
@@ -149,13 +142,13 @@ function extension.grep(cmd, root, query)
       return true
     end
 
-  telescope.live_grep(opts)
+  require('telescope.builtin').live_grep(opts)
 end
 
 function extension.rg_grep_operator(type)
   return extension.create_operator(
     extension.grep,
-    grep:new_rg_grep_command(true, false),
+    require('arctgx.grep'):new_rg_grep_command(true, false),
     git.top(base.getBufferCwd())
   )(type)
 end
@@ -163,14 +156,14 @@ end
 function extension.git_grep_operator(type)
   return extension.create_operator(
     extension.grep,
-    grep:new_git_grep_command(true, false),
+    require('arctgx.grep'):new_git_grep_command(true, false),
     git.top(base.getBufferCwd())
   )(type)
 end
 
 function extension.rgGrep(query, useFixedStrings, ignoreCase)
   return extension.grep(
-    grep:new_rg_grep_command(useFixedStrings, ignoreCase),
+    require('arctgx.grep'):new_rg_grep_command(useFixedStrings, ignoreCase),
     git.top(base.getBufferCwd()),
     query
   )
@@ -178,14 +171,14 @@ end
 
 function extension.gitGrep(query, useFixedStrings, ignoreCase)
   return extension.grep(
-    grep:new_git_grep_command(useFixedStrings, ignoreCase),
+    require('arctgx.grep'):new_git_grep_command(useFixedStrings, ignoreCase),
     git.top(base.getBufferCwd()),
     query
   )
 end
 
 function extension.files(cmd, root, query, title)
-  telescope.find_files({
+  require('telescope.builtin').find_files({
     cwd = root,
     find_command = cmd,
     default_text = query,
@@ -207,13 +200,13 @@ end
 
 function extension.files_all_operator(type)
   return extension.create_operator(extension.files,
-    files.command_fdfind_all(),
+    require('arctgx.files').command_fdfind_all(),
     git.top(base.getBufferCwd()), 'Files (all)')(
     type)
 end
 
 function extension.filesAll(query)
-  extension.files(files.command_fdfind_all(), git.top(base.getBufferCwd()),
+  extension.files(require('arctgx.files').command_fdfind_all(), git.top(base.getBufferCwd()),
     query, 'Files (all)')
 end
 
