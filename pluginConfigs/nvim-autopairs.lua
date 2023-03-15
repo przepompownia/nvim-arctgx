@@ -2,7 +2,6 @@ local npairs = require('nvim-autopairs')
 local Rule = require('nvim-autopairs.rule')
 local okCmp, cmp = pcall(require, 'cmp')
 local okTs, _ = pcall(require, 'nvim-treesitter.parsers')
-local treesitter = require('arctgx.treesitter')
 
 npairs.setup {
   check_ts = true,
@@ -23,7 +22,7 @@ end
 if okTs then
   local _, cond = pcall(require, 'nvim-autopairs.conds')
   local function isAfterTypeInPhpDocblock()
-    local captures = treesitter.getCapturesBeforeCursor(0)
+    local captures = require('arctgx.treesitter').getCapturesBeforeCursor(0)
     if not vim.tbl_contains(captures, 'comment') then
       return false
     end
