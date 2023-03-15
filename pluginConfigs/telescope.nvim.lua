@@ -1,10 +1,8 @@
 local action_layout = require 'telescope.actions.layout'
 local actions = require 'telescope.actions'
 local base = require 'arctgx.base'
-local windows = require('arctgx.telescope.windows')
 local api = vim.api
 local arctgx = require('arctgx.telescope')
-local builtin = require('telescope.builtin')
 local keymap = require('vim.keymap')
 
 require('telescope').setup {
@@ -49,11 +47,11 @@ keymap.set('n', '<Plug>(ide-grep-git)', function() arctgx.gitGrep('', false, fal
 keymap.set('n', '<Plug>(ide-grep-files)', function() arctgx.rgGrep('', false, false) end)
 keymap.set('n', '<Plug>(ide-browse-files)', arctgx.filesAll)
 keymap.set('n', '<Plug>(ide-browse-gfiles)', arctgx.filesGit)
-keymap.set('n', '<Plug>(ide-browse-cmd-history)', builtin.command_history)
+keymap.set('n', '<Plug>(ide-browse-cmd-history)', function() require('telescope.builtin').command_history() end)
 keymap.set('n', '<Plug>(ide-browse-history)', function() arctgx.oldfiles(false) end)
 keymap.set('n', '<Plug>(ide-browse-history-in-cwd)', function() arctgx.oldfiles(true) end)
 keymap.set('n', '<Plug>(ide-browse-buffers)', arctgx.buffers)
-keymap.set('n', '<Plug>(ide-browse-windows)', windows.list)
+keymap.set('n', '<Plug>(ide-browse-windows)', function() require('arctgx.telescope.windows').list() end)
 keymap.set('n', '<Plug>(ide-git-show-branches)', arctgx.branches)
 keymap.set('v', '<Plug>(ide-git-string-search-operator)', function()
   arctgx.gitGrep(base.getVisualSelection(), true)
