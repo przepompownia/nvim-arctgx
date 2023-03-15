@@ -1,6 +1,4 @@
-local lineHover = require 'arctgx.lineHover'
-local session   = require 'arctgx.session'
-local window    = require 'arctgx.window'
+local session = require 'arctgx.session'
 local api = vim.api
 
 local function bufferNameGenerator(opts)
@@ -34,7 +32,7 @@ api.nvim_create_autocmd('FileType', {
     vim.b.ideTabName = 'DBUI[d]'
     vim.keymap.set('n', '<Left>', '<Plug>(DBUI_GotoParentNode)', {buffer = 0})
     vim.keymap.set('n', '<Right>', '<Plug>(DBUI_GotoChildNode)', {buffer = 0})
-    lineHover.enableForWindow()
+    require('arctgx.lineHover').enableForWindow()
   end
 })
 api.nvim_create_autocmd('FileType', {
@@ -75,7 +73,7 @@ end
 vim.keymap.set('n', '<Plug>(dbui-new-query)', newQuery, {})
 
 session.appendBeforeSaveHook('Close tabs with DBUI', function ()
-  window.forEachWindowWithBufFileType('dbui', function (winId)
+  require('arctgx.window').forEachWindowWithBufFileType('dbui', function (winId)
     local tabNr = api.nvim_tabpage_get_number(api.nvim_win_get_tabpage(winId))
     vim.cmd.tabclose(tabNr)
   end)
