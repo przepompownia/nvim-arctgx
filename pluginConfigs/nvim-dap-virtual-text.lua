@@ -1,5 +1,5 @@
 local api = vim.api
-local dap = require('dap')
+-- local dap = require('dap')
 local virtualText = require('nvim-dap-virtual-text')
 
 ---@param variable any
