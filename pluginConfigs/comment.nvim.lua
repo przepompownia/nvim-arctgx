@@ -1,5 +1,3 @@
-local cmapi = require('Comment.api')
-
 local function createPrehook()
   local res, comment = pcall(require, 'ts_context_commentstring.integrations.comment_nvim')
 
@@ -20,12 +18,12 @@ local esc = vim.api.nvim_replace_termcodes(
 
 for _, lhs in ipairs({'<C-/>', '<C-_>'}) do
   vim.keymap.set({'n', 'i'}, lhs, function ()
-    cmapi.toggle.linewise.current()
+    require('Comment.api').toggle.linewise.current()
     vim.cmd.normal 'j'
   end)
 
   vim.keymap.set('x', lhs, function()
     vim.api.nvim_feedkeys(esc, 'nx', false)
-    cmapi.toggle.linewise(vim.fn.visualmode())
+    require('Comment.api').toggle.linewise(vim.fn.visualmode())
   end)
 end
