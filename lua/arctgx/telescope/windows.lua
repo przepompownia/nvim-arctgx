@@ -22,7 +22,12 @@ local function listBufferWindowPairs()
 end
 
 local function makeEntry(entry)
-  local display = ('%s %s'):format(entry.winId, entry.bufname)
+  local ok, _ = vim.loop.fs_stat(entry.bufname)
+  local relativePath
+  if ok then
+    relativePath = vim.fn.fnamemodify(entry.bufname, ':.')
+  end
+  local display = ('%s %s'):format(entry.winId, relativePath or entry.bufname)
   return {
     value = entry,
     display = display,
@@ -30,6 +35,7 @@ local function makeEntry(entry)
   }
 end
 
+---@diagnostic disable-next-line: unused-local, unused-function
 local function previewer()
   return buffer_previewer.new_buffer_previewer {
     title = 'Window content',
