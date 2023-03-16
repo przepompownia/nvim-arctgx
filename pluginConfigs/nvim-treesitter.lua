@@ -8,6 +8,7 @@ require'nvim-treesitter.configs'.setup {
     'gitcommit',
     'gitignore',
     'git_rebase',
+    'git_config',
     'help',
     'html',
     'http',
