@@ -25,7 +25,7 @@ require('bqf').setup({
   func_map = {
     open = '',
     vsplit = '',
-    ptogglemode = '<Leader>p',
+    ptogglemode = ',p',
     stoggleup = '',
   },
 })
