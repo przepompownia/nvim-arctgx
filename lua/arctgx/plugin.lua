@@ -21,7 +21,7 @@ function plugin.loadCustomConfiguration(pluginDirs, pluginConfigDir)
 end
 
 function plugin.loadSingleConfiguration(pluginName, pluginConfigDir)
-  local pluginFilePath = vim.loop.fs_realpath(pluginConfigDir .. '/' .. pluginName:gsub('%.lua$', '') .. '.lua')
+  local pluginFilePath = vim.loop.fs_realpath(pluginConfigDir .. '/' .. pluginName:gsub('%.lua$', ''):gsub('%.', '-') .. '.lua')
 
   if nil == pluginFilePath then
     -- vim.notify(('Config %s does not exist'):format(pluginName))
