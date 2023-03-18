@@ -1,14 +1,15 @@
 local plugin = require 'arctgx.plugin'
 local api = vim.api
-local configDir = vim.fn.expand('<sfile>:p:h')
-local pluginConfigDir = vim.fn.simplify(configDir .. '/../lua/arctgx/pluginConfigs/')
+local configDir = vim.fn.expand('<sfile>:p:h:h')
+local pluginPrefix = 'arctgx.pluginConfigs'
+-- local pluginConfigDir = vim.fn.simplify(configDir .. '/lua/arctgx/pluginConfigs/')
 
 local augroupHighlight = api.nvim_create_augroup('ConfigureHighlight', {clear = true})
 local augroupAfterVimEnter = api.nvim_create_augroup('AfterVimEnter', {clear = true})
 
 local function configureHighlight()
   local path = vim.fn.simplify(vim.fn.fnamemodify(
-      ('%s/../colors/%s.lua'):format(configDir, vim.opt.background:get()),
+      ('%s/colors/%s.lua'):format(configDir, vim.opt.background:get()),
       ':p'
   ))
   dofile(path)
@@ -20,7 +21,7 @@ if vim.tbl_isempty(vim.g.pluginDirs) then
   vim.notify('Empty vim.g.pluginDirs', vim.log.levels.ERROR)
 end
 
-plugin.loadCustomConfiguration(vim.g.pluginDirs, pluginConfigDir)
+plugin.loadCustomConfiguration(vim.g.pluginDirs, pluginPrefix)
 
 api.nvim_create_autocmd('ColorScheme', {
   group = augroupHighlight,
