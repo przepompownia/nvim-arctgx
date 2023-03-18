@@ -5,24 +5,24 @@ require('statuscol').setup({
     {
       text = { builtin.foldfunc },
       condition = { true },
-      click = 'v:lua.ScFa'
+      click = 'v:lua.ScFa',
     },
     {
       sign = { name = { 'GitSigns.*' }, maxwidth = 1, colwidth = 1, auto = true },
-      click = 'v:lua.ScSa'
+      click = 'v:lua.ScSa',
     },
     {
       sign = { name = { 'Diagnostic' }, maxwidth = 1, colwidth = 1, auto = true },
       click = 'v:lua.ScSa'
     },
     {
-      sign = { name = { 'Dap.*' }, maxwidth = 2, auto = true },
+      sign = { name = { 'Dap.*' }, maxwidth = 2, colwidth = 1, auto = true },
       click = 'v:lua.ScLa'
     },
-     { text = { builtin.lnumfunc }, click = 'v:lua.ScLa', },
     {
       sign = { name = { '.*' }, maxwidth = 1, colwidth = 1, auto = true },
       click = 'v:lua.ScSa'
     },
+    { text = { builtin.lnumfunc, ' ' }, click = 'v:lua.ScLa', },
   }
 })
