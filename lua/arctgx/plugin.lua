@@ -6,7 +6,7 @@ local function listAllPlugins(pluginDir)
   for _, path in ipairs(pluginPaths) do
     table.insert(plugins, vim.fn.fnamemodify(path, ':t'))
   end
-  
+
   return plugins
 end
 
@@ -20,15 +20,11 @@ function plugin.loadCustomConfiguration(pluginDirs, pluginConfigDir)
   end
 end
 
-function plugin.loadSingleConfiguration(pluginName, pluginConfigDir)
-  local pluginFilePath = vim.loop.fs_realpath(pluginConfigDir .. '/' .. pluginName:gsub('%.lua$', ''):gsub('%.', '-') .. '.lua')
+function plugin.loadSingleConfiguration(pluginName, pluginPrefix)
+  local pluginFilePath = pluginPrefix .. '.' .. pluginName:gsub('%.lua$', ''):gsub('%.', '-')
 
-  if nil == pluginFilePath then
-    -- vim.notify(('Config %s does not exist'):format(pluginName))
-    return
-  end
-
-  dofile(pluginFilePath)
+  -- @todo Prevent from loading nonexisting files
+  local ok, out = pcall(require, pluginFilePath)
 end
 
 return plugin
