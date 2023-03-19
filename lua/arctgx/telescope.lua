@@ -55,7 +55,7 @@ end
 
 function extension.create_operator(search_function, cmd, root, title)
   return function(type)
-    search_function(cmd, root, base.operator_get_text(type), title)
+    search_function(cmd, root, base.operatorGetText(type), title)
   end
 end
 

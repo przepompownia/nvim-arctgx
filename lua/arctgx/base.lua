@@ -87,10 +87,8 @@ function base.tabDropToLineAndColumnWithDefaultMapping(path, line, column)
   base.tabDropToLineAndColumnWithMapping(path, vim.g.projectPathMappings, line, column)
 end
 
-function base.operator_get_text(type)
-  if 'char' == type then
-    return base.getTextBetweenMarks('\'[', '\']')
-  end
+function base.operatorGetText(type)
+  return base.getTextBetweenMarks('\'[', '\']')
 end
 
 function base.getRangeBetweenMarks(mark1, mark2)

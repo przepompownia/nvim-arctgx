@@ -16,7 +16,7 @@ function Url.open(url)
 end
 
 function Url.openWithOperator(type)
-  Url.open(base.operator_get_text(type))
+  Url.open(base.operatorGetText(type))
 end
 
 return Url
