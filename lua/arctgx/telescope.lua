@@ -55,7 +55,9 @@ end
 
 function extension.create_operator(search_function, cmd, root, title)
   return function(type)
-    search_function(cmd, root, base.operatorGetText(type), title)
+    local str = base.operatorGetText(type) or ''
+
+    search_function(cmd, root, str, title)
   end
 end
 
@@ -79,6 +81,11 @@ end
 ---@param root string
 ---@param query string
 function extension.grep(cmd, root, query)
+  if query:find('\n') then
+    vim.notify('Cannot grep multiline text', vim.log.levels.WARN)
+
+    return
+  end
   local action_state = require 'telescope.actions.state'
   local opts = {
     cwd = root,
