@@ -87,7 +87,7 @@ function base.tabDropToLineAndColumnWithDefaultMapping(path, line, column)
   base.tabDropToLineAndColumnWithMapping(path, vim.g.projectPathMappings, line, column)
 end
 
-function base.operatorGetText(type)
+function base.operatorGetText(_)
   return base.getTextBetweenMarks('\'[', '\']')
 end
 
