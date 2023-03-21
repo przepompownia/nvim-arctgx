@@ -1,4 +1,6 @@
 local augroup = vim.api.nvim_create_augroup('LspAttachInlayhints', {clear = true})
+require "lsp-inlayhints.config".load({
+})
 
 vim.api.nvim_create_autocmd('LspAttach', {
   group = augroup,
