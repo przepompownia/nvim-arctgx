@@ -8,7 +8,6 @@ vim.g.loaded_netrwPlugin = 1
 
 require('nvim-tree').setup({
   hijack_cursor = true,
-  remove_keymaps = {'<Tab>'},
   actions = {
     change_dir = {
       enable = false,
@@ -22,6 +21,12 @@ require('nvim-tree').setup({
     treeapi.config.mappings.default_on_attach(bufnr)
     local injectNode = require('nvim-tree.utils').inject_node
 
+    vim.keymap.set(
+      'n',
+      '<TAB>',
+      '<C-w>w',
+      {buffer = bufnr, noremap = true}
+    )
     vim.keymap.set(
       'n',
       '<CR>',
