@@ -1,6 +1,6 @@
 local base = require 'arctgx.base'
 local api = vim.api
-local keymap = require('vim.keymap')
+local keymap = vim.keymap
 
 require('telescope').setup {
   defaults = {
