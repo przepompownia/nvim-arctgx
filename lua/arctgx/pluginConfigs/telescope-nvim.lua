@@ -1,5 +1,3 @@
-local action_layout = require 'telescope.actions.layout'
-local actions = require 'telescope.actions'
 local base = require 'arctgx.base'
 local api = vim.api
 local arctgx = require('arctgx.telescope')
@@ -13,12 +11,12 @@ require('telescope').setup {
     layout_config = {height = 0.99, width = 0.99},
     mappings = {
       i = {
-        ['<C-p>'] = actions.cycle_history_next,
-        ['<C-n>'] = actions.cycle_history_prev,
-        ['<A-Up>'] = actions.preview_scrolling_up,
-        ['<A-Down>'] = actions.preview_scrolling_down,
-        ['<A-/>'] = action_layout.toggle_preview,
-        ['<Esc>'] = actions.close,
+        ['<C-p>'] = 'cycle_history_next',
+        ['<C-n>'] = 'cycle_history_prev',
+        ['<A-Up>'] = 'preview_scrolling_up',
+        ['<A-Down>'] = 'preview_scrolling_down',
+        ['<A-/>'] = require 'telescope.actions.layout'.toggle_preview,
+        ['<Esc>'] = 'close',
       },
     },
   },
