@@ -1,5 +1,5 @@
 local api = vim.api
-local keymap = require('vim.keymap')
+local keymap = vim.keymap
 local base = require('arctgx.base')
 local session = require('arctgx.session')
 
