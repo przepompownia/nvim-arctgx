@@ -91,8 +91,8 @@ require('nvim-tree').setup({
 
 local function focusOnFile()
   local treeapi = require('nvim-tree.api')
-  local bufName = vim.loop.fs_realpath(vim.api.nvim_buf_get_name(0)) or vim.loop.cwd()
-  treeapi.tree.open(require('arctgx.git').top(vim.fs.dirname(bufName)))
+  local bufName = vim.loop.fs_realpath(vim.api.nvim_buf_get_name(0))
+  treeapi.tree.open(require('arctgx.git').top(bufName and vim.fs.dirname(bufName) or vim.loop.cwd()))
   -- treeapi.tree.toggle_hidden_filter()
   treeapi.live_filter.clear()
   treeapi.tree.find_file(bufName)
