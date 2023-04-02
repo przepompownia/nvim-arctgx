@@ -11,7 +11,7 @@ dap.adapters.php = {
   args = {'run'}
 }
 
-local bashdbDir = vim.env['XDG_CONFIG_HOME'] .. '/tools/bash-debug/'
+local bashdbDir = vim.env['XDG_CONFIG_HOME'] .. '/tools/vscode-bash-debug/'
 
 ---@param defaultValue any
 ---@param promptTemplate string
