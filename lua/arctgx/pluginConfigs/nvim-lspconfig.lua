@@ -73,25 +73,6 @@ lspconfig.yamlls.setup {
   }
 }
 
-local function getLuaRuntime()
-  --- from nlua.nvim
-  local result = {};
-  for _, path in pairs(vim.api.nvim_list_runtime_paths()) do
-    local luaPath = path .. '/lua/';
-    if 1 == vim.fn.isdirectory(luaPath) then
-      result[luaPath] = true
-    end
-  end
-
-  result[vim.fn.expand('$VIMRUNTIME/lua')] = true
-
-  return result;
-end
-
-local runtimePath = vim.split(package.path, ';')
-table.insert(runtimePath, 'lua/?.lua')
-table.insert(runtimePath, 'lua/?/init.lua')
-
 local neodevOk, neodev = pcall(require, 'neodev')
 if neodevOk then
   neodev.setup({
