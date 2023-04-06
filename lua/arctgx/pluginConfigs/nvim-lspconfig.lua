@@ -56,12 +56,6 @@ lspconfig.phpactor.setup {
   on_attach = arctgxLsp.onAttach,
 }
 
-lspconfig.sqls.setup {
-  cmd = {os.getenv('HOME') .. '/go/bin/sqls', '-config', os.getenv('HOME') .. '/.config/sqls/config.yml'};
-  capabilities = capabilities,
-  on_attach = arctgxLsp.onAttach,
-}
-
 lspconfig.yamlls.setup {
   capabilities = capabilities,
   on_attach = arctgxLsp.onAttach,
