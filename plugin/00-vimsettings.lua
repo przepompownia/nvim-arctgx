@@ -11,9 +11,7 @@ vim.go.updatetime = 300
 vim.o.showbreak = '> '
 vim.go.showmatch = false
 
-if 1 == vim.fn.has('nvim-0.9') then
-  vim.opt.shortmess:append('C')
-end
+vim.opt.shortmess:append('C')
 
 vim.opt.complete:remove('t')
 vim.opt.matchpairs:append('<:>')
@@ -27,9 +25,7 @@ vim.go.eadirection = 'hor'
 vim.opt.isfname:remove('=')
 
 vim.opt.diffopt:append('vertical')
-if 1 == vim.fn.has('nvim-0.9') then
-  vim.opt.diffopt:append('linematch:60')
-end
+vim.opt.diffopt:append('linematch:60')
 vim.opt.jumpoptions:append('view')
 
 vim.go.foldlevelstart = 99
