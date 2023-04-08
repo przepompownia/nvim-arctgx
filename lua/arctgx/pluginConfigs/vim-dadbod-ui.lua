@@ -73,7 +73,7 @@ end
 vim.keymap.set('n', '<Plug>(dbui-new-query)', newQuery, {})
 
 session.appendBeforeSaveHook('Close tabs with DBUI', function ()
-  require('arctgx.window').forEachWindowWithBufFileType('dbui', function (winId)
+  require('arctgx.window').forEachWindowWithBufFileType({'dbui'}, function (winId)
     local tabNr = api.nvim_tabpage_get_number(api.nvim_win_get_tabpage(winId))
     vim.cmd.tabclose(tabNr)
   end)

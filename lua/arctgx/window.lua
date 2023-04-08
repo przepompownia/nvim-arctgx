@@ -3,16 +3,17 @@ local api = vim.api
 
 local extension = {}
 
----@param filetype string
+---@param filetypes table
 ---@param callback fun(winId: integer): any
-function extension.forEachWindowWithBufFileType(filetype, callback)
+function extension.forEachWindowWithBufFileType(filetypes, callback)
+  vim.validate({filetypes = {filetypes, {'table'}}})
   local function runWithBuffer(winId)
     if not api.nvim_win_is_valid(winId) then
       return
     end
 
     local bufId = api.nvim_win_get_buf(winId)
-    if api.nvim_buf_get_option(bufId, 'filetype') ~= filetype then
+    if not vim.tbl_contains(filetypes, api.nvim_buf_get_option(bufId, 'filetype')) then
       return
     end
 

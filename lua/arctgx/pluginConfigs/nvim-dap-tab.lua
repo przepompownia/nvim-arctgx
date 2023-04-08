@@ -1,6 +1,6 @@
 local keymap = require 'vim.keymap'
 local dapTab = require 'dap-tab'
-local session= require 'arctgx.session'
+local session = require 'arctgx.session'
 local api = vim.api
 
 local opts = {silent = true, noremap = true}

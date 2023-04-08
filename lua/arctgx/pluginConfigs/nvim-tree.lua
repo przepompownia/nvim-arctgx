@@ -106,7 +106,7 @@ end
 keymap.set({'n'}, '<Plug>(ide-tree-focus-current-file)', focusOnFile)
 
 session.appendBeforeSaveHook('Close nvim-tree instances', function ()
-  require('arctgx.window').forEachWindowWithBufFileType('NvimTree', function (winId)
+  require('arctgx.window').forEachWindowWithBufFileType({'NvimTree'}, function (winId)
     api.nvim_win_close(winId, false)
   end)
 end)

@@ -1,4 +1,5 @@
 local api = vim.api
+local session = require 'arctgx.session'
 
 local augroup = api.nvim_create_augroup('FugitiveConfig', {clear = true})
 api.nvim_create_autocmd('BufReadPost', {
@@ -36,4 +37,9 @@ vim.keymap.set('n', '<Plug>(ide-git-commit)', function ()
 end)
 vim.keymap.set('n', '<Plug>(ide-git-blame)', function ()
   vim.cmd.Git {'blame'}
+end)
+session.appendBeforeSaveHook('Close Fugitive windows', function ()
+  require('arctgx.window').forEachWindowWithBufFileType({'fugitiveblame'}, function (winId)
+    api.nvim_win_close(winId, true)
+  end)
 end)
