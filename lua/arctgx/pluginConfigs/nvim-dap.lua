@@ -7,8 +7,8 @@ local api = vim.api
 
 dap.adapters.php = {
   type = 'executable',
-  command = vim.env['XDG_CONFIG_HOME'] .. '/bin/vscode-php-debug',
-  args = {'run'}
+  command = vim.env['XDG_CONFIG_HOME'] .. '/bin/dap-adapter-utils',
+  args = {'run', 'vscode-php-debug', 'phpDebug'}
 }
 
 local bashdbDir = vim.env['XDG_CONFIG_HOME'] .. '/tools/vscode-bash-debug/'
