@@ -3,10 +3,10 @@ vim.diagnostic.config({
   underline = false,
 })
 
-vim.fn.sign_define('DiagnosticSignHint', {text = '💡', texthl = 'IdeHintSign', linehl = '', numhl = 'IdeLineNrHint'})
-vim.fn.sign_define('DiagnosticSignInfo', {text = '', texthl = 'IdeInfoSign', linehl = '', numhl = 'IdeLineNrInfo'})
-vim.fn.sign_define('DiagnosticSignWarn', {text = '⚠', texthl = 'IdeWarningSign', linehl = '', numhl = 'IdeLineNrWarning'})
-vim.fn.sign_define('DiagnosticSignError', {text = '', texthl = 'IdeErrorSign', linehl = '', numhl = 'IdeLineNrError'})
+vim.fn.sign_define('DiagnosticSignHint', {text = '💡', texthl = 'IdeHintSign', linehl = ''})
+vim.fn.sign_define('DiagnosticSignInfo', {text = '', texthl = 'IdeInfoSign', linehl = ''})
+vim.fn.sign_define('DiagnosticSignWarn', {text = '⚠', texthl = 'IdeWarningSign', linehl = ''})
+vim.fn.sign_define('DiagnosticSignError', {text = '', texthl = 'IdeErrorSign', linehl = ''})
 
 local ns = vim.api.nvim_create_namespace('arctgx.diagnostic.signs')
 local origSignsHandler = vim.diagnostic.handlers.signs
