@@ -48,8 +48,10 @@ gitsigns.configuration = {
     end, {expr=true})
 
     -- Actions
-    map({'n', 'v'}, '<Plug>(ide-git-hunk-stage)', ':Gitsigns stage_hunk<CR>')
-    map({'n', 'v'}, '<Plug>(ide-git-hunk-reset)', ':Gitsigns reset_hunk<CR>')
+    map({'n'}, '<Plug>(ide-git-hunk-stage)', gs.stage_hunk)
+    map({'n'}, '<Plug>(ide-git-hunk-reset)', gs.reset_hunk)
+    map({'v'}, '<Plug>(ide-git-hunk-stage)', function() gs.stage_hunk {line("."), line("v")} end)
+    map({'v'}, '<Plug>(ide-git-hunk-reset)', function() gs.reset_hunk {line("."), line("v")} end)
     map('n', '<Plug>(ide-git-stage-write-file)', gs.stage_buffer)
     map({'n', 'v'}, '<Plug>(ide-git-hunk-undo-stage)', gs.undo_stage_hunk)
     map('n', '<Plug>(ide-git-buffer-reset)', gs.reset_buffer)
