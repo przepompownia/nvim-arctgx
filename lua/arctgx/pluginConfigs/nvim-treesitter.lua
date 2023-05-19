@@ -9,7 +9,6 @@ require'nvim-treesitter.configs'.setup {
     'gitignore',
     'git_rebase',
     'git_config',
-    'help',
     'html',
     'http',
     'ini',
@@ -34,6 +33,7 @@ require'nvim-treesitter.configs'.setup {
     'toml',
     'twig',
     'vim',
+    'vimdoc',
     'yaml',
   },
   highlight = {
