@@ -65,7 +65,7 @@ cmp.setup({
       cmp.config.compare.sort_text,
       cmp.config.compare.exact,
       cmp.config.compare.recently_used,
-      cmp.config.compare.locals,
+      cmp.config.compare.locality,
       function(...) return require('cmp_buffer'):compare_locality(...) end,
     }
   },
