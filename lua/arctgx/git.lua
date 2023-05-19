@@ -38,7 +38,9 @@ function extension.push(relativeDir, remoteRepo)
     end
 
     local out = table.concat(data, '\n')
-    vim.notify(('%s: %s'):format(remoteRepo, out), level)
+    vim.schedule(function()
+      vim.notify(('%s: %s'):format(remoteRepo, out), level)
+    end)
   end
 
   local job = createJob(relativeDir, {'push', remoteRepo}, {
