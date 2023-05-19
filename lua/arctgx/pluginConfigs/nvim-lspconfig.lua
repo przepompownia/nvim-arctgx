@@ -32,7 +32,7 @@ configs.phpactor = {
     },
     cmd = {
       -- 'phpxx',
-      vim.loop.fs_realpath(vim.fn.exepath('phpactor')),
+      vim.loop.fs_realpath(vim.fn.exepath('phpactor')) or 'phpactor',
       'language-server',
       -- '-vvv',
     },
