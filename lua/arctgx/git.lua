@@ -32,13 +32,13 @@ function extension.push(relativeDir, remoteRepo)
   local stderr = {}
   local logLevel = vim.log.levels.INFO
 
-  local function printMessages(data, logLevel)
+  local function printMessages(data, level)
     if 0 == #data then
       return
     end
 
     local out = table.concat(data, '\n')
-    vim.notify(('%s: %s'):format(remoteRepo, out), logLevel)
+    vim.notify(('%s: %s'):format(remoteRepo, out), level)
   end
 
   local job = createJob(relativeDir, {'push', remoteRepo}, {
