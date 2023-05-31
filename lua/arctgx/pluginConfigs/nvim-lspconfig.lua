@@ -110,11 +110,19 @@ lspconfig.lua_ls.setup {
         statusBar = false,
         progressBar = false,
       },
+      hint = {
+        enable = true,
+      },
     },
   },
 }
 
-local servers = { 'bashls', 'vimls', 'dockerls', 'tsserver' }
+local servers = {
+  'bashls',
+  'vimls',
+  'dockerls',
+  'tsserver',
+}
 for _, lsp in ipairs(servers) do
   lspconfig[lsp].setup {
     capabilities = capabilities,
