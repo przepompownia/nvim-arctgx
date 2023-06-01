@@ -28,7 +28,7 @@ local function new_class_from_file(path)
 
   local buf = api.nvim_create_buf(true, false)
   api.nvim_buf_set_name(buf, path)
-  api.nvim_buf_set_option(buf, 'filetype', 'php')
+  vim.bo[buf].filetype = 'php'
   vim.fn.bufload(buf)
 
   local timer = vim.loop.new_timer()
@@ -90,7 +90,7 @@ local function showWindow(title, syntax, contents)
     bot = '─',
   })
 
-  vim.api.nvim_buf_set_option(float.bufnr, 'filetype', syntax)
+  vim.bo[float.bufnr].filetype = syntax
   vim.api.nvim_buf_set_lines(float.bufnr, 0, -1, false, out)
 end
 

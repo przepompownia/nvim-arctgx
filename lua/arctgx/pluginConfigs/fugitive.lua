@@ -6,7 +6,7 @@ api.nvim_create_autocmd('BufReadPost', {
   group = augroup,
   pattern = 'fugitive://*',
   callback = function (params)
-    api.nvim_buf_set_option(params.buf, 'bufhidden', 'delete')
+    vim.bo[params.buf].bufhidden = 'delete'
   end
 })
 api.nvim_create_autocmd('FileType', {

@@ -2,7 +2,7 @@ local lineHover = {}
 
 local api = vim.api
 local defaultDebounceTime = 0
-local windowId = nil
+local winId = nil
 
 local timer = vim.loop.new_timer()
 
@@ -15,8 +15,8 @@ end
 local function createBuffer(content)
   local bufNr = api.nvim_create_buf(false, true)
   vim.fn.setbufline(bufNr, 1, content)
-  api.nvim_buf_set_option(bufNr, 'bufhidden', 'wipe')
-  api.nvim_buf_set_option(bufNr, 'modified', false)
+  vim.bo[bufNr].bufhidden = 'wipe'
+  vim.bo[bufNr].modified = false
 
   return bufNr
 end
@@ -24,11 +24,11 @@ end
 local function hideExistingWindow()
   timer:stop()
 
-  if nil == windowId or not api.nvim_win_is_valid(windowId) then
+  if nil == winId or not api.nvim_win_is_valid(winId) then
     return
   end
 
-  api.nvim_win_close(windowId, true)
+  api.nvim_win_close(winId, true)
 end
 
 lineHover.show = function ()
@@ -43,7 +43,7 @@ lineHover.show = function ()
 
   local bufNr = createBuffer(lineContent)
 
-  windowId = api.nvim_open_win(bufNr, false, {
+  winId = api.nvim_open_win(bufNr, false, {
     relative = 'win',
     width = contentWidth,
     height = 1,
@@ -52,7 +52,7 @@ lineHover.show = function ()
     bufpos = {vim.fn.line('.') - 2, 0},
   })
 
-  api.nvim_win_set_option(windowId, 'winhighlight', 'NormalFloat:Normal')
+  vim.wo[winId]['winhighlight'] = 'NormalFloat:Normal'
 end
 
 lineHover.enableForWindow = function ()

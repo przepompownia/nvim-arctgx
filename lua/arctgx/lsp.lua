@@ -29,8 +29,6 @@ function M.onAttach(client, bufnr)
     keymap.set(modes, lhs, rhs, opts)
   end
 
-  api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
-
   bufMap('n', '<Plug>(ide-goto-definition)', buf.definition)
   bufMap('n', '<Plug>(ide-goto-definition-in-place)', buf.definitionInPlace)
   bufMap('n', '<Plug>(ide-peek-definition)', buf.peekDefinition)

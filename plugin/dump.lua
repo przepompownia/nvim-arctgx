@@ -6,8 +6,8 @@ function dump(value)
 
     local lines = vim.split('out = ' .. value_string, '\n')
     vim.api.nvim_buf_set_lines(buf, 0, #lines, false, lines)
-    vim.api.nvim_buf_set_option(buf, 'filetype', 'lua')
-    vim.api.nvim_buf_set_option(buf, 'bufhidden', 'wipe')
+    vim.bo[buf].filetype = 'lua'
+    vim.bo[buf].bufhidden = 'wipe'
     vim.api.nvim_open_win(buf, true, {
       relative = 'editor',
       width = 120,

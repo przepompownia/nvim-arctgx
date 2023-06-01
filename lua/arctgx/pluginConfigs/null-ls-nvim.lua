@@ -72,7 +72,7 @@ null.setup({
 -- https://github.com/jose-elias-alvarez/null-ls.nvim/discussions/236
 local chooseFormatter = function(range)
   local bufnr = vim.api.nvim_get_current_buf()
-  local filetype = vim.api.nvim_buf_get_option(bufnr, 'filetype')
+  local filetype = vim.bo[bufnr].filetype
 
   local method = require('null-ls.methods').internal.FORMATTING
   local available = require('null-ls.generators').get_available(filetype, method)

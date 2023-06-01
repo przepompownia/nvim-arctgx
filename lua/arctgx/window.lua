@@ -13,7 +13,7 @@ function extension.forEachWindowWithBufFileType(filetypes, callback)
     end
 
     local bufId = api.nvim_win_get_buf(winId)
-    if not vim.tbl_contains(filetypes, api.nvim_buf_get_option(bufId, 'filetype')) then
+    if not vim.tbl_contains(filetypes, vim.bo[bufId].filetype) then
       return
     end
 
