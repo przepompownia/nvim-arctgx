@@ -11,8 +11,6 @@ vim.go.updatetime = 300
 vim.o.showbreak = '> '
 vim.go.showmatch = false
 
-vim.opt.shortmess:append('C')
-
 vim.opt.complete:remove('t')
 vim.opt.matchpairs:append('<:>')
 vim.opt.spell = false
