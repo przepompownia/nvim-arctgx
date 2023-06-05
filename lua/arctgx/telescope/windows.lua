@@ -22,7 +22,7 @@ local function listBufferWindowPairs()
 end
 
 local function makeEntry(entry)
-  local ok, _ = vim.loop.fs_stat(entry.bufname)
+  local ok, _ = vim.uv.fs_stat(entry.bufname)
   local relativePath
   if ok then
     relativePath = vim.fn.fnamemodify(entry.bufname, ':.')

@@ -154,7 +154,7 @@ do
       return fileDir
     end
 
-    return vim.loop.cwd()
+    return vim.uv.cwd()
   end
 end
 

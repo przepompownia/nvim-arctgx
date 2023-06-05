@@ -4,7 +4,7 @@ local api = vim.api
 local defaultDebounceTime = 0
 local winId = nil
 
-local timer = vim.loop.new_timer()
+local timer = vim.uv.new_timer()
 
 lineHover.showDelayed = function (debounceTime)
   timer:start(debounceTime or defaultDebounceTime, 0, vim.schedule_wrap(function()

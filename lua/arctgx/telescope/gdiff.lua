@@ -68,7 +68,7 @@ end
 
 function gdiff.run(opts)
   local command = diff:newCommand('GDiff', opts.args or {},
-    opts.cwd or vim.loop.cwd())
+    opts.cwd or vim.uv.cwd())
   opts = opts or {}
   pickers.new(opts, {
     prompt_title = 'GDiff',

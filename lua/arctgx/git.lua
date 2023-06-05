@@ -104,7 +104,7 @@ end
 
 ---@return table<int, {branch: string, desc: string, head: string?}>
 function extension.branches(gitDir, withRelativeDate, keepEmpty)
-  local binDir = vim.loop.fs_realpath(vim.fs.dirname(debug.getinfo(1,'S').source:sub(2)) .. '/../../bin')
+  local binDir = vim.uv.fs_realpath(vim.fs.dirname(debug.getinfo(1, 'S').source:sub(2)) .. '/../../bin')
   local command = {binDir .. '/git-list-branches', gitDir}
   local emptyValue = nil
   if true == keepEmpty then

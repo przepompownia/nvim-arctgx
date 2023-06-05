@@ -31,7 +31,7 @@ local function new_class_from_file(path)
   vim.bo[buf].filetype = 'php'
   vim.fn.bufload(buf)
 
-  local timer = vim.loop.new_timer()
+  local timer = vim.uv.new_timer()
   local i = 1
   timer:start(
     0,
@@ -68,7 +68,7 @@ function extension.classNew()
   vim.ui.input({
     prompt = 'File: ',
     completion = 'file',
-    default = bufname == '' and vim.loop.cwd() or bufname,
+    default = bufname == '' and vim.uv.cwd() or bufname,
   }, new_class_from_file)
 end
 

@@ -2,11 +2,9 @@ local base = require('arctgx.base')
 
 local Url = {}
 
-local uv = vim.loop
-
 -- does not work with changed XDG_CONFIG_HOME
 function Url.open(url)
-  uv.spawn('gio', {
+  vim.uv.spawn('gio', {
     args = {
       'open',
       url,

@@ -13,7 +13,7 @@ end
 function plugin.loadCustomConfiguration(pluginDirs, pluginConfigDir)
   for _, pluginDir in ipairs(pluginDirs) do
     for _, pluginName in ipairs(listAllPlugins(pluginDir)) do
-      if vim.tbl_contains(vim.opt.runtimepath:get(), vim.loop.fs_realpath(pluginDir .. '/' .. pluginName)) then
+      if vim.tbl_contains(vim.opt.runtimepath:get(), vim.uv.fs_realpath(pluginDir .. '/' .. pluginName)) then
         plugin.loadSingleConfiguration(pluginName, pluginConfigDir)
       end
     end

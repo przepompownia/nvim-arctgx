@@ -32,13 +32,13 @@ configs.phpactor = {
     },
     cmd = {
       -- 'phpxx',
-      vim.loop.fs_realpath(vim.fn.exepath('phpactor')) or 'phpactor',
+      vim.uv.fs_realpath(vim.fn.exepath('phpactor')) or 'phpactor',
       'language-server',
       -- '-vvv',
     },
     filetypes = { 'php' },
     root_dir = function(pattern)
-      local cwd = vim.loop.cwd()
+      local cwd = vim.uv.cwd()
       local root = util.root_pattern('composer.json', '.git')(pattern)
 
       return util.path.is_descendant(cwd, root) and cwd or root
