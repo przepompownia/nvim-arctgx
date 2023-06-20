@@ -7,7 +7,10 @@ local pluginPrefix = 'arctgx.pluginConfigs'
 local augroupHighlight = api.nvim_create_augroup('ConfigureHighlight', {clear = true})
 local augroupAfterVimEnter = api.nvim_create_augroup('AfterVimEnter', {clear = true})
 
-vim.uv = vim.loop -- remove it after nvim 0.10 will be available
+-- remove it after nvim 0.10 will be available
+if nil == vim.uv then
+  vim.uv = vim.loop
+end
 
 local function configureHighlight()
   local path = vim.fn.simplify(vim.fn.fnamemodify(
