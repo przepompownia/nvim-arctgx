@@ -28,7 +28,6 @@ require'nvim-treesitter.configs'.setup {
     'regex',
     'query',
     'sql',
-    'teal',
     'todotxt',
     'toml',
     'twig',
