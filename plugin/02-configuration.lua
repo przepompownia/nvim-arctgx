@@ -57,5 +57,5 @@ vim.api.nvim_create_autocmd('UIEnter', {
 
 api.nvim_create_user_command('Packadd', function (opts)
   vim.cmd.packadd(opts.args)
-  plugin.loadSingleConfiguration(opts.args, pluginConfigDir)
+  plugin.loadSingleConfiguration(opts.args, pluginPrefix)
 end, {nargs = 1, complete = 'packadd'})
