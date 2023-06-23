@@ -37,7 +37,9 @@ local function new_class_from_file(path)
     0,
     1000,
     vim.schedule_wrap(function()
-      vim.lsp.for_each_buffer_client(buf, function(client, client_id, bufnr)
+      for _, client in ipairs(vim.lsp.get_active_clients({
+        bufnr = buf,
+      })) do
         if 'phpactor' == client.name then
           timer:close()
 
@@ -56,7 +58,7 @@ local function new_class_from_file(path)
           end)
           return
         end
-      end)
+      end
       -- vim.notify(('Server not ready, trying %s time'):format(tostring(i)))
       i = i + 1
     end)
