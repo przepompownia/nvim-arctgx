@@ -54,12 +54,12 @@ function M.onAttach(client, bufnr)
 
   if client.server_capabilities.documentHighlightProvider then
     api.nvim_create_autocmd({'CursorMoved', 'CursorMovedI'}, {
-      group = 'LspDocumentHighlight',
+      group = augroup,
       buffer = bufnr,
       callback = vim.lsp.buf.clear_references
     })
     api.nvim_create_autocmd({'CursorHold', 'CursorHoldI'}, {
-      group = 'LspDocumentHighlight',
+      group = augroup,
       buffer = bufnr,
       callback = vim.lsp.buf.document_highlight
     })
@@ -77,14 +77,13 @@ function M.onAttach(client, bufnr)
       callback = function (args)
         vim.lsp.buf.clear_references()
         local supported = false
-        vim.lsp.for_each_buffer_client(args.buf, function (client, client_id)
-          if (client_id ~= args.data.client_id) and client.supports_method('textDocument/documentHighlight') then
-            supported = true
+        for _, client in ipairs(vim.lsp.get_active_clients({
+          bufnr = args.buf,
+          id = args.data.client_id,
+        })) do
+          if client.supports_method('textDocument/documentHighlight') then
+            return
           end
-        end)
-
-        if supported then
-          return
         end
 
         api.nvim_clear_autocmds {
@@ -96,6 +95,9 @@ function M.onAttach(client, bufnr)
   end
 
   -- vim.notify(('Server %s attached to %s'):format(client.name, api.nvim_buf_get_name(bufnr)))
+  if client.server_capabilities.inlayHintProvider then
+    vim.lsp.buf.inlay_hint(bufnr, true)
+  end
 end
 
 return M
