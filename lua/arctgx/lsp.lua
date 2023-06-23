@@ -63,14 +63,6 @@ function M.onAttach(client, bufnr)
       buffer = bufnr,
       callback = vim.lsp.buf.document_highlight
     })
-    local hlMap = {
-      LspReferenceRead = 'IdeReferenceRead',
-      LspReferenceText = 'IdeReferenceText',
-      LspReferenceWrite = 'IdeReferenceWrite'
-    }
-    for key, value in pairs(hlMap) do
-      api.nvim_set_hl(0, key, {link = value})
-    end
     api.nvim_create_autocmd({'LspDetach'}, {
       group = augroup,
       buffer = bufnr,
