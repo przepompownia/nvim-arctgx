@@ -90,6 +90,7 @@ local function showWindow(title, filetype, contents)
     border = 'rounded',
     style = 'minimal',
     title = title,
+    title_pos = 'center',
   })
 
   vim.wo[win].winblend = 0
