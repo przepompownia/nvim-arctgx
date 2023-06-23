@@ -1,7 +1,6 @@
 local base = require('arctgx.base')
 local vim = vim
 local api = vim.api
-local Float = require('plenary.window.float')
 
 local extension = {}
 
@@ -74,23 +73,26 @@ function extension.classNew()
   }, new_class_from_file)
 end
 
-local function showWindow(title, syntax, contents)
-  local out = vim.split(contents, '\n')
+local function showWindow(title, filetype, contents)
+  local buf = vim.api.nvim_create_buf(false, false)
 
-  local float = Float.percentage_range_window(0.6, 0.4, {winblend = 0}, {
+  vim.bo[buf].filetype = filetype
+  vim.bo[buf].bufhidden = 'wipe'
+  local lines = vim.split(contents, '\n')
+  vim.api.nvim_buf_set_lines(buf, 0, -1, false, lines)
+
+  local win = vim.api.nvim_open_win(buf, true, {
+    relative = 'editor',
+    width = 120,
+    height = #lines,
+    row = 0.9,
+    col = 0.9,
+    border = 'rounded',
+    style = 'minimal',
     title = title,
-    topleft = '┌',
-    topright = '┐',
-    top = '─',
-    left = '│',
-    right = '│',
-    botleft = '└',
-    botright = '┘',
-    bot = '─',
   })
 
-  vim.bo[float.bufnr].filetype = syntax
-  vim.api.nvim_buf_set_lines(float.bufnr, 0, -1, false, out)
+  vim.wo[win].winblend = 0
 end
 
 function extension.dumpConfig()
