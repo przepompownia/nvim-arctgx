@@ -8,7 +8,7 @@ vim.bo.shiftwidth = 4
 
 vim.go.backup = false
 vim.go.updatetime = 300
-vim.o.showbreak = '> '
+vim.wo.showbreak = '> '
 vim.go.showmatch = false
 
 vim.opt.complete:remove('t')
