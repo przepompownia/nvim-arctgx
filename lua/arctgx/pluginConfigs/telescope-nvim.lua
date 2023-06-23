@@ -4,10 +4,15 @@ local keymap = vim.keymap
 
 require('telescope').setup {
   defaults = {
-    previewer = true,
-    preview_cutoff = 1,
+    preview = {
+      timeout = 10,
+    },
     layout_strategy = 'horizontal',
-    layout_config = {height = 0.99, width = 0.99},
+    layout_config = {
+      height = 0.99,
+      width = 0.99,
+      preview_cutoff = 1,
+    },
     mappings = {
       i = {
         ['<C-p>'] = 'cycle_history_next',
