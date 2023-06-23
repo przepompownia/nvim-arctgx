@@ -75,10 +75,7 @@ function extension.classNew()
 end
 
 local function showWindow(title, syntax, contents)
-  local out = {}
-  for match in string.gmatch(contents, '[^\n]+') do
-    table.insert(out, match)
-  end
+  local out = vim.split(contents, '\n')
 
   local float = Float.percentage_range_window(0.6, 0.4, {winblend = 0}, {
     title = title,
