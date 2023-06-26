@@ -6,6 +6,11 @@ local keymap = require('vim.keymap')
 local buf = require('arctgx.lsp.buf')
 
 local augroup = api.nvim_create_augroup('LspDocumentHighlight', {clear = true})
+local ns = vim.api.nvim_create_namespace('arctgxLsp')
+
+function M.ns()
+  return ns
+end
 
 function M.defaultClientCapabilities()
   local capabilities = lsp.protocol.make_client_capabilities()

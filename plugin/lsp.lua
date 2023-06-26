@@ -5,8 +5,9 @@ local hlMap = {
   LspReferenceWrite = 'IdeReferenceWrite'
 }
 for key, value in pairs(hlMap) do
-  vim.api.nvim_set_hl(0, key, {link = value})
+  vim.api.nvim_set_hl(require('arctgx.lsp').ns(), key, {link = value})
 end
+vim.api.nvim_set_hl_ns(require('arctgx.lsp').ns())
 
 local border = 'rounded'
 local origUtilOpenFloatingPreview = vim.lsp.util.open_floating_preview

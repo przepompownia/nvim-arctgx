@@ -15,7 +15,7 @@ do
     IdeBreakpointSign = {fg = '#1212ff'},
     IdeInfoSign = {fg = '#626262'},
     IdeWarningSign = {
-      fg = api.nvim_get_hl_by_name('WarningMsg', true).background,
+      fg = api.nvim_get_hl(0, {name = 'WarningMsg'}).bg,
     },
     IdeHintSign = {fg = '#15aabf'},
     IdeErrorSign = {fg = '#bb8800'},
@@ -31,6 +31,6 @@ do
   }
 
   for name, def in pairs(highlights) do
-    vim.api.nvim_set_hl(0, name, def)
+    vim.api.nvim_set_hl(require('arctgx.lsp').ns(), name, def)
   end
 end
