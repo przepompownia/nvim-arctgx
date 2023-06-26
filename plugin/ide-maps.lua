@@ -45,7 +45,7 @@ local keyToPlugMappings = {
   ['<Leader>icn'] = {rhs = '<Plug>(ide-class-new)', modes = {'n'}},
   ['gi'] = {rhs = '<Plug>(ide-goto-implementation)', modes = {'n'}},
   ['gr'] = {rhs = '<Plug>(ide-find-references)', modes = {'n'}},
-  ['<Leader>ih'] = {rhs = '<Plug>(ide-hover)', modes = {'n'}},
+  ['<Leader>ih'] = {rhs = '<Plug>(ide-toggle-inlay-hints)', modes = {'n'}},
   ['K'] = {rhs = '<Plug>(ide-hover)', modes = {'n'}},
   ['<space>f'] = {rhs = '<Plug>(ide-format-with-all-formatters)', modes = {'n', 'v'}},
   ['<space>F'] = {rhs = '<Plug>(ide-format-with-selected-formatter)', modes = {'n', 'v'}},
