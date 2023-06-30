@@ -55,7 +55,7 @@ function M.onAttach(client, bufnr)
   bufMap('n', '<Plug>(ide-diagnostic-goto-previous)', diagnostic.goto_prev)
   bufMap('n', '<Plug>(ide-diagnostic-goto-next)', diagnostic.goto_next)
   bufMap('n', '<space>q', diagnostic.setloclist)
-  bufMap('n', '<Plug>(ide-toggle-inlay-hints)', function() vim.lsp.buf.inlay_hint(bufnr) end)
+  bufMap('n', '<Plug>(ide-toggle-inlay-hints)', function() vim.lsp.inlay_hint(bufnr) end)
   bufMap({'n', 'v'}, '<Plug>(ide-format-with-all-formatters)', function() return lsp.buf.format({async = true}) end)
 
   if client.server_capabilities.documentHighlightProvider then
