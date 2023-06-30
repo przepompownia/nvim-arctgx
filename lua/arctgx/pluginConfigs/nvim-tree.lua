@@ -96,11 +96,17 @@ require('nvim-tree').setup({
 
 local function focusOnFile()
   local treeapi = require('nvim-tree.api')
-  local bufName = vim.uv.fs_realpath(vim.api.nvim_buf_get_name(0))
-  treeapi.tree.open(require('arctgx.git').top(bufName and vim.fs.dirname(bufName) or vim.uv.cwd()))
+  local bufPath = vim.uv.fs_realpath(vim.api.nvim_buf_get_name(0))
+  treeapi.tree.open(require('arctgx.git').top(bufPath and vim.fs.dirname(bufPath) or vim.uv.cwd()))
   -- treeapi.tree.toggle_hidden_filter()
   treeapi.live_filter.clear()
-  treeapi.tree.find_file(bufName)
+  local pathToFocus = bufPath or vim.uv.cwd()
+  treeapi.tree.find_file(pathToFocus)
+  if vim.fn.isdirectory(pathToFocus) == 1 then
+    local node = treeapi.tree.get_node_under_cursor()
+    require('nvim-tree.lib').expand_or_collapse(node)
+  end
+  vim.cmd.normal('zz')
 end
 
 keymap.set({'n'}, '<Plug>(ide-tree-focus-current-file)', focusOnFile)
