@@ -62,7 +62,7 @@ function M.onAttach(client, bufnr)
     api.nvim_create_autocmd({'CursorMoved', 'CursorMovedI'}, {
       group = augroup,
       buffer = bufnr,
-      callback = vim.lsp.buf.clear_references
+      callback = function (args) vim.lsp.buf.clear_references(args.buf) end
     })
     api.nvim_create_autocmd({'CursorHold', 'CursorHoldI'}, {
       group = augroup,
@@ -73,7 +73,7 @@ function M.onAttach(client, bufnr)
       group = augroup,
       buffer = bufnr,
       callback = function (args)
-        vim.lsp.buf.clear_references()
+        vim.lsp.buf.clear_references(args.buf)
         for _, cl in ipairs(vim.lsp.get_active_clients({
           bufnr = args.buf,
           id = args.data.client_id,
