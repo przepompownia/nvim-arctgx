@@ -30,6 +30,7 @@ cmp.setup({
 
     ['<A-CR>'] = cmp.mapping.confirm({select = true, behavior = cmp.ConfirmBehavior.Insert}),
     ['<S-Tab>'] = cmp.mapping(function(fallback)
+      local luasnip = require('luasnip')
       if cmp.visible() then
         cmp.select_prev_item()
       elseif luasnip.jumpable(-1) then
