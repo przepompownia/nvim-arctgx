@@ -1,9 +1,0 @@
-#!/usr/bin/env bash
-
-format="${1:-%(refname:strip=3)}"
-
-git for-each-ref \
-    --format="$format" \
-    --sort="committerdate:relative" \
-    "refs/remotes/*/*" \
-    "refs/remotes/*/*/**"

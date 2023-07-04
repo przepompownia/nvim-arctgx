@@ -1,7 +1,7 @@
 local extension = {}
 
 local function createJob(relativeDir, gitArgs, jobOpts)
-  return require('plenary.job'):new(vim.tbl_deep_extend("force", {
+  return require('plenary.job'):new(vim.tbl_deep_extend('force', {
     command = 'git',
     cwd = relativeDir,
     args = gitArgs,
@@ -102,45 +102,72 @@ function extension.isTracked(path, gitDir, workTree)
   return 0 == exitCode
 end
 
+local function trimHead(text)
+  text = require('arctgx.string').trim(text or '')
+  if #text == 0 then
+    return nil
+  end
+  return text
+end
+
 ---@return table<int, {branch: string, desc: string, head: string?}>
 function extension.branches(gitDir, withRelativeDate, keepEmpty)
-  local binDir = vim.uv.fs_realpath(vim.fs.dirname(debug.getinfo(1, 'S').source:sub(2)) .. '/../../bin')
-  local command = {binDir .. '/git-list-branches', gitDir}
+  local relativeDatePart = withRelativeDate and ';%09%(committerdate:relative)' or ''
+  local function formatArgs(strip)
+    return ('%%(committerdate:unix);%%(HEAD);%%(refname:strip=%s)%s'):format(strip, relativeDatePart)
+  end
   local emptyValue = nil
   if true == keepEmpty then
     emptyValue = ''
   end
 
-  if true ~= withRelativeDate then
-    table.insert(command, 1)
-  end
+  local out = {}
 
-  local job = require('plenary.job'):new({
-    args = {unpack(command, 2)},
-    sync = true,
-    command = command[1]
-  })
-  job:sync()
-
-  local list = job:result()
-  local result = {}
-
-  local function trimHead(text)
-    text = vim.fn.trim(text)
-    if #text == 0 then
-      return nil
+  local function prepareOutput(_, data)
+    if nil == data then
+      return
     end
-    return text
+    for line in vim.gsplit(data, '\n', {trimempty = true}) do
+      local timestamp, head, branch, desc = unpack(vim.split(line, ';'))
+      if out[branch] then
+        return
+      end
+      out[branch] = {
+        timestamp = tonumber(timestamp),
+        branch = branch,
+        desc = trimHead(desc) or emptyValue,
+        head = trimHead(head) or emptyValue,
+      }
+    end
   end
 
-  for _, entry in ipairs(list) do
-    local head, branch, desc = unpack(vim.split(entry, ';'))
-    table.insert(result, 1, {
-      branch = branch,
-      desc = desc or emptyValue,
-      head = trimHead(head) or emptyValue
-    })
-  end
+  vim.system({
+    'git',
+    'for-each-ref',
+    '--format',
+    formatArgs(2),
+    '--sort',
+    'committerdate:relative',
+    'refs/tags/*',
+    'refs/tags/*/**',
+    'refs/heads/*',
+    'refs/heads/*/**',
+  }, {cwd = gitDir, stdout = prepareOutput}):wait()
+  vim.system({
+    'git',
+    'for-each-ref',
+    '--format',
+    formatArgs(3),
+    '--sort',
+    'committerdate:relative',
+    'refs/remotes/*/*',
+    'refs/remotes/*/*/**',
+  }, {cwd = gitDir, stdout = prepareOutput}):wait()
+
+  local result = vim.tbl_values(out)
+  table.sort(result, function (a, b)
+    return (a.timestamp or 0) > (b.timestamp or 0)
+  end)
 
   return result
 end
