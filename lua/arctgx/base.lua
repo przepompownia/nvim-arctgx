@@ -2,7 +2,7 @@ local api = vim.api
 local base = {}
 
 function base.get_bufnr_by_path(path)
-  local bufnr = vim.fn.bufnr(path)
+  local bufnr = vim.fn.bufnr('^' .. path .. '$')
 
   return -1 ~= bufnr and bufnr or nil
 end
