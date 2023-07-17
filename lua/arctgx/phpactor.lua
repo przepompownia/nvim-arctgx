@@ -36,7 +36,7 @@ local function new_class_from_file(path)
     0,
     1000,
     vim.schedule_wrap(function()
-      for _, client in ipairs(vim.lsp.get_active_clients({
+      for _, client in ipairs(vim.lsp.get_clients({
         bufnr = buf,
       })) do
         if 'phpactor' == client.name then
