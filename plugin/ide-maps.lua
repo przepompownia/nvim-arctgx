@@ -51,7 +51,6 @@ local keyToPlugMappings = {
   ['<Leader>iaf'] = {rhs = '<Plug>(ide-action-fold)', modes = {'n'}},
   ['<Leader>iar'] = {rhs = '<Plug>(ide-action-rename)', modes = {'n'}},
   ['<Leader>ilo'] = {rhs = '<Plug>(ide-list-document-symbols)', modes = {'n'}},
-  ['<Leader>ilf'] = {rhs = '<Plug>(ide-list-document-functions)', modes = {'n'}},
   ['<Leader>ilw'] = {rhs = '<Plug>(ide-list-workspace-symbols)', modes = {'n'}},
   [']]'] = {rhs = '<Plug>(ide-move-forward-function-start)', modes = {'n'}},
   [']['] = {rhs = '<Plug>(ide-move-forward-function-end)', modes = {'n'}},
