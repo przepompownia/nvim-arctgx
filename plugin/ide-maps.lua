@@ -115,25 +115,18 @@ local globalMappings = {
 
   ['gx'] = {rhs = '<Plug>(ide-url-open-operator)', modes = {'n', 'v'}},
 
-  ['<Leader>ibb'] = {rhs = '<Plug>(ide-browse-buffers)', modes = {'n'}},
   ['<S-F1>'] = {rhs = '<Plug>(ide-browse-buffers)', modes = {'n'}},
   ['<Leader>;'] = {rhs = '<Plug>(ide-browse-cmd-history)', modes = {'n'}},
-  ['<Leader>ibh'] = {rhs = '<Plug>(ide-browse-history)', modes = {'n'}},
   ['<F4>'] = {rhs = '<Plug>(ide-browse-history)', modes = {'n'}},
   ['<Leader><F4>'] = {rhs = '<Plug>(ide-browse-history-in-cwd)', modes = {'n'}},
   ['<S-F4>'] = {rhs = '<Plug>(ide-git-show-branches)', modes = {'n'}},
   ['<F5>'] = {rhs = '<Plug>(ide-db-ui-toggle)', modes = {'n'}},
-  ['<Leader>ibf'] = {rhs = '<Plug>(ide-browse-files)', modes = {'n'}},
-  ['<Leader>ibg'] = {rhs = '<Plug>(ide-browse-gfiles)', modes = {'n'}},
-  ['<Leader>ibw'] = {rhs = '<Plug>(ide-browse-windows)', modes = {'n'}},
   ['<F1>'] = {rhs = '<Plug>(ide-browse-windows)', modes = {'n'}},
   ['<F11>'] = {rhs = '<Plug>(ide-browse-gfiles)', modes = {'n'}},
   ['<S-F11>'] = {rhs = '<Plug>(ide-browse-files)', modes = {'n'}},
   ['<F12>'] = {rhs = '<Plug>(ide-grep-git)', modes = {'n'}},
   ['<S-F12>'] = {rhs = '<Plug>(ide-grep-files)', modes = {'n'}},
 
-  ['<Leader>igg'] = {rhs = '<Plug>(ide-grep-git)', modes = {'n'}},
-  ['<Leader>igf'] = {rhs = '<Plug>(ide-grep-files)', modes = {'n'}},
   ['<Leader>m'] = {rhs = '<Plug>(ide-tree-focus-current-file)', modes = {'n'}},
   ['<Leader>iwb'] = {rhs = '<Plug>(ide-write-backup)', modes = {'n'}},
 
