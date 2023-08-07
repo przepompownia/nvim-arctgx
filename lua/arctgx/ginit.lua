@@ -7,3 +7,12 @@ if vim.g.GuiLoaded then
   vim.cmd.packadd 'vim-tmux-focus-events'
   vim.env.TMUX = nil
 end
+
+local augroupGinit = vim.api.nvim_create_augroup('AfterGinit', {clear = true})
+vim.api.nvim_create_autocmd('FocusGained', {
+  group = augroupGinit,
+  pattern = '*',
+  callback = function ()
+    vim.cmd.checktime()
+  end,
+})
