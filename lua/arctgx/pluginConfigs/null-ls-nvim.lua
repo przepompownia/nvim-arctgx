@@ -49,7 +49,6 @@ null.setup({
         '$FILENAME',
       },
     }),
-    null.builtins.diagnostics.shellcheck,
     null.builtins.formatting.lua_format,
     null.builtins.formatting.phpcbf.with(phpcsArgs),
     null.builtins.formatting.phpcsfixer.with({cwd = phpProjectRoot}),
