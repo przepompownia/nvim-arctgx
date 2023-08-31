@@ -3,7 +3,7 @@ local base = require('arctgx.base')
 local api = vim.api
 
 local function phpProjectRoot(pattern)
-  local cwd = vim.uv.cwd()
+  -- local cwd = vim.uv.cwd()
   local root = require('lspconfig.util').root_pattern('composer.json', '.git')(pattern.bufname)
 
   -- returned = util.path.is_descendant(cwd, root) and cwd or root
