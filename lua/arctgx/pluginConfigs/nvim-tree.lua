@@ -63,7 +63,9 @@ require('nvim-tree').setup({
     signcolumn = 'no',
     -- adaptive_size = true,
   },
-  sort_by = 'case_insensitive',
+  sort = {
+    sorter = 'name',
+  },
   renderer = {
     full_name = true,
     group_empty = true,
