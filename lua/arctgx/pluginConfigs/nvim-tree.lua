@@ -96,6 +96,15 @@ require('nvim-tree').setup({
   },
 })
 
+local function expandNode()
+  local treeapi = require('nvim-tree.api')
+  local node = treeapi.tree.get_node_under_cursor()
+  if node.name == '..' then
+    return
+  end
+  treeapi.node.open.edit(node)
+end
+
 local function focusOnFile()
   local treeapi = require('nvim-tree.api')
   local bufPath = vim.uv.fs_realpath(vim.api.nvim_buf_get_name(0))
@@ -105,8 +114,7 @@ local function focusOnFile()
   local pathToFocus = bufPath or vim.uv.cwd()
   treeapi.tree.find_file(pathToFocus)
   if vim.fn.isdirectory(pathToFocus) == 1 then
-    local node = treeapi.tree.get_node_under_cursor()
-    require('nvim-tree.lib').expand_or_collapse(node)
+    expandNode()
   end
   vim.cmd.normal('zz')
 end
