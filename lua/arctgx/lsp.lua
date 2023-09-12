@@ -75,9 +75,8 @@ function M.onAttach(client, bufnr)
         vim.lsp.buf.clear_references(args.buf)
         for _, cl in ipairs(vim.lsp.get_clients({
           bufnr = args.buf,
-          id = args.data.client_id,
         })) do
-          if cl.supports_method('textDocument/documentHighlight') then
+          if cl.id ~= args.data.client_id and cl.supports_method('textDocument/documentHighlight') then
             return
           end
         end
