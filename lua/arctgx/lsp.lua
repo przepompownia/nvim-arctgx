@@ -44,9 +44,9 @@ function M.onAttach(client, bufnr)
   bufMap('n', '<Plug>(ide-list-document-symbols)', lsp.buf.document_symbol)
   bufMap('n', '<Plug>(ide-action-rename)', lsp.buf.rename)
   bufMap('n', '<Plug>(ide-find-references)',
-    function() lsp.buf.references {includeDeclaration = false} end)
+    function () lsp.buf.references {includeDeclaration = false} end)
   bufMap('n', '<Plug>(ide-diagnostic-info)',
-    function() diagnostic.open_float({border = 'rounded'}) end)
+    function () diagnostic.open_float({border = 'rounded'}) end)
   bufMap('n', '<Plug>(ide-workspace-folder-add)', lsp.buf.add_workspace_folder)
   bufMap('n', '<Plug>(ide-workspace-folder-remove)', lsp.buf.remove_workspace_folder)
   bufMap('n', '<Plug>(ide-workspace-folder-list)', buf.workspaceFolders)
@@ -54,14 +54,14 @@ function M.onAttach(client, bufnr)
   bufMap('n', '<Plug>(ide-diagnostic-goto-previous)', diagnostic.goto_prev)
   bufMap('n', '<Plug>(ide-diagnostic-goto-next)', diagnostic.goto_next)
   bufMap('n', '<space>q', diagnostic.setloclist)
-  bufMap('n', '<Plug>(ide-toggle-inlay-hints)', function() vim.lsp.inlay_hint(bufnr) end)
-  bufMap({'n', 'v'}, '<Plug>(ide-format-with-all-formatters)', function() return lsp.buf.format({async = true}) end)
+  bufMap('n', '<Plug>(ide-toggle-inlay-hints)', function () vim.lsp.inlay_hint(bufnr) end)
+  bufMap({'n', 'v'}, '<Plug>(ide-format-with-all-formatters)', function () return lsp.buf.format({async = true}) end)
 
   if client.server_capabilities.documentHighlightProvider then
     api.nvim_create_autocmd({'CursorMoved', 'CursorMovedI'}, {
       group = augroup,
       buffer = bufnr,
-      callback = function (args) vim.lsp.buf.clear_references(args.buf) end
+      callback = function (args) vim.lsp.util.buf_clear_references(args.buf) end
     })
     api.nvim_create_autocmd({'CursorHold', 'CursorHoldI'}, {
       group = augroup,
@@ -72,7 +72,7 @@ function M.onAttach(client, bufnr)
       group = augroup,
       buffer = bufnr,
       callback = function (args)
-        vim.lsp.buf.clear_references(args.buf)
+        vim.lsp.util.buf_clear_references(args.buf)
         for _, cl in ipairs(vim.lsp.get_clients({
           bufnr = args.buf,
         })) do
