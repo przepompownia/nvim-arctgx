@@ -15,6 +15,7 @@ local function bufferNameGenerator(opts)
 end
 
 vim.g.Db_ui_buffer_name_generator = bufferNameGenerator
+vim.g.db_ui_use_nvim_notify = 1
 vim.g.db_ui_table_helpers = {
   mysql = {
     ['Get By ID'] = 'SELECT * FROM `{table}` WHERE `id` = :{table}_id \\G',
