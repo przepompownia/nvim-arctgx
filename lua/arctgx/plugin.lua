@@ -11,6 +11,15 @@ local function listAllPlugins(pluginDir)
 end
 
 function plugin.loadCustomConfiguration(pluginDirs, pluginConfigDir)
+  vim.validate({
+    pluginDirs = {pluginDirs, 'table'},
+    pluginConfigDir = {pluginConfigDir, 'string'},
+  })
+
+  if vim.tbl_isempty(pluginDirs) then
+    vim.notify('Empty vim.g.pluginDirs', vim.log.levels.ERROR)
+  end
+
   for _, pluginDir in ipairs(pluginDirs) do
     for _, pluginName in ipairs(listAllPlugins(pluginDir)) do
       if vim.tbl_contains(vim.opt.runtimepath:get(), vim.uv.fs_realpath(pluginDir .. '/' .. pluginName)) then

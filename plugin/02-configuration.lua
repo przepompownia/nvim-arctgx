@@ -22,11 +22,7 @@ end
 
 vim.go.termguicolors = true
 
-if vim.tbl_isempty(vim.g.pluginDirs) then
-  vim.notify('Empty vim.g.pluginDirs', vim.log.levels.ERROR)
-end
-
-plugin.loadCustomConfiguration(vim.g.pluginDirs, pluginPrefix)
+plugin.loadCustomConfiguration(vim.g.pluginDirs or {}, pluginPrefix)
 
 api.nvim_create_autocmd('ColorScheme', {
   group = augroupHighlight,
