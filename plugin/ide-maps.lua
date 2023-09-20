@@ -112,8 +112,6 @@ local globalMappings = {
 
   ['<Leader>ff'] = {rhs = '<Plug>(ide-files-search-operator)', modes = {'n', 'v'}},
 
-  ['gx'] = {rhs = '<Plug>(ide-url-open-operator)', modes = {'n', 'v'}},
-
   ['<S-F1>'] = {rhs = '<Plug>(ide-browse-buffers)', modes = {'n'}},
   ['<Leader>;'] = {rhs = '<Plug>(ide-browse-cmd-history)', modes = {'n'}},
   ['<F4>'] = {rhs = '<Plug>(ide-browse-history)', modes = {'n'}},
