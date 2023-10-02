@@ -31,12 +31,13 @@ require('nvim-tree').setup({
       'n',
       '<CR>',
       injectNode(function(node)
-        if nil == node.nodes then
-          treeapi.tree.close()
-          base.tab_drop_path(node.absolute_path)
+        if node.name == '..' or node.type == 'directory' then
+          treeapi.node.open.edit()
+
           return
         end
-        require('nvim-tree.lib').expand_or_collapse(node)
+        treeapi.tree.close()
+        base.tab_drop_path(node.absolute_path)
       end),
       {buffer = bufnr, noremap = true}
     )
