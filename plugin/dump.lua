@@ -8,7 +8,7 @@ function dump(value)
     vim.api.nvim_buf_set_lines(buf, 0, #lines, false, lines)
     vim.treesitter.start(buf, 'lua')
     vim.bo[buf].bufhidden = 'wipe'
-    local winId = vim.api.nvim_open_win(buf, true, {
+    vim.api.nvim_open_win(buf, true, {
       relative = 'editor',
       width = 120,
       height = #lines,
