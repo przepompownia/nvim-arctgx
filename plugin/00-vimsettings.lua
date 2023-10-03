@@ -10,6 +10,9 @@ vim.go.backup = false
 vim.go.updatetime = 300
 vim.wo.showbreak = '> '
 vim.go.showmatch = false
+vim.wo.foldmethod = 'expr'
+vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+vim.wo.foldtext = 'v:lua.vim.treesitter.foldtext()'
 
 vim.opt.complete:remove('t')
 vim.opt.matchpairs:append('<:>')

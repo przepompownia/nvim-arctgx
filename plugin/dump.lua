@@ -17,7 +17,5 @@ function dump(value)
       border = 'rounded',
       style = 'minimal',
     })
-    vim.wo[winId].foldmethod = 'expr'
-    vim.wo[winId].foldexpr = 'v:lua.vim.treesitter.foldexpr()'
   end)
 end
