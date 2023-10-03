@@ -36,6 +36,7 @@ require'nvim-treesitter.configs'.setup {
     'twig',
     'vim',
     'vimdoc',
+    'xml',
     'yaml',
   },
   highlight = {
