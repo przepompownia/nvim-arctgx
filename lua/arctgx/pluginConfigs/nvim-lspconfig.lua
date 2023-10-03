@@ -67,54 +67,53 @@ lspconfig.yamlls.setup {
   }
 }
 
-local neodevOk, neodev = pcall(require, 'neodev')
-if neodevOk then
-  neodev.setup({
-    override = function (root_dir, options)
-      -- vim.notify('Neodev root_dir: ' .. root_dir, vim.log.levels.INFO)
-      options.plugins = true
-    end
-  })
-end
-
 lspconfig.lua_ls.setup {
-  autostart = true,
-  capabilities = capabilities,
   on_attach = arctgxLsp.onAttach,
-  settings = {
-    Lua = {
-      runtime = {
-        version = 'LuaJIT',
-      },
-      workspace = {
-        -- library = getLuaRuntime(),
-        maxPreload = 10000,
-        preloadFileSize = 10000,
-        -- library = vim.api.nvim_get_runtime_file('', true),
-        checkThirdParty = false,
-      },
-      completion = {
-        showWord = 'Disable',
-        postfix = '.',
-      },
-      diagnostics = {
-        globals = {'vim'},
-        neededFileStatus = {
-          ['codestyle-check'] = 'Any',
+  on_init = function (client)
+    local path = client.workspace_folders[1].name
+
+    if vim.loop.fs_stat(path .. '/.luarc.json') or vim.loop.fs_stat(path .. '/.luarc.jsonc') then
+      return true
+    end
+
+    vim.notify('.luarc.json(c) not found')
+    client.config.settings = vim.tbl_deep_extend('force', client.config.settings, {
+      Lua = {
+        runtime = {
+          path = {
+            'lua/?.lua',
+            'lua/?/init.lua',
+          },
+          version = 'LuaJIT',
+          pathStrict = true,
         },
-      },
-      telemetry = {
-        enable = false,
-      },
-      window = {
-        statusBar = false,
-        progressBar = false,
-      },
-      hint = {
-        enable = true,
-      },
-    },
-  },
+        workspace = {
+          checkThirdParty = false,
+          library = {
+            vim.env.VIMRUNTIME,
+            -- include generated table from JSON file
+          },
+          maxPreload = 10000,
+          preloadFileSize = 10000,
+        },
+        window = {
+          statusBar = false,
+          progressBar = false,
+        },
+        hint = {
+          enable = true,
+        },
+        diagnostics = {
+          unusedLocalExclude = '_*',
+          neededFileStatus = {
+            ['codestyle-check'] = 'Any',
+          },
+        },
+      }
+    })
+
+    client.notify('workspace/didChangeConfiguration', {settings = client.config.settings})
+  end
 }
 
 local servers = {
