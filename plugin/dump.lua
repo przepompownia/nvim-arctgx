@@ -8,7 +8,7 @@ function dump(value)
     vim.api.nvim_buf_set_lines(buf, 0, #lines, false, lines)
     vim.treesitter.start(buf, 'lua')
     vim.bo[buf].bufhidden = 'wipe'
-    vim.api.nvim_open_win(buf, true, {
+    local winId = vim.api.nvim_open_win(buf, true, {
       relative = 'editor',
       width = 120,
       height = #lines,
@@ -17,5 +17,7 @@ function dump(value)
       border = 'rounded',
       style = 'minimal',
     })
+    vim.wo[winId].foldmethod = 'expr'
+    vim.wo[winId].foldexpr = 'v:lua.vim.treesitter.foldexpr()'
   end)
 end
