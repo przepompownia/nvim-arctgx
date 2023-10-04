@@ -7,14 +7,34 @@ local function defaultWorkspaceLibrary()
   }
 end
 
-local function generatedWorkspaceLibrary()
+local function generatedWorkspaceLibrary(root)
+  local configPath = root .. '/.lua-ls-workspace-lib.json'
+  if not vim.uv.fs_stat(configPath) then
+    return nil
+  end
+  local config = io.open(configPath, 'r')
+  if nil == config then
+    return nil
+  end
+
+  local content = config:read('*a')
+  if nil == content or content:len() == 0 then
+    return nil
+  end
+
+  local _, library = pcall(vim.json.decode, content, {table = {array = true, object = true}})
+
+  if vim.tbl_isarray(library) then
+    return library
+  end
+
   return nil
 end
 
 M.onInit = function (client)
   local path = client.workspace_folders[1].name
 
-  if vim.loop.fs_stat(path .. '/.luarc.json') or vim.loop.fs_stat(path .. '/.luarc.jsonc') then
+  if vim.uv.fs_stat(path .. '/.luarc.json') or vim.uv.fs_stat(path .. '/.luarc.jsonc') then
     return true
   end
 
@@ -31,7 +51,7 @@ M.onInit = function (client)
       },
       workspace = {
         checkThirdParty = false,
-        library = generatedWorkspaceLibrary() or defaultWorkspaceLibrary(),
+        library = generatedWorkspaceLibrary(path) or defaultWorkspaceLibrary(),
         maxPreload = 10000,
         preloadFileSize = 10000,
       },
