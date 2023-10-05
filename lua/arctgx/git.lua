@@ -70,16 +70,6 @@ function extension.pushToAllRemoteRepos(relativeDir)
   end
 end
 
-function extension.pushall(relativeDir)
-  local job = require('plenary.job'):new({
-    command = 'git',
-    cwd = relativeDir,
-    args = {'pushall'},
-  })
-
-  return job:sync()[1] or relativeDir
-end
-
 function extension.command_files()
   return {'git', 'ls-files'}
 end
