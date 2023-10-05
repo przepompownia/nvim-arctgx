@@ -1,30 +1,38 @@
 local extension = {}
 
-local function createJob(relativeDir, gitArgs, jobOpts)
-  return require('plenary.job'):new(vim.tbl_deep_extend('force', {
-    command = 'git',
-    cwd = relativeDir,
-    args = gitArgs,
-  }, jobOpts or {}))
+local function gsplit(text)
+  return vim.gsplit(text, '\n', {trimempty = true})
+end
+
+---@param command string[]
+---@param opts SystemOpts
+---@return string[]
+local function system(command, opts)
+  local out = {}
+  local function prepareOutput(_, data)
+    if nil == data then
+      return
+    end
+    for line in gsplit(data) do
+      out[#out + 1] = line
+    end
+  end
+
+  opts.stdout = prepareOutput
+  local job = vim.system(command, opts)
+  job:wait()
+
+  return out
 end
 
 function extension.top(relativeDir)
-  local job = createJob(relativeDir, {'rev-parse', '--show-toplevel'})
-  job:sync()
+  local out = system({'git', 'rev-parse', '--show-toplevel'}, {cwd = relativeDir})
 
-  local out, _ = job:result()
-
-  return out[1] or relativeDir
+  return #out > 0 and out[1] or relativeDir
 end
 
 function extension.remote(relativeDir, gitRemoteOpts)
-  local job = createJob(relativeDir, {'remote', unpack(gitRemoteOpts or {})})
-
-  job:sync()
-
-  local out, _ = job:result()
-
-  return out
+  return system({'git', 'remote', unpack(gitRemoteOpts or {})}, {cwd = relativeDir, text = false})
 end
 
 function extension.push(relativeDir, remoteRepo)
@@ -38,29 +46,31 @@ function extension.push(relativeDir, remoteRepo)
     end
 
     local out = table.concat(data, '\n')
-    vim.schedule(function()
+    vim.schedule(function ()
       vim.notify(('%s: %s'):format(remoteRepo, out), level)
     end)
   end
 
-  local job = createJob(relativeDir, {'push', remoteRepo}, {
-    on_stdout = function (_, data, _)
-      table.insert(stdout, data)
-    end,
-    on_stderr = function (_, data, _)
-      table.insert(stderr, data)
-    end,
-    on_exit = function (_, exitCode, _)
-      if 0 < exitCode then
+  vim.system(
+    {'git', 'push', remoteRepo},
+    {
+      cwd = relativeDir,
+      stdout = function (_, data)
+        table.insert(stdout, data)
+      end,
+      stderr = function (_, data)
+        table.insert(stderr, data)
+      end,
+    },
+    function (obj)
+      if 0 < obj.code then
         logLevel = vim.log.levels.ERROR
       end
 
       printMessages(stdout, logLevel)
       printMessages(stderr, logLevel)
     end
-  })
-
-  job:start()
+  ):wait()
 end
 
 function extension.pushToAllRemoteRepos(relativeDir)
@@ -75,21 +85,17 @@ function extension.command_files()
 end
 
 function extension.isTracked(path, gitDir, workTree)
-  local args = {
+  local cmd = {
+    'git',
     '--git-dir', gitDir,
     '--work-tree', workTree,
     'ls-files',
     '--error-unmatch',
     path,
   }
-  local job = require('plenary.job'):new({
-    command = 'git',
-    args = args,
-    sync = true,
-  })
-  local _, exitCode = job:sync()
+  local obj = vim.system(cmd):wait()
 
-  return 0 == exitCode
+  return 0 == obj.code
 end
 
 local function trimHead(text)
@@ -117,7 +123,7 @@ function extension.branches(gitDir, withRelativeDate, keepEmpty)
     if nil == data then
       return
     end
-    for line in vim.gsplit(data, '\n', {trimempty = true}) do
+    for line in gsplit(data) do
       local timestamp, head, branch, desc = unpack(vim.split(line, ';'))
       if out[branch] then
         return
