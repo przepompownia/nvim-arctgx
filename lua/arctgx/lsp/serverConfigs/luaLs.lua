@@ -31,6 +31,8 @@ local function generatedWorkspaceLibrary(root)
   return nil
 end
 
+--- @param client lsp.Client
+--- @return boolean
 M.onInit = function (client)
   local path = client.workspace_folders[1].name
 
@@ -45,6 +47,8 @@ M.onInit = function (client)
         path = {
           'lua/?.lua',
           'lua/?/init.lua',
+          '?.lua',
+          '?/init.lua',
         },
         version = 'LuaJIT',
         pathStrict = true,
