@@ -51,16 +51,21 @@ function extension.push(relativeDir, remoteRepo)
     end)
   end
 
+  local function insertOutput(storage)
+    return function (_, data)
+      if nil == data then
+        return
+      end
+      table.insert(storage, require('arctgx.string').trim(data))
+    end
+  end
+
   vim.system(
     {'git', 'push', remoteRepo},
     {
       cwd = relativeDir,
-      stdout = function (_, data)
-        table.insert(stdout, data)
-      end,
-      stderr = function (_, data)
-        table.insert(stderr, data)
-      end,
+      stdout = insertOutput(stdout),
+      stderr = insertOutput(stderr),
     },
     function (obj)
       if 0 < obj.code then
