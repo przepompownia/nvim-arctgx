@@ -8,7 +8,7 @@ require('statuscol').setup({
       click = 'v:lua.ScFa',
     },
     {
-      sign = { name = { 'GitSigns.*' }, maxwidth = 1, colwidth = 1, auto = true },
+      sign = { namespace = { 'gitsigns*' }, maxwidth = 1, colwidth = 1, auto = true },
       click = 'v:lua.ScSa',
     },
     {
