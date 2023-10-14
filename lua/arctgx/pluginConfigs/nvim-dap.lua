@@ -33,7 +33,7 @@ end
 
 local function splitToArgs(input)
   local result = {}
-  for param in string.gmatch(input, "%S+") do
+  for param in string.gmatch(input, '%S+') do
     table.insert(result, param)
   end
   return result
@@ -73,7 +73,7 @@ dap.configurations.lua = {
     type = 'nlua',
     request = 'attach',
     name = 'Attach to running Neovim instance',
-    host = function()
+    host = function ()
       local defaultValue = '127.0.0.1'
       local value = vim.fn.input(('Host [%s]: '):format(defaultValue), defaultValue)
       if value ~= '' then
@@ -81,10 +81,10 @@ dap.configurations.lua = {
       end
       return defaultValue
     end,
-    port = function()
+    port = function ()
       local defaultValue = 9004
       local val = tonumber(vim.fn.input(('Port [%s]: '):format(defaultValue), defaultValue))
-      if val~= '' then
+      if val ~= '' then
         return val
       end
       return defaultValue
@@ -92,7 +92,9 @@ dap.configurations.lua = {
   }
 }
 
-dap.adapters.nlua = function(callback, config)
+--- @param callback function
+--- @param config ServerAdapter
+dap.adapters.nlua = function (callback, config)
   callback({type = 'server', host = config.host, port = config.port})
 end
 
@@ -125,7 +127,7 @@ keymap.set({'n'}, '<Plug>(ide-debugger-clear-breakpoints)', dap.clear_breakpoint
 keymap.set(
   {'n'},
   '<Plug>(ide-debugger-toggle-breakpoint-conditional)',
-  function() dap.set_breakpoint(vim.fn.input('Breakpoint condition: ')) end,
+  function () dap.set_breakpoint(vim.fn.input('Breakpoint condition: ')) end,
   opts
 )
 keymap.set({'n'}, '<Plug>(ide-debugger-up-frame)', dap.up, opts)
@@ -135,7 +137,7 @@ keymap.set({'n'}, '<Plug>(ide-debugger-close)', dap.close, opts)
 keymap.set(
   {'n'},
   '<Plug>(ide-debugger-clean)',
-  function()
+  function ()
     dap.close()
     dap.clear_breakpoints()
     api.nvim_exec_autocmds('User', {pattern = 'DAPClean', modeline = false})
@@ -145,7 +147,7 @@ keymap.set(
 keymap.set(
   {'n'},
   '<Plug>(ide-debugger-add-log-breakpoint)',
-  function() dap.set_breakpoint(nil, nil, vim.fn.input('Log point message: ')) end,
+  function () dap.set_breakpoint(nil, nil, vim.fn.input('Log point message: ')) end,
   opts
 )
 -- nnoremap <silent> <leader>dr :lua require'dap'.repl.open()<CR>
@@ -154,39 +156,39 @@ dap.defaults.fallback.switchbuf = 'uselast'
 dap.configurations.php = {php.default}
 local ideDAPSessionActive = ''
 
-dap.listeners.after['event_initialized']['arctgx'] = function(session, body)
+dap.listeners.after['event_initialized']['arctgx'] = function (_session, _body)
   api.nvim_exec_autocmds('User', {pattern = 'IdeStatusChanged', modeline = false})
   ideDAPSessionActive = 'L'
 end
 
-dap.listeners.after['event_stopped']['arctgx'] = function(session, body)
+dap.listeners.after['event_stopped']['arctgx'] = function (_session, _body)
   api.nvim_exec_autocmds('User', {pattern = 'IdeStatusChanged', modeline = false})
   ideDAPSessionActive = 'S'
 end
 
-dap.listeners.after['event_exited']['arctgx'] = function(session, body)
+dap.listeners.after['event_exited']['arctgx'] = function (_session, _body)
   api.nvim_exec_autocmds('User', {pattern = 'IdeStatusChanged', modeline = false})
   print('Exited')
   ideDAPSessionActive = 'E'
 end
-dap.listeners.after['event_thread']['arctgx'] = function(session, body)
+dap.listeners.after['event_thread']['arctgx'] = function (_session, body)
   api.nvim_exec_autocmds('User', {pattern = 'IdeStatusChanged', modeline = false})
   if body.reason == 'exited' then
     print('Thread ' .. body.threadId .. ' exited')
     ideDAPSessionActive = 'X'
   end
 end
-dap.listeners.before['disconnect']['arctgx'] = function(session, body)
+dap.listeners.before['disconnect']['arctgx'] = function (_session, _body)
   api.nvim_exec_autocmds('User', {pattern = 'IdeStatusChanged', modeline = false})
   vim.notify('Disconnected')
   ideDAPSessionActive = 'D'
 end
-dap.listeners.after['event_terminated']['arctgx'] = function(session, body)
+dap.listeners.after['event_terminated']['arctgx'] = function (_session, _body)
   api.nvim_exec_autocmds('User', {pattern = 'IdeStatusChanged', modeline = false})
   vim.notify('Terminated')
   ideDAPSessionActive = 'T'
 end
 
 require('arctgx.widgets').addDebugHook(function ()
-  return dap.session() and ('⛧' ..  ' ' .. ideDAPSessionActive) or '-'
+  return dap.session() and ('⛧' .. ' ' .. ideDAPSessionActive) or '-'
 end)
