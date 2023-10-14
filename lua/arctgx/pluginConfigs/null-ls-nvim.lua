@@ -49,7 +49,6 @@ null.setup({
         '$FILENAME',
       },
     }),
-    null.builtins.formatting.lua_format,
     null.builtins.formatting.phpcbf.with(phpcsArgs),
     null.builtins.formatting.phpcsfixer.with({cwd = phpProjectRoot}),
     -- null.builtins.formatting.prettier.with({
@@ -63,13 +62,12 @@ null.setup({
     --   },
     -- }),
     null.builtins.formatting.shfmt,
-    null.builtins.formatting.stylua,
     null.builtins.formatting.xmllint,
   },
 })
 
 -- https://github.com/jose-elias-alvarez/null-ls.nvim/discussions/236
-local chooseFormatter = function(range)
+local chooseFormatter = function (range)
   local bufnr = vim.api.nvim_get_current_buf()
   local filetype = vim.bo[bufnr].filetype
 
@@ -81,7 +79,7 @@ local chooseFormatter = function(range)
     formatters[formatter.opts.command] = formatter
   end
 
-  local onSelect = function(selected)
+  local onSelect = function (selected)
     if not selected then
       return
     end
