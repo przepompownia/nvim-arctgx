@@ -67,7 +67,7 @@ M.onInit = function (client)
         enable = true,
       },
       diagnostics = {
-        unusedLocalExclude = '_*',
+        unusedLocalExclude = {'_*'},
         neededFileStatus = {
           ['codestyle-check'] = 'Any',
         },
