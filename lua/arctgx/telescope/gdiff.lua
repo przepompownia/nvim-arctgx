@@ -1,7 +1,5 @@
-local pickers = require 'telescope.pickers'
 local finders = require 'telescope.finders'
 local conf = require('telescope.config').values
-local Job = require('plenary.job')
 local diff = require('arctgx.git.diff')
 local from_entry = require 'telescope.from_entry'
 local make_entry = require('telescope.make_entry')
@@ -23,7 +21,7 @@ local function makeRequest(command)
     else
       command:unsetShortOptionWithValue('-S')
     end
-    local job = Job:new({
+    local job = require('plenary.job'):new({
       args = {unpack(command, 2)},
       sync = true,
       command = command[1]
@@ -70,7 +68,7 @@ function gdiff.run(opts)
   local command = diff:newCommand('GDiff', opts.args or {},
     opts.cwd or vim.uv.cwd())
   opts = opts or {}
-  pickers.new(opts, {
+  require('telescope.pickers').new(opts, {
     prompt_title = 'GDiff',
     finder = finders.new_dynamic({
       fn = makeRequest(command),
