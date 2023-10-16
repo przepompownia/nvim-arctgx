@@ -1,5 +1,6 @@
 local api = vim.api
 local base = {}
+local pluginDir = nil
 
 function base.get_bufnr_by_path(path)
   local bufnr = vim.fn.bufnr('^' .. path .. '$')
@@ -199,6 +200,16 @@ function base.enablePrivateMode()
   vim.opt_global.undofile = false
   vim.opt_global.writebackup = false
   vim.opt.shada = nil
+end
+
+function base.getPluginDir()
+  if pluginDir then
+    return pluginDir
+  end
+
+  local modulePath = debug.getinfo(1).source:match('@?(.*/)')
+
+  return vim.uv.fs_realpath(modulePath .. '../../')
 end
 
 return base

@@ -1,16 +1,17 @@
 local dap = require 'dap'
 local php = require('arctgx.dap.php')
 local widgets = require('dap.ui.widgets')
+local base = require('arctgx.base')
 local vim = vim
 local api = vim.api
 
 dap.adapters.php = {
   type = 'executable',
-  command = vim.env['XDG_CONFIG_HOME'] .. '/bin/dap-adapter-utils',
+  command = base.getPluginDir() .. '/bin/dap-adapter-utils',
   args = {'run', 'vscode-php-debug', 'phpDebug'}
 }
 
-local bashdbDir = vim.env['XDG_CONFIG_HOME'] .. '/tools/vscode-bash-debug/'
+local bashdbDir = base.getPluginDir() .. '/tools/vscode-bash-debug/'
 
 ---@param defaultValue any
 ---@param promptTemplate string
