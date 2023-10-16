@@ -1,5 +1,4 @@
 local api = vim.api
-local keymap = require 'vim.keymap'
 local dapui = require('dapui')
 local base  = require('arctgx.base')
 
@@ -46,11 +45,11 @@ api.nvim_create_user_command('DAW', function (opts)
 end , {nargs = 1, desc = 'DAP UI: add expression to watch'})
 
 local opts = {silent = true, noremap = true}
-keymap.set('x', '<Plug>(ide-debugger-ui-add-to-watch)', function ()
+vim.keymap.set('x', '<Plug>(ide-debugger-ui-add-to-watch)', function ()
   watchExpression(base.getVisualSelection())
 end)
-keymap.set({'n'}, '<Plug>(ide-debugger-ui-toggle)', dapui.toggle, opts)
-keymap.set({'n', 'x'}, '<Plug>(ide-debugger-eval-popup)', function()
+vim.keymap.set({'n'}, '<Plug>(ide-debugger-ui-toggle)', dapui.toggle, opts)
+vim.keymap.set({'n', 'x'}, '<Plug>(ide-debugger-eval-popup)', function()
   local keywordChars = {}
   if vim.tbl_contains({'php', 'sh'}, vim.bo.ft) then
     keywordChars = {'$'}

@@ -1,12 +1,11 @@
-local keymap = require 'vim.keymap'
 local dapTab = require 'dap-tab'
 local session = require 'arctgx.session'
 local api = vim.api
 
 local opts = {silent = true, noremap = true}
 
-keymap.set({'n'}, '<Plug>(ide-debugger-go-to-view)', dapTab.verboseGoToDebugWin, opts)
-keymap.set({'n'}, '<Plug>(ide-debugger-close-view)', dapTab.closeDebugWin, opts)
+vim.keymap.set({'n'}, '<Plug>(ide-debugger-go-to-view)', dapTab.verboseGoToDebugWin, opts)
+vim.keymap.set({'n'}, '<Plug>(ide-debugger-close-view)', dapTab.closeDebugWin, opts)
 
 local augroup = api.nvim_create_augroup('ArctgxDapTab', {clear = true})
 api.nvim_create_autocmd('User', {

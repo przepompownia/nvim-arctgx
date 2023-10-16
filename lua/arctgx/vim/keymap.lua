@@ -1,5 +1,4 @@
 local api = vim.api
-local keymap = require('vim.keymap')
 
 ---@alias KeyToPlugMappings table<string, {rhs: string, modes: table<string>, repeatable: boolean}>
 
@@ -24,7 +23,7 @@ function extension.loadKeyToPlugMappings(mappings, bufnr)
   for lhs, mapping in pairs(mappings) do
     local modes = mapping.modes or { 'n' }
     for _, mode in ipairs(modes) do
-      keymap.set({ mode }, lhs, function()
+      vim.keymap.set({ mode }, lhs, function()
         local internalSeq = api.nvim_replace_termcodes(mapping.rhs, true, false, true)
         api.nvim_feedkeys(internalSeq, mode, false)
         if mode ~= 'i' and true == mapping.repeatable then

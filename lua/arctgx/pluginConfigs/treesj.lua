@@ -1,5 +1,4 @@
 local tsj = require('treesj')
-local keymap = require 'vim.keymap'
 
 local langs = {}
 
@@ -11,6 +10,6 @@ tsj.setup({
   notify = true,
   langs = langs,
 })
-keymap.set({'n'}, '<Plug>(ide-toggle-split-join-lines-at-cursor)', tsj.toggle, {})
-keymap.set({'n'}, '<Plug>(ide-toggle-split-lines-at-cursor)', tsj.split, {})
-keymap.set({'n'}, '<Plug>(ide-toggle-join-lines-at-cursor)', tsj.join, {})
+vim.keymap.set({'n'}, '<Plug>(ide-toggle-split-join-lines-at-cursor)', tsj.toggle, {})
+vim.keymap.set({'n'}, '<Plug>(ide-toggle-split-lines-at-cursor)', tsj.split, {})
+vim.keymap.set({'n'}, '<Plug>(ide-toggle-join-lines-at-cursor)', tsj.join, {})

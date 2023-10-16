@@ -31,7 +31,7 @@ function M.onAttach(client, bufnr)
     opts = opts or {}
     opts.noremap = opts.noremap or true
     opts.silent = opts.silent or true
-    keymap.set(modes, lhs, rhs, opts)
+    vim.keymap.set(modes, lhs, rhs, opts)
   end
 
   bufMap('n', '<Plug>(ide-goto-definition)', buf.definition)
