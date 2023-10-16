@@ -1,0 +1,65 @@
+#!/usr/bin/env bash
+
+currentDir="$(dirname "$(dirname "$(realpath "${BASH_SOURCE[0]}")")")"
+
+toolsDir="${currentDir}/tools"
+
+command="${1?install|setAsCurrent|run}"
+shift
+
+installAdapter() {
+    declare dest file name version url
+    vendor="${1}"
+    name="${2}"
+    version="${3}"
+    url="${4}"
+    dest="${toolsDir}/${name}/${version}"
+    mkdir -p "$dest"
+    cd "$dest" || return 1
+    file="${name}-${version}.vsix"
+    curl --continue-at - --output "$file" --remote-time --location "${url}" || return
+    unzip -n "$file"
+}
+
+setAsCurrent() {
+    declare name version
+    name="${1}"
+    version="${2}"
+    cd "${toolsDir}/${name}" || return
+    ln --no-target-directory --symbolic --force "$version" 'current'
+}
+
+runAdapter() {
+    declare version executableName script
+    name="${1}"
+    executableName="${2}"
+    version="${3?missing version}"
+    script="${toolsDir}/${name}/${version}/extension/out/${executableName}.js"
+    if [[ ! -f $script ]]; then
+        echo Cannot find script "$script" >&2
+        return 1
+    fi
+
+    node "$script"
+}
+
+case "$command" in
+    install)
+        vendor="${1?missing vendor}"
+        name="${2?missing adapter name}"
+        version="${3?missing version}"
+        url="${4}"
+        installAdapter "$vendor" "$name" "$version" "$url"
+        ;;
+    setAsCurrent)
+        name="${1?missing adapter name}"
+        version="${2?missing version}"
+        setAsCurrent "$name" "$version"
+        ;;
+    run)
+        name="${1?missing adapter name}"
+        executableName="${2?missing executable name}"
+        version="${3:-current}"
+        runAdapter "$name" "$executableName" "$version"
+        ;;
+esac
