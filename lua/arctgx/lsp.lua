@@ -2,7 +2,6 @@ local M = {}
 local api = vim.api
 local lsp = vim.lsp
 local diagnostic = require('vim.diagnostic')
-local keymap = require('vim.keymap')
 local buf = require('arctgx.lsp.buf')
 
 local augroup = api.nvim_create_augroup('LspDocumentHighlight', {clear = true})
