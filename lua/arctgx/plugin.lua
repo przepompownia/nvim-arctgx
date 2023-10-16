@@ -10,10 +10,10 @@ local function listAllPlugins(pluginDir)
   return plugins
 end
 
-function plugin.loadCustomConfiguration(pluginDirs, pluginConfigDir)
+function plugin.loadCustomConfiguration(pluginDirs, pluginPrefix, configDir)
   vim.validate({
     pluginDirs = {pluginDirs, 'table'},
-    pluginConfigDir = {pluginConfigDir, 'string'},
+    pluginConfigDir = {pluginPrefix, 'string'},
   })
 
   if vim.tbl_isempty(pluginDirs) then
@@ -23,17 +23,23 @@ function plugin.loadCustomConfiguration(pluginDirs, pluginConfigDir)
   for _, pluginDir in ipairs(pluginDirs) do
     for _, pluginName in ipairs(listAllPlugins(pluginDir)) do
       if vim.tbl_contains(vim.opt.runtimepath:get(), vim.uv.fs_realpath(pluginDir .. '/' .. pluginName)) then
-        plugin.loadSingleConfiguration(pluginName, pluginConfigDir)
+        plugin.loadSingleConfiguration(pluginName, pluginPrefix, configDir)
       end
     end
   end
 end
 
-function plugin.loadSingleConfiguration(pluginName, pluginPrefix)
-  local pluginFilePath = pluginPrefix .. '.' .. pluginName:gsub('%.lua$', ''):gsub('%.', '-')
+function plugin.loadSingleConfiguration(pluginName, pluginPrefix, configDir)
+  local tail = pluginName:gsub('%.lua$', ''):gsub('%.', '-')
+  if not vim.uv.fs_stat(configDir .. '/lua/' .. pluginPrefix:gsub('%.', '/') .. '/' .. tail .. '.lua') then
+    return
+  end
+  local pluginModule = pluginPrefix .. '.' .. tail
 
-  -- @todo Prevent from loading nonexisting files
-  local ok, out = pcall(require, pluginFilePath)
+  local ok, out = pcall(require, pluginModule)
+  if not ok then
+    vim.notify(out, vim.log.levels.WARN)
+  end
 end
 
 return plugin

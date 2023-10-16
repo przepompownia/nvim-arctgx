@@ -2,7 +2,6 @@ local plugin = require 'arctgx.plugin'
 local api = vim.api
 local configDir = vim.fn.expand('<sfile>:p:h:h')
 local pluginPrefix = 'arctgx.pluginConfigs'
--- local pluginConfigDir = vim.fn.simplify(configDir .. '/lua/arctgx/pluginConfigs/')
 
 local augroupHighlight = api.nvim_create_augroup('ConfigureHighlight', {clear = true})
 local augroupAfterVimEnter = api.nvim_create_augroup('AfterVimEnter', {clear = true})
@@ -22,7 +21,7 @@ end
 
 vim.go.termguicolors = true
 
-plugin.loadCustomConfiguration(vim.g.pluginDirs or {}, pluginPrefix)
+plugin.loadCustomConfiguration(vim.g.pluginDirs or {}, pluginPrefix, configDir)
 
 api.nvim_create_autocmd('ColorScheme', {
   group = augroupHighlight,
@@ -58,5 +57,5 @@ vim.api.nvim_create_autocmd('UIEnter', {
 
 api.nvim_create_user_command('Packadd', function (opts)
   vim.cmd.packadd(opts.args)
-  plugin.loadSingleConfiguration(opts.args, pluginPrefix)
+  plugin.loadSingleConfiguration(opts.args, pluginPrefix, configDir)
 end, {nargs = 1, complete = 'packadd'})
