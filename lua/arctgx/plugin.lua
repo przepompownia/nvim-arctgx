@@ -10,7 +10,7 @@ local function listAllPlugins(pluginDir)
   return plugins
 end
 
-function plugin.loadCustomConfiguration(pluginDirs, pluginPrefix, configDir)
+function plugin.loadCustomConfiguration(pluginDirs, pluginPrefix)
   vim.validate({
     pluginDirs = {pluginDirs, 'table'},
     pluginConfigDir = {pluginPrefix, 'string'},
@@ -23,15 +23,15 @@ function plugin.loadCustomConfiguration(pluginDirs, pluginPrefix, configDir)
   for _, pluginDir in ipairs(pluginDirs) do
     for _, pluginName in ipairs(listAllPlugins(pluginDir)) do
       if vim.tbl_contains(vim.opt.runtimepath:get(), vim.uv.fs_realpath(pluginDir .. '/' .. pluginName)) then
-        plugin.loadSingleConfiguration(pluginName, pluginPrefix, configDir)
+        plugin.loadSingleConfiguration(pluginName, pluginPrefix)
       end
     end
   end
 end
 
-function plugin.loadSingleConfiguration(pluginName, pluginPrefix, configDir)
+function plugin.loadSingleConfiguration(pluginName, pluginPrefix)
   local tail = pluginName:gsub('%.lua$', ''):gsub('%.', '-')
-  if not vim.uv.fs_stat(configDir .. '/lua/' .. pluginPrefix:gsub('%.', '/') .. '/' .. tail .. '.lua') then
+  if not vim.uv.fs_stat(require('arctgx.base').getPluginDir() .. '/lua/' .. pluginPrefix:gsub('%.', '/') .. '/' .. tail .. '.lua') then
     return
   end
   local pluginModule = pluginPrefix .. '.' .. tail
