@@ -56,13 +56,13 @@ function base.tab_drop(path, line, column, relative_bufnr)
   vim.cmd.normal({bang = true, args = {"m'"}})
 
   -- Push a new item into tagstack
-  local from = { vim.fn.bufnr('%'), vim.fn.line('.'), vim.fn.col('.'), 0 }
-  local items = { { tagname = vim.fn.expand('<cword>'), from = from } }
-  vim.fn.settagstack(vim.fn.win_getid(), { items = items }, 't')
+  local from = {vim.fn.bufnr('%'), vim.fn.line('.'), vim.fn.col('.'), 0}
+  local items = {{tagname = vim.fn.expand('<cword>'), from = from}}
+  vim.fn.settagstack(vim.fn.win_getid(), {items = items}, 't')
 
   local ok, result = pcall(api.nvim_win_set_cursor, 0, {line, (column or 1) - 1})
   if not ok then
-    vim.notify(('%s: line %s, col %s'):format(result, line, column), vim.log.levels.WARN, { title = 'tab drop' })
+    vim.notify(('%s: line %s, col %s'):format(result, line, column), vim.log.levels.WARN, {title = 'tab drop'})
   end
 end
 
@@ -99,7 +99,7 @@ function base.getRangeBetweenMarks(mark1, mark2)
   local finishLine, finishCol = finish[2], finish[3]
   if vim.fn.mode() == 'V' then
     startCol = 1
-    finishCol = 2^31 - 1
+    finishCol = 2 ^ 31 - 1
   end
   if startLine > finishLine or (startLine == finishLine and startCol > finishCol) then
     return finishLine, finishCol, startLine, startCol
@@ -111,7 +111,7 @@ end
 function base.getTextBetweenMarks(mark1, mark2)
   local startLine, startCol, finishLine, finishCol = base.getRangeBetweenMarks(mark1, mark2)
 
-  local lines = api.nvim_buf_get_text(0, startLine -1, startCol - 1, finishLine -1, finishCol, {})
+  local lines = api.nvim_buf_get_text(0, startLine - 1, startCol - 1, finishLine - 1, finishCol, {})
 
   return table.concat(lines, '\n')
 end
@@ -124,8 +124,8 @@ function base.getVisualSelectionRange()
   local startLine, startCol, finishLine, finishCol = base.getRangeBetweenMarks('v', '.')
 
   return {
-    ['start'] = { startLine, startCol - 1 },
-    ['end'] = { finishLine, finishCol - 1 },
+    ['start'] = {startLine, startCol - 1},
+    ['end'] = {finishLine, finishCol - 1},
   }
 end
 
