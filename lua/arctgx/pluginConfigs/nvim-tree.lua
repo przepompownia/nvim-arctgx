@@ -113,7 +113,9 @@ local function focusOnFile()
   -- treeapi.tree.toggle_hidden_filter()
   treeapi.live_filter.clear()
   local pathToFocus = bufPath or vim.uv.cwd()
-  treeapi.tree.find_file(pathToFocus)
+  treeapi.tree.find_file({
+    buf = pathToFocus,
+  })
   if vim.fn.isdirectory(pathToFocus) == 1 then
     expandNode()
   end
