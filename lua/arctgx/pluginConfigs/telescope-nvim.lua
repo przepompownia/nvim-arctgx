@@ -88,3 +88,9 @@ api.nvim_create_autocmd({'ColorScheme'}, {
   group = augroup,
   callback = reloadColors,
 })
+api.nvim_create_autocmd({'FileType'}, {
+  group = augroup,
+  callback = function ()
+    vim.keymap.set({'n'}, 'zf', require('telescope.builtin').quickfix, {buffer = true})
+  end,
+})
