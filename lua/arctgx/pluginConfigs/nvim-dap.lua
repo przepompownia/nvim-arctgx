@@ -153,6 +153,9 @@ vim.keymap.set(
 -- nnoremap <silent> <leader>dr :lua require'dap'.repl.open()<CR>
 -- nnoremap <silent> <leader>dl :lua require'dap'.run_last()<CR>
 dap.defaults.fallback.switchbuf = 'uselast'
+dap.defaults.fallback.external_terminal = {
+  command = '/usr/bin/kitty',
+}
 dap.configurations.php = {php.default}
 local ideDAPSessionActive = ''
 
