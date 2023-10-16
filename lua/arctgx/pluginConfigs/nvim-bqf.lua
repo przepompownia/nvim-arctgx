@@ -1,5 +1,3 @@
-local keymap = require('vim.keymap')
-
 require('bqf').setup({
   auto_enable = true,
   preview = {
@@ -35,8 +33,8 @@ local function tabDropHandler()
 end
 
 local function configureWindow()
-  keymap.set({'n'}, '<2-LeftMouse>', tabDropHandler, {buffer = true})
-  keymap.set({'n'}, '<CR>', tabDropHandler, {buffer = true})
+  vim.keymap.set({'n'}, '<2-LeftMouse>', tabDropHandler, {buffer = true})
+  vim.keymap.set({'n'}, '<CR>', tabDropHandler, {buffer = true})
   vim.wo.cursorline = true
 end
 
