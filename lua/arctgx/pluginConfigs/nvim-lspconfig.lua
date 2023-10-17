@@ -67,6 +67,8 @@ lspconfig.yamlls.setup {
 }
 
 lspconfig.lua_ls.setup {
+  -- cmd = {'lua-language-server', '--loglevel=trace'},
+  -- trace = 'verbose',
   on_attach = arctgxLsp.onAttach,
   on_init = require('arctgx.lsp.serverConfigs.luaLs').onInit
 }
