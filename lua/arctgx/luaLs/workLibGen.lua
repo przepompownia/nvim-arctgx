@@ -15,6 +15,10 @@ local function listRuntimePaths()
     return path ~= vim.uv.cwd() and path ~= vim.env.NVIM_SANDBOXED_CWD
   end, vim.api.nvim_get_runtime_file('', true))
 
+  paths = vim.tbl_map(function (value)
+    return value .. '/lua'
+  end, paths)
+
   return paths
 end
 
