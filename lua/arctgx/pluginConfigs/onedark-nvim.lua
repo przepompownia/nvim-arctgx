@@ -1,4 +1,4 @@
 require('onedark').setup {
-    style = 'light'
+  style = 'light',
 }
 vim.g.colorschemeLight = 'onedark'
