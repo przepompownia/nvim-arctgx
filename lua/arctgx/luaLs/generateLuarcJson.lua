@@ -1,8 +1,8 @@
 --- Generate workspace library for lua-ls respecting runtimepath
 --- based on given init file
 --- At the project dir run
---- nvim -u ~/.vim/nvim/init.lua -l lua-ls-work-lib-gen.lua
---- and see .lua-ls-workspace-lib.json as the result
+--- nvim -u ~/.vim/nvim/init.lua -l generateLuarcJson.lua
+--- and see .luarc.json as the result
 
 local function tableFromJsonFile(jsonFile)
   if not vim.uv.fs_stat(jsonFile) then
