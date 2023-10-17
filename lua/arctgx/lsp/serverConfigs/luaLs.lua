@@ -7,30 +7,6 @@ local function defaultWorkspaceLibrary()
   }
 end
 
-local function generatedWorkspaceLibrary(root)
-  local configPath = root .. '/.lua-ls-workspace-lib.json'
-  if not vim.uv.fs_stat(configPath) then
-    return nil
-  end
-  local config = io.open(configPath, 'r')
-  if nil == config then
-    return nil
-  end
-
-  local content = config:read('*a')
-  if nil == content or content:len() == 0 then
-    return nil
-  end
-
-  local _, library = pcall(vim.json.decode, content, {table = {array = true, object = true}})
-
-  if vim.tbl_isarray(library) then
-    return library
-  end
-
-  return nil
-end
-
 --- @param client lsp.Client
 --- @return boolean
 M.onInit = function (client)
@@ -40,7 +16,7 @@ M.onInit = function (client)
     return true
   end
 
-  vim.notify('.luarc.json(c) not found')
+  vim.notify('.luarc.json(c) not found. Loading defaults.')
   client.config.settings = vim.tbl_deep_extend('force', client.config.settings, {
     Lua = {
       runtime = {
@@ -55,7 +31,7 @@ M.onInit = function (client)
       },
       workspace = {
         checkThirdParty = false,
-        library = generatedWorkspaceLibrary(path) or defaultWorkspaceLibrary(),
+        library = defaultWorkspaceLibrary(),
         maxPreload = 10000,
         preloadFileSize = 10000,
       },

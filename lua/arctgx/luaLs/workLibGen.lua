@@ -1,8 +1,32 @@
---- Generate workspace library for lua-ls respecting runtimepath 
+--- Generate workspace library for lua-ls respecting runtimepath
 --- based on given init file
 --- At the project dir run
 --- nvim -u ~/.vim/nvim/init.lua -l lua-ls-work-lib-gen.lua
 --- and see .lua-ls-workspace-lib.json as the result
+
+local function tableFromJsonFile(jsonFile)
+  if not vim.uv.fs_stat(jsonFile) then
+    return nil
+  end
+  local config = io.open(jsonFile, 'r')
+  if nil == config then
+    return nil
+  end
+
+  local content = config:read('*a')
+  if nil == content or content:len() == 0 then
+    return nil
+  end
+
+  local ok, result = pcall(vim.json.decode, content, {table = {array = true, object = true}})
+
+  if not ok then
+    print(vim.inspect(result))
+    return
+  end
+
+  return result
+end
 
 local function listRuntimePaths()
   local paths = vim.tbl_filter(function (path)
@@ -22,8 +46,7 @@ local function listRuntimePaths()
   return paths
 end
 
-local function write(text)
-  local filename = '.lua-ls-workspace-lib.json'
+local function write(text, filename)
   local out = io.open(filename, 'w')
   if nil == out then
     error('Cannot write to ' .. filename)
@@ -32,6 +55,37 @@ local function write(text)
   out:close()
 end
 
-local paths = listRuntimePaths()
-table.insert(paths, '${3rd}/luv/library')
-write(vim.json.encode(paths))
+local function generate()
+  local outputFile = '.luarc.json'
+  local paths = listRuntimePaths()
+  if nil == paths then
+    return
+  end
+  table.insert(paths, '${3rd}/luv/library')
+  local staticConfigFile = '.luarc-static.jsonc'
+  local staticConfig = tableFromJsonFile(staticConfigFile)
+  if nil == staticConfig or nil == staticConfig['workspace'] then
+    return
+  end
+  staticConfig['workspace']['library'] = paths
+  local content = vim.json.encode(staticConfig)
+
+  if 0 == #vim.fn.exepath('jq') then
+    write(content, outputFile)
+    return
+  end
+
+  vim.system({
+    'jq', '--sort-keys', '.'
+  }, {
+    stdin = content,
+  }, function (obj)
+    if 0 ~= obj.code then
+      write(content, outputFile)
+      return
+    end
+    write(obj.stdout, outputFile)
+  end):wait()
+end
+
+generate()
