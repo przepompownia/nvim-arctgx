@@ -12,7 +12,7 @@ api.nvim_create_autocmd('BufReadPost', {
 api.nvim_create_autocmd('FileType', {
   pattern = 'gitcommit',
   group = augroup,
-  callback = function (params)
+  callback = function (_params)
     vim.cmd([[
       inoremap <buffer> <F3> <C-\><C-n>:q<CR>
     ]])
@@ -21,7 +21,7 @@ api.nvim_create_autocmd('FileType', {
 api.nvim_create_autocmd('FileType', {
   pattern = {'git', 'fugitiveblame', 'fugitive'},
   group = augroup,
-  callback = function (params)
+  callback = function (_params)
    vim.keymap.set('n', 'q', vim.cmd.quit)
   end
 })
