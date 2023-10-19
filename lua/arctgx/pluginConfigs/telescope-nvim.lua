@@ -25,11 +25,19 @@ require('telescope').setup {
   },
 }
 
-api.nvim_create_user_command('GGrep', function(opts) require('arctgx.telescope').gitGrep(opts.args, false, false) end, {nargs = '*'})
-api.nvim_create_user_command('RGrep', function(opts) require('arctgx.telescope').rgGrep(opts.args, false, false) end, {nargs = '*'})
+api.nvim_create_user_command(
+  'GGrep',
+  function(opts) require('arctgx.telescope').gitGrep(opts.args, false, false) end,
+  {nargs = '*'}
+)
+api.nvim_create_user_command(
+  'RGrep',
+  function(opts) require('arctgx.telescope').rgGrep(opts.args, false, false) end,
+  {nargs = '*'}
+)
 api.nvim_create_user_command(
   'GTDiff',
-  function(opts)
+  function (opts)
     require('arctgx.telescope.gdiff').run({
       args = opts.fargs,
       cwd = require('arctgx.git').top(base.getBufferCwd()),
@@ -43,26 +51,26 @@ api.nvim_create_user_command(
     end,
   }
 )
-vim.keymap.set('n', '<Plug>(ide-grep-git)', function() require('arctgx.telescope').gitGrep('', false, false) end)
-vim.keymap.set('n', '<Plug>(ide-grep-files)', function() require('arctgx.telescope').rgGrep('', false, false) end)
-vim.keymap.set('n', '<Plug>(ide-browse-files)', function() require('arctgx.telescope').filesAll() end)
-vim.keymap.set('n', '<Plug>(ide-browse-gfiles)', function() require('arctgx.telescope').filesGit() end)
-vim.keymap.set('n', '<Plug>(ide-browse-cmd-history)', function() require('telescope.builtin').command_history() end)
-vim.keymap.set('n', '<Plug>(ide-browse-history)', function() require('arctgx.telescope').oldfiles(false) end)
-vim.keymap.set('n', '<Plug>(ide-browse-history-in-cwd)', function() require('arctgx.telescope').oldfiles(true) end)
-vim.keymap.set('n', '<Plug>(ide-browse-buffers)', function() require('arctgx.telescope').buffers() end)
-vim.keymap.set('n', '<Plug>(ide-browse-windows)', function() require('arctgx.telescope.windows').list() end)
-vim.keymap.set('n', '<Plug>(ide-git-show-branches)', function() require('arctgx.telescope').branches() end)
-vim.keymap.set('v', '<Plug>(ide-git-string-search-operator)', function()
+vim.keymap.set('n', '<Plug>(ide-grep-git)', function () require('arctgx.telescope').gitGrep('', false, false) end)
+vim.keymap.set('n', '<Plug>(ide-grep-files)', function () require('arctgx.telescope').rgGrep('', false, false) end)
+vim.keymap.set('n', '<Plug>(ide-browse-files)', function () require('arctgx.telescope').filesAll() end)
+vim.keymap.set('n', '<Plug>(ide-browse-gfiles)', function () require('arctgx.telescope').filesGit() end)
+vim.keymap.set('n', '<Plug>(ide-browse-cmd-history)', function () require('telescope.builtin').command_history() end)
+vim.keymap.set('n', '<Plug>(ide-browse-history)', function () require('arctgx.telescope').oldfiles(false) end)
+vim.keymap.set('n', '<Plug>(ide-browse-history-in-cwd)', function () require('arctgx.telescope').oldfiles(true) end)
+vim.keymap.set('n', '<Plug>(ide-browse-buffers)', function () require('arctgx.telescope').buffers() end)
+vim.keymap.set('n', '<Plug>(ide-browse-windows)', function () require('arctgx.telescope.windows').list() end)
+vim.keymap.set('n', '<Plug>(ide-git-show-branches)', function () require('arctgx.telescope').branches() end)
+vim.keymap.set('v', '<Plug>(ide-git-string-search-operator)', function ()
   require('arctgx.telescope').gitGrep(base.getVisualSelection(), true)
 end)
-vim.keymap.set('v', '<Plug>(ide-grep-string-search-operator)', function()
+vim.keymap.set('v', '<Plug>(ide-grep-string-search-operator)', function ()
   require('arctgx.telescope').rgGrep(base.getVisualSelection(), true)
 end)
-vim.keymap.set('v', '<Plug>(ide-git-files-search-operator)', function()
+vim.keymap.set('v', '<Plug>(ide-git-files-search-operator)', function ()
   require('arctgx.telescope').filesGit(base.getVisualSelection(), true)
 end)
-vim.keymap.set('v', '<Plug>(ide-files-search-operator)', function()
+vim.keymap.set('v', '<Plug>(ide-files-search-operator)', function ()
   require('arctgx.telescope').filesAll(base.getVisualSelection(), true)
 end)
 
@@ -78,7 +86,7 @@ end)
 vim.keymap.set('n', '<Plug>(ide-files-search-operator)', function ()
   base.runOperator("v:lua.require'arctgx.telescope'.files_all_operator")
 end)
-local augroup = api.nvim_create_augroup('ArctgxTelescope', { clear = true })
+local augroup = api.nvim_create_augroup('ArctgxTelescope', {clear = true})
 api.nvim_create_autocmd({'FileType'}, {
   group = augroup,
   callback = function ()
