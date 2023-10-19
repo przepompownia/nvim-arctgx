@@ -12,6 +12,12 @@ local function closeDiffviewTabs()
   end)
 end
 
+vim.keymap.set('n', '<Plug>(ide-git-log-all-files)', function ()
+  vim.cmd.DiffviewFileHistory()
+end)
+vim.keymap.set('n', '<Plug>(ide-git-log-current-file)', function ()
+  vim.cmd.DiffviewFileHistory({args = {'%'}})
+end)
 vim.keymap.set('n', '<Plug>(ide-git-status-open)', function ()
   vim.cmd.DiffviewOpen()
 end)
