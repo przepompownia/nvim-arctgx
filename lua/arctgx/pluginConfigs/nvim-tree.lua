@@ -2,6 +2,7 @@ local api = vim.api
 local keymap = vim.keymap
 local base = require('arctgx.base')
 local session = require('arctgx.session')
+local treeapi = require('nvim-tree.api')
 
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
@@ -17,7 +18,6 @@ require('nvim-tree').setup({
     },
   },
   on_attach = function(bufnr)
-    local treeapi = require('nvim-tree.api')
     treeapi.config.mappings.default_on_attach(bufnr)
     local injectNode = require('nvim-tree.utils').inject_node
 
@@ -97,8 +97,23 @@ require('nvim-tree').setup({
   },
 })
 
+local Event = treeapi.events.Event
+
+treeapi.events.subscribe(Event.NodeRenamed, function(data)
+  local yes = 'y'
+  vim.ui.input({
+    prompt = 'Do you want to stage this renaming? > ',
+    default = yes,
+  }, function(input)
+      if input ~= yes then
+        return
+      end
+      vim.system({'git', 'add', '-u', data.old_name})
+      vim.system({'git', 'add', data.new_name})
+    end)
+end)
+
 local function expandNode()
-  local treeapi = require('nvim-tree.api')
   local node = treeapi.tree.get_node_under_cursor()
   if node.name == '..' then
     return
@@ -107,7 +122,6 @@ local function expandNode()
 end
 
 local function focusOnFile()
-  local treeapi = require('nvim-tree.api')
   local bufPath = vim.uv.fs_realpath(vim.api.nvim_buf_get_name(0))
   treeapi.tree.open(require('arctgx.git').top(bufPath and vim.fs.dirname(bufPath) or vim.uv.cwd()))
   -- treeapi.tree.toggle_hidden_filter()
