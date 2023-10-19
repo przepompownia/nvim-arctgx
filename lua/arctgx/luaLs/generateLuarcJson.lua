@@ -65,7 +65,7 @@ local function generate()
   local staticConfigFile = '.luarc-static.jsonc'
   local staticConfig = tableFromJsonFile(staticConfigFile)
   if nil == staticConfig or nil == staticConfig['workspace'] then
-    return
+    staticConfig = require('arctgx.lsp.serverConfigs.luaLs').defaultConfig()
   end
   staticConfig['workspace']['library'] = paths
   local content = vim.json.encode(staticConfig)

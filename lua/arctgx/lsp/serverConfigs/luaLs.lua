@@ -7,6 +7,40 @@ local function defaultWorkspaceLibrary()
   }
 end
 
+function M.defaultConfig()
+  return {
+    runtime = {
+      path = {
+        'lua/?.lua',
+        'lua/?/init.lua',
+        '?.lua',
+        '?/init.lua',
+      },
+      version = 'LuaJIT',
+      pathStrict = true,
+    },
+    workspace = {
+      checkThirdParty = false,
+      library = defaultWorkspaceLibrary(),
+      maxPreload = 10000,
+      preloadFileSize = 10000,
+    },
+    window = {
+      statusBar = false,
+      progressBar = false,
+    },
+    hint = {
+      enable = true,
+    },
+    diagnostics = {
+      unusedLocalExclude = {'_*'},
+      neededFileStatus = {
+        ['codestyle-check'] = 'Any',
+      },
+    },
+  }
+end
+
 --- @param client lsp.Client
 --- @return boolean
 M.onInit = function (client)
@@ -18,37 +52,7 @@ M.onInit = function (client)
 
   vim.notify('.luarc.json(c) not found. Loading defaults.')
   client.config.settings = vim.tbl_deep_extend('force', client.config.settings, {
-    Lua = {
-      runtime = {
-        path = {
-          'lua/?.lua',
-          'lua/?/init.lua',
-          '?.lua',
-          '?/init.lua',
-        },
-        version = 'LuaJIT',
-        pathStrict = true,
-      },
-      workspace = {
-        checkThirdParty = false,
-        library = defaultWorkspaceLibrary(),
-        maxPreload = 10000,
-        preloadFileSize = 10000,
-      },
-      window = {
-        statusBar = false,
-        progressBar = false,
-      },
-      hint = {
-        enable = true,
-      },
-      diagnostics = {
-        unusedLocalExclude = {'_*'},
-        neededFileStatus = {
-          ['codestyle-check'] = 'Any',
-        },
-      },
-    }
+    Lua = M.defaultConfig()
   })
 
   client.notify('workspace/didChangeConfiguration', {settings = client.config.settings})
