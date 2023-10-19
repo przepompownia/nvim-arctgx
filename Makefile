@@ -1,4 +1,4 @@
-.PHONY: install-vscode-php-debug install-vscode-bash-debug install-vscode-cpptools-debug
+.PHONY: install-vscode-php-debug install-vscode-bash-debug install-vscode-cpptools-debug luarc
 
 SHELL := /bin/bash
 DIR := ${CURDIR}
@@ -21,5 +21,18 @@ install-vscode-bash-debug:
 install-vscode-cpptools-debug:
 	$(DIR)/bin/dap-adapter-utils install microsoft vscode-cpptools $(cpptoolsVersion) $(cpptoolsUrl)
 	$(DIR)/bin/dap-adapter-utils setAsCurrent vscode-cpptools $(cpptoolsVersion)
+
+require-init:
+ifndef nvimInit
+	$(error nvimInit path is required)
+else
+	@echo > /dev/null
+endif
+
+projectDir := $(DIR)
+.ONESHELL:
+luarc: require-init
+	cd $(projectDir)
+	nvim -u $(nvimInit) -l $(DIR)/lua/arctgx/luaLs/generateLuarcJson.lua
 
 start: install-vscode-php-debug
