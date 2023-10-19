@@ -78,15 +78,7 @@ end)
 vim.keymap.set('n', '<Plug>(ide-files-search-operator)', function ()
   base.runOperator("v:lua.require'arctgx.telescope'.files_all_operator")
 end)
-local function reloadColors()
-  api.nvim_set_hl(0, 'TelescopeCaret', {fg = '#a52626', bg = '#8b8d8b', bold = true, default = false})
-  api.nvim_set_hl(0, 'TelescopeSelection', {fg = '#f4fff4', bg = '#8b8d8b', bold = true, default = false})
-end
 local augroup = api.nvim_create_augroup('ArctgxTelescope', { clear = true })
-api.nvim_create_autocmd({'ColorScheme'}, {
-  group = augroup,
-  callback = reloadColors,
-})
 api.nvim_create_autocmd({'FileType'}, {
   group = augroup,
   callback = function ()
