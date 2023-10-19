@@ -25,10 +25,6 @@ api.nvim_create_autocmd('FileType', {
    vim.keymap.set('n', 'q', vim.cmd.quit)
   end
 })
-vim.keymap.set('n', '<Plug>(ide-git-status)', function ()
-  vim.cmd.Git()
-  vim.cmd.resize(33)
-end)
 vim.keymap.set('n', '<Plug>(ide-git-log)', function ()
   vim.cmd.Gllog()
 end)
