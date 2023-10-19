@@ -13,7 +13,7 @@ api.nvim_create_autocmd('FileType', {
   pattern = {'git', 'fugitiveblame', 'fugitive'},
   group = augroup,
   callback = function (_params)
-   vim.keymap.set('n', 'q', vim.cmd.quit)
+    vim.keymap.set('n', 'q', vim.cmd.quit, {buffer = 0})
   end
 })
 vim.keymap.set('n', '<Plug>(ide-git-log)', function ()
