@@ -75,7 +75,7 @@ function extension.push(relativeDir, remoteRepo)
       printMessages(stdout, logLevel)
       printMessages(stderr, logLevel)
     end
-  ):wait()
+  )
 end
 
 function extension.pushToAllRemoteRepos(relativeDir)
