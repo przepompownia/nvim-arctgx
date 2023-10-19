@@ -6,7 +6,7 @@ require('diffview').setup({
 })
 
 local function closeDiffviewTabs()
-  require('arctgx.window').forEachWindowWithBufFileType({'DiffviewFiles'}, function (winId)
+  require('arctgx.window').forEachWindowWithBufFileType({'DiffviewFiles', 'DiffviewFileHistory'}, function (winId)
     local tabNr = vim.api.nvim_tabpage_get_number(vim.api.nvim_win_get_tabpage(winId))
     vim.cmd.tabclose(tabNr)
   end)
