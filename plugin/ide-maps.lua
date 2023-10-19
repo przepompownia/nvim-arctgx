@@ -124,7 +124,7 @@ local globalMappings = {
   ['<F12>'] = {rhs = '<Plug>(ide-grep-git)', modes = {'n'}},
   ['<S-F12>'] = {rhs = '<Plug>(ide-grep-files)', modes = {'n'}},
 
-  ['<Leader>m'] = {rhs = '<Plug>(ide-tree-focus-current-file)', modes = {'n'}},
+  ['<Leader>m'] = {rhs = '<Plug>(ide-tree-focus-current-file)', modes = {'n'}, desc = 'File tree: focus current buffer'},
   ['<Leader>iwb'] = {rhs = '<Plug>(ide-write-backup)', modes = {'n'}},
 
   ['<Esc>'] = {rhs = '<Plug>(ide-close-popup)'},

@@ -1,6 +1,6 @@
 local api = vim.api
 
----@alias KeyToPlugMappings table<string, {rhs: string, modes: table<string>, repeatable: boolean}>
+---@alias KeyToPlugMappings table<string, {rhs: string, modes: table<string>, repeatable: boolean, desc: string}>
 
 local extension = {}
 
@@ -21,6 +21,7 @@ function extension.loadKeyToPlugMappings(mappings, bufnr)
     opts.buffer = bufnr
   end
   for lhs, mapping in pairs(mappings) do
+    opts.desc = mapping.desc
     local modes = mapping.modes or { 'n' }
     for _, mode in ipairs(modes) do
       vim.keymap.set({ mode }, lhs, function()
@@ -29,7 +30,7 @@ function extension.loadKeyToPlugMappings(mappings, bufnr)
         if mode ~= 'i' and true == mapping.repeatable then
           repeatSeq(internalSeq)
         end
-      end, opts or {})
+      end, opts)
     end
   end
 end
