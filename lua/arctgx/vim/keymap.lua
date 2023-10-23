@@ -15,10 +15,10 @@ local function repeatSeq(sequence)
   pcall(vim.fn['repeat#set'], sequence, -1)
 end
 
----@param string mode
----@param string lhs
+---@param mode string
+---@param lhs string
+---@param mapping KeyToPlugMapping
 ---@param opts table
----@param KeyToPlugMapping mapping
 local function doKeyToPlugMapping(mode, lhs, mapping, opts)
   vim.keymap.set({ mode }, lhs, function()
     local internalSeq = vim.keycode(mapping.rhs)
