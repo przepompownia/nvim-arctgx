@@ -1,7 +1,5 @@
 local api = vim.api
 
-local mapdefs = {}
-
 ---@alias KeyToPlugMapping {rhs: string, modes: table<string>, repeatable: boolean, desc: string}
 ---@alias KeyToPlugMappings table<string, KeyToPlugMapping>
 
