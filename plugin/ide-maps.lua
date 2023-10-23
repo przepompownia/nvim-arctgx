@@ -138,7 +138,7 @@ local augroup = api.nvim_create_augroup('IdeMapsLua', {clear = true})
 api.nvim_create_autocmd({'FileType'}, {
   group = augroup,
   callback = function (params)
-    local excludedFiletypes = {'help', 'man', 'dbout', 'dapui_hover', 'fugitive'}
+    local excludedFiletypes = {'help', 'man', 'dbout', 'dapui_hover', 'noice'}
     if vim.tbl_contains(excludedFiletypes, params.match) then
       return
     end
