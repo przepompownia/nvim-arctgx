@@ -31,15 +31,11 @@ local function doKeyToPlugMapping(mode, lhs, mapping, opts)
   end, opts)
 end
 
-local opts = { silent = true, noremap = true }
-
 ---@param mappings KeyToPlugMappings
 ---@param bufnr integer|nil
 function extension.loadKeyToPlugMappings(mappings, bufnr)
-  if nil ~= bufnr then
-    opts.buffer = bufnr
-  end
   for lhs, mapping in pairs(mappings) do
+    local opts = {silent = true, buffer = bufnr}
     opts.desc = mapping.desc
     local modes = mapping.modes or { 'n' }
     for _, mode in ipairs(modes) do doKeyToPlugMapping(mode, lhs, mapping, opts) end
