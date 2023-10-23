@@ -34,9 +34,27 @@ end
 
 vim.keymap.set('n', 'gp', selectionFromPastedRange, {expr = true, silent = true})
 vim.keymap.set('v', ']p', 'pgv=', {silent = true, desc = 'Paste with indentation'})
+
 vim.keymap.set('n', ']p', function ()
   return 'p' .. selectionFromPastedRange() .. '='
 end, {expr = true, desc = 'Paste with indentation', silent = true})
+
+
+vim.keymap.set('n', '<A-j>', function ()
+  return 'ddp' .. selectionFromPastedRange() .. '='
+end, {expr = true, desc = 'Move single line down with indentation', silent = true})
+vim.keymap.set('v', '<A-j>', function ()
+  return 'dp' .. selectionFromPastedRange() .. '=gv'
+end, {expr = true, desc = 'Move single line down with indentation', silent = true})
+
+vim.keymap.set('n', '<A-k>', function ()
+  return 'ddkP' .. selectionFromPastedRange() .. '='
+end, {expr = true, desc = 'Move single line up with indentation', silent = true})
+
+vim.keymap.set('v', '<A-k>', function ()
+  return 'dkP' .. selectionFromPastedRange() .. '=gv'
+end, {expr = true, desc = 'Move single line up with indentation', silent = true})
+
 vim.keymap.set('t', '<S-Insert>', '<C-\\><C-N>"*pi', opts)
 vim.keymap.set('n', 'i', function() base.insertWithInitialIndentation('i') end, opts)
 vim.keymap.set('n', 'a', function() base.insertWithInitialIndentation('a') end, opts)
