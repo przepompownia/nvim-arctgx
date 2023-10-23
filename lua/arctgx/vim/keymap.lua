@@ -18,12 +18,16 @@ end
 ---@param mapping KeyToPlugMapping
 ---@param opts table
 local function doKeyToPlugMapping(mode, lhs, mapping, opts)
+  if mode == 'i' or true ~= mapping.repeatable then
+    vim.keymap.set({ mode }, lhs, mapping.rhs, opts)
+
+    return
+  end
+
   vim.keymap.set({ mode }, lhs, function()
     local internalSeq = vim.keycode(mapping.rhs)
     api.nvim_feedkeys(internalSeq, mode, false)
-    if mode ~= 'i' and true == mapping.repeatable then
-      repeatSeq(internalSeq)
-    end
+    repeatSeq(internalSeq)
   end, opts)
 end
 
