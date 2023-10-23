@@ -171,11 +171,6 @@ base.setOperatorfunc = vim.fn[vim.api.nvim_exec([[
   echon get(function('s:set_opfunc'), 'name')
 ]], true)]
 
-function base.runOperator(operatorFuncAsString)
-  vim.o.operatorfunc = operatorFuncAsString
-  base.feedKeys('g@')
-end
-
 ---@param keywordChars table<string>
 ---@param callback function
 function base.withAppendedToKeyword(keywordChars, callback)
