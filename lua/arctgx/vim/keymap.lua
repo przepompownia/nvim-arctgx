@@ -9,10 +9,6 @@ function extension.feedKeys(sequence)
   api.nvim_feedkeys(api.nvim_replace_termcodes(sequence, true, false, true), 'n', false)
 end
 
-local function repeatSeq(sequence)
-  pcall(vim.fn['repeat#set'], sequence, -1)
-end
-
 ---@param mode string
 ---@param lhs string
 ---@param mapping KeyToPlugMapping
@@ -24,10 +20,13 @@ local function doKeyToPlugMapping(mode, lhs, mapping, opts)
     return
   end
 
+  opts.expr = true
   vim.keymap.set({ mode }, lhs, function()
-    local internalSeq = vim.keycode(mapping.rhs)
-    api.nvim_feedkeys(internalSeq, mode, false)
-    repeatSeq(internalSeq)
+    require('arctgx.base').setOperatorfunc(function ()
+      local internalSeq = vim.keycode(mapping.rhs)
+      api.nvim_feedkeys(internalSeq, mode, false)
+    end)
+    return 'g@l'
   end, opts)
 end
 

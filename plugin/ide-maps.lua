@@ -78,7 +78,6 @@ local keyToPlugMappings = {
   ['<Leader>]'] = {rhs = '<Plug>(treesitter-node-incremental)', modes = {'v'}},
   ['<Leader>['] = {rhs = '<Plug>(treesitter-node-decremental)', modes = {'v'}},
   ['<Leader><Leader>]'] = {rhs = '<Plug>(treesitter-scope-incremental)', modes = {'v'}},
-
 }
 
 ---@type KeyToPlugMappings

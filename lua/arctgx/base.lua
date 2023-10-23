@@ -163,6 +163,14 @@ function base.feedKeys(input)
   api.nvim_feedkeys(api.nvim_replace_termcodes(input, true, false, true), 'n', false)
 end
 
+-- from @zeertzjq https://github.com/neovim/neovim/issues/14157#issuecomment-1320787927
+base.setOperatorfunc = vim.fn[vim.api.nvim_exec([[
+  func s:set_opfunc(val)
+    let &opfunc = a:val
+  endfunc
+  echon get(function('s:set_opfunc'), 'name')
+]], true)]
+
 function base.runOperator(operatorFuncAsString)
   vim.o.operatorfunc = operatorFuncAsString
   base.feedKeys('g@')
