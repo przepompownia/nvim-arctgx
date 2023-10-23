@@ -32,11 +32,11 @@ local function selectionFromPastedRange()
   return '`[' .. vim.fn.getregtype():sub(0, 1) .. '`]'
 end
 
-vim.keymap.set('n', 'gp', selectionFromPastedRange, {expr = true})
-vim.keymap.set('v', ']p', 'pgv=', {silent = true, desc = ''})
+vim.keymap.set('n', 'gp', selectionFromPastedRange, {expr = true, silent = true})
+vim.keymap.set('v', ']p', 'pgv=', {silent = true, desc = 'Paste with indentation'})
 vim.keymap.set('n', ']p', function ()
   return 'p' .. selectionFromPastedRange() .. '='
-end, {expr = true})
+end, {expr = true, desc = 'Paste with indentation', silent = true})
 vim.keymap.set('t', '<S-Insert>', '<C-\\><C-N>"*pi', opts)
 vim.keymap.set('n', 'i', function() base.insertWithInitialIndentation('i') end, opts)
 vim.keymap.set('n', 'a', function() base.insertWithInitialIndentation('a') end, opts)
