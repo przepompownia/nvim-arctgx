@@ -36,7 +36,7 @@ local function listRuntimePaths()
 
     --- Prevent from treat CWD as an element of workspace library
     --- https://github.com/przepompownia/dotnvim/blob/b3f904a81a07045d8cc811b953df6524807623d9/lib/nvim-isolated#L24-L25
-    return path ~= vim.uv.cwd() and path ~= vim.env.NVIM_SANDBOXED_CWD
+    return path ~= vim.env.NVIM_SANDBOXED_CWD
   end, vim.api.nvim_get_runtime_file('', true))
 
   return vim.tbl_map(function (value)
@@ -56,6 +56,11 @@ end
 local function generate()
   local outputFile = '.luarc.jsonc'
   local paths = listRuntimePaths()
+  local projectLuaDir = vim.uv.cwd() .. '/lua'
+  if vim.fn.isdirectory(projectLuaDir) == 1 and not vim.tbl_contains(paths, projectLuaDir) then
+    table.insert(paths, projectLuaDir)
+  end
+
   table.insert(paths, '${3rd}/luv/library')
   table.insert(paths, '${3rd}/luassert/library')
   local staticConfigFile = '.luarc-static.jsonc'
