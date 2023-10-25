@@ -16,12 +16,6 @@ api.nvim_create_autocmd('FileType', {
     vim.keymap.set('n', 'q', vim.cmd.quit, {buffer = 0})
   end
 })
-vim.keymap.set('n', '<Plug>(ide-git-log)', function ()
-  vim.cmd.Gllog()
-end)
-vim.keymap.set('n', '<Plug>(ide-git-blame)', function ()
-  vim.cmd.Git {'blame'}
-end)
 session.appendBeforeSaveHook('Close Fugitive windows', function ()
   require('arctgx.window').forEachWindowWithBufFileType({'fugitiveblame'}, function (winId)
     api.nvim_win_close(winId, true)
