@@ -13,7 +13,7 @@
       "snippets",
       "tools",
       "bin",
-      "lua",
+      "lua"
     ],
     "checkThirdParty": false,
     "maxPreload": 10000,
@@ -32,9 +32,9 @@
   },
   "diagnostics": {
     "neededFileStatus": {
-      "codestyle-check": "Any",
+      "codestyle-check": "Any"
     },
     "globals": ["dump", "vim"],
     "unusedLocalExclude": ["_*"]
-  },
+  }
 }
