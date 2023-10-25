@@ -31,6 +31,9 @@
     "enable": true
   },
   "diagnostics": {
+    "neededFileStatus": {
+      "codestyle-check": "Any",
+    },
     "globals": ["dump", "vim"],
     "unusedLocalExclude": ["_*"]
   },
