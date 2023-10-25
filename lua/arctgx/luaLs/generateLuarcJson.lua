@@ -39,11 +39,9 @@ local function listRuntimePaths()
     return path ~= vim.uv.cwd() and path ~= vim.env.NVIM_SANDBOXED_CWD
   end, vim.api.nvim_get_runtime_file('', true))
 
-  paths = vim.tbl_map(function (value)
+  return vim.tbl_map(function (value)
     return value .. '/lua'
   end, paths)
-
-  return paths
 end
 
 local function write(text, filename)
@@ -58,9 +56,6 @@ end
 local function generate()
   local outputFile = '.luarc.json'
   local paths = listRuntimePaths()
-  if nil == paths then
-    return
-  end
   table.insert(paths, '${3rd}/luv/library')
   local staticConfigFile = '.luarc-static.jsonc'
   local staticConfig = tableFromJsonFile(staticConfigFile)
@@ -71,8 +66,13 @@ local function generate()
   staticConfig['workspace']['library'] = paths
   local content = vim.json.encode(staticConfig)
 
+  local function printSuccessMessage()
+    vim.notify(('Saved result into %s/%s'):format(vim.uv.cwd(), outputFile))
+  end
+
   if 0 == #vim.fn.exepath('jq') then
     write(content, outputFile)
+    printSuccessMessage()
     return
   end
 
@@ -87,6 +87,8 @@ local function generate()
     end
     write(obj.stdout, outputFile)
   end):wait()
+
+  printSuccessMessage()
 end
 
 generate()
