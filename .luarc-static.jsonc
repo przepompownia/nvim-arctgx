@@ -19,9 +19,6 @@
     "maxPreload": 10000,
     "preloadFileSize": 10000
   },
-  "diagnostics": {
-    "unusedLocalExclude": [ "_*" ]
-  },
   "completion": {
     "callSnippet": "Replace",
     "keywordSnippet": "Replace"
