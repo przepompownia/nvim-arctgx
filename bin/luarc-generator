@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+currentDir="$(dirname "$(dirname "$(realpath "${BASH_SOURCE[0]}")")")"
+
+set -e
+
+initFile="${1?Please specify init file as the only parameter}"
+
+nvim -u "${initFile}" -l "${currentDir}/lua/arctgx/luaLs/generateLuarcJson.lua"

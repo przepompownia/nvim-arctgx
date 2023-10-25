@@ -33,6 +33,6 @@ projectDir := $(DIR)
 .ONESHELL:
 luarc: require-init
 	cd $(projectDir)
-	nvim -u $(nvimInit) -l $(DIR)/lua/arctgx/luaLs/generateLuarcJson.lua
+	$(DIR)/bin/luarc-generator $(nvimInit)
 
 start: install-vscode-php-debug
