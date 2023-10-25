@@ -57,6 +57,7 @@ local function generate()
   local outputFile = '.luarc.jsonc'
   local paths = listRuntimePaths()
   table.insert(paths, '${3rd}/luv/library')
+  table.insert(paths, '${3rd}/luassert/library')
   local staticConfigFile = '.luarc-static.jsonc'
   local staticConfig = tableFromJsonFile(staticConfigFile)
   if nil == staticConfig or nil == staticConfig['workspace'] then
