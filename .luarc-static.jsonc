@@ -3,9 +3,7 @@
   "runtime": {
     "path": [
       "?.lua",
-      "?/init.lua",
-      "lua/?.lua",
-      "lua/?/init.lua"
+      "?/init.lua"
     ],
     "pathStrict": true,
     "version": "LuaJIT"
@@ -14,7 +12,8 @@
     "ignoreDir": [
       "snippets",
       "tools",
-      "bin"
+      "bin",
+      "lua",
     ],
     "checkThirdParty": false,
     "maxPreload": 10000,

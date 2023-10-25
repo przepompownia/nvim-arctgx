@@ -20,6 +20,7 @@ function M.defaultConfig()
       pathStrict = true,
     },
     workspace = {
+      ignoreDir = {'lua'},
       checkThirdParty = false,
       library = defaultWorkspaceLibrary(),
       maxPreload = 10000,
