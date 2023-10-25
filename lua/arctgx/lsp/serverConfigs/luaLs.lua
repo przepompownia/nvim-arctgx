@@ -33,6 +33,7 @@ function M.defaultConfig()
       enable = true,
     },
     diagnostics = {
+      globals = {'vim', 'dump'},
       unusedLocalExclude = {'_*'},
       neededFileStatus = {
         ['codestyle-check'] = 'Any',

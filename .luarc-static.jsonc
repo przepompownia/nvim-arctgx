@@ -35,10 +35,7 @@
     "enable": true
   },
   "diagnostics": {
-    "globals": ["dump"],
+    "globals": ["dump", "vim"],
     "unusedLocalExclude": ["_*"]
   },
-  "diagnostics.globals": [
-    "dump"
-  ]
 }
