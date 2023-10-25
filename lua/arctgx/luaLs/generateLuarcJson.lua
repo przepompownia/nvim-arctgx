@@ -2,7 +2,7 @@
 --- based on given init file
 --- At the project dir run
 --- nvim -u ~/.vim/nvim/init.lua -l generateLuarcJson.lua
---- and see .luarc.json as the result
+--- and see .luarc.jsonc as the result
 
 local function tableFromJsonFile(jsonFile)
   if not vim.uv.fs_stat(jsonFile) then
@@ -54,7 +54,7 @@ local function write(text, filename)
 end
 
 local function generate()
-  local outputFile = '.luarc.json'
+  local outputFile = '.luarc.jsonc'
   local paths = listRuntimePaths()
   table.insert(paths, '${3rd}/luv/library')
   local staticConfigFile = '.luarc-static.jsonc'
