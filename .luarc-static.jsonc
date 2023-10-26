@@ -21,7 +21,9 @@
   },
   "completion": {
     "callSnippet": "Replace",
-    "keywordSnippet": "Replace"
+    "keywordSnippet": "Replace",
+    "postfix": ".",
+    "showWord": "Disable"
   },
   "window": {
     "progressBar": false,

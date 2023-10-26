@@ -40,6 +40,12 @@ function M.defaultConfig()
         ['codestyle-check'] = 'Any',
       },
     },
+    completion = {
+      postfix = '.',
+      showWord = 'Disable',
+      callSnippet = 'Replace',
+      keywordSnippet = 'Replace',
+    },
   }
 end
 
