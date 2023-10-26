@@ -27,12 +27,12 @@ require('telescope').setup {
 
 api.nvim_create_user_command(
   'GGrep',
-  function(opts) require('arctgx.telescope').gitGrep(opts.args, false, false) end,
+  function (opts) require('arctgx.telescope').gitGrep(opts.args, false, false) end,
   {nargs = '*'}
 )
 api.nvim_create_user_command(
   'RGrep',
-  function(opts) require('arctgx.telescope').rgGrep(opts.args, false, false) end,
+  function (opts) require('arctgx.telescope').rgGrep(opts.args, false, false) end,
   {nargs = '*'}
 )
 api.nvim_create_user_command(
