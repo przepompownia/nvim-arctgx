@@ -23,7 +23,7 @@ virtualText.setup {
   only_first_definition = false,
   all_references = true,
   filter_references_pattern = '<module',
-  virt_text_pos = 'eol',
+  -- virt_text_pos = 'eol',
   all_frames = false,
   virt_lines = false,
   virt_text_win_col = nil,

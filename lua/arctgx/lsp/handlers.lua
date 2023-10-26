@@ -22,7 +22,7 @@ local tabDropLocation = function(location, offset_encoding)
   local path = vim.api.nvim_buf_get_name(bufnr)
 
   local col = util._get_line_byte_from_position(bufnr, range.start, offset_encoding)
-  base.tab_drop(path, row + 1, col + 1)
+  base.tabDrop(path, row + 1, col + 1)
 
   vim.cmd 'normal zt'
 

@@ -2,13 +2,13 @@ local api = vim.api
 local base = {}
 local pluginDir = nil
 
-function base.get_bufnr_by_path(path)
+function base.getBufnrByPath(path)
   local bufnr = vim.fn.bufnr('^' .. path .. '$')
 
   return -1 ~= bufnr and bufnr or nil
 end
 
-function base.get_first_win_id_by_bufnr(bufNr)
+function base.getFirstWinIdByBufnr(bufNr)
   if nil == bufNr then
     return nil
   end
@@ -22,11 +22,11 @@ local function buffer_is_fresh(bufNr)
   return '' == api.nvim_buf_get_name(bufNr) and api.nvim_buf_get_changedtick(bufNr) <= 2
 end
 
-function base.tab_drop_path(path, relative_winnr)
+function base.tabDropPath(path, relative_winnr)
   local filename = vim.fn.fnamemodify(path, ':p')
 
-  local bufNr = base.get_bufnr_by_path(filename) or vim.fn.bufadd(filename)
-  local existing_win_id = base.get_first_win_id_by_bufnr(bufNr)
+  local bufNr = base.getBufnrByPath(filename) or vim.fn.bufadd(filename)
+  local existing_win_id = base.getFirstWinIdByBufnr(bufNr)
 
   if nil ~= existing_win_id then
     api.nvim_set_current_win(existing_win_id)
@@ -46,8 +46,8 @@ function base.tab_drop_path(path, relative_winnr)
   vim.cmd.tabedit(filename)
 end
 
-function base.tab_drop(path, line, column, relative_bufnr)
-  base.tab_drop_path(path, relative_bufnr)
+function base.tabDrop(path, line, column, relative_bufnr)
+  base.tabDropPath(path, relative_bufnr)
 
   if nil == line then
     return
@@ -81,7 +81,7 @@ function base.tabDropToLineAndColumnWithMapping(path, mapping, line, column)
 
     return path
   end
-  base.tab_drop(translateRemotePath(), line, column)
+  base.tabDrop(translateRemotePath(), line, column)
 end
 
 function base.tabDropToLineAndColumnWithDefaultMapping(path, line, column)

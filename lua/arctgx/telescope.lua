@@ -6,7 +6,7 @@ local extension = {}
 local function tabDropEntry(entry, winId)
   local path = entry.path or vim.fn.expand(entry.filename)
   vim.cmd('stopinsert')
-  base.tab_drop(path, entry.lnum, entry.col, winId)
+  base.tabDrop(path, entry.lnum, entry.col, winId)
   -- https://github.com/nvim-telescope/telescope.nvim/commit/205f469244916716c49cc2b9026566749425c5ba
   if vim.wo.foldmethod == 'expr' then
     vim.schedule(function ()

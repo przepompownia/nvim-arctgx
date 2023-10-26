@@ -49,7 +49,7 @@ local function new_class_from_file(path)
               return
             end
 
-            base.tab_drop_path(path)
+            base.tabDropPath(path)
             vim.lsp.buf.execute_command({
               command = 'create_class',
               arguments = {vim.uri_from_fname(path), variant},
