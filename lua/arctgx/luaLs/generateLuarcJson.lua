@@ -63,7 +63,7 @@ local function generate()
 
   table.insert(paths, '${3rd}/luv/library')
   table.insert(paths, '${3rd}/luassert/library')
-  local staticConfigFile = '.luarc-static.jsonc'
+  local staticConfigFile = '.luarc-static.json'
   local staticConfig = tableFromJsonFile(staticConfigFile)
   if nil == staticConfig or nil == staticConfig['workspace'] then
     local modulePath = vim.uv.fs_realpath(debug.getinfo(1).source:match('@?(.*/)') .. '../lsp/serverConfigs/luaLs.lua')
