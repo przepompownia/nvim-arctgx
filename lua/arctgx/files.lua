@@ -1,6 +1,6 @@
 local extension = {}
 
-function extension.command_fdfind_all()
+function extension.commandFdfindAll()
   return {
     'fdfind',
     '--hidden',

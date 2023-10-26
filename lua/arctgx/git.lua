@@ -85,7 +85,7 @@ function extension.pushToAllRemoteRepos(relativeDir)
   end
 end
 
-function extension.command_files()
+function extension.commandFiles()
   return {'git', 'ls-files'}
 end
 

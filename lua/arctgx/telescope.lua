@@ -49,7 +49,7 @@ local customActions = require('telescope.actions.mt').transform_mod({
 
 extension.customActions = customActions
 
-function extension.defaultFileMappings(prompt_bufnr, map)
+function extension.defaultFileMappings(_promptBufnr, map)
   local actions = require('telescope.actions')
   actions.select_default:replace(customActions.tabDrop)
   map({'i', 'n'}, '<C-y>', actions.file_edit)
@@ -58,11 +58,11 @@ function extension.defaultFileMappings(prompt_bufnr, map)
   return true
 end
 
-function extension.create_operator(search_function, cmd, root, title)
+function extension.createOperator(searchFunction, cmd, root, title)
   return function(type)
     local str = base.operatorGetText(type) or ''
 
-    search_function(cmd, root, str, title)
+    searchFunction(cmd, root, str, title)
   end
 end
 
@@ -157,25 +157,25 @@ function extension.grep(cmd, root, query)
   require('telescope.builtin').live_grep(opts)
 end
 
-function extension.rg_grep_operator(type)
-  return extension.create_operator(
+function extension.rgGrepOperator(type)
+  return extension.createOperator(
     extension.grep,
-    require('arctgx.grep'):new_rg_grep_command(true, false),
+    require('arctgx.grep'):newRgGrepCommand(true, false),
     git.top(base.getBufferCwd())
   )(type)
 end
 
-function extension.git_grep_operator(type)
-  return extension.create_operator(
+function extension.gitGrepOperator(type)
+  return extension.createOperator(
     extension.grep,
-    require('arctgx.grep'):new_git_grep_command(true, false),
+    require('arctgx.grep'):newGitGrepCommand(true, false),
     git.top(base.getBufferCwd())
   )(type)
 end
 
 function extension.rgGrep(query, useFixedStrings, ignoreCase)
   return extension.grep(
-    require('arctgx.grep'):new_rg_grep_command(useFixedStrings, ignoreCase),
+    require('arctgx.grep'):newRgGrepCommand(useFixedStrings, ignoreCase),
     git.top(base.getBufferCwd()),
     query
   )
@@ -183,7 +183,7 @@ end
 
 function extension.gitGrep(query, useFixedStrings, ignoreCase)
   return extension.grep(
-    require('arctgx.grep'):new_git_grep_command(useFixedStrings, ignoreCase),
+    require('arctgx.grep'):newGitGrepCommand(useFixedStrings, ignoreCase),
     git.top(base.getBufferCwd()),
     query
   )
@@ -200,25 +200,25 @@ function extension.files(cmd, root, query, title)
 end
 
 function extension.filesGit(query)
-  extension.files(git.command_files(), git.top(base.getBufferCwd()), query,
+  extension.files(git.commandFiles(), git.top(base.getBufferCwd()), query,
     'Files (git)')
 end
 
-function extension.files_git_operator(type)
-  return extension.create_operator(extension.files, git.command_files(),
+function extension.filesGitOperator(type)
+  return extension.createOperator(extension.files, git.commandFiles(),
     git.top(base.getBufferCwd()), 'Files (git)')(
     type)
 end
 
-function extension.files_all_operator(type)
-  return extension.create_operator(extension.files,
-    require('arctgx.files').command_fdfind_all(),
+function extension.filesAllOperator(type)
+  return extension.createOperator(extension.files,
+    require('arctgx.files').commandFdfindAll(),
     git.top(base.getBufferCwd()), 'Files (all)')(
     type)
 end
 
 function extension.filesAll(query)
-  extension.files(require('arctgx.files').command_fdfind_all(), git.top(base.getBufferCwd()),
+  extension.files(require('arctgx.files').commandFdfindAll(), git.top(base.getBufferCwd()),
     query, 'Files (all)')
 end
 

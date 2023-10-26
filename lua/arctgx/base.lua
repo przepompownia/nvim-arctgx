@@ -22,7 +22,7 @@ local function buffer_is_fresh(bufNr)
   return '' == api.nvim_buf_get_name(bufNr) and api.nvim_buf_get_changedtick(bufNr) <= 2
 end
 
-function base.tabDropPath(path, relative_winnr)
+function base.tabDropPath(path, relativeWinId)
   local filename = vim.fn.fnamemodify(path, ':p')
 
   local bufNr = base.getBufnrByPath(filename) or vim.fn.bufadd(filename)
@@ -34,11 +34,11 @@ function base.tabDropPath(path, relative_winnr)
     return
   end
 
-  relative_winnr = relative_winnr or vim.fn.win_getid()
+  relativeWinId = relativeWinId or vim.fn.win_getid()
 
-  if buffer_is_fresh(vim.fn.winbufnr(relative_winnr)) then
-    api.nvim_win_set_buf(relative_winnr, bufNr)
-    api.nvim_set_current_win(relative_winnr)
+  if buffer_is_fresh(vim.fn.winbufnr(relativeWinId)) then
+    api.nvim_win_set_buf(relativeWinId, bufNr)
+    api.nvim_set_current_win(relativeWinId)
 
     return
   end
@@ -46,8 +46,8 @@ function base.tabDropPath(path, relative_winnr)
   vim.cmd.tabedit(filename)
 end
 
-function base.tabDrop(path, line, column, relative_bufnr)
-  base.tabDropPath(path, relative_bufnr)
+function base.tabDrop(path, line, column, relativeBufId)
+  base.tabDropPath(path, relativeBufId)
 
   if nil == line then
     return
@@ -88,7 +88,7 @@ function base.tabDropToLineAndColumnWithDefaultMapping(path, line, column)
   base.tabDropToLineAndColumnWithMapping(path, vim.g.projectPathMappings, line, column)
 end
 
-function base.operatorGetText(_)
+function base.operatorGetText()
   return base.getTextBetweenMarks('\'[', '\']')
 end
 

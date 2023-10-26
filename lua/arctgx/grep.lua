@@ -8,7 +8,7 @@ function extension:new(name, list)
   return list
 end
 
-function extension:index_of(element)
+function extension:indexOf(element)
   for k, v in ipairs(self) do
     if v == element then
       return k
@@ -17,7 +17,7 @@ function extension:index_of(element)
 end
 
 function extension:switch(option)
-  local key = self:index_of(option)
+  local key = self:indexOf(option)
   if key then
     table.remove(self, key)
     return
@@ -27,7 +27,7 @@ function extension:switch(option)
 end
 
 function extension:switchWithRequiredValue(option, value)
-  local key = self:index_of(option)
+  local key = self:indexOf(option)
   if key then
     table.remove(self, key)
     table.remove(self, key)
@@ -41,25 +41,25 @@ end
 ---@return string
 function extension:status()
   local settings = {}
-  table.insert(settings, self:index_of('--fixed-strings') and 'Fixed strings' or 'Regex')
-  table.insert(settings, 'Case ' .. (self:index_of('--ignore-case') and 'insensitive' or 'sensitive'))
-  table.insert(settings, (self:index_of('--max-count') and 'Only first result' or nil))
+  table.insert(settings, self:indexOf('--fixed-strings') and 'Fixed strings' or 'Regex')
+  table.insert(settings, 'Case ' .. (self:indexOf('--ignore-case') and 'insensitive' or 'sensitive'))
+  table.insert(settings, (self:indexOf('--max-count') and 'Only first result' or nil))
   return ('%s: %s'):format(self.name, table.concat(settings, ', '))
 end
 
-function extension:switch_fixed_strings()
+function extension:switchFixedStrings()
   self:switch('--fixed-strings')
 end
 
-function extension:switch_case_sensibility()
+function extension:switchCaseSensibility()
   self:switch('--ignore-case')
 end
 
-function extension:switch_only_first_result()
+function extension:switchOnlyaFirstResult()
   self:switchWithRequiredValue('--max-count', 1)
 end
 
-function extension:new_command(name, commandTable, useFixedStrings, ignoreCase)
+function extension:newCommand(name, commandTable, useFixedStrings, ignoreCase)
   local command = self:new(name, commandTable)
 
   if (true == useFixedStrings) then
@@ -73,8 +73,8 @@ function extension:new_command(name, commandTable, useFixedStrings, ignoreCase)
   return command
 end
 
-function extension:new_git_grep_command(useFixedStrings, ignoreCase)
-  return self:new_command('Grep (git)', {
+function extension:newGitGrepCommand(useFixedStrings, ignoreCase)
+  return self:newCommand('Grep (git)', {
     'git',
     'grep',
     '--color=never',
@@ -84,8 +84,8 @@ function extension:new_git_grep_command(useFixedStrings, ignoreCase)
   }, useFixedStrings, ignoreCase)
 end
 
-function extension:new_rg_grep_command(useFixedStrings, ignoreCase)
-  return self:new_command('Grep (rg)', {
+function extension:newRgGrepCommand(useFixedStrings, ignoreCase)
+  return self:newCommand('Grep (rg)', {
     'rg',
     '--color=never',
     '--line-number',

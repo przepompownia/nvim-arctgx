@@ -6,15 +6,15 @@ local extension = {}
 
 local variants = {'default'}
 
-function extension.add_variant(variant)
+function extension.addVariant(variant)
   table.insert(variants, variant)
 end
 
-function extension.get_variants()
+function extension.getVariants()
   return variants
 end
 
-local function new_class_from_file(path)
+local function newClassFromFile(path)
   if not path then
     print('Cancelled.')
     return
@@ -42,7 +42,7 @@ local function new_class_from_file(path)
         if 'phpactor' == client.name then
           timer:close()
 
-          vim.ui.select(extension.get_variants(), {prompt = 'Select variant: '}, function(variant)
+          vim.ui.select(extension.getVariants(), {prompt = 'Select variant: '}, function(variant)
             if nil == variant then
               api.nvim_buf_delete(buf, {})
               vim.notify('aborted')
@@ -70,7 +70,7 @@ function extension.classNew()
     prompt = 'File: ',
     completion = 'file',
     default = bufname == '' and vim.uv.cwd() or bufname,
-  }, new_class_from_file)
+  }, newClassFromFile)
 end
 
 local function showWindow(title, filetype, contents)
