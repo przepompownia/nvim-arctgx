@@ -1,21 +1,21 @@
-local windowhistory = require 'arctgx.windowhistory'
-local window        = require 'arctgx.window'
-local api = vim.api
-
-local augroup = api.nvim_create_augroup('WindowHistory', {clear = true})
-api.nvim_create_autocmd('VimEnter', {
+local augroup = vim.api.nvim_create_augroup('WindowHistory', {clear = true})
+vim.api.nvim_create_autocmd('VimEnter', {
   group = augroup,
-  callback = windowhistory.createFromWindowList,
+  callback = function ()
+    return require('arctgx.windowhistory').createFromWindowList()
+  end,
 })
-api.nvim_create_autocmd('WinEnter', {
+vim.api.nvim_create_autocmd('WinEnter', {
   group = augroup,
-  callback = window.onWinEnter,
+  callback = function ()
+    return require('arctgx.window').onWinEnter()
+  end,
   nested = true,
 })
-api.nvim_create_autocmd('WinClosed', {
+vim.api.nvim_create_autocmd('WinClosed', {
   group = augroup,
   callback = function (params)
-    window.onWinClosed(tonumber(params.file))
+    require('arctgx.window').onWinClosed(tonumber(params.file))
   end,
   nested = true,
 })
