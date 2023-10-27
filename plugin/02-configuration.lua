@@ -3,7 +3,6 @@ local api = vim.api
 local pluginPrefix = 'arctgx.pluginConfigs'
 
 local augroupHighlight = api.nvim_create_augroup('ConfigureHighlight', {clear = true})
-local augroupAfterVimEnter = api.nvim_create_augroup('AfterVimEnter', {clear = true})
 
 -- remove it after nvim 0.10 will be available
 if nil == vim.uv then
@@ -29,7 +28,7 @@ api.nvim_create_autocmd('ColorScheme', {
 })
 
 api.nvim_create_autocmd('VimEnter', {
-  group = augroupAfterVimEnter,
+  once = true,
   pattern = '*',
   nested = true,
   callback = function ()
@@ -38,7 +37,7 @@ api.nvim_create_autocmd('VimEnter', {
 })
 
 api.nvim_create_autocmd('VimEnter', {
-  group = augroupAfterVimEnter,
+  once = true,
   pattern = '*',
   callback = function ()
     vim.cmd.clearjumps()

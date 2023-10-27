@@ -1,6 +1,6 @@
 local augroup = vim.api.nvim_create_augroup('WindowHistory', {clear = true})
 vim.api.nvim_create_autocmd('VimEnter', {
-  group = augroup,
+  once = true,
   callback = function ()
     return require('arctgx.windowhistory').createFromWindowList()
   end,
