@@ -32,14 +32,6 @@ local function isPopup(winId)
   return 'popup' == vim.fn.win_gettype(winId)
 end
 
-function extension.closePopupForTab()
-  for _, winId in ipairs(api.nvim_tabpage_list_wins(0)) do
-    if isPopup(winId) then
-      api.nvim_win_close(winId, true)
-    end
-  end
-end
-
 function extension.onWinEnter()
   local winId = api.nvim_get_current_win()
   if isPopup(winId) then

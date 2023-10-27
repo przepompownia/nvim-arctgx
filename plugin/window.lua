@@ -20,4 +20,4 @@ api.nvim_create_autocmd('WinClosed', {
   nested = true,
 })
 
-vim.keymap.set('n', '<Plug>(ide-close-popup)', window.closePopupForTab)
+vim.keymap.set('n', '<Plug>(ide-close-popup)', vim.cmd.fclose)
