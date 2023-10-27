@@ -11,8 +11,8 @@ end
 
 local function configureHighlight()
   local path = vim.fn.simplify(vim.fn.fnamemodify(
-      ('%s/colors/%s.lua'):format(require('arctgx.base').getPluginDir(), vim.opt.background:get()),
-      ':p'
+    ('%s/colors/%s.lua'):format(require('arctgx.base').getPluginDir(), vim.opt.background:get()),
+    ':p'
   ))
   dofile(path)
 end
@@ -46,7 +46,7 @@ api.nvim_create_autocmd('VimEnter', {
 
 vim.api.nvim_create_autocmd('UIEnter', {
   once = true,
-  callback = function()
+  callback = function ()
     if 1 == vim.fn.has('gui_running') then
       require 'arctgx.ginit'
     end
