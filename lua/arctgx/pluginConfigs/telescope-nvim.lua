@@ -18,7 +18,9 @@ require('telescope').setup {
         ['<C-n>'] = 'cycle_history_prev',
         ['<A-Up>'] = 'preview_scrolling_up',
         ['<A-Down>'] = 'preview_scrolling_down',
-        ['<A-/>'] = require 'telescope.actions.layout'.toggle_preview,
+        ['<A-/>'] = function (promptBufnr)
+          return require 'telescope.actions.layout'.toggle_preview(promptBufnr)
+        end,
         ['<Esc>'] = 'close',
       },
     },
