@@ -11,8 +11,6 @@ function M.defaultConfig()
   return {
     runtime = {
       path = {
-        'lua/?.lua',
-        'lua/?/init.lua',
         '?.lua',
         '?/init.lua',
       },
