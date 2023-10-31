@@ -7,12 +7,10 @@ local util = require 'vim.lsp.util'
 
 local Handlers = {}
 
----@param params {items: table, title: string, offset_encoding: string}
+---@param params {items: table, title: string}
 function Handlers.onList(params)
-  params.offset_encoding = params.offset_encoding or 'utf-16'
-  local items = util.locations_to_items(params.items, params.offset_encoding)
-  if #items == 1 then
-    local item = items[1]
+  if #params.items == 1 then
+    local item = params.items[1]
     base.tabDrop(item.filename, item.lnum, item.col)
     vim.cmd 'normal zt'
 
@@ -40,7 +38,7 @@ function Handlers.tabDropLocationHandler(_, result, ctx, _)
 
   Handlers.onList({
     title = 'LSP locations',
-    items = result,
+    items = util.locations_to_items(result),
     offset_encoding = client.offset_encoding,
   })
 end
