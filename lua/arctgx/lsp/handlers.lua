@@ -38,8 +38,7 @@ function Handlers.tabDropLocationHandler(_, result, ctx, _)
 
   Handlers.onList({
     title = 'LSP locations',
-    items = util.locations_to_items(result),
-    offset_encoding = client.offset_encoding,
+    items = util.locations_to_items(result, client.offset_encoding),
   })
 end
 
