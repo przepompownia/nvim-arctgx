@@ -1,17 +1,10 @@
-local base = require('arctgx.base')
-
-local vim = vim
-local api = vim.api
-local log = require 'vim.lsp.log'
-local util = require 'vim.lsp.util'
-
 local Handlers = {}
 
 ---@param params {items: table, title: string}
 function Handlers.onList(params)
   if #params.items == 1 then
     local item = params.items[1]
-    base.tabDrop(item.filename, item.lnum, item.col)
+    require('arctgx.base').tabDrop(item.filename, item.lnum, item.col)
     vim.cmd 'normal zt'
 
     return
@@ -21,10 +14,12 @@ function Handlers.onList(params)
     title = params.title,
     items = params.items,
   })
-  api.nvim_command('copen')
+  vim.cmd.copen()
 end
 
 function Handlers.tabDropLocationHandler(_, result, ctx, _)
+  local log = require 'vim.lsp.log'
+
   if result == nil or vim.tbl_isempty(result) then
     local _ = log.info() and log.info(ctx.method, 'No location found')
 
@@ -38,7 +33,7 @@ function Handlers.tabDropLocationHandler(_, result, ctx, _)
 
   Handlers.onList({
     title = 'LSP locations',
-    items = util.locations_to_items(result, client.offset_encoding),
+    items = require('vim.lsp.util').locations_to_items(result, client.offset_encoding),
   })
 end
 
