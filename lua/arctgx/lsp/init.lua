@@ -1,7 +1,6 @@
 local M = {}
 local api = vim.api
 local lsp = vim.lsp
-local diagnostic = require('vim.diagnostic')
 local buf = require('arctgx.lsp.buf')
 
 local augroup = api.nvim_create_augroup('LspDocumentHighlight', {clear = true})
@@ -51,14 +50,14 @@ function M.onAttach(client, bufnr)
   bufMap('n', '<Plug>(ide-find-references)',
     function () lsp.buf.references {includeDeclaration = false} end)
   bufMap('n', '<Plug>(ide-diagnostic-info)',
-    function () diagnostic.open_float({border = 'rounded'}) end)
+    function () vim.diagnostic.open_float({border = 'rounded'}) end)
   bufMap('n', '<Plug>(ide-workspace-folder-add)', lsp.buf.add_workspace_folder)
   bufMap('n', '<Plug>(ide-workspace-folder-remove)', lsp.buf.remove_workspace_folder)
   bufMap('n', '<Plug>(ide-workspace-folder-list)', buf.workspaceFolders)
   bufMap({'v', 'n'}, '<Plug>(ide-code-action)', lsp.buf.code_action)
-  bufMap('n', '<Plug>(ide-diagnostic-goto-previous)', diagnostic.goto_prev)
-  bufMap('n', '<Plug>(ide-diagnostic-goto-next)', diagnostic.goto_next)
-  bufMap('n', '<space>q', diagnostic.setloclist)
+  bufMap('n', '<Plug>(ide-diagnostic-goto-previous)', vim.diagnostic.goto_prev)
+  bufMap('n', '<Plug>(ide-diagnostic-goto-next)', vim.diagnostic.goto_next)
+  bufMap('n', '<space>q', vim.diagnostic.setloclist)
   bufMap('n', '<Plug>(ide-toggle-inlay-hints)', function () vim.lsp.inlay_hint(bufnr) end)
   bufMap({'n', 'v'}, '<Plug>(ide-format-with-all-formatters)', function () return lsp.buf.format({async = true}) end)
 
