@@ -1,6 +1,4 @@
-local handlers = require 'arctgx.lsp.handlers'
 local lsp = require('vim.lsp')
-local util = require 'vim.lsp.util'
 
 local Buf = {}
 
