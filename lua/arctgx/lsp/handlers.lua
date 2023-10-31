@@ -7,26 +7,23 @@ local util = require 'vim.lsp.util'
 
 local Handlers = {}
 
--- based on lsp/util.lua
-local tabDropLocation = function(location, offset_encoding)
-  -- location may be Location or LocationLink
-  local uri = location.uri or location.targetUri
-  if uri == nil then return end
-  if offset_encoding == nil then
-    vim.notify_once('tabDropLocation must be called with valid offset encoding', vim.log.levels.WARN)
+---@param params {items: table, title: string, offset_encoding: string}
+function Handlers.onList(params)
+  params.offset_encoding = params.offset_encoding or 'utf-16'
+  local items = util.locations_to_items(params.items, params.offset_encoding)
+  if #items == 1 then
+    local item = items[1]
+    base.tabDrop(item.filename, item.lnum, item.col)
+    vim.cmd 'normal zt'
+
+    return
   end
 
-  local range = location.range or location.targetSelectionRange
-  local row = range.start.line
-  local bufnr = vim.uri_to_bufnr(uri)
-  local path = vim.api.nvim_buf_get_name(bufnr)
-
-  local col = util._get_line_byte_from_position(bufnr, range.start, offset_encoding)
-  base.tabDrop(path, row + 1, col + 1)
-
-  vim.cmd 'normal zt'
-
-  return true
+  vim.fn.setqflist({}, ' ', {
+    title = params.title,
+    items = params.items,
+  })
+  api.nvim_command('copen')
 end
 
 function Handlers.tabDropLocationHandler(_, result, ctx, _)
@@ -37,26 +34,15 @@ function Handlers.tabDropLocationHandler(_, result, ctx, _)
   end
   local client = vim.lsp.get_client_by_id(ctx.client_id)
 
-  -- textDocument/definition can return Location or Location[]
-  -- https://microsoft.github.io/language-server-protocol/specifications/specification-current/#textDocument_definition
-
   if not vim.tbl_islist(result) then
-    tabDropLocation(result, client.offset_encoding)
-
-    return
+    result = {result}
   end
 
-  if #result == 1 then
-    tabDropLocation(result[1], client.offset_encoding)
-
-    return
-  end
-
-  vim.fn.setqflist({}, ' ', {
+  Handlers.onList({
     title = 'LSP locations',
-    items = util.locations_to_items(result, client.offset_encoding),
+    items = result,
+    offset_encoding = client.offset_encoding,
   })
-  api.nvim_command('copen')
 end
 
 return Handlers
