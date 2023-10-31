@@ -10,7 +10,6 @@ local function previewLocation(_, result, ctx, _)
     return nil
   end
   if vim.tbl_islist(result) then
-    print(vim.inspect('islist'))
     vim.lsp.util.preview_location(result[1])
     return
   end
