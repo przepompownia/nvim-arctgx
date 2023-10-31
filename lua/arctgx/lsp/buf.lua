@@ -25,31 +25,6 @@ function Buf.workspaceFolders()
   dump(lsp.buf.list_workspace_folders())
 end
 
-function Buf.declaration()
-  local params = util.make_position_params()
-  request('textDocument/declaration', params, handlers.tabDropLocationHandler)
-end
-
-function Buf.definition()
-  local params = util.make_position_params()
-  request('textDocument/definition', params, handlers.tabDropLocationHandler)
-end
-
-function Buf.definitionInPlace()
-  local params = util.make_position_params()
-  request('textDocument/definition', params)
-end
-
-function Buf.implementation()
-  local params = util.make_position_params()
-  request('textDocument/implementation', params, handlers.tabDropLocationHandler)
-end
-
-function Buf.typeDefinition()
-  local params = util.make_position_params()
-  request('textDocument/typeDefinition', params, handlers.tabDropLocationHandler)
-end
-
 function Buf.peekDefinition()
   local params = lsp.util.make_position_params()
   request('textDocument/definition', params, previewLocation)
