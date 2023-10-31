@@ -1,5 +1,4 @@
 require('luasnip.loaders.from_snipmate').load()
-local lsp = require('vim.lsp')
 
 local ls = require 'luasnip'
 local s = ls.snippet
@@ -46,7 +45,7 @@ ls.add_snippets('php', {
         [4] = {
           [events.leave] = function()
               vim.api.nvim_cmd({cmd = 'stopinsert'}, {})
-              lsp.buf.code_action()
+              vim.lsp.buf.code_action()
           end
         }
       }

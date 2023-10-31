@@ -1,5 +1,3 @@
-local lsp = require('vim.lsp')
-
 local Buf = {}
 
 local function request(method, params, handler)
@@ -13,18 +11,18 @@ local function previewLocation(_, result, ctx, _)
   end
   if vim.tbl_islist(result) then
     print(vim.inspect('islist'))
-    lsp.util.preview_location(result[1])
+    vim.lsp.util.preview_location(result[1])
     return
   end
-  lsp.util.preview_location(result)
+  vim.lsp.util.preview_location(result)
 end
 
 function Buf.workspaceFolders()
-  dump(lsp.buf.list_workspace_folders())
+  dump(vim.lsp.buf.list_workspace_folders())
 end
 
 function Buf.peekDefinition()
-  local params = lsp.util.make_position_params()
+  local params = vim.lsp.util.make_position_params()
   request('textDocument/definition', params, previewLocation)
 end
 
