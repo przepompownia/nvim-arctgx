@@ -10,8 +10,8 @@ vim.api.nvim_create_autocmd('TermOpen', {
 vim.api.nvim_create_autocmd('TermClose', {
   group = augroup,
   pattern = 'term://*',
-  callback = function ()
-    vim.cmd.quit()
+  callback = function (args)
+    vim.api.nvim_buf_delete(args.buf, {})
   end
 })
 
