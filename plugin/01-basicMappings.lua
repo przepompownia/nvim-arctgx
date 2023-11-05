@@ -60,7 +60,6 @@ vim.keymap.set('n', 'i', function() base.insertWithInitialIndentation('i') end, 
 vim.keymap.set('n', 'a', function() base.insertWithInitialIndentation('a') end, opts)
 vim.keymap.set('n', '<Leader>fcc', function() vim.fn.setreg('+', vim.fn.expand('%:.')) end, opts)
 vim.keymap.set('n', '<Leader>fcC', function() vim.fn.setreg('+', vim.fn.expand('%:p')) end, opts)
-vim.keymap.set('n', '<Leader>hls', function() vim.fn.setreg('/', '') end, opts)
 vim.keymap.set('n', '<Leader>co', vim.cmd.copen, opts)
 vim.keymap.set('t', '<M-p>', function()
   local regname = vim.fn.nr2char(vim.fn.getchar())
