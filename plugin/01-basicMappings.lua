@@ -1,5 +1,5 @@
 local keymap = require 'arctgx.vim.keymap'
-local base   = require 'arctgx.base'
+local base = require 'arctgx.base'
 local api = vim.api
 
 ---@type KeyToPlugMappings
@@ -76,16 +76,16 @@ for i = 1, 12 do
   end, {})
 end
 
-vim.keymap.set({'i', 'n'}, '<A-Up>', function() vim.cmd.wincmd('k') end, opts)
-vim.keymap.set({'i', 'n'}, '<A-Down>', function() vim.cmd.wincmd('j') end, opts)
-vim.keymap.set({'i', 'n'}, '<A-Left>', function() vim.cmd.wincmd('h') end, opts)
-vim.keymap.set({'i', 'n'}, '<A-Right>', function() vim.cmd.wincmd('l') end, opts)
-vim.keymap.set('i', '<C-BS>', function() vim.cmd.normal('db') end, opts)
-vim.keymap.set('i', '<C-Del>', function() vim.cmd.normal('dw') end, opts)
+vim.keymap.set({'i', 'n'}, '<A-Up>', function () vim.cmd.wincmd('k') end, opts)
+vim.keymap.set({'i', 'n'}, '<A-Down>', function () vim.cmd.wincmd('j') end, opts)
+vim.keymap.set({'i', 'n'}, '<A-Left>', function () vim.cmd.wincmd('h') end, opts)
+vim.keymap.set({'i', 'n'}, '<A-Right>', function () vim.cmd.wincmd('l') end, opts)
+vim.keymap.set('i', '<C-BS>', function () vim.cmd.normal('db') end, opts)
+vim.keymap.set('i', '<C-Del>', function () vim.cmd.normal('dw') end, opts)
 vim.keymap.set({'i', 'n'}, '<F2>', vim.cmd.update, opts)
 vim.keymap.set({'i', 'n'}, '<F3>', vim.cmd.quit, opts)
-vim.keymap.set({'i', 'n'}, '<S-F3>', function() vim.cmd.quit {bang = true} end, opts)
-vim.keymap.set({'i'}, '<C-Left>', function() vim.cmd.normal('b') end, opts)
-vim.keymap.set({'i'}, '<C-Right>', function() vim.cmd.normal('w') end, opts)
-vim.keymap.set({'i'}, '<S-Left>', function() vim.cmd.normal('v') end, opts)
-vim.keymap.set({'i'}, '<S-Right>', function() vim.cmd.normal('v') end, opts)
+vim.keymap.set({'i', 'n'}, '<S-F3>', function () vim.cmd.quit {bang = true} end, opts)
+vim.keymap.set({'i'}, '<C-Left>', function () vim.cmd.normal('b') end, opts)
+vim.keymap.set({'i'}, '<C-Right>', function () vim.cmd.normal('w') end, opts)
+vim.keymap.set({'i'}, '<S-Left>', function () vim.cmd.normal('v') end, opts)
+vim.keymap.set({'i'}, '<S-Right>', function () vim.cmd.normal('v') end, opts)
