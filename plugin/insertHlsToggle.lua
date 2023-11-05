@@ -4,13 +4,13 @@ vim.api.nvim_create_autocmd('InsertEnter', {
   pattern = '*',
   callback = function ()
     vim.b.savedHlsearch = vim.opt_local.hlsearch:get()
-    vim.opt_local.hlsearch = false
+    vim.go.hlsearch = false
   end
 })
 vim.api.nvim_create_autocmd('InsertLeave', {
   group = augroup,
   pattern = '*',
   callback = function ()
-    vim.opt_local.hlsearch = vim.b.savedHlsearch
+    vim.go.hlsearch = vim.b.savedHlsearch
   end
 })
