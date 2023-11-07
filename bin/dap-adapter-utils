@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -e
+
 currentDir="$(dirname "$(dirname "$(realpath "${BASH_SOURCE[0]}")")")"
 
 toolsDir="${currentDir}/tools"
@@ -17,8 +19,11 @@ installAdapter() {
     mkdir -p "$dest"
     cd "$dest" || return 1
     file="${name}-${version}.vsix"
-    curl --continue-at - --output "$file" --remote-time --location "${url}" || return
-    unzip -n "$file"
+    curl --verbose --fail --output "$file" --remote-time --location "${url}"
+    unzip -n "$file" || unzipExitCode=$?
+    if (("${unzipExitCode:-0}" > 2)); then
+        return 1
+    fi
 }
 
 setAsCurrent() {

@@ -10,15 +10,21 @@ bashDebugUrl := 'https://github.com/rogalmic/vscode-bash-debug/releases/download
 cpptoolsVersion := '1.16.3'
 cpptoolsUrl := 'https://github.com/microsoft/vscode-cpptools/releases/download/v1.16.3/cpptools-linux.vsix'
 
+.ONESHELL:
 install-vscode-php-debug:
+	set -e
 	$(DIR)/bin/dap-adapter-utils install xdebug vscode-php-debug $(vscodePhpDebugVersion) $(vscodePhpDebugUrl)
 	$(DIR)/bin/dap-adapter-utils setAsCurrent vscode-php-debug $(vscodePhpDebugVersion)
 
+.ONESHELL:
 install-vscode-bash-debug:
+	set -e
 	$(DIR)/bin/dap-adapter-utils install rogalmic vscode-bash-debug $(bashDebugVersion) $(bashDebugUrl)
 	$(DIR)/bin/dap-adapter-utils setAsCurrent vscode-bash-debug $(bashDebugVersion)
 
+.ONESHELL:
 install-vscode-cpptools-debug:
+	set -e
 	$(DIR)/bin/dap-adapter-utils install microsoft vscode-cpptools $(cpptoolsVersion) $(cpptoolsUrl)
 	$(DIR)/bin/dap-adapter-utils setAsCurrent vscode-cpptools $(cpptoolsVersion)
 
