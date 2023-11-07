@@ -33,6 +33,7 @@ require 'nvim-treesitter.configs'.setup {
     'ssh_config',
     'todotxt',
     'toml',
+    'udev',
     'twig',
     'vim',
     'vimdoc',
