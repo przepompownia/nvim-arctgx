@@ -11,6 +11,6 @@ vim.api.nvim_create_autocmd('InsertLeave', {
   group = augroup,
   pattern = '*',
   callback = function ()
-    vim.go.hlsearch = vim.b.savedHlsearch
+    vim.go.hlsearch = vim.b.savedHlsearch or true
   end
 })
