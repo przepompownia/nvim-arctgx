@@ -143,19 +143,21 @@ do
     bufferCwdCallback[bufNr] = callback
   end
 
-  function base.getBufferCwd()
-    local callback = bufferCwdCallback[vim.api.nvim_get_current_buf()]
+  ---@param buf integer?
+  ---@return string
+  function base.getBufferCwd(buf)
+    buf = buf or vim.api.nvim_get_current_buf()
+    local callback = bufferCwdCallback[buf]
     if nil ~= callback then
       return callback()
     end
 
-    local fileDir = vim.fn.expand('%:p:h')
-
-    if 1 == vim.fn.isdirectory(fileDir) then
-      return fileDir
+    local ok, fileDir = pcall(vim.uv.fs_realpath, vim.api.nvim_buf_get_name(buf))
+    if not ok or fileDir == nil then
+      return vim.uv.cwd()
     end
 
-    return vim.uv.cwd()
+    return vim.fs.dirname(fileDir)
   end
 end
 
