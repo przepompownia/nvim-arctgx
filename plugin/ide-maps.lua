@@ -21,7 +21,6 @@ local keyToPlugMappings = {
   ['<Leader>dw'] = {rhs = '<Plug>(ide-debugger-go-to-view)'},
   ['<Leader>dW'] = {rhs = '<Plug>(ide-debugger-ui-add-to-watch)'},
   ['<Leader>dc'] = {rhs = '<Plug>(ide-debugger-close-view)'},
-  ['<F6>'] = {rhs = '<Plug>(ide-list-document-symbols)', modes = {'n'}},
   ['<Leader><S-F5>'] = {rhs = '<Plug>(ide-debugger-ui-toggle)', modes = {'n'}},
   ['<Leader>dt'] = {rhs = '<Plug>(ide-debugger-toggle-breakpoint)', repeatable = true, modes = {'n'}},
   ['<Leader><S-F10>'] = {
@@ -50,6 +49,7 @@ local keyToPlugMappings = {
   ['<space>F'] = {rhs = '<Plug>(ide-format-with-selected-formatter)', modes = {'n', 'v'}},
   ['<Leader>iaf'] = {rhs = '<Plug>(ide-action-fold)', modes = {'n'}},
   ['<Leader>iar'] = {rhs = '<Plug>(ide-action-rename)', modes = {'n'}},
+  ['<F6>'] = {rhs = '<Plug>(ide-list-document-symbols)', modes = {'n'}},
   ['<Leader>ilo'] = {rhs = '<Plug>(ide-list-document-symbols)', modes = {'n'}},
   ['<Leader>ilw'] = {rhs = '<Plug>(ide-list-workspace-symbols)', modes = {'n'}},
   [']]'] = {rhs = '<Plug>(ide-move-forward-function-start)', modes = {'n'}},
