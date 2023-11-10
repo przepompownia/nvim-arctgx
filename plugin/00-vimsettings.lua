@@ -54,3 +54,15 @@ vim.opt.sessionoptions:remove('folds')
 vim.opt.signcolumn = 'auto:1-9'
 vim.opt.tags = ''
 vim.opt.listchars = 'eol:$,tab:>-,trail:~,extends:>,precedes:<'
+
+vim.g.clipboard = {
+  name = 'OSC 52 (clipboard), wl-copy/wl-paste (primary)',
+  copy = {
+    ['+'] = require('vim.clipboard.osc52').copy,
+    ['*'] = {'wl-copy', '--primary'},
+  },
+  paste = {
+    ['+'] = require('vim.clipboard.osc52').paste,
+    ['*'] = {'wl-paste', '--primary'},
+  },
+}

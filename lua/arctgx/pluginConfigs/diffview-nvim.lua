@@ -24,3 +24,13 @@ end)
 vim.keymap.set('n', '<Plug>(ide-git-status-close)', closeDiffviewTabs)
 
 session.appendBeforeSaveHook('Close DiffView tabs', closeDiffviewTabs)
+
+vim.api.nvim_create_autocmd('FileType', {
+  group = vim.api.nvim_create_augroup('BufEnter', {clear = true}),
+  pattern = {'diffview://.*'},
+  callback = function (args)
+    require('arctgx.base').addBufferCwdCallback(args.buf, function ()
+      return vim.uv.cwd()
+    end)
+  end,
+})
