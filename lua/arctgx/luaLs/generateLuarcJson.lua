@@ -34,7 +34,7 @@ local function listRuntimePaths()
       return false
     end
 
-    --- Prevent from treat CWD as an element of workspace library
+    --- Prevent from treat sandboxed CWD as an element of workspace library
     --- https://github.com/przepompownia/dotnvim/blob/b3f904a81a07045d8cc811b953df6524807623d9/lib/nvim-isolated#L24-L25
     return path ~= vim.env.NVIM_SANDBOXED_CWD
   end, vim.api.nvim_get_runtime_file('', true))
