@@ -19,7 +19,7 @@ installAdapter() {
     mkdir -p "$dest"
     cd "$dest" || return 1
     file="${name}-${version}.vsix"
-    curl --verbose --fail --output "$file" --remote-time --location "${url}"
+    curl --continue-at - --output "$file" --remote-time --location "${url}"
     unzip -n "$file" || unzipExitCode=$?
     if (("${unzipExitCode:-0}" > 2)); then
         return 1
