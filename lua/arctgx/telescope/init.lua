@@ -115,38 +115,38 @@ function extension.grep(cmd, root, query)
     return vim.tbl_flatten {cmd, '--', prompt, search_list}
   end, opts.entry_maker or require('telescope.make_entry').gen_from_vimgrep(opts), opts.max_results, opts.cwd)
 
-  local new_grep_finder = function (prompt_bufnr)
-    local picker = action_state.get_current_picker(prompt_bufnr)
+  local newGrepFinder = function (promptBufnr)
+    local picker = action_state.get_current_picker(promptBufnr)
     return picker.finder
   end
-  local refreshPicker = function (prompt_bufnr, command)
-    local picker = action_state.get_current_picker(prompt_bufnr)
+  local refreshPicker = function (promptBufnr, command)
+    local picker = action_state.get_current_picker(promptBufnr)
 
-    picker:refresh(new_grep_finder(prompt_bufnr), {reset_prompt = false})
+    picker:refresh(newGrepFinder(promptBufnr), {reset_prompt = false})
     picker.prompt_border:change_title(command:status())
   end
 
-  opts.attach_mappings = function (prompt_bufnr, map)
+  opts.attach_mappings = function (promptBufnr, map)
     customActions.toggleCaseSensibility:enhance {
       post = function ()
-        cmd:switch_case_sensibility()
-        refreshPicker(prompt_bufnr, cmd)
+        cmd:switchCaseSensibility()
+        refreshPicker(promptBufnr, cmd)
       end
     }
     customActions.toggleFixedStrings:enhance {
       post = function ()
-        cmd:switch_fixed_strings()
-        refreshPicker(prompt_bufnr, cmd)
+        cmd:switchFixedStrings()
+        refreshPicker(promptBufnr, cmd)
       end
     }
     customActions.toggleOnlyFirstResult:enhance {
       post = function ()
-        cmd:switch_only_first_result()
-        refreshPicker(prompt_bufnr, cmd)
+        cmd:switchOnlyaFirstResult()
+        refreshPicker(promptBufnr, cmd)
       end
     }
 
-    extension.defaultFileMappings(prompt_bufnr, map)
+    extension.defaultFileMappings(promptBufnr, map)
     map({'i', 'n'}, '<A-i>', customActions.toggleCaseSensibility)
     map({'i', 'n'}, '<A-f>', customActions.toggleFixedStrings)
     map({'i', 'n'}, '<A-o>', customActions.toggleOnlyFirstResult)

@@ -1,3 +1,4 @@
+--- @class Grep
 local extension = {}
 
 function extension:new(name, list)
