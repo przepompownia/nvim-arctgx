@@ -42,9 +42,9 @@ end
 local customActions = require('telescope.actions.mt').transform_mod({
   tabDrop = extension.tabDrop,
 
-  toggleCaseSensibility = function() end,
-  toggleFixedStrings = function() end,
-  toggleOnlyFirstResult = function() end
+  toggleCaseSensibility = function () end,
+  toggleFixedStrings = function () end,
+  toggleOnlyFirstResult = function () end
 })
 
 extension.customActions = customActions
@@ -59,7 +59,7 @@ function extension.defaultFileMappings(_promptBufnr, map)
 end
 
 function extension.createOperator(searchFunction, cmd, root, title)
-  return function(type)
+  return function (type)
     local str = base.operatorGetText(type) or ''
 
     searchFunction(cmd, root, str, title)
@@ -100,8 +100,8 @@ function extension.grep(cmd, root, query)
     prompt_title = cmd:status(),
   }
   -- vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<C-\\><C-N>", true, true, true), "v", true)
-  opts.finder = require('telescope.finders').new_job(function(prompt)
-    if not prompt or prompt == "" then
+  opts.finder = require('telescope.finders').new_job(function (prompt)
+    if not prompt or prompt == '' then
       return nil
     end
 
@@ -112,47 +112,47 @@ function extension.grep(cmd, root, query)
       search_list = search_dirs
     end
 
-    return vim.tbl_flatten { cmd, "--", prompt, search_list }
+    return vim.tbl_flatten {cmd, '--', prompt, search_list}
   end, opts.entry_maker or require('telescope.make_entry').gen_from_vimgrep(opts), opts.max_results, opts.cwd)
 
-  local new_grep_finder = function(prompt_bufnr)
+  local new_grep_finder = function (prompt_bufnr)
     local picker = action_state.get_current_picker(prompt_bufnr)
     return picker.finder
   end
-  local refreshPicker = function(prompt_bufnr, command)
+  local refreshPicker = function (prompt_bufnr, command)
     local picker = action_state.get_current_picker(prompt_bufnr)
 
     picker:refresh(new_grep_finder(prompt_bufnr), {reset_prompt = false})
     picker.prompt_border:change_title(command:status())
   end
 
-  opts.attach_mappings = function(prompt_bufnr, map)
-      customActions.toggleCaseSensibility:enhance {
-        post = function()
-          cmd:switch_case_sensibility()
-          refreshPicker(prompt_bufnr, cmd)
-        end
-      }
-      customActions.toggleFixedStrings:enhance {
-        post = function()
-          cmd:switch_fixed_strings()
-          refreshPicker(prompt_bufnr, cmd)
-        end
-      }
-      customActions.toggleOnlyFirstResult:enhance {
-        post = function()
-          cmd:switch_only_first_result()
-          refreshPicker(prompt_bufnr, cmd)
-        end
-      }
+  opts.attach_mappings = function (prompt_bufnr, map)
+    customActions.toggleCaseSensibility:enhance {
+      post = function ()
+        cmd:switch_case_sensibility()
+        refreshPicker(prompt_bufnr, cmd)
+      end
+    }
+    customActions.toggleFixedStrings:enhance {
+      post = function ()
+        cmd:switch_fixed_strings()
+        refreshPicker(prompt_bufnr, cmd)
+      end
+    }
+    customActions.toggleOnlyFirstResult:enhance {
+      post = function ()
+        cmd:switch_only_first_result()
+        refreshPicker(prompt_bufnr, cmd)
+      end
+    }
 
-      extension.defaultFileMappings(prompt_bufnr, map)
-      map({'i', 'n'}, '<A-i>', customActions.toggleCaseSensibility)
-      map({'i', 'n'}, '<A-f>', customActions.toggleFixedStrings)
-      map({'i', 'n'}, '<A-o>', customActions.toggleOnlyFirstResult)
+    extension.defaultFileMappings(prompt_bufnr, map)
+    map({'i', 'n'}, '<A-i>', customActions.toggleCaseSensibility)
+    map({'i', 'n'}, '<A-f>', customActions.toggleFixedStrings)
+    map({'i', 'n'}, '<A-o>', customActions.toggleOnlyFirstResult)
 
-      return true
-    end
+    return true
+  end
 
   require('telescope.builtin').live_grep(opts)
 end
