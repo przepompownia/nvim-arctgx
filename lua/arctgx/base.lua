@@ -26,19 +26,22 @@ function base.tabDropPath(path, relativeWinId)
   local filename = vim.fn.fnamemodify(path, ':p')
 
   local bufNr = base.getBufnrByPath(filename) or vim.fn.bufadd(filename)
-  local existing_win_id = base.getFirstWinIdByBufnr(bufNr)
+  local existingWinId = base.getFirstWinIdByBufnr(bufNr)
 
-  if nil ~= existing_win_id then
-    api.nvim_set_current_win(existing_win_id)
+  if nil ~= existingWinId then
+    api.nvim_set_current_win(existingWinId)
 
     return
   end
 
   relativeWinId = relativeWinId or vim.fn.win_getid()
+  local relativeBufId = api.nvim_win_get_buf(relativeWinId)
 
-  if buffer_is_fresh(vim.fn.winbufnr(relativeWinId)) then
+  if buffer_is_fresh(relativeBufId) then
+    vim.bo[bufNr].buflisted = true
     api.nvim_win_set_buf(relativeWinId, bufNr)
     api.nvim_set_current_win(relativeWinId)
+    api.nvim_buf_delete(relativeBufId, {})
 
     return
   end
