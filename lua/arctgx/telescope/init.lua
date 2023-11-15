@@ -88,7 +88,20 @@ function extension.oldfiles(onlyCwd)
 end
 
 function extension.buffers()
-  require('telescope.builtin').buffers({attach_mappings = extension.defaultFileMappings})
+  require('telescope.builtin').buffers({
+    attach_mappings = function (promptBufnr, map)
+      extension.defaultFileMappings(promptBufnr, map)
+      local function deleteBuffer()
+        callOnSelection(promptBufnr, function (selectedEntry, _picker)
+          vim.api.nvim_buf_delete(selectedEntry.bufnr, {force = false})
+        end, 'actions.deleteBuffer')
+      end
+
+      map({'i', 'n'}, '<C-u>', deleteBuffer)
+
+      return true
+    end,
+  })
 end
 
 ---@param cmd Grep
