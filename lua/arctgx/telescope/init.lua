@@ -16,27 +16,36 @@ local function tabDropEntry(entry, winId)
   vim.api.nvim_exec_autocmds('User', {pattern = 'IdeStatusChanged', modeline = false})
 end
 
-function extension.tabDrop(promptBufnr)
-  local action_state = require 'telescope.actions.state'
-  local selection = action_state.get_selected_entry()
+---@param promptBufnr integer
+---@param callback function({bufnr: integer}, Picker)
+local function callOnSelection(promptBufnr, callback, actionName)
+  local actionState = require 'telescope.actions.state'
+  local selection = actionState.get_selected_entry()
   if selection == nil then
-    require('telescope.utils').__warn_no_selection 'actions.tabDrop'
+    require('telescope.utils').__warn_no_selection(actionName)
     return
   end
 
-  local picker = action_state.get_current_picker(promptBufnr)
-  local winId = picker.original_win_id
+  ---@type Picker
+  local picker = actionState.get_current_picker(promptBufnr)
   local multiSelection = picker:get_multi_selection()
   local actions = require('telescope.actions')
   actions.close(promptBufnr)
 
   if next(multiSelection) == nil then
     local selectedEntry = picker:get_selection()
-    tabDropEntry(selectedEntry, winId)
+    callback(selectedEntry, picker)
     return
   end
 
-  for _, entry in ipairs(multiSelection) do tabDropEntry(entry, winId) end
+  for _, entry in ipairs(multiSelection) do callback(entry, picker) end
+end
+
+function extension.tabDrop(promptBufnr)
+  callOnSelection(promptBufnr, function (selectedEntry, picker)
+    local winId = picker.original_win_id
+    tabDropEntry(selectedEntry, winId)
+  end, 'actions.tabDrop')
 end
 
 local customActions = require('telescope.actions.mt').transform_mod({
