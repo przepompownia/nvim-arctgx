@@ -68,8 +68,8 @@ function extension.defaultFileMappings(_promptBufnr, map)
 end
 
 function extension.createOperator(searchFunction, cmd, root, title)
-  return function (type)
-    local str = base.operatorGetText(type) or ''
+  return function (_type)
+    local str = base.operatorGetText() or ''
 
     searchFunction(cmd, root, str, title)
   end
