@@ -1,3 +1,4 @@
+local session = require('arctgx.session')
 require('neotest').setup({
   adapters = {
     require('neotest-phpunit') {
@@ -11,3 +12,9 @@ require('neotest').setup({
     },
   }
 })
+
+session.appendBeforeSaveHook('Close neotest windows', function ()
+  require('arctgx.window').forEachWindowWithBufFileType({'neotest-output-panel', 'neotest-summary'}, function (winId)
+    vim.api.nvim_win_close(winId, false)
+  end)
+end)
