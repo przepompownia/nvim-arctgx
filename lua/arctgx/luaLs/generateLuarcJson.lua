@@ -34,13 +34,16 @@ local function listRuntimePaths()
       return false
     end
 
-    --- Prevent from treat sandboxed CWD as an element of workspace library
-    --- https://github.com/przepompownia/dotnvim/blob/b3f904a81a07045d8cc811b953df6524807623d9/lib/nvim-isolated#L24-L25
-    return path ~= vim.env.NVIM_SANDBOXED_CWD
+    return true
   end, vim.api.nvim_get_runtime_file('', true))
 
+  ---@param value string
   return vim.tbl_map(function (value)
-    return value .. '/lua'
+    if not vim.env.NVIM_UNSANDBOXED_CONFIGDIR then
+      return value .. '/lua'
+    end
+
+    return value:gsub('^' .. vim.fn.stdpath('config'), vim.env.NVIM_UNSANDBOXED_CONFIGDIR, 1) .. '/lua'
   end, paths)
 end
 
@@ -56,10 +59,6 @@ end
 local function generate()
   local outputFile = '.luarc.jsonc'
   local paths = listRuntimePaths()
-  local projectLuaDir = vim.uv.cwd() .. '/lua'
-  if vim.fn.isdirectory(projectLuaDir) == 1 and not vim.tbl_contains(paths, projectLuaDir) then
-    table.insert(paths, projectLuaDir)
-  end
 
   table.insert(paths, '${3rd}/luv/library')
   table.insert(paths, '${3rd}/luassert/library')
