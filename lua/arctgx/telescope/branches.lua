@@ -35,8 +35,8 @@ function Branches.list(opts)
       entry_maker = makeEntry,
     }),
     sorter = require('telescope.config').generic_sorter(opts),
-    attach_mappings = function(promptBufnr)
-      require('telescope.actions').select_default:replace(function()
+    attach_mappings = function (promptBufnr)
+      require('telescope.actions').select_default:replace(function ()
         require('telescope.actions').close(promptBufnr)
         local selection = require('telescope.actions.state').get_selected_entry()
         local branch = selection.value.branch
