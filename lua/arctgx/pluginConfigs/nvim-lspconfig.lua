@@ -8,9 +8,8 @@ require('lspconfig.ui.windows').default_options.border = 'rounded'
 local capabilities = arctgxLsp.defaultClientCapabilities()
 
 lspconfig.jsonls.setup {
-  filetypes = { 'json', 'jsonc' },
+  filetypes = {'json', 'jsonc'},
   capabilities = capabilities,
-  on_attach = arctgxLsp.onAttach,
   settings = {
     json = {
       schemas = require('schemastore').json.schemas(),
@@ -20,7 +19,6 @@ lspconfig.jsonls.setup {
 
 lspconfig.lemminx.setup {
   capabilities = capabilities,
-  on_attach = arctgxLsp.onAttach,
 }
 
 configs.phpactor = {
@@ -52,12 +50,10 @@ configs.phpactor = {
 
 lspconfig.phpactor.setup {
   capabilities = capabilities,
-  on_attach = arctgxLsp.onAttach,
 }
 
 lspconfig.yamlls.setup {
   capabilities = capabilities,
-  on_attach = arctgxLsp.onAttach,
   settings = {
     ['yaml.schemastore.enable'] = true,
     ['yaml.schemas'] = {
@@ -69,7 +65,6 @@ lspconfig.yamlls.setup {
 lspconfig.lua_ls.setup {
   -- cmd = {'lua-language-server', '--loglevel=trace'},
   -- trace = 'verbose',
-  on_attach = arctgxLsp.onAttach,
   on_init = require('arctgx.lsp.serverConfigs.luaLs').onInit
 }
 
@@ -82,7 +77,6 @@ local servers = {
 for _, lsp in ipairs(servers) do
   lspconfig[lsp].setup {
     capabilities = capabilities,
-    on_attach = arctgxLsp.onAttach,
     flags = {
       debounce_text_changes = 150,
     }

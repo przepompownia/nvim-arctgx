@@ -21,7 +21,4 @@ function M.defaultClientCapabilities()
   return capabilities
 end
 
-function M.onAttach(client, bufnr)
-end
-
 return M
