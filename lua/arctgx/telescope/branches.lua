@@ -1,13 +1,3 @@
-local api = vim.api
-local pickers          = require 'telescope.pickers'
-local finders          = require 'telescope.finders'
-local actions          = require 'telescope.actions'
-local action_state     = require 'telescope.actions.state'
-local conf             = require('telescope.config').values
-local Job              = require('plenary.job')
-local utils            = require('telescope.utils')
-local git              = require('arctgx.git')
-
 local Branches = {}
 
 local function makeEntry(entry)
@@ -19,9 +9,9 @@ local function makeEntry(entry)
   }
 end
 
-local function switchToBranch(branch, cwd, noHooks)
+local function switchToBranch(branch, cwd, _noHooks)
   local cmd = {'git', '-c', 'core.hooksPath=', 'switch', branch}
-  local stdout, exitCode, stderr = utils.get_os_command_output(cmd, cwd)
+  local _stdout, exitCode, stderr = require('telescope.utils').get_os_command_output(cmd, cwd)
 
   if {} ~= stderr then
     vim.notify(table.concat(stderr, '\n'), vim.log.levels.INFO)
@@ -31,24 +21,24 @@ local function switchToBranch(branch, cwd, noHooks)
     return
   end
   vim.schedule(function ()
-    api.nvim_cmd({cmd = 'checktime'}, {})
-    api.nvim_exec_autocmds('User', {pattern = 'IdeStatusChanged', modeline = false})
+    vim.api.nvim_cmd({cmd = 'checktime'}, {})
+    vim.api.nvim_exec_autocmds('User', {pattern = 'IdeStatusChanged', modeline = false})
   end)
 end
 
 function Branches.list(opts)
   opts = opts or {}
-  pickers.new(opts, {
+  require('telescope.pickers').new(opts, {
     prompt_title = 'Git branches',
-    finder = finders.new_table({
-      results = git.branches(opts.cwd, true, true),
+    finder = require('telescope.finders').new_table({
+      results = require('arctgx.git').branches(opts.cwd, true, true),
       entry_maker = makeEntry,
     }),
-    sorter = conf.generic_sorter(opts),
-    attach_mappings = function(prompt_bufnr)
-      actions.select_default:replace(function()
-        actions.close(prompt_bufnr)
-        local selection = action_state.get_selected_entry()
+    sorter = require('telescope.config').generic_sorter(opts),
+    attach_mappings = function(promptBufnr)
+      require('telescope.actions').select_default:replace(function()
+        require('telescope.actions').close(promptBufnr)
+        local selection = require('telescope.actions.state').get_selected_entry()
         local branch = selection.value.branch
         switchToBranch(branch, opts.cwd)
       end)
