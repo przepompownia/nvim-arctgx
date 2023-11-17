@@ -33,8 +33,8 @@ configs.phpactor = {
       'language-server',
       -- '-vvv',
     },
-    filetypes = { 'php' },
-    root_dir = function(pattern)
+    filetypes = {'php'},
+    root_dir = function (pattern)
       local cwd = vim.uv.cwd()
       local root = util.root_pattern('composer.json', '.git')(pattern)
 
