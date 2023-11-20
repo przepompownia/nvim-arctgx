@@ -80,8 +80,9 @@ vim.api.nvim_create_autocmd('LspAttach', {
           vim.lsp.util.buf_clear_references(args.buf)
           for _, cl in ipairs(vim.lsp.get_clients({
             bufnr = args.buf,
+            method = vim.lsp.protocol.Methods.textDocument_documentHighlight,
           })) do
-            if cl.id ~= args.data.client_id and cl.supports_method('textDocument/documentHighlight') then
+            if cl.id ~= args.data.client_id then
               return
             end
           end

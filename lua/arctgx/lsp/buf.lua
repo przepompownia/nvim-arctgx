@@ -22,7 +22,7 @@ end
 
 function Buf.peekDefinition(bufnr)
   local params = vim.lsp.util.make_position_params()
-  request('textDocument/definition', params, previewLocation, bufnr)
+  request(vim.lsp.protocol.Methods.textDocument_definition, params, previewLocation, bufnr)
 end
 
 return Buf
