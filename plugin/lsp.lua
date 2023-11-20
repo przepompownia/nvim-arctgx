@@ -78,13 +78,14 @@ vim.api.nvim_create_autocmd('LspAttach', {
         buffer = ev.buf,
         callback = function (args)
           vim.lsp.util.buf_clear_references(args.buf)
-          for _, cl in ipairs(vim.lsp.get_clients({
+          local existsOtherClientWithHl = vim.iter(vim.lsp.get_clients({
             bufnr = args.buf,
             method = vim.lsp.protocol.Methods.textDocument_documentHighlight,
-          })) do
-            if cl.id ~= args.data.client_id then
-              return
-            end
+          })):any(function (cl)
+            return cl.id ~= args.data.client_id
+          end)
+          if existsOtherClientWithHl then
+            return
           end
 
           vim.api.nvim_clear_autocmds {
