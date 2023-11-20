@@ -21,7 +21,7 @@ function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
   return origUtilOpenFloatingPreview(contents, syntax, opts, ...)
 end
 
-vim.keymap.set('n', '<Plug>(ide-diagnostic-info)', function () vim.diagnostic.open_float({border = 'rounded'}) end, {})
+vim.keymap.set('n', '<Plug>(ide-diagnostic-info)', vim.diagnostic.open_float, {})
 vim.keymap.set('n', '<Plug>(ide-diagnostic-goto-previous)', vim.diagnostic.goto_prev, {})
 vim.keymap.set('n', '<Plug>(ide-diagnostic-goto-next)', vim.diagnostic.goto_next, {})
 vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist, {})
