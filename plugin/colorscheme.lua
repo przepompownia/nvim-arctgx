@@ -10,7 +10,7 @@ api.nvim_create_autocmd('OptionSet', {
         return vim.g.colorschemeLight or 'delek'
       end
 
-      return vim.g.colorschemeDark or 'darkblue'
+      return vim.g.colorschemeDark or 'habamax'
     end
     api.nvim_cmd({cmd = 'colorscheme', args = {theme()}}, {})
   end
