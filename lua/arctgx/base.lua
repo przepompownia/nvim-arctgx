@@ -8,7 +8,7 @@ function base.getBufnrByPath(path)
   return -1 ~= bufnr and bufnr or nil
 end
 
-function base.getFirstWinIdByBufnr(bufNr)
+local function getFirstWinIdByBufnr(bufNr)
   if nil == bufNr then
     return nil
   end
@@ -26,7 +26,7 @@ local function tabDropPath(path, relativeWinId)
   local filename = vim.fn.fnamemodify(path, ':p')
 
   local bufNr = base.getBufnrByPath(filename) or vim.fn.bufadd(filename)
-  local existingWinId = base.getFirstWinIdByBufnr(bufNr)
+  local existingWinId = getFirstWinIdByBufnr(bufNr)
 
   if nil ~= existingWinId then
     api.nvim_set_current_win(existingWinId)
