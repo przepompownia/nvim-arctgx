@@ -60,11 +60,11 @@ local function addCurrentPosToTagstack()
   vim.fn.settagstack(api.nvim_get_current_win(), {items = items}, 't')
 end
 
-function base.tabDrop(path, line, column, relativeBufId)
+function base.tabDrop(path, line, column, relativeWinId)
   markAsPreviousPos()
   addCurrentPosToTagstack()
 
-  tabDropPath(path, relativeBufId)
+  tabDropPath(path, relativeWinId)
 
   if nil == line then
     return
