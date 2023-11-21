@@ -2,7 +2,6 @@ local dap = require 'dap'
 local php = require('arctgx.dap.php')
 local widgets = require('dap.ui.widgets')
 local base = require('arctgx.base')
-local vim = vim
 local api = vim.api
 
 dap.adapters.php = {
