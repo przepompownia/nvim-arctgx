@@ -17,7 +17,7 @@ require('nvim-tree').setup({
       quit_on_open = true,
     },
   },
-  on_attach = function(bufnr)
+  on_attach = function (bufnr)
     treeapi.config.mappings.default_on_attach(bufnr)
     local injectNode = require('nvim-tree.utils').inject_node
 
@@ -30,7 +30,7 @@ require('nvim-tree').setup({
     vim.keymap.set(
       'n',
       '<CR>',
-      injectNode(function(node)
+      injectNode(function (node)
         if node.name == '..' or node.type == 'directory' then
           treeapi.node.open.edit()
 
