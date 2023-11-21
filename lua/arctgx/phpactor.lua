@@ -35,31 +35,30 @@ local function newClassFromFile(path)
   timer:start(
     0,
     1000,
-    vim.schedule_wrap(function()
-      for _, client in ipairs(vim.lsp.get_clients({
-        bufnr = buf,
-      })) do
-        if 'phpactor' == client.name then
-          timer:close()
+    vim.schedule_wrap(function ()
+      local clients = vim.iter(vim.lsp.get_clients({bufnr = buf, name = 'phpactor'}))
+      if not clients:next() then
+        vim.notify(('Server not ready, trying %s time'):format(tostring(i)))
+        i = i + 1
+        return
+      end
 
-          vim.ui.select(extension.getVariants(), {prompt = 'Select variant: '}, function(variant)
-            if nil == variant then
-              api.nvim_buf_delete(buf, {})
-              vim.notify('aborted')
-              return
-            end
+      timer:close()
 
-            base.tabDropPath(path)
-            vim.lsp.buf.execute_command({
-              command = 'create_class',
-              arguments = {vim.uri_from_fname(path), variant},
-            })
-          end)
+      vim.ui.select(extension.getVariants(), {prompt = 'Select variant: '}, function (variant)
+        print('V: ' .. vim.inspect(variant))
+        if nil == variant then
+          api.nvim_buf_delete(buf, {})
+          vim.notify('Canceled when selecting a variant')
           return
         end
-      end
-      -- vim.notify(('Server not ready, trying %s time'):format(tostring(i)))
-      i = i + 1
+
+        base.tabDropPath(path)
+        vim.lsp.buf.execute_command({
+          command = 'create_class',
+          arguments = {vim.uri_from_fname(path), variant},
+        })
+      end)
     end)
   )
 end
