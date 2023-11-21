@@ -25,7 +25,7 @@ require('nvim-tree').setup({
       'n',
       '<TAB>',
       '<C-w>w',
-      {buffer = bufnr, noremap = true}
+      {buffer = bufnr, noremap = true, desc = 'Jump to the last used window'}
     )
     vim.keymap.set(
       'n',
@@ -39,7 +39,7 @@ require('nvim-tree').setup({
         treeapi.tree.close()
         base.tabDropPath(node.absolute_path)
       end),
-      {buffer = bufnr, noremap = true}
+      {buffer = bufnr, noremap = true, desc = 'Open or expand node'}
     )
     vim.keymap.set(
       'n',
@@ -51,13 +51,13 @@ require('nvim-tree').setup({
         end
         require('nvim-tree.lib').expand_or_collapse(node)
       end,
-      {buffer = bufnr}
+      {buffer = bufnr, desc = 'Expand directory node or move right'}
     )
     vim.keymap.set(
       'n',
       '<Left>',
       treeapi.node.navigate.parent_close,
-      {buffer = bufnr, noremap = true}
+      {buffer = bufnr, noremap = true, desc = 'Close directory'}
     )
   end,
   view = {
@@ -99,18 +99,18 @@ require('nvim-tree').setup({
 
 local Event = treeapi.events.Event
 
-treeapi.events.subscribe(Event.NodeRenamed, function(data)
+treeapi.events.subscribe(Event.NodeRenamed, function (data)
   local yes = 'y'
   vim.ui.input({
     prompt = 'Do you want to stage this renaming? > ',
     default = yes,
-  }, function(input)
-      if input ~= yes then
-        return
-      end
-      vim.system({'git', 'add', '-u', data.old_name})
-      vim.system({'git', 'add', data.new_name})
-    end)
+  }, function (input)
+    if input ~= yes then
+      return
+    end
+    vim.system({'git', 'add', '-u', data.old_name})
+    vim.system({'git', 'add', data.new_name})
+  end)
 end)
 
 local function expandNode()
