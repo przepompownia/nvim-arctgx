@@ -2,7 +2,7 @@ local api = vim.api
 local base = {}
 local pluginDir = nil
 
-function base.getBufnrByPath(path)
+local function getBufnrByPath(path)
   local bufnr = vim.fn.bufnr('^' .. path .. '$')
 
   return -1 ~= bufnr and bufnr or nil
@@ -25,7 +25,7 @@ end
 local function tabDropPath(path, relativeWinId)
   local filename = vim.fn.fnamemodify(path, ':p')
 
-  local bufNr = base.getBufnrByPath(filename) or vim.fn.bufadd(filename)
+  local bufNr = getBufnrByPath(filename) or vim.fn.bufadd(filename)
   local existingWinId = getFirstWinIdByBufnr(bufNr)
 
   if nil ~= existingWinId then
