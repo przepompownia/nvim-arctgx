@@ -1,5 +1,4 @@
 local base = require('arctgx.base')
-local vim = vim
 local api = vim.api
 
 local extension = {}
@@ -53,7 +52,7 @@ local function newClassFromFile(path)
           return
         end
 
-        base.tabDrop(path)
+        require('arctgx.base').tabDrop(path)
         vim.lsp.buf.execute_command({
           command = 'create_class',
           arguments = {vim.uri_from_fname(path), variant},
