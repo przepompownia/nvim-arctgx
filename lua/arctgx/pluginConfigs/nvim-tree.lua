@@ -108,8 +108,21 @@ treeapi.events.subscribe(Event.NodeRenamed, function (data)
     if input ~= yes then
       return
     end
-    vim.system({'git', 'add', '-u', data.old_name})
-    vim.system({'git', 'add', data.new_name})
+    vim.system({'git', 'add', '-u', '--', data.old_name})
+    vim.system({'git', 'add', '--', data.new_name})
+  end)
+end)
+
+treeapi.events.subscribe(Event.FileRemoved, function (data)
+  local yes = 'y'
+  vim.ui.input({
+    prompt = 'Do you want to stage this removal? > ',
+    default = yes,
+  }, function (input)
+    if input ~= yes then
+      return
+    end
+    vim.system({'git', 'add', '-u', '--', data.fname})
   end)
 end)
 
