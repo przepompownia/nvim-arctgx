@@ -49,19 +49,26 @@ local function tabDropPath(path, relativeWinId)
   vim.cmd.tabedit(filename)
 end
 
+local function markAsPreviousPos()
+  vim.cmd.normal({bang = true, args = {"m'"}})
+end
+
+local function addCurrentPosToTagstack()
+  local curLine, curColumn = unpack(api.nvim_win_get_cursor(0))
+  local from = {api.nvim_get_current_buf(), curLine, curColumn + 1, 0}
+  local items = {{tagname = vim.fn.expand('<cword>'), from = from}}
+  vim.fn.settagstack(api.nvim_get_current_win(), {items = items}, 't')
+end
+
 function base.tabDrop(path, line, column, relativeBufId)
+  markAsPreviousPos()
+  addCurrentPosToTagstack()
+
   tabDropPath(path, relativeBufId)
 
   if nil == line then
     return
   end
-
-  vim.cmd.normal({bang = true, args = {"m'"}})
-
-  -- Push a new item into tagstack
-  local from = {vim.fn.bufnr('%'), vim.fn.line('.'), vim.fn.col('.'), 0}
-  local items = {{tagname = vim.fn.expand('<cword>'), from = from}}
-  vim.fn.settagstack(vim.fn.win_getid(), {items = items}, 't')
 
   local ok, result = pcall(api.nvim_win_set_cursor, 0, {line, (column or 1) - 1})
   if not ok then
