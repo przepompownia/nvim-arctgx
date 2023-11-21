@@ -22,7 +22,7 @@ local function buffer_is_fresh(bufNr)
   return '' == api.nvim_buf_get_name(bufNr) and api.nvim_buf_get_changedtick(bufNr) <= 2
 end
 
-function base.tabDropPath(path, relativeWinId)
+local function tabDropPath(path, relativeWinId)
   local filename = vim.fn.fnamemodify(path, ':p')
 
   local bufNr = base.getBufnrByPath(filename) or vim.fn.bufadd(filename)
@@ -50,7 +50,7 @@ function base.tabDropPath(path, relativeWinId)
 end
 
 function base.tabDrop(path, line, column, relativeBufId)
-  base.tabDropPath(path, relativeBufId)
+  tabDropPath(path, relativeBufId)
 
   if nil == line then
     return

@@ -37,7 +37,7 @@ require('nvim-tree').setup({
           return
         end
         treeapi.tree.close()
-        base.tabDropPath(node.absolute_path)
+        base.tabDrop(node.absolute_path)
       end),
       {buffer = bufnr, noremap = true, desc = 'Open or expand node'}
     )
