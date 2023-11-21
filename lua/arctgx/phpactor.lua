@@ -1,4 +1,3 @@
-local base = require('arctgx.base')
 local api = vim.api
 
 local extension = {}
