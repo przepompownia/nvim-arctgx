@@ -28,7 +28,7 @@ function M.findRoot(file, rootPatterns)
     path = file,
     upward = true,
     stop = vim.uv.os_homedir(),
-  })[1])
+  })[1] or file)
 end
 
 return M
