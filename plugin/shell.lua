@@ -20,3 +20,7 @@ vim.api.nvim_create_autocmd('TermClose', {
 vim.api.nvim_create_user_command('Shell', function (opts)
   require('arctgx.shell').open({cmd = opts.fargs})
 end, {nargs = '*'})
+
+vim.keymap.set({'n'}, '<Plug>(ide-open-shell)', function ()
+  require('arctgx.shell').open()
+end, {})

@@ -113,13 +113,14 @@ local globalMappings = {
 
   ['<Leader>ff'] = {rhs = '<Plug>(ide-files-search-operator)', modes = {'n', 'v'}},
 
+  ['<F1>'] = {rhs = '<Plug>(ide-browse-windows)', modes = {'n'}},
   ['<S-F1>'] = {rhs = '<Plug>(ide-browse-buffers)', modes = {'n'}},
   ['<Leader>;'] = {rhs = '<Plug>(ide-browse-cmd-history)', modes = {'n'}},
   ['<F4>'] = {rhs = '<Plug>(ide-browse-history)', modes = {'n'}},
   ['<Leader><F4>'] = {rhs = '<Plug>(ide-browse-history-in-cwd)', modes = {'n'}},
   ['<S-F4>'] = {rhs = '<Plug>(ide-git-show-branches)', modes = {'n'}},
   ['<F5>'] = {rhs = '<Plug>(ide-db-ui-toggle)', modes = {'n'}},
-  ['<F1>'] = {rhs = '<Plug>(ide-browse-windows)', modes = {'n'}},
+  ['<F8>'] = {rhs = '<Plug>(ide-open-shell)', modes = {'n'}, desc = 'Open shell window, mostly with dirname of current buffer as CWD'},
   ['<F11>'] = {rhs = '<Plug>(ide-browse-gfiles)', modes = {'n'}},
   ['<S-F11>'] = {rhs = '<Plug>(ide-browse-files)', modes = {'n'}},
   ['<F12>'] = {rhs = '<Plug>(ide-grep-git)', modes = {'n'}},
