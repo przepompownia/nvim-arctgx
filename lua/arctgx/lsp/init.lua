@@ -24,7 +24,11 @@ end
 ---@param file string
 ---@param rootPatterns string[]
 function M.findRoot(file, rootPatterns)
-  return vim.fs.dirname(vim.fs.find(rootPatterns, {path = file, upward = true})[1])
+  return vim.fs.dirname(vim.fs.find(rootPatterns, {
+    path = file,
+    upward = true,
+    stop = vim.uv.os_homedir(),
+  })[1])
 end
 
 return M
