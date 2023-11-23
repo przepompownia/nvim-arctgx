@@ -85,7 +85,7 @@ function M.clientConfig(file)
       -- '--loglevel=trace',
     },
     -- trace = 'verbose',
-    root_dir = vim.fs.dirname(vim.fs.find(rootPatterns, {path = file, upward = true})[1]),
+    root_dir = require('arctgx.lsp').findRoot(file, rootPatterns),
     single_file_support = true,
     log_level = vim.lsp.protocol.MessageType.Warning,
     on_init = M.onInit,

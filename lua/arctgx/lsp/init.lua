@@ -21,4 +21,10 @@ function M.defaultClientCapabilities()
   return capabilities
 end
 
+---@param file string
+---@param rootPatterns string[]
+function M.findRoot(file, rootPatterns)
+  return vim.fs.dirname(vim.fs.find(rootPatterns, {path = file, upward = true})[1])
+end
+
 return M
