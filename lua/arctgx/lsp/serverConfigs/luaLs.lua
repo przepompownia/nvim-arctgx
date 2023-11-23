@@ -49,7 +49,7 @@ end
 
 --- @param client lsp.Client
 --- @return boolean
-M.onInit = function (client)
+function M.onInit(client)
   local path = client.workspace_folders[1].name
 
   if vim.uv.fs_stat(path .. '/.luarc.json') or vim.uv.fs_stat(path .. '/.luarc.jsonc') then
@@ -62,6 +62,32 @@ M.onInit = function (client)
   })
 
   client.notify('workspace/didChangeConfiguration', {settings = client.config.settings})
+
+  return true
+end
+
+---@return lsp.ClientConfig
+function M.clientConfig(file)
+  return {
+    name = 'luals',
+    filetype = 'lua',
+    cmd = {
+      'lua-language-server',
+      -- '--loglevel=trace',
+    },
+    -- trace = 'verbose',
+    root_dir = vim.fs.dirname(vim.fs.find({
+      '.luarc.jsonc',
+      '.luarc.json',
+      '.luacheckrc',
+      '.stylua.toml',
+      'stylua.toml',
+      '.git',
+    }, {path = file, upward = true})[1]),
+    single_file_support = true,
+    log_level = vim.lsp.protocol.MessageType.Warning,
+    on_init = M.onInit,
+  }
 end
 
 return M

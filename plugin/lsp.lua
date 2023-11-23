@@ -99,3 +99,14 @@ vim.api.nvim_create_autocmd('LspAttach', {
     -- vim.notify(('Server %s attached to %s'):format(client.name, api.nvim_buf_get_name(ev.buf)))
   end,
 })
+
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = {'lua'},
+  group = vim.api.nvim_create_augroup('arctgx.lsp.clients.luals', {}),
+  callback = function (args)
+    vim.lsp.start(
+      require('arctgx.lsp.serverConfigs.luaLs').clientConfig(args.file),
+      {bufnr = args.buf}
+    )
+  end,
+})
