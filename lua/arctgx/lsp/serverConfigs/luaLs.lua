@@ -89,6 +89,7 @@ function M.clientConfig(file)
     single_file_support = true,
     log_level = vim.lsp.protocol.MessageType.Warning,
     on_init = M.onInit,
+    capabilities = require('arctgx.lsp').defaultClientCapabilities(),
   }
 end
 
