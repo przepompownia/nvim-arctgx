@@ -24,6 +24,7 @@ end
 ---@param file string
 ---@param rootPatterns string[]
 function M.findRoot(file, rootPatterns)
+  file = vim.fn.fnamemodify(file, ':p')
   return vim.fs.dirname(vim.fs.find(rootPatterns, {
     path = file,
     upward = true,
