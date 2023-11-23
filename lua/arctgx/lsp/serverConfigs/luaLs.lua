@@ -66,6 +66,15 @@ function M.onInit(client)
   return true
 end
 
+local rootPatterns = {
+  '.luarc.jsonc',
+  '.luarc.json',
+  '.luacheckrc',
+  '.stylua.toml',
+  'stylua.toml',
+  '.git',
+}
+
 ---@return lsp.ClientConfig
 function M.clientConfig(file)
   return {
@@ -76,14 +85,7 @@ function M.clientConfig(file)
       -- '--loglevel=trace',
     },
     -- trace = 'verbose',
-    root_dir = vim.fs.dirname(vim.fs.find({
-      '.luarc.jsonc',
-      '.luarc.json',
-      '.luacheckrc',
-      '.stylua.toml',
-      'stylua.toml',
-      '.git',
-    }, {path = file, upward = true})[1]),
+    root_dir = vim.fs.dirname(vim.fs.find(rootPatterns, {path = file, upward = true})[1]),
     single_file_support = true,
     log_level = vim.lsp.protocol.MessageType.Warning,
     on_init = M.onInit,
