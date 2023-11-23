@@ -4,7 +4,6 @@ vim.api.nvim_create_autocmd('FileType', {
   pattern = 'php',
   group = augroup,
   callback = function (opts)
-    vim.keymap.set('n', '<Plug>(ide-class-new)', require('arctgx.phpactor').classNew, {buffer = opts.buf})
-
+    vim.keymap.set('n', '<Plug>(ide-class-new)', require('arctgx.lsp.serverConfigs.phpactor').classNew, {buffer = opts.buf})
   end
 })
