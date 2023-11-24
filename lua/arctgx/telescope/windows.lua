@@ -39,11 +39,11 @@ end
 local function previewer()
   return buffer_previewer.new_buffer_previewer {
     title = 'Window content',
-    get_buffer_by_name = function(_, entry)
+    get_buffer_by_name = function (_, entry)
       return entry.value.bufname
     end,
 
-    define_preview = function(self, entry)
+    define_preview = function (self, entry)
       conf.buffer_previewer_maker(entry.value.bufname, self.state.bufnr, {
         bufname = self.state.bufname,
         winid = self.state.winid,
@@ -61,8 +61,8 @@ function Windows.list(opts)
       entry_maker = makeEntry,
     }),
     sorter = conf.generic_sorter(opts),
-    attach_mappings = function(prompt_bufnr, map)
-      actions.select_default:replace(function()
+    attach_mappings = function (prompt_bufnr, _map)
+      actions.select_default:replace(function ()
         actions.close(prompt_bufnr)
         local selection = action_state.get_selected_entry()
         if nil == selection then
