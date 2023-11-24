@@ -47,7 +47,7 @@ api.nvim_create_autocmd('FileType', {
   group = augroup,
   pattern = {'sql', 'mysql'},
   callback = function ()
-    if vim.b.dbui_db_key_name ~=nil then
+    if vim.b.dbui_db_key_name ~= nil then
       vim.b.ideTabName = 'DBUI[q]'
     end
   end
