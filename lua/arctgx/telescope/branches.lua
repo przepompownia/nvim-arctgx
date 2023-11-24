@@ -34,7 +34,7 @@ function Branches.list(opts)
       results = require('arctgx.git').branches(opts.cwd, true, true),
       entry_maker = makeEntry,
     }),
-    sorter = require('telescope.config').generic_sorter(opts),
+    sorter = require('telescope.config').values.generic_sorter(opts),
     attach_mappings = function (promptBufnr)
       require('telescope.actions').select_default:replace(function ()
         require('telescope.actions').close(promptBufnr)
