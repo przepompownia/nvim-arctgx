@@ -1,7 +1,6 @@
 local arctgxLsp = require 'arctgx.lsp'
 local configs = require 'lspconfig.configs'
 local lspconfig = require('lspconfig')
-local util = require('lspconfig.util')
 
 require('lspconfig.ui.windows').default_options.border = 'rounded'
 
@@ -22,30 +21,17 @@ lspconfig.lemminx.setup {
 }
 
 configs.phpactor = {
-  default_config = {
-    autostart = true,
-    cmd_env = {
-      XDG_CACHE_HOME = '/tmp'
+  default_config = vim.tbl_extend(
+    'keep',
+    {
+      autostart = true,
+      root_dir = function (file)
+        return require('arctgx.lsp').findRoot(file, require('arctgx.lsp.serverConfigs.phpactor').defaultRootPatterns)
+      end,
+      filetypes = {'php'},
     },
-    cmd = {
-      -- 'phpxx',
-      vim.uv.fs_realpath(vim.fn.exepath('phpactor')) or 'phpactor',
-      'language-server',
-      -- '-vvv',
-    },
-    filetypes = {'php'},
-    root_dir = function (pattern)
-      local cwd = vim.uv.cwd()
-      local root = util.root_pattern('composer.json', '.git')(pattern)
-
-      return util.path.is_descendant(cwd, root) and cwd or root
-    end,
-    init_options = {
-      ['logging.path'] = '/tmp/phpactor.log',
-      ['completion_worse.completor.keyword.enabled'] = true,
-      ['phpunit.enabled'] = true,
-    },
-  },
+    require('arctgx.lsp.serverConfigs.phpactor').clientConfig()
+  ),
 }
 
 lspconfig.phpactor.setup {

@@ -94,19 +94,55 @@ local function showWindow(title, filetype, contents)
 end
 
 function extension.dumpConfig()
-  vim.lsp.buf_request(0, 'phpactor/debug/config', {['return'] = true}, function(_, result)
+  vim.lsp.buf_request(0, 'phpactor/debug/config', {['return'] = true}, function (_, result)
     showWindow('Phpactor LSP Configuration', 'json', result)
   end)
 end
 
 function extension.status()
-  vim.lsp.buf_request(0, 'phpactor/status', {['return'] = true}, function(_, result)
+  vim.lsp.buf_request(0, 'phpactor/status', {['return'] = true}, function (_, result)
     showWindow('Phpactor Status', 'markdown', result)
   end)
 end
 
 function extension.reindex()
   vim.lsp.buf_notify(0, 'phpactor/indexer/reindex', {})
+end
+
+extension.defaultRootPatterns = {
+  'composer.json',
+  '.phpactor.json',
+  '.git',
+}
+
+---@return lsp.ClientConfig
+function extension.clientConfig(file, rootPatterns)
+  return {
+    name = 'phpactor',
+    filetype = 'php',
+    cmd_env = {
+      XDG_CACHE_HOME = '/tmp'
+    },
+    cmd = {
+      -- 'phpxx',
+      vim.uv.fs_realpath(vim.fn.exepath('phpactor')) or 'phpactor',
+      'language-server',
+      -- '-vvv',
+    },
+    -- trace = 'verbose',
+    root_dir = require('arctgx.lsp').findRoot(file, rootPatterns or extension.defaultRootPatterns),
+    single_file_support = true,
+    log_level = vim.lsp.protocol.MessageType.Warning,
+    capabilities = require('arctgx.lsp').defaultClientCapabilities(),
+    init_options = {
+      ['logging.path'] = '/tmp/phpactor.log',
+      ['completion_worse.completor.keyword.enabled'] = true,
+      ['phpunit.enabled'] = true,
+      ['language_server_worse_reflection.inlay_hints.enable'] = true,
+      ['language_server_worse_reflection.inlay_hints.types'] = true,
+      ['language_server_worse_reflection.inlay_hints.params'] = true,
+    },
+  }
 end
 
 return extension
