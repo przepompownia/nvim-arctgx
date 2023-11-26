@@ -16,7 +16,7 @@ local origSignsHandler = vim.diagnostic.handlers.signs
 
 -- from :help diagnostic-handlers-example
 vim.diagnostic.handlers.signs = {
-  show = function(_, bufnr, _, opts)
+  show = function (_, bufnr, _, opts)
     local diagnostics = vim.diagnostic.get(bufnr)
 
     local maxSeverityPerLine = {}
@@ -30,7 +30,7 @@ vim.diagnostic.handlers.signs = {
     local filteredDiagnostics = vim.tbl_values(maxSeverityPerLine)
     origSignsHandler.show(ns, bufnr, filteredDiagnostics, opts)
   end,
-  hide = function(_, bufnr)
+  hide = function (_, bufnr)
     if vim.api.nvim_buf_is_valid(bufnr) then
       origSignsHandler.hide(ns, bufnr)
     end
