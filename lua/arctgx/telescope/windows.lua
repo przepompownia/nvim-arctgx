@@ -1,8 +1,7 @@
-local pickers          = require 'telescope.pickers'
-local finders          = require 'telescope.finders'
-local actions          = require 'telescope.actions'
-local action_state     = require 'telescope.actions.state'
-local conf             = require('telescope.config').values
+local pickers = require 'telescope.pickers'
+local finders = require 'telescope.finders'
+local actions = require 'telescope.actions'
+local action_state = require 'telescope.actions.state'
 local buffer_previewer = require('telescope.previewers.buffer_previewer')
 
 ---@class arctgx.telescope.windows
@@ -44,7 +43,7 @@ local function previewer()
     end,
 
     define_preview = function (self, entry)
-      conf.buffer_previewer_maker(entry.value.bufname, self.state.bufnr, {
+      require('telescope.config').values.buffer_previewer_maker(entry.value.bufname, self.state.bufnr, {
         bufname = self.state.bufname,
         winid = self.state.winid,
       })
@@ -60,7 +59,7 @@ function Windows.list(opts)
       results = listBufferWindowPairs(),
       entry_maker = makeEntry,
     }),
-    sorter = conf.generic_sorter(opts),
+    sorter = require('telescope.config').values.generic_sorter(opts),
     attach_mappings = function (prompt_bufnr, _map)
       actions.select_default:replace(function ()
         actions.close(prompt_bufnr)
