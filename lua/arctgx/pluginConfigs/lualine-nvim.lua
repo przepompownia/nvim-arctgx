@@ -21,6 +21,10 @@ require('lualine').setup({
     disabled_filetypes = {
       'fern',
       'dap-repl',
+      'dapui_watches',
+      'dapui_scopes',
+      'dapui_breakpoints',
+      'dapui_stacks',
     },
   },
   sections = {
