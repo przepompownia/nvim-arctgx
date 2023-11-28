@@ -16,7 +16,7 @@ local mapToKeySequenceList = {
   ['<Tab>'] = {rhs = '<C-w>w', modes = {'n', 'v'}},
   ['g<Left>'] = {rhs = '<C-O>', modes = {'n'}},
   ['g<Right>'] = {rhs = '<C-I>', modes = {'n'}},
-  ['<Insert>'] = {rhs = '<Nop>', modes = {'i'}},
+  ['<Insert>'] = {rhs = '<Nop>', modes = {'i', 'c'}},
   ['<C-z>'] = {rhs = '<C-x><C-o>', modes = {'i'}},
   ['Q'] = {rhs = '<Nop>', modes = {'n'}},
   ['<C-BS>'] = {rhs = '<C-w>', modes = {'c'}},
