@@ -77,6 +77,7 @@ local rootPatterns = {
 
 ---@return lsp.ClientConfig
 function M.clientConfig(file)
+  local lsp = require('arctgx.lsp')
   return {
     name = 'luals',
     filetype = 'lua',
@@ -85,11 +86,18 @@ function M.clientConfig(file)
       -- '--loglevel=trace',
     },
     -- trace = 'verbose',
-    root_dir = require('arctgx.lsp').findRoot(file, rootPatterns),
+    root_dir = lsp.findRoot(file, rootPatterns),
     single_file_support = true,
     log_level = vim.lsp.protocol.MessageType.Warning,
     on_init = M.onInit,
-    capabilities = require('arctgx.lsp').defaultClientCapabilities(),
+    capabilities = lsp.defaultClientCapabilities(),
+    on_attach = function (_, bufnr)
+      local root = lsp.findRoot(vim.api.nvim_buf_get_name(bufnr), rootPatterns)
+      if not vim.tbl_contains(vim.lsp.buf.list_workspace_folders(), root) then
+        vim.notify(('"%s" added to workspace folders'):format(root), vim.log.levels.INFO, {title = 'LSP'})
+        vim.lsp.buf.add_workspace_folder(root)
+      end
+    end,
   }
 end
 

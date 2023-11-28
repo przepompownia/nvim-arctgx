@@ -106,7 +106,11 @@ vim.api.nvim_create_autocmd('FileType', {
   callback = function (args)
     vim.lsp.start(
       require('arctgx.lsp.serverConfigs.luaLs').clientConfig(args.file),
-      {bufnr = args.buf}
-    )
+      {
+        bufnr = args.buf,
+        reuse_client = function (client, config)
+          return client.name == config.name
+        end
+      })
   end,
 })

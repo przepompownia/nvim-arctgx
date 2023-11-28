@@ -17,7 +17,21 @@ function base.setTabDropReplacement(cb)
   tabDropReplacement = cb
 end
 
+local function markAsPreviousPos()
+  vim.cmd.normal({bang = true, args = {"m'"}})
+end
+
+local function addCurrentPosToTagstack()
+  local curLine, curColumn = unpack(api.nvim_win_get_cursor(0))
+  local from = {api.nvim_get_current_buf(), curLine, curColumn + 1, 0}
+  local items = {{tagname = vim.fn.expand('<cword>'), from = from}}
+  vim.fn.settagstack(api.nvim_get_current_win(), {items = items}, 't')
+end
+
 function base.tabDrop(path, line, column, relativeWinId)
+  markAsPreviousPos()
+  addCurrentPosToTagstack()
+
   tabDropReplacement(path, line, column, relativeWinId)
 end
 
