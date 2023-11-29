@@ -14,6 +14,7 @@ vim.wo.foldmethod = 'expr'
 vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
 vim.wo.foldtext = 'v:lua.vim.treesitter.foldtext()'
 
+vim.go.pumblend = 15
 vim.opt.complete:remove('t')
 vim.opt.matchpairs:append('<:>')
 vim.opt.spell = false
@@ -54,15 +55,3 @@ vim.opt.sessionoptions:remove('folds')
 vim.opt.signcolumn = 'auto:1-9'
 vim.opt.tags = ''
 vim.opt.listchars = 'eol:$,tab:>-,trail:~,extends:>,precedes:<'
-
-vim.g.clipboard = {
-  name = 'OSC 52 (clipboard), wl-copy/wl-paste (primary)',
-  copy = {
-    ['+'] = require('vim.ui.clipboard.osc52').copy,
-    ['*'] = {'wl-copy', '--primary'},
-  },
-  paste = {
-    ['+'] = require('vim.ui.clipboard.osc52').paste,
-    ['*'] = {'wl-paste', '--primary'},
-  },
-}
