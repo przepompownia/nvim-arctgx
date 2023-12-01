@@ -6,5 +6,8 @@ vim.keymap.set('n', '<Plug>(ide-git-push-all)', function ()
   require 'arctgx.git'.pushToAllRemoteRepos(require('arctgx.base').getBufferCwd())
 end)
 vim.keymap.set('n', '<Plug>(ide-git-commit)', function ()
-  require 'arctgx.shell'.open({cmd = {'git', 'commit'}})
+  require 'arctgx.shell'.open({
+    cmd = {'git', 'commit'},
+    cwd = require('arctgx.git').top(require('arctgx.base').getBufferCwd()),
+  })
 end)
