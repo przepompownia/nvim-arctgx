@@ -181,7 +181,7 @@ local function splitRange(range)
     ['...'] = '\\.\\.\\.',
   }
   for separator, separatorPattern in pairs(separators) do
-    local separatorStart, separatorEnd = range:find(separator, 1, true)
+    local separatorStart, _separatorEnd = range:find(separator, 1, true)
     if nil ~= separatorStart then
       local lead, part = unpack(vim.fn.split(range, separatorPattern, 1))
       return {
