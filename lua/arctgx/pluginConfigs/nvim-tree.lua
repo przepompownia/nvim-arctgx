@@ -110,6 +110,7 @@ treeapi.events.subscribe(Event.NodeRenamed, function (data)
     end
     vim.system({'git', 'add', '-u', '--', data.old_name})
     vim.system({'git', 'add', '--', data.new_name})
+    vim.notify(('renamed from %s to %s'):format(data.old_name, data.new_name))
   end)
 end)
 
@@ -135,11 +136,15 @@ local function expandNode()
 end
 
 local function focusOnFile()
-  local bufPath = vim.uv.fs_realpath(vim.api.nvim_buf_get_name(0))
-  treeapi.tree.open(require('arctgx.git').top(bufPath and vim.fs.dirname(bufPath) or vim.uv.cwd()))
+  local bufPath = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(0), ':p')
+  local realParent = vim.iter(vim.fs.parents(bufPath)):find(function (path)
+    return vim.uv.fs_realpath(path) and path ~= '/'
+  end) or vim.uv.cwd()
+  treeapi.tree.open(require('arctgx.git').top(realParent))
   -- treeapi.tree.toggle_hidden_filter()
   treeapi.live_filter.clear()
-  local pathToFocus = bufPath or vim.uv.cwd()
+  local pathToFocus = vim.uv.fs_realpath(bufPath) or realParent
+
   treeapi.tree.find_file({
     buf = pathToFocus,
   })
