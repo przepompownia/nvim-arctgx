@@ -2,15 +2,15 @@ local keymap = require('arctgx.vim.keymap')
 local api = vim.api
 
 ---@type AbstractKeymaps
-local abstractMappings = {
-  ['<F8>'] = {name = 'open-shell', desc = 'Open shell window, mostly with dirname of current buffer as CWD'}
+local abstractKeymaps = {
+  shellOpen = {lhs = {'<F8>'}, desc = 'Open shell window, mostly with dirname of current buffer as CWD'},
+  diagnosticSetLocList = {lhs = {'<Space>q'}},
+  diagnosticOpenFloat = {lhs = {'<Leader>ii'}},
+  diagnosticGotoPrevious = {lhs = {'[d'}},
+  diagnosticGotoNext = {lhs = {']d'}},
 }
-vim.api.nvim_create_autocmd('UIEnter', {
-  once = true,
-  callback = function ()
-    require('arctgx.vim.abstractKeymap').implement(abstractMappings)
-  end,
-})
+
+require('arctgx.vim.abstractKeymap').load(abstractKeymaps)
 
 ---@type KeyToPlugMappings
 local keyToPlugMappings = {
@@ -77,9 +77,6 @@ local keyToPlugMappings = {
   ['<Leader>A'] = {rhs = '<Plug>(ide-parameter-swap-backward)', repeatable = true, modes = {'n'}},
   ['iC'] = {rhs = '<Plug>(ide-select-class-inner)', modes = {'x', 'o'}},
   ['aC'] = {rhs = '<Plug>(ide-select-class-outer)', modes = {'x', 'o'}},
-  ['<Leader>ii'] = {rhs = '<Plug>(ide-diagnostic-info)', modes = {'n'}},
-  ['[d'] = {rhs = '<Plug>(ide-diagnostic-goto-previous)', modes = {'n'}},
-  [']d'] = {rhs = '<Plug>(ide-diagnostic-goto-next)', modes = {'n'}},
   ['<Leader>sfa'] = {rhs = '<Plug>(ide-workspace-folder-add)', modes = {'n'}},
   ['<Leader>sfd'] = {rhs = '<Plug>(ide-workspace-folder-remove)', modes = {'n'}},
   ['<Leader>sfl'] = {rhs = '<Plug>(ide-workspace-folder-list)', modes = {'n'}},

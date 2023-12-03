@@ -1,47 +1,38 @@
 local abstractKeymap = {}
 
----@alias AbstractKeymap {name: string, modes: table<string>, repeatable: boolean?, desc: string?}
+---@alias AbstractKeymap {lhs: table<string>, repeatable: boolean?, desc: string?, opts: table}
 ---@alias AbstractKeymaps table<string, AbstractKeymap>
 
-local handlersMt = {
-  __index = function (_, k)
-    return {
-      rhs = function ()
-        vim.notify(('%s not implemented yet.'):format(k), vim.log.levels.WARN, {title = 'Keymaps'})
-      end,
-      opts = {}
-    }
+---@type AbstractKeymaps
+local keymaps = {}
+
+function abstractKeymap.set(modes, name, rhs, opts)
+  local keymap = keymaps[name]
+  if nil == keymap then
+    vim.notify(('%s not defined yet.'):format(name), vim.log.levels.ERROR, {title = 'Keymaps'})
+
+    return
   end
-}
 
-local handlers = {}
-for _, mode in ipairs({'n', 'i', 'v', 'x'}) do
-  handlers[mode] = setmetatable({}, handlersMt)
-end
+  if type(modes) == 'string' then
+    modes = {modes}
+  end
 
-function abstractKeymap.set(mode, name, rhs, opts)
-  handlers[mode][name] = {rhs = rhs, opts = opts or {}}
-end
-
----@param mappings AbstractKeymaps
----@param bufnr integer|nil
-function abstractKeymap.implement(mappings, bufnr)
-  for lhs, mapping in pairs(mappings) do
-    local opts = {
-      silent = true,
-      buffer = bufnr,
-    }
-    opts.desc = mapping.desc
-    local modes = mapping.modes or {'n'}
-    for _, mode in ipairs(modes) do
+  for _, mode in ipairs(modes) do
+    for _, lhs in ipairs(keymap.lhs) do
       vim.keymap.set(
         mode,
         lhs,
-        handlers[mode][mapping.name]['rhs'],
-        vim.tbl_extend('keep', handlers[mode][mapping.name]['opts'] or {}, opts)
+        rhs,
+        vim.tbl_extend('keep', keymap.opts or {}, opts or {})
       )
     end
   end
+end
+
+---@param mappings AbstractKeymaps
+function abstractKeymap.load(mappings)
+  keymaps = mappings
 end
 
 return abstractKeymap

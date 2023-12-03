@@ -1,5 +1,6 @@
 local lsp = vim.lsp
 local buf = require('arctgx.lsp.buf')
+local keymap = require('arctgx.vim.abstractKeymap')
 
 vim.lsp.set_log_level(vim.log.levels.WARN)
 local hlMap = {
@@ -21,10 +22,10 @@ function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
   return origUtilOpenFloatingPreview(contents, syntax, opts, ...)
 end
 
-vim.keymap.set('n', '<Plug>(ide-diagnostic-info)', vim.diagnostic.open_float, {})
-vim.keymap.set('n', '<Plug>(ide-diagnostic-goto-previous)', vim.diagnostic.goto_prev, {})
-vim.keymap.set('n', '<Plug>(ide-diagnostic-goto-next)', vim.diagnostic.goto_next, {})
-vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist, {})
+keymap.set('n', 'diagnosticOpenFloat)', vim.diagnostic.open_float, {})
+keymap.set('n', 'diagnosticGotoPrevious)', vim.diagnostic.goto_prev, {})
+keymap.set('n', 'diagnosticGotoNext)', vim.diagnostic.goto_next, {})
+keymap.set('n', 'diagnosticSetLocList', vim.diagnostic.setloclist, {})
 
 local augroup = vim.api.nvim_create_augroup('LspDocumentHighlight', {clear = true})
 vim.api.nvim_create_autocmd('LspAttach', {
