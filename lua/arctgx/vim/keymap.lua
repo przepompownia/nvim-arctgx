@@ -2,7 +2,7 @@ local api = vim.api
 
 ---@alias KeyToPlugMapping {rhs: string, modes: table<string>, repeatable: boolean, desc: string}
 ---@alias KeyToPlugMappings table<string, KeyToPlugMapping>
----@alias AbstractMapping {abstractName: string, modes: table<string>, repeatable: boolean?, desc: string?}
+---@alias AbstractMapping {name: string, modes: table<string>, repeatable: boolean?, desc: string?}
 ---@alias AbstractMappings table<string, AbstractMapping>
 
 local extension = {}
@@ -59,8 +59,8 @@ for _, mode in ipairs({'n', 'i', 'v', 'x'}) do
   handlers[mode] = setmetatable({}, handlersMt)
 end
 
-function extension.implement(mode, abstractName, rhs, opts)
-  handlers[mode][abstractName] = {rhs = rhs, opts = opts or {}}
+function extension.implement(mode, name, rhs, opts)
+  handlers[mode][name] = {rhs = rhs, opts = opts or {}}
 end
 
 ---@param mappings AbstractMappings
@@ -77,8 +77,8 @@ function extension.loadAbstractMappings(mappings, bufnr)
       vim.keymap.set(
         mode,
         lhs,
-        handlers[mode][mapping.abstractName]['rhs'],
-        vim.tbl_extend('keep', handlers[mode][mapping.abstractName]['opts'] or {}, opts)
+        handlers[mode][mapping.name]['rhs'],
+        vim.tbl_extend('keep', handlers[mode][mapping.name]['opts'] or {}, opts)
       )
     end
   end

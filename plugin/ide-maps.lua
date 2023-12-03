@@ -3,7 +3,7 @@ local api = vim.api
 
 ---@type AbstractMappings
 local abstractMappings = {
-  ['<F8>'] = {abstractName = 'open-shell', desc = 'Open shell window, mostly with dirname of current buffer as CWD'}
+  ['<F8>'] = {name = 'open-shell', desc = 'Open shell window, mostly with dirname of current buffer as CWD'}
 }
 vim.api.nvim_create_autocmd('UIEnter', {
   once = true,
