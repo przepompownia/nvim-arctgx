@@ -2,8 +2,8 @@ local api = vim.api
 
 ---@alias KeyToPlugMapping {rhs: string, modes: table<string>, repeatable: boolean, desc: string}
 ---@alias KeyToPlugMappings table<string, KeyToPlugMapping>
----@alias AbstractMapping {name: string, modes: table<string>, repeatable: boolean?, desc: string?}
----@alias AbstractMappings table<string, AbstractMapping>
+---@alias AbstractKeymap {name: string, modes: table<string>, repeatable: boolean?, desc: string?}
+---@alias AbstractKeymaps table<string, AbstractKeymap>
 
 local extension = {}
 
@@ -59,13 +59,13 @@ for _, mode in ipairs({'n', 'i', 'v', 'x'}) do
   handlers[mode] = setmetatable({}, handlersMt)
 end
 
-function extension.implement(mode, name, rhs, opts)
+function extension.set(mode, name, rhs, opts)
   handlers[mode][name] = {rhs = rhs, opts = opts or {}}
 end
 
----@param mappings AbstractMappings
+---@param mappings AbstractKeymaps
 ---@param bufnr integer|nil
-function extension.loadAbstractMappings(mappings, bufnr)
+function extension.implementAbstractKeymaps(mappings, bufnr)
   for lhs, mapping in pairs(mappings) do
     local opts = {
       silent = true,
