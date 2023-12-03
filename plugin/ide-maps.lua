@@ -8,7 +8,7 @@ local abstractMappings = {
 vim.api.nvim_create_autocmd('UIEnter', {
   once = true,
   callback = function ()
-    keymap.implementAbstractKeymaps(abstractMappings)
+    require('arctgx.vim.abstractKeymap').implement(abstractMappings)
   end,
 })
 

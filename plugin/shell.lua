@@ -21,6 +21,6 @@ vim.api.nvim_create_user_command('Shell', function (opts)
   require('arctgx.shell').open({cmd = opts.fargs})
 end, {nargs = '*'})
 
-require('arctgx.vim.keymap').set('n', 'open-shell', function ()
+require('arctgx.vim.abstractKeymap').set('n', 'open-shell', function ()
   require('arctgx.shell').open()
 end)
