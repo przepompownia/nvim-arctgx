@@ -1,6 +1,17 @@
 local keymap = require('arctgx.vim.keymap')
 local api = vim.api
 
+---@type AbstractMappings
+local keyToHandlerMappings = {
+  ['<F8>'] = {abstractName = 'open-shell', desc = 'Open shell window, mostly with dirname of current buffer as CWD'}
+}
+vim.api.nvim_create_autocmd('UIEnter', {
+  once = true,
+  callback = function ()
+    keymap.loadAbstractMappings(keyToHandlerMappings)
+  end,
+})
+
 ---@type KeyToPlugMappings
 local keyToPlugMappings = {
   ['<Leader>dr'] = {rhs = '<Plug>(ide-debugger-run)', repeatable = true},
@@ -120,7 +131,6 @@ local globalMappings = {
   ['<Leader><F4>'] = {rhs = '<Plug>(ide-browse-history-in-cwd)', modes = {'n'}},
   ['<S-F4>'] = {rhs = '<Plug>(ide-git-show-branches)', modes = {'n'}},
   ['<F5>'] = {rhs = '<Plug>(ide-db-ui-toggle)', modes = {'n'}},
-  ['<F8>'] = {rhs = '<Plug>(ide-open-shell)', modes = {'n'}, desc = 'Open shell window, mostly with dirname of current buffer as CWD'},
   ['<F11>'] = {rhs = '<Plug>(ide-browse-gfiles)', modes = {'n'}},
   ['<S-F11>'] = {rhs = '<Plug>(ide-browse-files)', modes = {'n'}},
   ['<F12>'] = {rhs = '<Plug>(ide-grep-git)', modes = {'n'}},
