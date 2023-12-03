@@ -2,13 +2,13 @@ local keymap = require('arctgx.vim.keymap')
 local api = vim.api
 
 ---@type AbstractMappings
-local keyToHandlerMappings = {
+local abstractMappings = {
   ['<F8>'] = {abstractName = 'open-shell', desc = 'Open shell window, mostly with dirname of current buffer as CWD'}
 }
 vim.api.nvim_create_autocmd('UIEnter', {
   once = true,
   callback = function ()
-    keymap.loadAbstractMappings(keyToHandlerMappings)
+    keymap.loadAbstractMappings(abstractMappings)
   end,
 })
 
