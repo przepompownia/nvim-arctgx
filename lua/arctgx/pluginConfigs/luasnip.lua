@@ -20,7 +20,10 @@ ls.add_snippets('lua', {
   }),
   s('lvt', {
     t('print(debug.traceback())'),
-  })
+  }),
+  s('finish', {
+    t('if true then return end'),
+  }),
 })
 
 ls.add_snippets('php', {
