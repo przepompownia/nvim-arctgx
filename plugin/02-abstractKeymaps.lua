@@ -45,15 +45,15 @@ local abstractKeymaps = {
   testUIToggleOutput = {lhs = '<Leader>uo', desc = 'Test UI: toggle output'},
   testUIRunNearest = {lhs = '<Leader>ur', desc = 'Test UI: run nearest test case'},
   testUIRunNearestWithDap = {lhs = '<Leader>ud', desc = 'Test UI: run nearest test case with DAP strategy'},
+  splitLinesAtCursor = {lhs = '[oj', desc = 'Split lines at cursor'},
+  joinLinesAtCursor = {lhs = ']oj', desc = 'Join lines at cursor'},
+  toggleSplitJoinLinesAtCursor = {lhs = 'yoj', desc = 'Toggle split/join lines at cursor'},
 }
 
 require('arctgx.vim.abstractKeymap').load(abstractKeymaps)
 
 ---@type KeyToPlugMappings
 local keyToPlugMappings = {
-  ['[oj'] = {rhs = '<Plug>(ide-toggle-split-lines-at-cursor)', modes = {'n'}},
-  [']oj'] = {rhs = '<Plug>(ide-toggle-join-lines-at-cursor)', modes = {'n'}},
-  ['yoj'] = {rhs = '<Plug>(ide-toggle-split-join-lines-at-cursor)', modes = {'n'}, repeatable = true},
   ['<C-\\>,'] = {rhs = '<Plug>(ide-show-signature-help)', modes = {'i'}},
   ['<Leader>ish'] = {rhs = '<Plug>(ide-show-signature-help)', modes = {'n'}},
   ['<C-Space>'] = {rhs = '<Plug>(ide-trigger-completion)', modes = {'i'}},
