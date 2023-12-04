@@ -30,33 +30,27 @@ local abstractKeymaps = {
   debuggerClean = {lhs = '<Leader>dQ', desc = 'Debugger: clean'},
   -- debuggerDetach = {lhs = '<Leader><S-F6>', desc = 'Debugger: detach'},
   debuggerRunToCursor = {lhs = '<Leader>dC', desc = 'Debugger: run to cursor'},
-  -- debugger = {lhs = '<Leader>dp', desc = 'Debugger: '},
+  debuggerEvalToFloat = {lhs = '<Leader>dp', desc = 'Debugger: evaluate and show the result in float window'},
   debuggerFrameUp = {lhs = '<Leader>dk', desc = 'Debugger: '},
   debuggerFrameDown = {lhs = '<Leader>dj', desc = 'Debugger: '},
   debuggerSetLogBreakpoint = {lhs = '<Leader>dl', desc = 'Debugger: set log breakpoint'},
-  -- debugger = {lhs = '<Leader>dw', desc = 'Debugger: '},
-  -- debugger = {lhs = '<Leader>dW', desc = 'Debugger: '},
-  -- debugger = {lhs = '<Leader>dc', desc = 'Debugger: '},
-  -- debugger = {lhs = '<Leader><S-F5>', desc = 'Debugger: '},
+  debuggerJumpToUI = {lhs = '<Leader>dw', desc = 'Debugger: jump to UI if exists'},
+  debuggerAddToWatched = {lhs = '<Leader>dW', desc = 'Debugger: add expression to watchlist'},
+  debuggerCloseUI = {lhs = '<Leader>dc', desc = 'Debugger: close UI'},
+  debuggerUIToggle = {lhs = '<Leader><S-F5>', desc = 'Debugger: UI toggle'},
   debuggerClearBreakpoints = {lhs = '<Leader>db', desc = 'Debugger: clear breakpoints'},
   debuggerToggleBreakpoint = {lhs = '<Leader>dt', desc = 'Debugger: set breakpoint'},
-  debuggerSetBreakpointConditional = {lhs = '<Leader><S-F10>', desc = 'Debugger: set conditional breakpoint'},
+  debuggerSetBreakpointConditional = {lhs = '<Leader>dT', desc = 'Debugger: set conditional breakpoint'},
+  testUIToggleSummary = {lhs = '<Leader>us', desc = 'Test UI: toggle summary'},
+  testUIToggleOutput = {lhs = '<Leader>uo', desc = 'Test UI: toggle output'},
+  testUIRunNearest = {lhs = '<Leader>ur', desc = 'Test UI: run nearest test case'},
+  testUIRunNearestWithDap = {lhs = '<Leader>ud', desc = 'Test UI: run nearest test case with DAP strategy'},
 }
 
 require('arctgx.vim.abstractKeymap').load(abstractKeymaps)
 
 ---@type KeyToPlugMappings
 local keyToPlugMappings = {
-  ['<Leader>dp'] = {
-    rhs = '<Plug>(ide-debugger-eval-popup)',
-    repeatable = false,
-    modes = {'n', 'x'},
-  },
-  ['<Leader>dw'] = {rhs = '<Plug>(ide-debugger-go-to-view)'},
-  ['<Leader>dW'] = {rhs = '<Plug>(ide-debugger-ui-add-to-watch)'},
-  ['<Leader>dc'] = {rhs = '<Plug>(ide-debugger-close-view)'},
-  ['<Leader><S-F5>'] = {rhs = '<Plug>(ide-debugger-ui-toggle)', modes = {'n'}},
-
   ['[oj'] = {rhs = '<Plug>(ide-toggle-split-lines-at-cursor)', modes = {'n'}},
   [']oj'] = {rhs = '<Plug>(ide-toggle-join-lines-at-cursor)', modes = {'n'}},
   ['yoj'] = {rhs = '<Plug>(ide-toggle-split-join-lines-at-cursor)', modes = {'n'}, repeatable = true},
