@@ -38,7 +38,9 @@ end
 ---@return function
 function abstractKeymap.repeatable(cb)
   return function ()
-    require('arctgx.base').setOperatorfunc(cb)
+    require('arctgx.base').setOperatorfunc(function (_type)
+      cb()
+    end)
     return 'g@l'
   end
 end

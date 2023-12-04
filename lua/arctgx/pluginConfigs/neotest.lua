@@ -1,5 +1,7 @@
 local session = require('arctgx.session')
-require('neotest').setup({
+local keymap = require('arctgx.vim.abstractKeymap')
+local neotest = require('neotest')
+neotest.setup({
   adapters = {
     require('neotest-phpunit') {
       phpunit_cmd = function ()
@@ -12,6 +14,14 @@ require('neotest').setup({
     },
   }
 })
+
+keymap.set({'n'}, 'testUIToggleSummary', neotest.summary.toggle, {})
+keymap.set({'n'}, 'testUIToggleOutput', neotest.output_panel.toggle, {})
+keymap.set({'n'}, 'testUIRunNearest', neotest.run.run, {})
+keymap.set({'n'}, 'testUIRunNearestWithDap', function () neotest.run.run({
+  strategy = 'dap',
+  -- env = phpXdebugEnv,
+}) end, {})
 
 session.appendBeforeSaveHook('Close neotest windows', function ()
   require('arctgx.window').forEachWindowWithBufFileType({'neotest-output-panel', 'neotest-summary'}, function (winId)

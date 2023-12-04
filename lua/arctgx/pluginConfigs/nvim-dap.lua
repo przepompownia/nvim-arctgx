@@ -3,6 +3,7 @@ local php = require('arctgx.dap.php')
 local widgets = require('dap.ui.widgets')
 local base = require('arctgx.base')
 local api = vim.api
+local keymap = require('arctgx.vim.abstractKeymap')
 
 dap.adapters.php = {
   type = 'executable',
@@ -116,26 +117,30 @@ vim.fn.sign_define('DapBreakpointRejected', {text = 'R', texthl = 'IdeCodeWindow
 vim.fn.sign_define('DapLogPoint', {text = 'L', texthl = 'IdeCodeWindowCurrentFrameSign', linehl = ''})
 vim.fn.sign_define('DapStopped', {text = '▶', texthl = 'IdeCodeWindowCurrentFrameSign', linehl = 'CursorLine'})
 
-local opts = {silent = true, noremap = true}
-vim.keymap.set({'n'}, '<Plug>(ide-debugger-run)', dap.continue, opts)
-vim.keymap.set({'n'}, '<Plug>(ide-debugger-step-over)', dap.step_over, opts)
-vim.keymap.set({'n'}, '<Plug>(ide-debugger-step-into)', dap.step_into, opts)
-vim.keymap.set({'n'}, '<Plug>(ide-debugger-step-out)', dap.step_out, opts)
-vim.keymap.set({'n'}, '<Plug>(ide-debugger-toggle-breakpoint)', dap.toggle_breakpoint, opts)
-vim.keymap.set({'n'}, '<Plug>(ide-debugger-clear-breakpoints)', dap.clear_breakpoints, opts)
-vim.keymap.set(
+local opts = {silent = true}
+keymap.set({'n'}, 'debuggerRun', keymap.repeatable(dap.continue), {expr = true})
+keymap.set({'n'}, 'debuggerStepOver', keymap.repeatable(dap.step_over), {expr = true})
+keymap.set({'n'}, 'debuggerStepInto', keymap.repeatable(dap.step_into), {expr = true})
+keymap.set({'n'}, 'debuggerStepOut', keymap.repeatable(dap.step_out), {expr = true})
+keymap.set({'n'}, 'debuggerToggleBreakpoint', keymap.repeatable(dap.toggle_breakpoint), {expr = true})
+keymap.set({'n'}, 'debuggerClearBreakpoints', dap.clear_breakpoints, opts)
+keymap.set(
   {'n'},
-  '<Plug>(ide-debugger-toggle-breakpoint-conditional)',
-  function () dap.set_breakpoint(vim.fn.input('Breakpoint condition: ')) end,
+  'debuggerSetBreakpointConditional',
+  function ()
+    vim.ui.input({prompt = 'Breakpoint condition: '}, function (condition)
+      dap.set_breakpoint(condition)
+    end)
+  end,
   opts
 )
-vim.keymap.set({'n'}, '<Plug>(ide-debugger-up-frame)', dap.up, opts)
-vim.keymap.set({'n'}, '<Plug>(ide-debugger-down-frame)', dap.down, opts)
-vim.keymap.set({'n'}, '<Plug>(ide-debugger-run-to-cursor)', dap.run_to_cursor, opts)
-vim.keymap.set({'n'}, '<Plug>(ide-debugger-close)', dap.close, opts)
-vim.keymap.set(
+keymap.set({'n'}, 'debuggerFrameUp', keymap.repeatable(dap.up), opts)
+keymap.set({'n'}, 'debuggerFrameDown', keymap.repeatable(dap.down), opts)
+keymap.set({'n'}, 'debuggerRunToCursor', dap.run_to_cursor, opts)
+keymap.set({'n'}, 'debuggerClose', dap.close, opts)
+keymap.set(
   {'n'},
-  '<Plug>(ide-debugger-clean)',
+  'debuggerClean',
   function ()
     dap.close()
     dap.clear_breakpoints()
@@ -143,9 +148,9 @@ vim.keymap.set(
   end,
   opts
 )
-vim.keymap.set(
+keymap.set(
   {'n'},
-  '<Plug>(ide-debugger-add-log-breakpoint)',
+  'debuggerSetLogBreakpoint',
   function () dap.set_breakpoint(nil, nil, vim.fn.input('Log point message: ')) end,
   opts
 )
