@@ -8,6 +8,10 @@ local abstractKeymaps = {
   diagnosticOpenFloat = {lhs = {'<Leader>ii'}},
   diagnosticGotoPrevious = {lhs = {'[d'}},
   diagnosticGotoNext = {lhs = {']d'}},
+  grepGit = {lhs = '<F12>', desc = 'Pick by git grep'},
+  grepAll = {lhs = '<S-F12>', desc = 'Pick by rg'},
+  filesGit = {lhs = '<F11>', desc = 'Pick files from git repo'},
+  filesAll = {lhs = '<S-F12>', desc = 'Pick all files'},
 }
 
 require('arctgx.vim.abstractKeymap').load(abstractKeymaps)
@@ -128,10 +132,6 @@ local globalMappings = {
   ['<Leader><F4>'] = {rhs = '<Plug>(ide-browse-history-in-cwd)', modes = {'n'}},
   ['<S-F4>'] = {rhs = '<Plug>(ide-git-show-branches)', modes = {'n'}},
   ['<F5>'] = {rhs = '<Plug>(ide-db-ui-toggle)', modes = {'n'}},
-  ['<F11>'] = {rhs = '<Plug>(ide-browse-gfiles)', modes = {'n'}},
-  ['<S-F11>'] = {rhs = '<Plug>(ide-browse-files)', modes = {'n'}},
-  ['<F12>'] = {rhs = '<Plug>(ide-grep-git)', modes = {'n'}},
-  ['<S-F12>'] = {rhs = '<Plug>(ide-grep-files)', modes = {'n'}},
 
   ['<Leader>m'] = {rhs = '<Plug>(ide-tree-focus-current-file)', modes = {'n'}, desc = 'File tree: focus current buffer'},
   ['<Leader>iwb'] = {rhs = '<Plug>(ide-write-backup)', modes = {'n'}},

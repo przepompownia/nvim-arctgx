@@ -1,5 +1,6 @@
 local base = require 'arctgx.base'
 local api = vim.api
+local keymap = require('arctgx.vim.abstractKeymap')
 
 require('telescope').setup {
   defaults = {
@@ -53,10 +54,10 @@ api.nvim_create_user_command(
     end,
   }
 )
-vim.keymap.set('n', '<Plug>(ide-grep-git)', function () require('arctgx.telescope').gitGrep('', false, false) end)
-vim.keymap.set('n', '<Plug>(ide-grep-files)', function () require('arctgx.telescope').rgGrep('', false, false) end)
-vim.keymap.set('n', '<Plug>(ide-browse-files)', function () require('arctgx.telescope').filesAll() end)
-vim.keymap.set('n', '<Plug>(ide-browse-gfiles)', function () require('arctgx.telescope').filesGit() end)
+keymap.set('n', 'grepGit', function () require('arctgx.telescope').gitGrep('', false, false) end)
+keymap.set('n', 'grepAll', function () require('arctgx.telescope').rgGrep('', false, false) end)
+keymap.set('n', 'filesGit', function () require('arctgx.telescope').filesAll() end)
+keymap.set('n', 'filesAll', function () require('arctgx.telescope').filesGit() end)
 vim.keymap.set('n', '<Plug>(ide-browse-cmd-history)', function () require('telescope.builtin').command_history() end)
 vim.keymap.set('n', '<Plug>(ide-browse-history)', function () require('arctgx.telescope').oldfiles(false) end)
 vim.keymap.set('n', '<Plug>(ide-browse-history-in-cwd)', function () require('arctgx.telescope').oldfiles(true) end)
