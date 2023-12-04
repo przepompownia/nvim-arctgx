@@ -33,6 +33,16 @@ function abstractKeymap.set(modes, name, rhs, opts)
   end
 end
 
+---Wrapper for keymap rhs to make callback repeatable
+---@param cb any
+---@return function
+function abstractKeymap.repeatable(cb)
+  return function ()
+    require('arctgx.base').setOperatorfunc(cb)
+    return 'g@l'
+  end
+end
+
 ---@param mappings AbstractKeymaps
 function abstractKeymap.load(mappings)
   keymaps = mappings
