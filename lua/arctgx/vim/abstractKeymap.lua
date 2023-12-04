@@ -1,6 +1,6 @@
 local abstractKeymap = {}
 
----@alias AbstractKeymap {lhs: table<string>, repeatable: boolean?, desc: string?, opts: table}
+---@alias AbstractKeymap {lhs: string|table<string>, repeatable: boolean?, desc: string?, opts: table}
 ---@alias AbstractKeymaps table<string, AbstractKeymap>
 
 ---@type AbstractKeymaps
@@ -19,6 +19,9 @@ function abstractKeymap.set(modes, name, rhs, opts)
   end
 
   for _, mode in ipairs(modes) do
+    if type(keymap.lhs) == 'string' then
+      keymap.lhs = {keymap.lhs}
+    end
     for _, lhs in ipairs(keymap.lhs) do
       vim.keymap.set(
         mode,
