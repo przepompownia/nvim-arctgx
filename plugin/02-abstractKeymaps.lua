@@ -8,10 +8,20 @@ local abstractKeymaps = {
   diagnosticOpenFloat = {lhs = {'<Leader>ii'}},
   diagnosticGotoPrevious = {lhs = {'[d'}},
   diagnosticGotoNext = {lhs = {']d'}},
+  browseWindows = {lhs = '<F1>', desc = 'Browse windows'},
+  browseBuffers = {lhs = '<S-F1>', desc = 'Browse buffers'},
+  browseOldfiles = {lhs = '<F4>', desc = 'Browse oldfiles'},
+  browseOldfilesInCwd = {lhs = '<Leader><F4>', desc = 'Browse oldfiles under CWD'},
+  browseGitBranches = {lhs = '<S-F4>', desc = 'Browse git branches'},
+  browseCommandHistory = {lhs = '<Leader>;', desc = 'Browse command history'},
   grepGit = {lhs = '<F12>', desc = 'Pick by git grep'},
-  grepAll = {lhs = '<S-F12>', desc = 'Pick by rg'},
+  grepAll = {lhs = '<S-F12>', desc = 'Pick by ripgrep'},
   filesGit = {lhs = '<F11>', desc = 'Pick files from git repo'},
   filesAll = {lhs = '<S-F12>', desc = 'Pick all files'},
+  searchStringFromTextObject = {lhs = '<Leader>q', desc = 'Search string from textobject'},
+  searchStringInGitFromTextObject = {lhs = '<Leader>w', desc = 'Search string from textobject in git repo'},
+  searchStringInFilenamesFromTextObject = {lhs = '<Leader>ff', desc = 'Search string from textobject in finenames'},
+  searchStringInGitFilenamesFromTextObject = {lhs = '<Leader>fg', desc = 'Search string from textobject in git finenames'},
 }
 
 require('arctgx.vim.abstractKeymap').load(abstractKeymaps)
@@ -115,22 +125,12 @@ local globalMappings = {
   ['<Leader>hB'] = {rhs = '<Plug>(ide-git-blame-toggle-virtual)', modes = {'n'}},
   ['<Leader>hd'] = {rhs = '<Plug>(ide-git-diffthis)', modes = {'n'}},
   ['<Leader>hD'] = {rhs = '<Plug>(ide-git-diffthis-previous)', modes = {'n'}},
-  ['<Leader>fg'] = {rhs = '<Plug>(ide-git-files-search-operator)', modes = {'n', 'v'}},
 
-  ['<Leader>q'] = {rhs = '<Plug>(ide-grep-string-search-operator)', modes = {'v', 'n'}},
-  ['<Leader>w'] = {rhs = '<Plug>(ide-git-string-search-operator)', modes = {'v', 'n'}},
   ['<S-F2>'] = {rhs = '<Plug>(ide-git-stage-write-file)', modes = {'n'}},
   ['[h'] = {rhs = '<Plug>(ide-git-hunk-previous)', modes = {'n'}},
   [']h'] = {rhs = '<Plug>(ide-git-hunk-next)', modes = {'n'}},
 
-  ['<Leader>ff'] = {rhs = '<Plug>(ide-files-search-operator)', modes = {'n', 'v'}},
 
-  ['<F1>'] = {rhs = '<Plug>(ide-browse-windows)', modes = {'n'}},
-  ['<S-F1>'] = {rhs = '<Plug>(ide-browse-buffers)', modes = {'n'}},
-  ['<Leader>;'] = {rhs = '<Plug>(ide-browse-cmd-history)', modes = {'n'}},
-  ['<F4>'] = {rhs = '<Plug>(ide-browse-history)', modes = {'n'}},
-  ['<Leader><F4>'] = {rhs = '<Plug>(ide-browse-history-in-cwd)', modes = {'n'}},
-  ['<S-F4>'] = {rhs = '<Plug>(ide-git-show-branches)', modes = {'n'}},
   ['<F5>'] = {rhs = '<Plug>(ide-db-ui-toggle)', modes = {'n'}},
 
   ['<Leader>m'] = {rhs = '<Plug>(ide-tree-focus-current-file)', modes = {'n'}, desc = 'File tree: focus current buffer'},
