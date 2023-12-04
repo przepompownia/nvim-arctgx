@@ -3,7 +3,7 @@ local dapui = require('dapui')
 local base = require('arctgx.base')
 local keymap = require('arctgx.vim.abstractKeymap')
 
-local augroup = api.nvim_create_augroup('ArctgxDapUi', { clear = true })
+local augroup = api.nvim_create_augroup('ArctgxDapUi', {clear = true})
 local function reloadColors()
   local highlights = {
     DapUIVariable = {link = 'Normal'},
