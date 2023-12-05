@@ -33,7 +33,6 @@ vim.keymap.set('n', ']p', function ()
   return 'p' .. selectionFromPastedRange() .. '='
 end, {expr = true, desc = 'Paste with indentation', silent = true})
 
-
 vim.keymap.set('n', '<A-j>', function ()
   if vim.fn.line('.') == vim.fn.line('$') then
     return
