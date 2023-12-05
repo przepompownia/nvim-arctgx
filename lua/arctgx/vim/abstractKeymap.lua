@@ -6,11 +6,23 @@ local abstractKeymap = {}
 ---@type AbstractKeymaps
 local keymaps = {}
 
-function abstractKeymap.set(modes, name, rhs, opts)
+---@param name string
+---@return AbstractKeymap?
+local function getKeymap(name)
   local keymap = keymaps[name]
-  if nil == keymap then
-    vim.notify(('%s not defined yet.'):format(name), vim.log.levels.ERROR, {title = 'Keymaps'})
+  if nil ~= keymap then
+    if type(keymap.lhs) == 'string' then
+      keymap.lhs = {keymap.lhs}
+    end
+    return keymap
+  end
 
+  vim.notify(('%s not defined yet.'):format(name), vim.log.levels.ERROR, {title = 'Keymaps'})
+end
+
+function abstractKeymap.set(modes, name, rhs, opts)
+  local keymap = getKeymap(name)
+  if nil == keymap then
     return
   end
 

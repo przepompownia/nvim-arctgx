@@ -1,5 +1,4 @@
 local lsp = vim.lsp
-local buf = require('arctgx.lsp.buf')
 local keymap = require('arctgx.vim.abstractKeymap')
 
 vim.lsp.set_log_level(vim.log.levels.WARN)
@@ -37,9 +36,6 @@ vim.api.nvim_create_autocmd('LspAttach', {
       lsp.buf.definition({on_list = require('arctgx.lsp.handlers').onList})
     end, opts)
     keymap.set('n', 'langGoToDefinitionInPlace', lsp.buf.definition, opts)
-    keymap.set('n', 'langPeekDefinition', function ()
-      buf.peekDefinition(ev.buf)
-    end, opts)
     keymap.set('n', 'langGoToTypeDefinition', function ()
       lsp.buf.type_definition({on_list = require('arctgx.lsp.handlers').onList})
     end, opts)
@@ -55,7 +51,9 @@ vim.api.nvim_create_autocmd('LspAttach', {
     end, opts)
     keymap.set('n', 'langWorkspaceFolderAdd', lsp.buf.add_workspace_folder, opts)
     keymap.set('n', 'langWorkspaceFolderRemove', lsp.buf.remove_workspace_folder, opts)
-    keymap.set('n', 'langWorkspaceFolderList', buf.workspaceFolders, opts)
+    keymap.set('n', 'langWorkspaceFolderList', function ()
+      dump(vim.lsp.buf.list_workspace_folders())
+    end, opts)
     keymap.set({'v', 'n'}, 'langCodeAction', lsp.buf.code_action, opts)
     keymap.set('n', 'langToggleInlayHints', function ()
       vim.lsp.inlay_hint.enable(ev.buf, not vim.lsp.inlay_hint.is_enabled(ev.buf))
