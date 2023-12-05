@@ -30,13 +30,10 @@ local function doKeyToPlugMapping(mode, lhs, mapping, opts)
 end
 
 ---@param mappings KeyToPlugMappings
----@param bufnr integer|nil
-function extension.loadKeyToPlugMappings(mappings, bufnr)
+function extension.loadKeyToPlugMappings(mappings)
   for lhs, mapping in pairs(mappings) do
-    local opts = {silent = true, buffer = bufnr}
-    opts.desc = mapping.desc
     local modes = mapping.modes or {'n'}
-    for _, mode in ipairs(modes) do doKeyToPlugMapping(mode, lhs, mapping, opts) end
+    for _, mode in ipairs(modes) do doKeyToPlugMapping(mode, lhs, mapping, {silent = true}) end
   end
 end
 
