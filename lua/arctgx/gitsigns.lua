@@ -11,7 +11,7 @@ gitsigns.tryWorktrees = function (repoParams)
 
     for _, worktree in ipairs(repoParams) do
       if git.isTracked(file, worktree.gitdir, worktree.toplevel) then
-        callback ({
+        callback({
           toplevel = worktree.toplevel,
           gitdir = worktree.gitdir,
         })
