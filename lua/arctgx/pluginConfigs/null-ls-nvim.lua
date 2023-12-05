@@ -101,8 +101,8 @@ local chooseFormatter = function (range)
   vim.ui.select(choices, {prompt = 'Run formatter: '}, onSelect)
 end
 
-vim.keymap.set({'n'}, '<Plug>(ide-format-with-selected-formatter)', chooseFormatter)
-vim.keymap.set({'v'}, '<Plug>(ide-format-with-selected-formatter)', function ()
+require('arctgx.vim.abstractKeymap').set({'n'}, 'langApplySelectedformatter', chooseFormatter)
+require('arctgx.vim.abstractKeymap').set({'v'}, 'langApplySelectedformatter', function ()
   chooseFormatter(base.getVisualSelectionRange())
 end)
 api.nvim_create_user_command('NullLsSelectFormatter', chooseFormatter, {nargs = '*'})
