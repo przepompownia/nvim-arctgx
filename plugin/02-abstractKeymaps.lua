@@ -100,21 +100,6 @@ require('arctgx.vim.abstractKeymap').load(abstractKeymaps)
 
 ---@type KeyToPlugMappings
 local keyToPlugMappings = {
-  [']]'] = {rhs = '<Plug>(ide-move-forward-function-start)', modes = {'n'}},
-  [']['] = {rhs = '<Plug>(ide-move-forward-function-end)', modes = {'n'}},
-  [']m'] = {rhs = '<Plug>(ide-move-forward-class-start)', modes = {'n'}},
-  [']M'] = {rhs = '<Plug>(ide-move-forward-class-end)', modes = {'n'}},
-  ['[['] = {rhs = '<Plug>(ide-move-backward-function-start)', modes = {'n'}},
-  ['[]'] = {rhs = '<Plug>(ide-move-backward-function-end)', modes = {'n'}},
-  ['[m'] = {rhs = '<Plug>(ide-move-backward-class-start)', modes = {'n'}},
-  ['[M'] = {rhs = '<Plug>(ide-move-backward-class-end)', modes = {'n'}},
-  ['if'] = {rhs = '<Plug>(ide-select-function-inner)', modes = {'x'}},
-  ['af'] = {rhs = '<Plug>(ide-select-function-outer)', modes = {'x'}},
-  ['<Leader>a'] = {rhs = '<Plug>(ide-parameter-swap-forward)', repeatable = true, modes = {'n'}},
-  ['<Leader>A'] = {rhs = '<Plug>(ide-parameter-swap-backward)', repeatable = true, modes = {'n'}},
-  ['iC'] = {rhs = '<Plug>(ide-select-class-inner)', modes = {'x', 'o'}},
-  ['aC'] = {rhs = '<Plug>(ide-select-class-outer)', modes = {'x', 'o'}},
-
   ['<Leader>t'] = {rhs = '<Plug>(treesitter-init-selection)', modes = {'n'}},
   ['<Leader>]'] = {rhs = '<Plug>(treesitter-node-incremental)', modes = {'v'}},
   ['<Leader>['] = {rhs = '<Plug>(treesitter-node-decremental)', modes = {'v'}},

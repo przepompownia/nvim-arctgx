@@ -3,7 +3,7 @@ local keymap = require('arctgx.vim.abstractKeymap')
 local peekDefMap = {}
 peekDefMap[keymap.firstLhs('langPeekDefinition')] = '@function.outer'
 
-require'nvim-treesitter.configs'.setup {
+require 'nvim-treesitter.configs'.setup {
   textobjects = {
     select = {
       enable = true,
@@ -11,16 +11,20 @@ require'nvim-treesitter.configs'.setup {
       lookahead = true,
 
       keymaps = {
-        ['<Plug>(ide-select-function-outer)'] = '@function.outer',
-        ['<Plug>(ide-select-function-inner)'] = '@function.inner',
-        ['<Plug>(ide-select-class-outer)'] = '@class.outer',
-        ['<Plug>(ide-select-class-inner)'] = '@class.inner',
+        ['af'] = '@function.outer',
+        ['if'] = '@function.inner',
+        ['aC'] = '@class.outer',
+        ['iC'] = '@class.inner',
         ['al'] = '@block.outer',
         ['il'] = '@block.inner',
         ['as'] = '@statement.outer',
         ['is'] = '@statement.inner',
+        ['aa'] = '@assignment.outer',
+        ['ia'] = '@assignment.inner',
         ['ac'] = '@call.outer',
         ['ic'] = '@call.inner',
+        ['aO'] = '@comment.outer',
+        ['iO'] = '@comment.inner',
         ['ap'] = '@parameter.outer',
         ['ip'] = '@parameter.inner',
       },
@@ -34,29 +38,29 @@ require'nvim-treesitter.configs'.setup {
       enable = true,
       set_jumps = true,
       goto_next_start = {
-        ['<Plug>(ide-move-forward-function-start)'] = '@function.outer',
-        ['<Plug>(ide-move-forward-class-start)'] = '@class.outer',
+        [']]'] = '@function.outer',
+        [']m'] = '@class.outer',
       },
       goto_next_end = {
-        ['<Plug>(ide-move-forward-function-end)'] = '@function.outer',
-        ['<Plug>(ide-move-forward-class-end)'] = '@class.outer',
+        [']['] = '@function.outer',
+        [']M'] = '@class.outer',
       },
       goto_previous_start = {
-        ['<Plug>(ide-move-backward-function-start)'] = '@function.outer',
-        ['<Plug>(ide-move-backward-class-start)'] = '@class.outer',
+        ['[['] = '@function.outer',
+        ['[m'] = '@class.outer',
       },
       goto_previous_end = {
-        ['<Plug>(ide-move-backward-function-end)'] = '@function.outer',
-        ['<Plug>(ide-move-backward-class-end)'] = '@class.outer',
+        ['[]'] = '@function.outer',
+        ['[M'] = '@class.outer',
       },
     },
     swap = {
       enable = true,
       swap_next = {
-        ['<Plug>(ide-parameter-swap-forward)'] = '@parameter.inner',
+        ['<Leader>a'] = '@parameter.inner',
       },
       swap_previous = {
-        ['<Plug>(ide-parameter-swap-backward)'] = '@parameter.inner',
+        ['<Leader>A'] = '@parameter.inner',
       },
     },
     lsp_interop = {
