@@ -1,3 +1,8 @@
+local keymap = require('arctgx.vim.abstractKeymap')
+
+local peekDefMap = {}
+peekDefMap[keymap.firstLhs('langPeekDefinition')] = '@function.outer'
+
 require'nvim-treesitter.configs'.setup {
   textobjects = {
     select = {
@@ -57,10 +62,7 @@ require'nvim-treesitter.configs'.setup {
     lsp_interop = {
       enable = true,
       border = 'none',
-      peek_definition_code = {
-        ['<Plug>(ide-peek-definition-ts)'] = '@function.outer',
-        ['<Plug>(ide-peek-definition-class-ts)'] = '@class.outer',
-      },
+      peek_definition_code = peekDefMap,
     },
   },
 }
