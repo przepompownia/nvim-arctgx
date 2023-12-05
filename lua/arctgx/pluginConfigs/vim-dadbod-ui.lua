@@ -38,13 +38,6 @@ api.nvim_create_autocmd('FileType', {
 })
 api.nvim_create_autocmd('FileType', {
   group = augroup,
-  pattern = {'dbui', 'dbout', 'sql'},
-  callback = function ()
-    vim.keymap.set('n', '<Leader>n', '<Plug>(dbui-new-query)<CR>', {buffer = 0})
-  end
-})
-api.nvim_create_autocmd('FileType', {
-  group = augroup,
   pattern = {'sql', 'mysql'},
   callback = function ()
     if vim.b.dbui_db_key_name ~= nil then
@@ -71,7 +64,13 @@ local function newQuery()
     exe "normal \<Plug>(DBUI_SelectLine)"
   ]])
 end
-vim.keymap.set('n', '<Plug>(dbui-new-query)', newQuery, {})
+api.nvim_create_autocmd('FileType', {
+  group = augroup,
+  pattern = {'dbui', 'dbout', 'sql'},
+  callback = function (args)
+    vim.keymap.set('n', '<Leader>n', newQuery, {buffer = args.buf})
+  end
+})
 
 session.appendBeforeSaveHook('Close tabs with DBUI', function ()
   require('arctgx.window').forEachWindowWithBufFileType({'dbui'}, function (winId)
