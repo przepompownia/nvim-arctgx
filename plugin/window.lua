@@ -20,4 +20,4 @@ vim.api.nvim_create_autocmd('WinClosed', {
   nested = true,
 })
 
-vim.keymap.set('n', '<Plug>(ide-close-popup)', vim.cmd.fclose)
+require('arctgx.vim.abstractKeymap').set('n', 'closeFloatWindow', vim.cmd.fclose)

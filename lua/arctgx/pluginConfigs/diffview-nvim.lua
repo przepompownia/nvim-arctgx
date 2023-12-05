@@ -1,4 +1,5 @@
 local session = require 'arctgx.session'
+local keymap = require('arctgx.vim.abstractKeymap')
 
 require('diffview').setup({
   use_icons = false,
@@ -12,16 +13,16 @@ local function closeDiffviewTabs()
   end)
 end
 
-vim.keymap.set('n', '<Plug>(ide-git-log-all-files)', function ()
+keymap.set('n', 'gitLogAllFiles', function ()
   vim.cmd.DiffviewFileHistory()
 end)
-vim.keymap.set('n', '<Plug>(ide-git-log-current-file)', function ()
+keymap.set('n', 'gitLogCurrentFile', function ()
   vim.cmd.DiffviewFileHistory({args = {'%'}})
 end)
-vim.keymap.set('n', '<Plug>(ide-git-status-open)', function ()
+keymap.set('n', 'gitStatusUIOpen', function ()
   vim.cmd.DiffviewOpen()
 end)
-vim.keymap.set('n', '<Plug>(ide-git-status-close)', closeDiffviewTabs)
+keymap.set('n', 'gitStatusUIClose', closeDiffviewTabs)
 
 session.appendBeforeSaveHook('Close DiffView tabs', closeDiffviewTabs)
 

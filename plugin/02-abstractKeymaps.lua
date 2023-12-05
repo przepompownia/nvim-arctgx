@@ -31,8 +31,8 @@ local abstractKeymaps = {
   -- debuggerDetach = {lhs = '<Leader><S-F6>', desc = 'Debugger: detach'},
   debuggerRunToCursor = {lhs = '<Leader>dC', desc = 'Debugger: run to cursor'},
   debuggerEvalToFloat = {lhs = '<Leader>dp', desc = 'Debugger: evaluate and show the result in float window'},
-  debuggerFrameUp = {lhs = '<Leader>dk', desc = 'Debugger: '},
-  debuggerFrameDown = {lhs = '<Leader>dj', desc = 'Debugger: '},
+  debuggerFrameUp = {lhs = '<Leader>dk', desc = 'Debugger: frame up'},
+  debuggerFrameDown = {lhs = '<Leader>dj', desc = 'Debugger: frame down'},
   debuggerSetLogBreakpoint = {lhs = '<Leader>dl', desc = 'Debugger: set log breakpoint'},
   debuggerJumpToUI = {lhs = '<Leader>dw', desc = 'Debugger: jump to UI if exists'},
   debuggerAddToWatched = {lhs = '<Leader>dW', desc = 'Debugger: add expression to watchlist'},
@@ -48,6 +48,33 @@ local abstractKeymaps = {
   splitLinesAtCursor = {lhs = '[oj', desc = 'Split lines at cursor'},
   joinLinesAtCursor = {lhs = ']oj', desc = 'Join lines at cursor'},
   toggleSplitJoinLinesAtCursor = {lhs = 'yoj', desc = 'Toggle split/join lines at cursor'},
+  jumpToPreviousDiffOrGitHunk = {lhs = '[c', desc = 'Jump to previous diff or git hunk'},
+  jumpToNextDiffOrGitHunk = {lhs = ']c', desc = 'Jump to next diff or git hunk'},
+  gitHunkStage = {lhs = '<Leader>hs', desc = 'Git: stage hunk'},
+  gitStatusUIOpen = {lhs = {'<Leader>g', '<Leader>gs'}, desc = 'Git: open status UI'},
+  gitStatusUIClose = {lhs = '<Leader>gq', desc = 'Git: close status UI'},
+  gitCommit = {lhs = '<Leader>gc', desc = 'Git: commit'},
+  gitBlame = {lhs = '<Leader>gb', desc = 'Git: blame whole buffer'},
+  gitLogCurrentFile = {lhs = '<Leader>gl', desc = 'Git: log current file'},
+  gitLogAllFiles = {lhs = '<Leader>gL', desc = 'Git: log all files'},
+  gitPush = {lhs = '<Leader>gp', desc = 'Git: push'},
+  gitHunkUndoStage = {lhs = '<Leader>hu', desc = 'Git: undo stage hunk'},
+  gitHunkReset = {lhs = '<Leader>hr', desc = 'Git: reset hunk'},
+  gitHunkToVisual = {lhs = '<Leader>hv', desc = 'Git: create visual selection from hunk'},
+  gitBufferReset = {lhs = '<Leader>hR', desc = 'Git: reset buffer'},
+  gitHunkPreview = {lhs = '<Leader>hp', desc = 'Git: print hunk'},
+  gitHunkPrintInline = {lhs = '<Leader>hP', desc = 'Git: print hunk inline'},
+  gitToggleHighlight = {lhs = '<Leader>ht', desc = 'Git: toggle highlight'},
+  gitToggleDeleted = {lhs = '<Leader>hT', desc = 'Git: toggle displaying deleted lines'},
+  gitBlameLine = {lhs = '<Leader>hb', desc = 'Git: blame line under cursor'},
+  gitBlameToggleVirtual = {lhs = '<Leader>hB', desc = 'Git: toggle displaying blame in virtual lines'},
+  gitDiffAgainstIndex = {lhs = '<Leader>hd', desc = 'Git: diff against the index'},
+  gitDiffAgainstLastCommit = {lhs = '<Leader>hD', desc = 'Git: diff against the last commit'},
+  gitStageAndWriteFile = {lhs = '<S-F2>', desc = 'Git: stage and write file'},
+  closeFloatWindow = {lhs = '<Esc>', desc = 'Close float window'},
+  writeBackup = {lhs = '<Leader>iwb', desc = 'Write backup file'},
+  dbToggleUI = {lhs = '<F5>', desc = 'Toggle database UI'},
+  fileTreeFocus = {lhs = '<Leader>m', desc = 'File tree: focus current buffer'},
 }
 
 require('arctgx.vim.abstractKeymap').load(abstractKeymaps)
@@ -98,45 +125,6 @@ local keyToPlugMappings = {
   ['<Leader>['] = {rhs = '<Plug>(treesitter-node-decremental)', modes = {'v'}},
   ['<Leader><Leader>]'] = {rhs = '<Plug>(treesitter-scope-incremental)', modes = {'v'}},
 }
-
----@type KeyToPlugMappings
-local globalMappings = {
-  ['<Leader>hs'] = {rhs = '<Plug>(ide-git-hunk-stage)', modes = {'n', 'v'}},
-  ['<Leader>g'] = {rhs = '<Plug>(ide-git-status-open)', modes = {'n'}},
-  ['<Leader>gc'] = {rhs = '<Plug>(ide-git-commit)', modes = {'n'}},
-  ['<Leader>gb'] = {rhs = '<Plug>(ide-git-blame)', modes = {'n'}},
-  ['<Leader>gs'] = {rhs = '<Plug>(ide-git-status-open)', modes = {'n'}},
-  ['<Leader>gq'] = {rhs = '<Plug>(ide-git-status-close)', modes = {'n'}},
-  ['<Leader>gl'] = {rhs = '<Plug>(ide-git-log-current-file)', modes = {'n'}},
-  ['<Leader>gL'] = {rhs = '<Plug>(ide-git-log-all-files)', modes = {'n'}},
-  ['<Leader>gp'] = {rhs = '<Plug>(ide-git-push-all)', modes = {'n'}},
-  ['<Leader>hu'] = {rhs = '<Plug>(ide-git-hunk-undo-stage)', modes = {'n', 'v'}},
-  ['<Leader>hr'] = {rhs = '<Plug>(ide-git-hunk-reset)', modes = {'n'}},
-  ['<Leader>hv'] = {rhs = '<Plug>(ide-git-hunk-visual-selection)', modes = {'n'}},
-  ['<Leader>hR'] = {rhs = '<Plug>(ide-git-buffer-reset)', modes = {'n'}},
-  ['<Leader>hp'] = {rhs = '<Plug>(ide-git-hunk-print)', modes = {'n'}},
-  ['<Leader>hP'] = {rhs = '<Plug>(ide-git-hunk-print-inline)', modes = {'n'}},
-  ['<Leader>ht'] = {rhs = '<Plug>(ide-git-highlight-toggle)', modes = {'n'}},
-  ['<Leader>hT'] = {rhs = '<Plug>(ide-git-toggle-deleted)', modes = {'n'}},
-  ['<Leader>hb'] = {rhs = '<Plug>(ide-git-blame-line)', modes = {'n'}},
-  ['<Leader>hB'] = {rhs = '<Plug>(ide-git-blame-toggle-virtual)', modes = {'n'}},
-  ['<Leader>hd'] = {rhs = '<Plug>(ide-git-diffthis)', modes = {'n'}},
-  ['<Leader>hD'] = {rhs = '<Plug>(ide-git-diffthis-previous)', modes = {'n'}},
-
-  ['<S-F2>'] = {rhs = '<Plug>(ide-git-stage-write-file)', modes = {'n'}},
-  ['[h'] = {rhs = '<Plug>(ide-git-hunk-previous)', modes = {'n'}},
-  [']h'] = {rhs = '<Plug>(ide-git-hunk-next)', modes = {'n'}},
-
-
-  ['<F5>'] = {rhs = '<Plug>(ide-db-ui-toggle)', modes = {'n'}},
-
-  ['<Leader>m'] = {rhs = '<Plug>(ide-tree-focus-current-file)', modes = {'n'}, desc = 'File tree: focus current buffer'},
-  ['<Leader>iwb'] = {rhs = '<Plug>(ide-write-backup)', modes = {'n'}},
-
-  ['<Esc>'] = {rhs = '<Plug>(ide-close-popup)'},
-}
-
-keymap.loadKeyToPlugMappings(globalMappings)
 
 local augroup = api.nvim_create_augroup('IdeMapsLua', {clear = true})
 api.nvim_create_autocmd({'FileType'}, {

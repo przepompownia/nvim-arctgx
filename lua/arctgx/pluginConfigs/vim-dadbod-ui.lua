@@ -19,7 +19,7 @@ vim.g.db_ui_use_nvim_notify = 1
 vim.g.db_ui_table_helpers = {
   mysql = {
     ['Get By ID'] = 'SELECT * FROM `{table}` WHERE `id` = :{table}_id \\G',
-    Explain =  'ANALYZE {last_query}',
+    Explain = 'ANALYZE {last_query}',
     ['Show create table'] = 'SHOW CREATE TABLE `{table}`',
   }
 }
@@ -60,7 +60,7 @@ api.nvim_create_autocmd('FileType', {
   end
 })
 
-vim.keymap.set('n', '<Plug>(ide-db-ui-toggle)', function ()
+require('arctgx.vim.abstractKeymap').set('n', 'dbToggleUI', function ()
   api.nvim_cmd({cmd = 'DBUI', mods = {tab = 1}}, {})
 end, {})
 
