@@ -1,3 +1,11 @@
+local keymap = require('arctgx.vim.abstractKeymap')
+local tsKeymaps = {
+  init_selection = keymap.firstLhs('langInitSelection'),
+  node_incremental = keymap.firstLhs('langIncrementSelection'),
+  node_decremental = keymap.firstLhs('langDecrementSelection'),
+  scope_incremental = keymap.firstLhs('langScopeIncrementSelection'),
+}
+
 require 'nvim-treesitter.configs'.setup {
   ensure_installed = {
     'awk',
@@ -45,12 +53,7 @@ require 'nvim-treesitter.configs'.setup {
   },
   incremental_selection = {
     enable = true,
-    keymaps = {
-      init_selection = '<Plug>(treesitter-init-selection)',
-      node_incremental = '<Plug>(treesitter-node-incremental)',
-      node_decremental = '<Plug>(treesitter-node-decremental)',
-      scope_incremental = '<Plug>(treesitter-scope-incremental)',
-    },
+    keymaps = tsKeymaps,
   },
   indent = {
     enable = true,

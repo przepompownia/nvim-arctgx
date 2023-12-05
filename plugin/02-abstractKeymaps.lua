@@ -1,6 +1,3 @@
-local keymap = require('arctgx.vim.keymap')
-local api = vim.api
-
 ---@type AbstractKeymaps
 local abstractKeymaps = {
   shellOpen = {lhs = {'<F8>'}, desc = 'Open shell window, mostly with dirname of current buffer as CWD'},
@@ -94,27 +91,10 @@ local abstractKeymaps = {
   langWorkspaceFolderAdd = {lhs = '<Leader>sfa', desc = 'Add workspace folder'},
   langWorkspaceFolderRemove = {lhs = '<Leader>sfd', desc = 'Remove workspace folder'},
   langClassNew = {lhs = '<Leader>icn', desc = 'New class'},
+  langInitSelection = {lhs = '<Leader>t', desc = 'Init selection based on language'},
+  langIncrementSelection = {lhs = '<Leader>]', desc = 'Increment selection based on language'},
+  langScopeIncrementSelection = {lhs = '<Leader>]', desc = 'Increment selection based on language'},
+  langDecrementSelection = {lhs = '<Leader>[', desc = 'Decrement selection based on language'},
 }
 
 require('arctgx.vim.abstractKeymap').load(abstractKeymaps)
-
----@type KeyToPlugMappings
-local keyToPlugMappings = {
-  ['<Leader>t'] = {rhs = '<Plug>(treesitter-init-selection)', modes = {'n'}},
-  ['<Leader>]'] = {rhs = '<Plug>(treesitter-node-incremental)', modes = {'v'}},
-  ['<Leader>['] = {rhs = '<Plug>(treesitter-node-decremental)', modes = {'v'}},
-  ['<Leader><Leader>]'] = {rhs = '<Plug>(treesitter-scope-incremental)', modes = {'v'}},
-}
-
-local augroup = api.nvim_create_augroup('IdeMapsLua', {clear = true})
-api.nvim_create_autocmd({'FileType'}, {
-  group = augroup,
-  callback = function (params)
-    local excludedFiletypes = {'help', 'man', 'dbout', 'dapui_hover', 'noice'}
-    if vim.tbl_contains(excludedFiletypes, params.match) then
-      return
-    end
-
-    keymap.loadKeyToPlugMappings(keyToPlugMappings, params.buf)
-  end,
-})
