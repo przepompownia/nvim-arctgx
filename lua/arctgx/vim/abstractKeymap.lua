@@ -56,6 +56,13 @@ function abstractKeymap.repeatable(cb)
   end
 end
 
+function abstractKeymap.firstLhs(name)
+  local keymap = getKeymap(name)
+  if nil ~= keymap then
+    return keymap.lhs[1]
+  end
+end
+
 ---@param mappings AbstractKeymaps
 function abstractKeymap.load(mappings)
   keymaps = mappings
