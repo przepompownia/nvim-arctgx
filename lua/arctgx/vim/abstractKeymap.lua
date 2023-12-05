@@ -31,9 +31,6 @@ function abstractKeymap.set(modes, name, rhs, opts)
   end
 
   for _, mode in ipairs(modes) do
-    if type(keymap.lhs) == 'string' then
-      keymap.lhs = {keymap.lhs}
-    end
     for lhsMode, lhs in pairs(keymap.lhs) do
       if type(lhsMode) ~= 'string' or lhsMode == mode then
         vim.keymap.set(
