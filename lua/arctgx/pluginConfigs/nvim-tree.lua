@@ -46,7 +46,7 @@ require('nvim-tree').setup({
       function ()
         local node = treeapi.tree.get_node_under_cursor()
         if nil == node or nil == node.nodes then
-          return require('arctgx.vim.keymap').feedKeys('<Right>')
+          return api.nvim_feedkeys(vim.keycode('<Right>'), 'n', false)
         end
         require('nvim-tree.lib').expand_or_collapse(node)
       end,
