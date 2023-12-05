@@ -1,4 +1,3 @@
-local keymap = require 'arctgx.vim.keymap'
 local base = require 'arctgx.base'
 local api = vim.api
 
@@ -24,7 +23,9 @@ local mapToKeySequenceList = {
   ['<S-Up>'] = {rhs = '<C-y>', modes = {'n'}},
   ['<S-Down>'] = {rhs = '<C-e>', modes = {'n'}},
 }
-keymap.loadKeyToPlugMappings(mapToKeySequenceList)
+for lhs, mapping in pairs(mapToKeySequenceList) do
+  vim.keymap.set(mapping.modes, lhs, mapping.rhs, {silent = true})
+end
 
 local opts = {silent = true}
 
