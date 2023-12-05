@@ -1,33 +1,26 @@
 local base = require 'arctgx.base'
 local api = vim.api
 
----@type KeyToPlugMappings
-local mapToKeySequenceList = {
-  ['<Leader>='] = {rhs = 'ggVG=', modes = {'n', 'v'}},
-  ['<Leader>/'] = {rhs = '/', modes = {'n'}},
-  ['<Leader>?'] = {rhs = '?', modes = {'n'}},
-  ['/'] = {rhs = '/\\c', modes = {'n'}},
-  ['?'] = {rhs = '?\\c', modes = {'n'}},
-  ['<C-q>'] = {rhs = '<C-r>+', modes = {'i'}},
-  ['<C-Insert>'] = {rhs = '"*y', modes = {'x'}},
-  ['<C-S-Insert>'] = {rhs = '"+y', modes = {'x'}},
-  ['<S-Insert>'] = {rhs = '<MiddleMouse>', modes = {'!'}},
-  ['<Tab>'] = {rhs = '<C-w>w', modes = {'n', 'v'}},
-  ['g<Left>'] = {rhs = '<C-O>', modes = {'n'}},
-  ['g<Right>'] = {rhs = '<C-I>', modes = {'n'}},
-  ['<Insert>'] = {rhs = '<Nop>', modes = {'i', 'c'}},
-  ['<C-z>'] = {rhs = '<C-x><C-o>', modes = {'i'}},
-  ['Q'] = {rhs = '<Nop>', modes = {'n'}},
-  ['<C-BS>'] = {rhs = '<C-w>', modes = {'c'}},
-  ['<C-Del>'] = {rhs = '<S-Right><C-w>', modes = {'c'}},
-  ['<S-Up>'] = {rhs = '<C-y>', modes = {'n'}},
-  ['<S-Down>'] = {rhs = '<C-e>', modes = {'n'}},
-}
-for lhs, mapping in pairs(mapToKeySequenceList) do
-  vim.keymap.set(mapping.modes, lhs, mapping.rhs, {silent = true})
-end
-
 local opts = {silent = true}
+vim.keymap.set({'n'}, '<Leader>=', 'ggVG=', opts)
+vim.keymap.set({'n'}, '<Leader>/', '/', opts)
+vim.keymap.set({'n'}, '<Leader>?', '?', opts)
+vim.keymap.set({'n'}, '/', '/\\c', opts)
+vim.keymap.set({'n'}, '?', '?\\c', opts)
+vim.keymap.set({'i'}, '<C-q>', '<C-r>+', opts)
+vim.keymap.set({'x'}, '<C-Insert>', '"*y', opts)
+vim.keymap.set({'x'}, '<C-S-Insert>', '"+y', opts)
+vim.keymap.set({'!'}, '<S-Insert>', '<MiddleMouse>', opts)
+vim.keymap.set({'n', 'v'}, '<Tab>', '<C-w>w', opts)
+vim.keymap.set({'n'}, 'g<Left>', '<C-O>', opts)
+vim.keymap.set({'n'}, 'g<Right>', '<C-I>', opts)
+vim.keymap.set({'i', 'c'}, '<Insert>', '<Nop>', opts)
+vim.keymap.set({'i'}, '<C-z>', '<C-x><C-o>', opts)
+vim.keymap.set({'n'}, 'Q', '<Nop>', opts)
+vim.keymap.set({'c'}, '<C-BS>', '<C-w>', opts)
+vim.keymap.set({'c'}, '<C-Del>', '<S-Right><C-w>', opts)
+vim.keymap.set({'n'}, '<S-Up>', '<C-y>', opts)
+vim.keymap.set({'n'}, '<S-Down>', '<C-e>', opts)
 
 local function selectionFromPastedRange()
   return '`[' .. vim.fn.getregtype():sub(0, 1) .. '`]'
