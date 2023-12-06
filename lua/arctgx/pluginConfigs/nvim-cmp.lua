@@ -6,6 +6,21 @@ local hasWordsBefore = function()
   return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match('%s') == nil
 end
 
+---@type table<string, cmp.SourceConfig>
+local cmpSources = {
+  buffer = {
+    name = 'buffer',
+    option = {
+      get_bufnrs = function ()
+        return vim.iter(vim.api.nvim_list_bufs()):filter(function (bufnr)
+          return vim.api.nvim_buf_is_loaded(bufnr)
+        end):totable()
+      end
+    },
+    priority = 1,
+  }
+}
+
 cmp.setup({
   snippet = {
     expand = function(args)
@@ -54,14 +69,7 @@ cmp.setup({
   sources = {
     {name = 'nvim_lsp'},
     {name = 'luasnip'},
-    {
-      name = 'buffer',
-      option = {
-        get_bufnrs = function()
-          return vim.api.nvim_list_bufs()
-        end
-      },
-    },
+    cmpSources.buffer,
     {name = 'path'},
   },
   confirmation = {
