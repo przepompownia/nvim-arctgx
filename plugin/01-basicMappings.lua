@@ -3,10 +3,10 @@ local api = vim.api
 
 local opts = {silent = true}
 vim.keymap.set({'n'}, '<Leader>=', 'ggVG=', opts)
-vim.keymap.set({'n'}, '<Leader>/', '/', opts)
-vim.keymap.set({'n'}, '<Leader>?', '?', opts)
-vim.keymap.set({'n'}, '/', '/\\c', opts)
-vim.keymap.set({'n'}, '?', '?\\c', opts)
+vim.keymap.set({'n'}, '<Leader>/', '/', {})
+vim.keymap.set({'n'}, '<Leader>?', '?', {})
+vim.keymap.set({'n'}, '/', '/\\c', {})
+vim.keymap.set({'n'}, '?', '?\\c', {})
 vim.keymap.set({'i'}, '<C-q>', '<C-r>+', opts)
 vim.keymap.set({'x'}, '<C-Insert>', '"*y', opts)
 vim.keymap.set({'x'}, '<C-S-Insert>', '"+y', opts)
