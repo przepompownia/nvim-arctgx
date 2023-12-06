@@ -23,15 +23,20 @@ local cmpSources = {
 
 cmp.setup({
   snippet = {
-    expand = function(args)
+    expand = function (args)
       require('luasnip').lsp_expand(args.body)
     end,
   },
   mapping = cmp.mapping.preset.insert({
     ['<C-d>'] = cmp.mapping.scroll_docs(-4),
     ['<C-f>'] = cmp.mapping.scroll_docs(4),
-    ['<Plug>(ide-trigger-completion)'] = cmp.mapping.complete({}),
-    ['<Tab>'] = cmp.mapping(function(fallback)
+    ['<C-p>'] = cmp.mapping(function (fallback)
+      fallback()
+    end, {'i', 's'}),
+    ['<C-n>'] = cmp.mapping(function (fallback)
+      fallback()
+    end, {'i', 's'}),
+    ['<Tab>'] = cmp.mapping(function (fallback)
       local luasnip = require('luasnip')
       if cmp.visible() then
         cmp.select_next_item()
@@ -45,7 +50,7 @@ cmp.setup({
     end, {'i', 's'}),
 
     ['<A-CR>'] = cmp.mapping.confirm({select = true, behavior = cmp.ConfirmBehavior.Insert}),
-    ['<S-Tab>'] = cmp.mapping(function(fallback)
+    ['<S-Tab>'] = cmp.mapping(function (fallback)
       local luasnip = require('luasnip')
       if cmp.visible() then
         cmp.select_prev_item()
