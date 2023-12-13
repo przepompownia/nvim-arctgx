@@ -1,4 +1,4 @@
-config = {}
+local config = {}
 
 config.default = {
   type = 'php',
