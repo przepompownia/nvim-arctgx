@@ -1,10 +1,10 @@
 ---@type AbstractKeymaps
 local abstractKeymaps = {
   shellOpen = {lhs = {'<F8>'}, desc = 'Open shell window, mostly with dirname of current buffer as CWD'},
-  diagnosticSetLocList = {lhs = {'<Space>q'}},
-  diagnosticOpenFloat = {lhs = {'<Leader>ii'}},
-  diagnosticGotoPrevious = {lhs = {'[d'}},
-  diagnosticGotoNext = {lhs = {']d'}},
+  diagnosticSetLocList = {lhs = {'<Space>q'}, desc = 'Diagnostic: set location list'},
+  diagnosticOpenFloat = {lhs = {'<Leader>ii'}, desc = 'Diagnostic: open float window for current line'},
+  diagnosticGotoPrevious = {lhs = {'[d'}, desc = 'Diagnostic: go to previous'},
+  diagnosticGotoNext = {lhs = {']d'}, desc = 'Diagnostic: go to next'},
   browseWindows = {lhs = '<F1>', desc = 'Browse windows'},
   browseBuffers = {lhs = '<S-F1>', desc = 'Browse buffers'},
   browseOldfiles = {lhs = '<F4>', desc = 'Browse oldfiles'},
