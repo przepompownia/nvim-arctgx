@@ -27,7 +27,7 @@ virtualText.setup {
   all_frames = false,
   virt_lines = false,
   virt_text_win_col = nil,
-  display_callback = function(variable, bufId, stackframe, node)
+  display_callback = function (variable, bufId, _stackframe, _node)
     if true == skipDisplayingVariable(variable, bufId) then
       return ''
     end
