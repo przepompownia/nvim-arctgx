@@ -161,41 +161,44 @@ dap.defaults.fallback.external_terminal = {
   command = '/usr/bin/kitty',
 }
 dap.configurations.php = {php.default}
-local ideDAPSessionActive = ''
+local dapSessionStatus = ''
 
 dap.listeners.after['event_initialized']['arctgx'] = function (_session, _body)
   api.nvim_exec_autocmds('User', {pattern = 'IdeStatusChanged', modeline = false})
-  ideDAPSessionActive = 'L'
+  dapSessionStatus = 'L'
 end
 
 dap.listeners.after['event_stopped']['arctgx'] = function (_session, _body)
   api.nvim_exec_autocmds('User', {pattern = 'IdeStatusChanged', modeline = false})
-  ideDAPSessionActive = 'S'
+  dapSessionStatus = 'S'
 end
 
 dap.listeners.after['event_exited']['arctgx'] = function (_session, _body)
   api.nvim_exec_autocmds('User', {pattern = 'IdeStatusChanged', modeline = false})
   print('Exited')
-  ideDAPSessionActive = 'E'
+  dapSessionStatus = 'E'
 end
 dap.listeners.after['event_thread']['arctgx'] = function (_session, body)
   api.nvim_exec_autocmds('User', {pattern = 'IdeStatusChanged', modeline = false})
   if body.reason == 'exited' then
     print('Thread ' .. body.threadId .. ' exited')
-    ideDAPSessionActive = 'X'
+    dapSessionStatus = 'X'
   end
 end
 dap.listeners.before['disconnect']['arctgx'] = function (_session, _body)
   api.nvim_exec_autocmds('User', {pattern = 'IdeStatusChanged', modeline = false})
   vim.notify('Disconnected')
-  ideDAPSessionActive = 'D'
+  dapSessionStatus = 'D'
 end
 dap.listeners.after['event_terminated']['arctgx'] = function (_session, _body)
   api.nvim_exec_autocmds('User', {pattern = 'IdeStatusChanged', modeline = false})
   vim.notify('Terminated')
-  ideDAPSessionActive = 'T'
+  dapSessionStatus = 'T'
 end
 
 require('arctgx.widgets').addDebugHook(function ()
-  return dap.session() and ('⛧' .. ' ' .. ideDAPSessionActive) or '-'
+  return {
+    session = dap.session() and true or false,
+    status = dapSessionStatus,
+  }
 end)

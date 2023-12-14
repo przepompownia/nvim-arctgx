@@ -6,13 +6,8 @@ function widgets.addDebugHook(hook)
   table.insert(debugHooks, hook)
 end
 
-function widgets.renderDebug()
-  local out = 'D'
-  for _, hook in ipairs(debugHooks) do
-    out = out .. ' ' .. hook()
-  end
-
-  return out
+function widgets.getDebugHooks()
+  return debugHooks
 end
 
 return widgets
