@@ -4,12 +4,21 @@ vim.diagnostic.config({
   float = {
     border = 'rounded',
   },
+  signs = {
+    text = {
+      [vim.diagnostic.severity.ERROR] = '',
+      [vim.diagnostic.severity.WARN] = '⚠',
+      [vim.diagnostic.severity.INFO] = '',
+      [vim.diagnostic.severity.HINT] = '💡',
+    },
+    numhl = {
+      [vim.diagnostic.severity.ERROR] = 'IdeErrorSign',
+      [vim.diagnostic.severity.WARN] = 'IdeWarningSign',
+      [vim.diagnostic.severity.INFO] = 'IdeInfoSign',
+      [vim.diagnostic.severity.HINT] = 'IdeHintSign',
+    }
+  },
 })
-
-vim.fn.sign_define('DiagnosticSignHint', {text = '💡', texthl = 'IdeHintSign', linehl = ''})
-vim.fn.sign_define('DiagnosticSignInfo', {text = '', texthl = 'IdeInfoSign', linehl = ''})
-vim.fn.sign_define('DiagnosticSignWarn', {text = '⚠', texthl = 'IdeWarningSign', linehl = ''})
-vim.fn.sign_define('DiagnosticSignError', {text = '', texthl = 'IdeErrorSign', linehl = ''})
 
 local ns = vim.api.nvim_create_namespace('arctgx.diagnostic.signs')
 local origSignsHandler = vim.diagnostic.handlers.signs
