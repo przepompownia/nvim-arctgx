@@ -21,6 +21,7 @@ vim.keymap.set({'c'}, '<C-BS>', '<C-w>', opts)
 vim.keymap.set({'c'}, '<C-Del>', '<S-Right><C-w>', opts)
 vim.keymap.set({'n'}, '<S-Up>', '<C-y>', opts)
 vim.keymap.set({'n'}, '<S-Down>', '<C-e>', opts)
+vim.keymap.set({'n'}, '<C-w>C', vim.cmd.tabclose, opts)
 
 local function selectionFromPastedRange()
   return '`[' .. vim.fn.getregtype():sub(0, 1) .. '`]'
