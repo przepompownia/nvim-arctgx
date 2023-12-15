@@ -23,22 +23,16 @@ local function colorscheme(bg, tgc)
   return tgc and vim.g.colorschemeDark or 'habamax'
 end
 
-local function setColorscheme(bg, tgc)
-  api.nvim_cmd({cmd = 'colorscheme', args = {colorscheme(bg, tgc)}}, {})
-end
-
-api.nvim_create_autocmd('UIEnter', {
-  nested = true,
-  callback = vim.schedule_wrap(function ()
-    setColorscheme(vim.go.background, vim.go.termguicolors)
-  end),
-})
-
-api.nvim_create_autocmd('OptionSet', {
+local colorschemeReadyOptions = {'background', 'termguicolors'}
+vim.api.nvim_create_autocmd('OptionSet', {
   group = augroup,
-  pattern = 'background',
   nested = true,
+  pattern = colorschemeReadyOptions,
   callback = function ()
-    setColorscheme(vim.v.option_new, vim.go.termguicolors)
-  end
+    if vim.iter(colorschemeReadyOptions):all(function (option)
+        return vim.api.nvim_get_option_info2(option, {}).was_set
+      end) then
+      api.nvim_cmd({cmd = 'colorscheme', args = {colorscheme(vim.go.background, vim.go.termguicolors)}}, {})
+    end
+  end,
 })
