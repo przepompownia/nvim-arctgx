@@ -27,43 +27,18 @@ local function setColorscheme(bg, tgc)
   api.nvim_cmd({cmd = 'colorscheme', args = {colorscheme(bg, tgc)}}, {})
 end
 
--- vim.go.termguicolors = true
-
-api.nvim_create_autocmd('VimEnter', {
-  once = true,
-  pattern = '*',
+api.nvim_create_autocmd('UIEnter', {
   nested = true,
-  callback = function ()
-    vim.opt.background = 'dark'
-  end,
+  callback = vim.schedule_wrap(function ()
+    setColorscheme(vim.go.background, vim.go.termguicolors)
+  end),
 })
-
--- local opts = {}
---
--- local function isTermReady()
---   return opts.background ~= nil and opts.termguicolors ~= nil
--- end
---
--- vim.api.nvim_create_autocmd('OptionSet', {
---   pattern = 'background,termguicolors',
---   callback = function (data)
---     -- vim.notify(('Setting %s to %s'):format(data.match, vim.v.option_new))
---     opts[data.match] = vim.v.option_new
---     if isTermReady() then
---       vim.schedule(function ()
---         setColorscheme(vim.go.background, vim.go.termguicolors)
---       end)
---     end
---     return true
---   end,
--- })
 
 api.nvim_create_autocmd('OptionSet', {
   group = augroup,
   pattern = 'background',
   nested = true,
   callback = function ()
-    -- if not isTermReady() then return end
     setColorscheme(vim.v.option_new, vim.go.termguicolors)
   end
 })
