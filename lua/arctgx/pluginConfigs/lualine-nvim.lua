@@ -44,9 +44,6 @@ require('lualine').setup({
       {
         'selectioncount',
       },
-      {
-        'bufnr'
-      },
     },
     lualine_x = {'encoding', 'fileformat', 'filetype'},
     lualine_y = {'progress'},
