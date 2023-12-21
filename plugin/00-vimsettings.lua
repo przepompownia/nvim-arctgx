@@ -50,7 +50,6 @@ vim.go.showcmd = true
 vim.opt.swapfile = false
 
 vim.opt.sessionoptions:remove('help')
-vim.opt.sessionoptions:remove('buffers')
 vim.opt.sessionoptions:remove('folds')
 
 vim.opt.signcolumn = 'auto:1-9'
