@@ -31,7 +31,7 @@ require('lualine').setup({
     lualine_b = {
       {
         'branch',
-        on_click = function (numberOfClicks, button, modifiers)
+        on_click = function (_numberOfClicks, button, _modifiers)
           if 'r' == button then
             require('arctgx.telescope').branches()
           end
