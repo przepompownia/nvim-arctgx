@@ -80,13 +80,16 @@ function M.clientConfig(file)
   local lsp = require('arctgx.lsp')
   return {
     name = 'luals',
-    filetype = 'lua',
     cmd = {
       'lua-language-server',
       -- '--loglevel=trace',
     },
     -- trace = 'verbose',
-    root_dir = lsp.findRoot(file, rootPatterns),
+    root_dir = lsp.findRoot(file:gsub(
+      '^' .. vim.fn.stdpath('config'),
+      vim.env.NVIM_UNSANDBOXED_CONFIGDIR or vim.fn.stdpath('config'),
+      1
+    ), rootPatterns),
     single_file_support = true,
     log_level = vim.lsp.protocol.MessageType.Warning,
     on_init = M.onInit,
