@@ -86,10 +86,10 @@ require('lualine').setup({
     lualine_z = {
       {
         function ()
-          out = ''
+          local out = ''
           for _, hook in ipairs(require('arctgx.widgets').getDebugHooks()) do
             local data = hook()
-            symbol = data.session and '⛧ ' or '☠'
+            local symbol = data.session and '⛧ ' or '☠'
             out = out .. symbol .. ' ' .. data.status
           end
           return out
