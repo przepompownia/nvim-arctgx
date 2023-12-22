@@ -28,7 +28,14 @@ require('lualine').setup({
         end
       },
       'diff',
-      'diagnostics',
+      {
+        'diagnostics',
+        on_click = function (_numberOfClicks, button, _modifiers)
+          if 'l' == button then
+            vim.diagnostic.setloclist()
+          end
+        end
+      },
     },
     lualine_c = {
       {
