@@ -69,7 +69,6 @@ local abstractKeymaps = {
   gitDiffAgainstIndex = {lhs = '<Leader>hd', desc = 'Git: diff against the index'},
   gitDiffAgainstLastCommit = {lhs = '<Leader>hD', desc = 'Git: diff against the last commit'},
   gitStageAndWriteFile = {lhs = '<S-F2>', desc = 'Git: stage and write file'},
-  closeFloatWindow = {lhs = '<Esc>', desc = 'Close float window'},
   writeBackup = {lhs = '<Leader>iwb', desc = 'Write backup file'},
   dbToggleUI = {lhs = '<F5>', desc = 'Toggle database UI'},
   fileTreeFocus = {lhs = '<Leader>m', desc = 'File tree: focus current buffer'},
