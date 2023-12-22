@@ -1,5 +1,4 @@
 do
-  local api = vim.api
   local highlights = {
     IdeFloating = {bg = '#808080'},
     IdeDiagnosticError = {bg = '#440000'},
@@ -16,7 +15,7 @@ do
     IdeBreakpointSign = {fg = '#1212ff'},
     IdeInfoSign = {fg = '#afffff'},
     IdeWarningSign = {
-      fg = api.nvim_get_hl(0, {name = 'WarningMsg'}).bg,
+      fg = vim.api.nvim_get_hl(0, {name = 'WarningMsg'}).bg,
     },
     IdeHintSign = {fg = '#884499'},
     IdeErrorSign = {fg = '#440000'},
