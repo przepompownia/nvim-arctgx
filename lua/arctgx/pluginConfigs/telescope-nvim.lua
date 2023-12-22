@@ -58,6 +58,7 @@ keymap.set('n', 'grepGit', function () require('arctgx.telescope').gitGrep('', f
 keymap.set('n', 'grepAll', function () require('arctgx.telescope').rgGrep('', false, false) end)
 keymap.set('n', 'filesAll', function () require('arctgx.telescope').filesAll() end)
 keymap.set('n', 'filesGit', function () require('arctgx.telescope').filesGit() end)
+keymap.set('n', 'previewJumps', function () require('telescope.builtin').jumplist() end)
 keymap.set('n', 'browseCommandHistory', function () require('telescope.builtin').command_history() end)
 keymap.set('n', 'browseOldfiles', function () require('arctgx.telescope').oldfiles(false) end)
 keymap.set('n', 'browseOldfilesInCwd', function () require('arctgx.telescope').oldfiles(true) end)

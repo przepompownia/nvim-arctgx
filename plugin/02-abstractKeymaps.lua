@@ -1,6 +1,7 @@
 ---@type AbstractKeymaps
 local abstractKeymaps = {
   shellOpen = {lhs = {'<F8>'}, desc = 'Open shell window, mostly with dirname of current buffer as CWD'},
+  previewJumps = {lhs = '<F7>', desc = 'Preview jumps'},
   diagnosticSetLocList = {lhs = {'<Space>q'}, desc = 'Diagnostic: set location list'},
   diagnosticOpenFloat = {lhs = {'<Leader>ii'}, desc = 'Diagnostic: open float window for current line'},
   diagnosticGotoPrevious = {lhs = {'[d'}, desc = 'Diagnostic: go to previous'},
