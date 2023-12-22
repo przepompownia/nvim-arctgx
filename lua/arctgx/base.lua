@@ -3,7 +3,7 @@ local base = {}
 local pluginDir = nil
 
 local function tabDrop(path, line, column, _relativeWinId)
-  vim.cmd.drop({args = {path}, mods = {tab = #vim.api.nvim_list_tabpages()}})
+  vim.cmd.edit({args = {path}})
   if line then
     vim.fn.cursor(line, column or 1)
   end
