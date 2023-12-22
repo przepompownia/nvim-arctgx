@@ -1,4 +1,5 @@
 local api = vim.api
+---@field setOperatorfunc fun(cb: function)
 local base = {}
 local pluginDir = nil
 
@@ -141,6 +142,36 @@ base.setOperatorfunc = vim.fn[vim.api.nvim_exec([[
   endfunc
   echon get(function('s:set_opfunc'), 'name')
 ]], true)]
+
+---Defer callback until terminal related options autodetection is complete
+---@param augroupName string
+---@param cb fun(): boolean? return true to call it once unless you want to run it on each next change of those options
+function base.onColorschemeReady(augroupName, cb)
+  local colorschemeReadyOptions = {'background', 'termguicolors'}
+  local function isColorschemeReady()
+    return vim.iter(colorschemeReadyOptions):all(function (option)
+      return vim.api.nvim_get_option_info2(option, {}).was_set
+    end)
+  end
+
+  if isColorschemeReady() then
+    cb()
+    return
+  end
+
+  local augroup = vim.api.nvim_create_augroup(augroupName, {clear = true})
+
+  vim.api.nvim_create_autocmd('OptionSet', {
+    group = augroup,
+    nested = true,
+    pattern = colorschemeReadyOptions,
+    callback = function ()
+      if isColorschemeReady() and true == cb() then
+        vim.api.nvim_del_augroup_by_id(augroup)
+      end
+    end,
+  })
+end
 
 ---@param keywordChars table<string>
 ---@param callback function
