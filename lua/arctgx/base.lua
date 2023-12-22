@@ -154,8 +154,7 @@ function base.onColorschemeReady(augroupName, cb)
     end)
   end
 
-  if isColorschemeReady() then
-    cb()
+  if isColorschemeReady() and true == cb() then
     return
   end
 
