@@ -15,6 +15,9 @@ require('nvim-tree').setup({
     open_file = {
       quit_on_open = true,
     },
+    remove_file = {
+      close_window = false,
+    },
   },
   on_attach = function (bufnr)
     treeapi.config.mappings.default_on_attach(bufnr)
