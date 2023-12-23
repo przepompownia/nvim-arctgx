@@ -2,30 +2,32 @@ local api = vim.api
 ---@field setOperatorfunc fun(cb: function)
 local base = {}
 local pluginDir = nil
+---@class PathMappings table<string,string>
+---@type PathMappings
+local pathMappings = {}
+
+---@param remotePath string
+---@param localPath string
+function base.addPathMapping(remotePath, localPath)
+  pathMappings[remotePath] = localPath
+end
 
 ---@param path string
----@param mapping table<string, string>
+---@param mappings PathMappings
 ---@param line integer
 ---@param column integer
-function base.tabDropToLineAndColumnWithMapping(path, mapping, line, column)
-  local translateRemotePath = function ()
-    for remotePath, localPath in pairs(mapping or {}) do
-      if vim.startswith(path, remotePath) then
-        return path:gsub('^' .. remotePath, localPath)
-      end
-    end
+function base.editMappedPath(path, mappings, line, column)
+  local remotePath, localPath = vim.iter(mappings or pathMappings)
+    :filter(function (rp, _) return vim.startswith(path, rp) end)
+    :next()
 
-    return path
-  end
+  local mappedPath = remotePath and path:gsub('^' .. remotePath, localPath) or path
+  print(mappedPath)
 
-  vim.cmd.edit({args = {translateRemotePath()}})
+  vim.cmd.edit({args = {mappedPath}})
   if line then
     vim.fn.cursor(line, column or 1)
   end
-end
-
-function base.tabDropToLineAndColumnWithDefaultMapping(path, line, column)
-  base.tabDropToLineAndColumnWithMapping(path, vim.g.projectPathMappings, line, column)
 end
 
 function base.operatorGetText()
