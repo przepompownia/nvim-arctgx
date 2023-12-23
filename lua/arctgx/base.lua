@@ -16,8 +16,8 @@ end
 ---@param mappings PathMappings
 ---@param line integer
 ---@param column integer
-function base.editMappedPath(path, mappings, line, column)
-  local remotePath, localPath = vim.iter(mappings or pathMappings)
+function base.editMappedPath(path, line, column)
+  local remotePath, localPath = vim.iter(pathMappings)
     :filter(function (rp, _) return vim.startswith(path, rp) end)
     :next()
 
