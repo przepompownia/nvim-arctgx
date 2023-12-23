@@ -1,13 +1,15 @@
 local WriteBackup = {}
 
-WriteBackup.save = function ()
+function WriteBackup.save()
+  local backupDir = vim.g.arctgxBackupDir or '/tmp'
   local backupFile = ('%s/%s.%d'):format(
-    vim.g.arctgxBackupDir or '/tmp',
+    backupDir,
     vim.fn.expand('%:t'),
-    math.random(0,9999)
+    os.date('%s')
   )
 
-  vim.cmd.write(backupFile)
+  vim.fn.mkdir(backupDir, 'p')
+  vim.cmd({cmd = 'write', args = {backupFile}})
 end
 
 return WriteBackup

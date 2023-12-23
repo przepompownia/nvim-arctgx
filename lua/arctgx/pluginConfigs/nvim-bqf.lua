@@ -21,26 +21,10 @@ require('bqf').setup({
     end
   },
   func_map = {
+    openc = '<CR>',
     open = '',
     vsplit = '',
     ptogglemode = ',p',
     stoggleup = '',
   },
-})
-
-local function tabDropHandler()
-  require('bqf.qfwin.handler').open(true, 'TabDrop')
-end
-
-local function configureWindow()
-  vim.keymap.set({'n'}, '<2-LeftMouse>', tabDropHandler, {buffer = true})
-  vim.keymap.set({'n'}, '<CR>', tabDropHandler, {buffer = true})
-  vim.wo.cursorline = true
-end
-
-local augroup = vim.api.nvim_create_augroup('BqfMappings', {clear = true})
-vim.api.nvim_create_autocmd('FileType', {
-  group = augroup,
-  pattern = 'qf',
-  callback = configureWindow,
 })

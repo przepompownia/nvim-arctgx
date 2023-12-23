@@ -12,20 +12,12 @@ local function colorscheme(bg, tgc)
   return tgc and vim.g.colorschemeDark or 'habamax'
 end
 
-local colorschemeReadyOptions = {'background', 'termguicolors'}
-
-vim.api.nvim_create_autocmd('OptionSet', {
-  group = vim.api.nvim_create_augroup('ColorschemeLoading', {clear = true}),
-  nested = true,
-  pattern = colorschemeReadyOptions,
-  callback = function ()
-    if vim.iter(colorschemeReadyOptions):all(function (option)
-        return vim.api.nvim_get_option_info2(option, {}).was_set
-      end) then
-      vim.api.nvim_cmd({cmd = 'colorscheme', args = {colorscheme(vim.go.background, vim.go.termguicolors)}}, {})
-    end
-  end,
-})
+require('arctgx.base').onColorschemeReady(
+  'ColorschemeLoading',
+  function ()
+    vim.api.nvim_cmd({cmd = 'colorscheme', args = {colorscheme(vim.go.background, vim.go.termguicolors)}}, {})
+  end
+)
 
 vim.api.nvim_create_autocmd('ColorScheme', {
   group = vim.api.nvim_create_augroup('ConfigureHighlight', {clear = true}),

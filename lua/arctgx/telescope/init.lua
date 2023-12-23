@@ -3,19 +3,6 @@ local git = require('arctgx.git')
 
 local extension = {}
 
-local function tabDropEntry(entry, winId)
-  local path = entry.path or vim.fn.expand(entry.filename)
-  vim.cmd('stopinsert')
-  base.tabDrop(path, entry.lnum, entry.col, winId)
-  -- https://github.com/nvim-telescope/telescope.nvim/commit/205f469244916716c49cc2b9026566749425c5ba
-  if vim.wo.foldmethod == 'expr' then
-    vim.schedule(function ()
-      vim.opt.foldmethod = 'expr'
-    end)
-  end
-  vim.api.nvim_exec_autocmds('User', {pattern = 'IdeStatusChanged', modeline = false})
-end
-
 ---@param promptBufnr integer
 ---@param callback function({bufnr: integer}, Picker)
 local function callOnSelection(promptBufnr, callback, actionName)
@@ -41,16 +28,7 @@ local function callOnSelection(promptBufnr, callback, actionName)
   for _, entry in ipairs(multiSelection) do callback(entry, picker) end
 end
 
-function extension.tabDrop(promptBufnr)
-  callOnSelection(promptBufnr, function (selectedEntry, picker)
-    local winId = picker.original_win_id
-    tabDropEntry(selectedEntry, winId)
-  end, 'actions.tabDrop')
-end
-
 local customActions = require('telescope.actions.mt').transform_mod({
-  tabDrop = extension.tabDrop,
-
   toggleCaseSensibility = function () end,
   toggleFixedStrings = function () end,
   toggleOnlyFirstResult = function () end
@@ -60,7 +38,6 @@ extension.customActions = customActions
 
 function extension.defaultFileMappings(_promptBufnr, map)
   local actions = require('telescope.actions')
-  actions.select_default:replace(customActions.tabDrop)
   map({'i', 'n'}, '<C-y>', actions.file_edit)
   map({'i', 'n'}, '<A-u>', actions.to_fuzzy_refine)
 

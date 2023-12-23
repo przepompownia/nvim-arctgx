@@ -1,12 +1,13 @@
 ---@type AbstractKeymaps
 local abstractKeymaps = {
   shellOpen = {lhs = {'<F8>'}, desc = 'Open shell window, mostly with dirname of current buffer as CWD'},
+  previewJumps = {lhs = '<F7>', desc = 'Preview jumps'},
   diagnosticSetLocList = {lhs = {'<Space>q'}, desc = 'Diagnostic: set location list'},
   diagnosticOpenFloat = {lhs = {'<Leader>ii'}, desc = 'Diagnostic: open float window for current line'},
   diagnosticGotoPrevious = {lhs = {'[d'}, desc = 'Diagnostic: go to previous'},
   diagnosticGotoNext = {lhs = {']d'}, desc = 'Diagnostic: go to next'},
-  browseWindows = {lhs = '<F1>', desc = 'Browse windows'},
-  browseBuffers = {lhs = '<S-F1>', desc = 'Browse buffers'},
+  browseWindows = {lhs = '<S-F1>', desc = 'Browse windows'},
+  browseBuffers = {lhs = '<F1>', desc = 'Browse buffers'},
   browseOldfiles = {lhs = '<F4>', desc = 'Browse oldfiles'},
   browseOldfilesInCwd = {lhs = '<Leader><F4>', desc = 'Browse oldfiles under CWD'},
   browseGitBranches = {lhs = '<S-F4>', desc = 'Browse git branches'},
@@ -68,7 +69,6 @@ local abstractKeymaps = {
   gitDiffAgainstIndex = {lhs = '<Leader>hd', desc = 'Git: diff against the index'},
   gitDiffAgainstLastCommit = {lhs = '<Leader>hD', desc = 'Git: diff against the last commit'},
   gitStageAndWriteFile = {lhs = '<S-F2>', desc = 'Git: stage and write file'},
-  closeFloatWindow = {lhs = '<Esc>', desc = 'Close float window'},
   writeBackup = {lhs = '<Leader>iwb', desc = 'Write backup file'},
   dbToggleUI = {lhs = '<F5>', desc = 'Toggle database UI'},
   fileTreeFocus = {lhs = '<Leader>m', desc = 'File tree: focus current buffer'},

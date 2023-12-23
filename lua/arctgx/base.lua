@@ -1,60 +1,33 @@
 local api = vim.api
+---@field setOperatorfunc fun(cb: function)
 local base = {}
 local pluginDir = nil
+---@class PathMappings table<string,string>
+---@type PathMappings
+local pathMappings = {}
 
-local function tabDrop(path, line, column, _relativeWinId)
-  vim.cmd.drop({args = {path}, mods = {tab = #vim.api.nvim_list_tabpages()}})
+---@param remotePath string
+---@param localPath string
+function base.addPathMapping(remotePath, localPath)
+  pathMappings[remotePath] = localPath
+end
+
+---@param path string
+---@param mappings PathMappings
+---@param line integer
+---@param column integer
+function base.editMappedPath(path, mappings, line, column)
+  local remotePath, localPath = vim.iter(mappings or pathMappings)
+    :filter(function (rp, _) return vim.startswith(path, rp) end)
+    :next()
+
+  local mappedPath = remotePath and path:gsub('^' .. remotePath, localPath) or path
+  print(mappedPath)
+
+  vim.cmd.edit({args = {mappedPath}})
   if line then
     vim.fn.cursor(line, column or 1)
   end
-end
-
----@type fun(path: string, line: integer?, column: integer?, relativeWinId: integer?)
-local tabDropReplacement = tabDrop
-
----@param cb fun(path: string, line: integer?, column: integer?, relativeWinId: integer?)
-function base.setTabDropReplacement(cb)
-  tabDropReplacement = cb
-end
-
-local function markAsPreviousPos()
-  vim.cmd.normal({bang = true, args = {"m'"}})
-end
-
-local function addCurrentPosToTagstack()
-  local curLine, curColumn = unpack(api.nvim_win_get_cursor(0))
-  local from = {api.nvim_get_current_buf(), curLine, curColumn + 1, 0}
-  local items = {{tagname = vim.fn.expand('<cword>'), from = from}}
-  vim.fn.settagstack(api.nvim_get_current_win(), {items = items}, 't')
-end
-
-function base.tabDrop(path, line, column, relativeWinId)
-  markAsPreviousPos()
-  addCurrentPosToTagstack()
-
-  tabDropReplacement(path, line, column, relativeWinId)
-end
-
----comment
----@param path string
----@param mapping table<string, string>
----@param line integer
----@param column integer
-function base.tabDropToLineAndColumnWithMapping(path, mapping, line, column)
-  local translateRemotePath = function ()
-    for remotePath, localPath in pairs(mapping or {}) do
-      if vim.startswith(path, remotePath) then
-        return path:gsub('^' .. remotePath, localPath)
-      end
-    end
-
-    return path
-  end
-  base.tabDrop(translateRemotePath(), line, column)
-end
-
-function base.tabDropToLineAndColumnWithDefaultMapping(path, line, column)
-  base.tabDropToLineAndColumnWithMapping(path, vim.g.projectPathMappings, line, column)
 end
 
 function base.operatorGetText()
@@ -141,6 +114,35 @@ base.setOperatorfunc = vim.fn[vim.api.nvim_exec([[
   endfunc
   echon get(function('s:set_opfunc'), 'name')
 ]], true)]
+
+---Defer callback until terminal related options autodetection is complete
+---@param augroupName string
+---@param cb fun(): boolean? return true to call it once unless you want to run it on each next change of those options
+function base.onColorschemeReady(augroupName, cb)
+  local colorschemeReadyOptions = {'background', 'termguicolors'}
+  local function isColorschemeReady()
+    return vim.iter(colorschemeReadyOptions):all(function (option)
+      return vim.api.nvim_get_option_info2(option, {}).was_set
+    end)
+  end
+
+  if isColorschemeReady() and true == cb() then
+    return
+  end
+
+  local augroup = vim.api.nvim_create_augroup(augroupName, {clear = true})
+
+  vim.api.nvim_create_autocmd('OptionSet', {
+    group = augroup,
+    nested = true,
+    pattern = colorschemeReadyOptions,
+    callback = function ()
+      if isColorschemeReady() and true == cb() then
+        vim.api.nvim_del_augroup_by_id(augroup)
+      end
+    end,
+  })
+end
 
 ---@param keywordChars table<string>
 ---@param callback function

@@ -30,6 +30,7 @@ vim.opt.isfname:remove('=')
 vim.opt.diffopt:append('vertical')
 vim.opt.diffopt:append('linematch:60')
 vim.opt.jumpoptions:append('view')
+vim.opt_global.shortmess:append('I')
 
 vim.go.foldlevelstart = 99
 vim.wo.foldcolumn = 'auto'
@@ -41,6 +42,8 @@ vim.go.wildmenu = true
 vim.go.history = 1000
 vim.go.laststatus = 2
 vim.opt.completeopt:remove('preview')
+vim.go.showtabline = 1
+vim.go.tabline = "%!v:lua.require'arctgx.tabline'.prepare()"
 
 vim.go.ignorecase = false
 vim.go.wildignorecase = true
@@ -49,7 +52,6 @@ vim.go.showcmd = true
 vim.opt.swapfile = false
 
 vim.opt.sessionoptions:remove('help')
-vim.opt.sessionoptions:remove('buffers')
 vim.opt.sessionoptions:remove('folds')
 
 vim.opt.signcolumn = 'auto:1-9'

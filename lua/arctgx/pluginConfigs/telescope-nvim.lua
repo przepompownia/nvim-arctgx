@@ -19,6 +19,8 @@ require('telescope').setup {
         ['<C-n>'] = 'cycle_history_prev',
         ['<A-Up>'] = 'preview_scrolling_up',
         ['<A-Down>'] = 'preview_scrolling_down',
+        ['<A-Left>'] = 'preview_scrolling_left',
+        ['<A-Right>'] = 'preview_scrolling_right',
         ['<A-/>'] = function (promptBufnr)
           return require 'telescope.actions.layout'.toggle_preview(promptBufnr)
         end,
@@ -30,12 +32,22 @@ require('telescope').setup {
 
 api.nvim_create_user_command(
   'GGrep',
-  function (opts) require('arctgx.telescope').gitGrep(opts.args, false, false) end,
+  function (opts)
+    base.onColorschemeReady('GGrep', function ()
+      require('arctgx.telescope').gitGrep(opts.args, false, false)
+      return true
+    end)
+  end,
   {nargs = '*'}
 )
 api.nvim_create_user_command(
   'RGrep',
-  function (opts) require('arctgx.telescope').rgGrep(opts.args, false, false) end,
+  function (opts)
+    base.onColorschemeReady('GGrep', function ()
+      require('arctgx.telescope').rgGrep(opts.args, false, false)
+      return true
+    end)
+  end,
   {nargs = '*'}
 )
 api.nvim_create_user_command(
@@ -58,6 +70,7 @@ keymap.set('n', 'grepGit', function () require('arctgx.telescope').gitGrep('', f
 keymap.set('n', 'grepAll', function () require('arctgx.telescope').rgGrep('', false, false) end)
 keymap.set('n', 'filesAll', function () require('arctgx.telescope').filesAll() end)
 keymap.set('n', 'filesGit', function () require('arctgx.telescope').filesGit() end)
+keymap.set('n', 'previewJumps', function () require('telescope.builtin').jumplist() end)
 keymap.set('n', 'browseCommandHistory', function () require('telescope.builtin').command_history() end)
 keymap.set('n', 'browseOldfiles', function () require('arctgx.telescope').oldfiles(false) end)
 keymap.set('n', 'browseOldfilesInCwd', function () require('arctgx.telescope').oldfiles(true) end)
