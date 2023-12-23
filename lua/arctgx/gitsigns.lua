@@ -68,9 +68,6 @@ gitsigns.configuration = {
     map('n', 'gitDiffAgainstLastCommit', function () gs.diffthis('~') end)
     map('n', 'gitToggleDeleted', gs.toggle_deleted)
     map('n', 'gitHunkToVisual', gs.select_hunk)
-
-    -- Text object
-    map({'o', 'x'}, 'ih', ':<C-U>Gitsigns select_hunk<CR>')
   end
 }
 
