@@ -1,5 +1,4 @@
 local api = vim.api
-local base = require('arctgx.base')
 local session = require('arctgx.session')
 local treeapi = require('nvim-tree.api')
 
@@ -21,27 +20,12 @@ require('nvim-tree').setup({
   },
   on_attach = function (bufnr)
     treeapi.config.mappings.default_on_attach(bufnr)
-    local injectNode = require('nvim-tree.utils').inject_node
 
     vim.keymap.set(
       'n',
       '<TAB>',
       '<C-w>w',
       {buffer = bufnr, noremap = true, desc = 'Jump to the last used window'}
-    )
-    vim.keymap.set(
-      'n',
-      '<CR>',
-      injectNode(function (node)
-        if node.name == '..' or node.type == 'directory' then
-          treeapi.node.open.edit()
-
-          return
-        end
-        treeapi.tree.close()
-        base.tabDrop(node.absolute_path)
-      end),
-      {buffer = bufnr, noremap = true, desc = 'Open or expand node'}
     )
     vim.keymap.set(
       'n',
