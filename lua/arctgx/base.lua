@@ -3,21 +3,6 @@ local api = vim.api
 local base = {}
 local pluginDir = nil
 
-local function tabDrop(path, line, column, _relativeWinId)
-  vim.cmd.edit({args = {path}})
-  if line then
-    vim.fn.cursor(line, column or 1)
-  end
-end
-
----@type fun(path: string, line: integer?, column: integer?, relativeWinId: integer?)
-local tabDropReplacement = tabDrop
-
----@param cb fun(path: string, line: integer?, column: integer?, relativeWinId: integer?)
-function base.setTabDropReplacement(cb)
-  tabDropReplacement = cb
-end
-
 local function markAsPreviousPos()
   vim.cmd.normal({bang = true, args = {"m'"}})
 end
@@ -29,11 +14,14 @@ local function addCurrentPosToTagstack()
   vim.fn.settagstack(api.nvim_get_current_win(), {items = items}, 't')
 end
 
-function base.tabDrop(path, line, column, relativeWinId)
+function base.tabDrop(path, line, column)
   markAsPreviousPos()
   addCurrentPosToTagstack()
 
-  tabDropReplacement(path, line, column, relativeWinId)
+  vim.cmd.edit({args = {path}})
+  if line then
+    vim.fn.cursor(line, column or 1)
+  end
 end
 
 ---comment
