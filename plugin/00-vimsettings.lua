@@ -48,6 +48,8 @@ vim.go.tabline = "%!v:lua.require'arctgx.tabline'.prepare()"
 vim.go.ignorecase = false
 vim.go.wildignorecase = true
 vim.bo.path = '.,,'
+vim.opt.path:append(vim.fs.dirname(vim.env.VIMRUNTIME))
+vim.opt.path:append(vim.env.VIMRUNTIME)
 vim.go.showcmd = true
 vim.opt.swapfile = false
 
