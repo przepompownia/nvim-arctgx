@@ -199,26 +199,39 @@ function extension.files(cmd, root, query, title)
 end
 
 function extension.filesGit(query)
-  extension.files(git.commandFiles(), git.top(base.getBufferCwd()), query,
-    'Files (git)')
+  extension.files(
+    git.commandFiles(),
+    git.top(base.getBufferCwd()),
+    query,
+    'Files (git)'
+  )
 end
 
 function extension.filesGitOperator(type)
-  return extension.createOperator(extension.files, git.commandFiles(),
-    git.top(base.getBufferCwd()))(
+  return extension.createOperator(
+    extension.files,
+    git.commandFiles(),
+    git.top(base.getBufferCwd())
+  )(
     type)
 end
 
 function extension.filesAllOperator(type)
-  return extension.createOperator(extension.files,
+  return extension.createOperator(
+    extension.files,
     require('arctgx.files').commandFdfindAll(),
-    git.top(base.getBufferCwd()))(
+    git.top(base.getBufferCwd())
+  )(
     type)
 end
 
 function extension.filesAll(query)
-  extension.files(require('arctgx.files').commandFdfindAll(), git.top(base.getBufferCwd()),
-    query, 'Files (all)')
+  extension.files(
+    require('arctgx.files').commandFdfindAll(),
+    git.top(base.getBufferCwd()),
+    query,
+    'Files (all)'
+  )
 end
 
 return extension
