@@ -212,8 +212,7 @@ function extension.filesGitOperator(type)
     extension.files,
     git.commandFiles(),
     git.top(base.getBufferCwd())
-  )(
-    type)
+  )(type)
 end
 
 function extension.filesAllOperator(type)
@@ -221,8 +220,7 @@ function extension.filesAllOperator(type)
     extension.files,
     require('arctgx.files').commandFdfindAll(),
     git.top(base.getBufferCwd())
-  )(
-    type)
+  )(type)
 end
 
 function extension.filesAll(query)
