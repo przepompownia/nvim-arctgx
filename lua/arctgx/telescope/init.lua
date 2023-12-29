@@ -205,14 +205,14 @@ end
 
 function extension.filesGitOperator(type)
   return extension.createOperator(extension.files, git.commandFiles(),
-    git.top(base.getBufferCwd()), 'Files (git)')(
+    git.top(base.getBufferCwd()))(
     type)
 end
 
 function extension.filesAllOperator(type)
   return extension.createOperator(extension.files,
     require('arctgx.files').commandFdfindAll(),
-    git.top(base.getBufferCwd()), 'Files (all)')(
+    git.top(base.getBufferCwd()))(
     type)
 end
 
