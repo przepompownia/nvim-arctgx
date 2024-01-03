@@ -1,6 +1,11 @@
 local tabline = {}
 
 function tabline.label(tabpage)
+  local tabName = vim.t[tabpage].arctgxTabName
+  if tabName then
+    return tabName
+  end
+
   local currentBuf = vim.api.nvim_win_get_buf(vim.api.nvim_tabpage_get_win(tabpage))
   local bufname = vim.api.nvim_buf_get_name(currentBuf)
 
