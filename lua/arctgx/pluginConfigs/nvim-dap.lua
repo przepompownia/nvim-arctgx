@@ -134,8 +134,8 @@ keymap.set(
   end,
   opts
 )
-keymap.set({'n'}, 'debuggerFrameUp', keymap.repeatable(dap.up), opts)
-keymap.set({'n'}, 'debuggerFrameDown', keymap.repeatable(dap.down), opts)
+keymap.set({'n'}, 'debuggerFrameUp', keymap.repeatable(dap.up), {expr = true})
+keymap.set({'n'}, 'debuggerFrameDown', keymap.repeatable(dap.down), {expr = true})
 keymap.set({'n'}, 'debuggerRunToCursor', dap.run_to_cursor, opts)
 keymap.set({'n'}, 'debuggerClose', dap.close, opts)
 keymap.set(
