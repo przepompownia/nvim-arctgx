@@ -81,7 +81,7 @@ dapui.setup({
       position = 'left',
     },
     {
-      elements = { 'repl' },
+      elements = { 'repl', 'console' },
       size = 10,
       position = 'bottom',
     },
