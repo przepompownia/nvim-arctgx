@@ -31,17 +31,9 @@ api.nvim_create_autocmd('FileType', {
   group = augroup,
   pattern = 'dbui',
   callback = function ()
-    vim.b.ideTabName = 'DBUI[d]'
     vim.keymap.set('n', '<Left>', '<Plug>(DBUI_GotoParentNode)', {buffer = 0})
     vim.keymap.set('n', '<Right>', '<Plug>(DBUI_GotoChildNode)', {buffer = 0})
     require('arctgx.lineHover').enableForWindow()
-  end
-})
-
-api.nvim_create_autocmd('FileType', {
-  group = augroup,
-  pattern = 'dbui',
-  callback = function ()
     local tabpage = vim.api.nvim_get_current_tabpage()
     vim.t[tabpage].arctgxTabName = 'DBUI'
   end
