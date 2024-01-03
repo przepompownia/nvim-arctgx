@@ -37,25 +37,18 @@ api.nvim_create_autocmd('FileType', {
     require('arctgx.lineHover').enableForWindow()
   end
 })
+
 api.nvim_create_autocmd('FileType', {
   group = augroup,
-  pattern = {'sql', 'mysql'},
+  pattern = 'dbui',
   callback = function ()
-    if vim.b.dbui_db_key_name ~= nil then
-      vim.b.ideTabName = 'DBUI[q]'
-    end
-  end
-})
-api.nvim_create_autocmd('FileType', {
-  group = augroup,
-  pattern = 'dbout',
-  callback = function ()
-    vim.b.ideTabName = 'DBUI[o]'
+    local tabpage = vim.api.nvim_get_current_tabpage()
+    vim.t[tabpage].arctgxTabName = 'DBUI'
   end
 })
 
 require('arctgx.vim.abstractKeymap').set('n', 'dbToggleUI', function ()
-  api.nvim_cmd({cmd = 'DBUI', mods = {tab = 1}}, {})
+  vim.cmd.DBUI({mods = {tab = 1}})
 end, {})
 
 local function newQuery()
