@@ -32,6 +32,15 @@ local function reloadColors()
   end
 end
 
+vim.api.nvim_create_autocmd({'FileType'}, {
+  pattern = {'dapui_scopes'},
+  group = augroup,
+  callback = function ()
+    local tabpage = vim.api.nvim_get_current_tabpage()
+    vim.t[tabpage].arctgxTabName = 'DAP UI'
+  end
+})
+
 api.nvim_create_autocmd({'ColorScheme'}, {
   group = augroup,
   callback = reloadColors,

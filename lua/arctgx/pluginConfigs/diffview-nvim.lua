@@ -4,6 +4,14 @@ local keymap = require('arctgx.vim.abstractKeymap')
 require('diffview').setup({
   use_icons = false,
   enhanced_diff_hl = true,
+  -- keymaps = {
+  --   file_panel = {
+  --     -- {'n', 'gitCommit', function (...)
+  --     {'n', 'cc', function (...)
+  --       dump(...)
+  --     end, {desc = 'git commit'}},
+  --   },
+  -- },
 })
 
 local function closeDiffviewTabs()
@@ -35,3 +43,13 @@ vim.api.nvim_create_autocmd('FileType', {
     end)
   end,
 })
+
+vim.api.nvim_create_autocmd({'FileType'}, {
+  pattern = {'DiffviewFiles', 'DiffviewFileHistory'},
+  group = vim.api.nvim_create_augroup('DiffViewTabName', {clear = true}),
+  callback = function (args)
+    local tabpage = vim.api.nvim_get_current_tabpage()
+    vim.t[tabpage].arctgxTabName = args.match
+  end
+})
+
