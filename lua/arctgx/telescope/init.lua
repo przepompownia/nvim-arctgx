@@ -64,9 +64,9 @@ function extension.oldfiles(onlyCwd)
   })
 end
 
----@param opts table
+---@param opts table?
 function extension.buffers(opts)
-  opts = vim.tbl_deep_extend('keep', opts, {
+  opts = vim.tbl_deep_extend('keep', opts or {}, {
     attach_mappings = function (promptBufnr, map)
       extension.defaultFileMappings(promptBufnr, map)
       local function deleteBuffer()

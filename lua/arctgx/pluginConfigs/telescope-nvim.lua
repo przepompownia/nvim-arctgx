@@ -74,7 +74,14 @@ keymap.set('n', 'previewJumps', function () require('telescope.builtin').jumplis
 keymap.set('n', 'browseCommandHistory', function () require('telescope.builtin').command_history() end)
 keymap.set('n', 'browseOldfiles', function () require('arctgx.telescope').oldfiles(false) end)
 keymap.set('n', 'browseOldfilesInCwd', function () require('arctgx.telescope').oldfiles(true) end)
-keymap.set('n', 'browseBuffers', function () require('arctgx.telescope').buffers() end)
+keymap.set('n', 'browseAllBuffers', function () require('arctgx.telescope').buffers() end)
+keymap.set('n', 'browseBuffersInCwd', function ()
+  require('arctgx.telescope').buffers({
+    only_cwd = true,
+    sort_mru = true,
+    ignore_current_buffer = true,
+  })
+end)
 keymap.set('n', 'browseWindows', function () require('arctgx.telescope.windows').list() end)
 keymap.set('n', 'browseGitBranches', function () require('arctgx.telescope').branches() end)
 keymap.set('v', 'searchStringInGitFromTextObject', function ()
