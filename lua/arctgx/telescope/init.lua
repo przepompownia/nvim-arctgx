@@ -64,8 +64,9 @@ function extension.oldfiles(onlyCwd)
   })
 end
 
-function extension.buffers()
-  require('telescope.builtin').buffers({
+---@param opts table
+function extension.buffers(opts)
+  opts = vim.tbl_deep_extend('keep', opts, {
     attach_mappings = function (promptBufnr, map)
       extension.defaultFileMappings(promptBufnr, map)
       local function deleteBuffer()
@@ -79,6 +80,7 @@ function extension.buffers()
       return true
     end,
   })
+  require('telescope.builtin').buffers(opts)
 end
 
 ---@param cmd Grep
