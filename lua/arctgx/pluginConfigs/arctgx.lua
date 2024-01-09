@@ -6,9 +6,3 @@ end)
 keymap.set('n', 'gitPush', function ()
   require 'arctgx.git'.pushToAllRemoteRepos(require('arctgx.base').getBufferCwd())
 end)
-keymap.set('n', 'gitCommit', function ()
-  require 'arctgx.shell'.open({
-    cmd = {'git', 'commit'},
-    cwd = require('arctgx.git').top(require('arctgx.base').getBufferCwd()),
-  })
-end)

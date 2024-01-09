@@ -4,14 +4,6 @@ local keymap = require('arctgx.vim.abstractKeymap')
 require('diffview').setup({
   use_icons = false,
   enhanced_diff_hl = true,
-  -- keymaps = {
-  --   file_panel = {
-  --     -- {'n', 'gitCommit', function (...)
-  --     {'n', 'cc', function (...)
-  --       dump(...)
-  --     end, {desc = 'git commit'}},
-  --   },
-  -- },
 })
 
 local function closeDiffviewTabs()
