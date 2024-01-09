@@ -50,7 +50,7 @@ local abstractKeymaps = {
   jumpToPreviousDiffOrGitHunk = {lhs = '[c', desc = 'Jump to previous diff or git hunk'},
   jumpToNextDiffOrGitHunk = {lhs = ']c', desc = 'Jump to next diff or git hunk'},
   gitHunkStage = {lhs = '<Leader>hs', desc = 'Git: stage hunk'},
-  gitStatusUIOpen = {lhs = {'<Leader>g', '<Leader>gs'}, desc = 'Git: open status UI'},
+  gitStatusUIOpen = {lhs = {'<Leader>gg'}, desc = 'Git: open status UI'},
   gitStatusUIClose = {lhs = '<Leader>gq', desc = 'Git: close status UI'},
   gitCommit = {lhs = '<Leader>gc', desc = 'Git: commit'},
   gitBlame = {lhs = '<Leader>gb', desc = 'Git: blame whole buffer'},
