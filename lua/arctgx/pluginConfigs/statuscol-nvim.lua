@@ -12,11 +12,11 @@ require('statuscol').setup({
       click = 'v:lua.ScSa',
     },
     {
-      sign = {namespace = {'arctgx.diagnostic.signs/diagnostic/signs'}, maxwidth = 1, colwidth = 1, auto = true},
+      sign = {namespace = {'arctgx.diagnostic.signs/diagnostic/signs'}, maxwidth = 2, colwidth = 2, auto = true},
       click = 'v:lua.ScSa'
     },
     {
-      sign = {name = {'Dap.*'}, maxwidth = 2, colwidth = 1, auto = true},
+      sign = {name = {'Dap.*'}, maxwidth = 2, colwidth = 2, auto = true},
       click = 'v:lua.ScLa'
     },
     {
