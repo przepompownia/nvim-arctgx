@@ -154,6 +154,10 @@ keymap.set(
   function () dap.set_breakpoint(nil, nil, vim.fn.input('Log point message: ')) end,
   opts
 )
+
+local function info(message)
+  vim.notify(message, vim.log.levels.INFO, {title = 'DAP'})
+end
 -- nnoremap <silent> <leader>dr :lua require'dap'.repl.open()<CR>
 -- nnoremap <silent> <leader>dl :lua require'dap'.run_last()<CR>
 dap.defaults.fallback.switchbuf = 'uselast'
@@ -174,25 +178,22 @@ dap.listeners.after['event_stopped']['arctgx'] = function (_session, _body)
 end
 
 dap.listeners.after['event_exited']['arctgx'] = function (_session, _body)
-  api.nvim_exec_autocmds('User', {pattern = 'IdeStatusChanged', modeline = false})
-  print('Exited')
+  info('Exited')
   dapSessionStatus = 'E'
 end
 dap.listeners.after['event_thread']['arctgx'] = function (_session, body)
   api.nvim_exec_autocmds('User', {pattern = 'IdeStatusChanged', modeline = false})
   if body.reason == 'exited' then
-    print('Thread ' .. body.threadId .. ' exited')
+    info('Thread ' .. body.threadId .. ' exited')
     dapSessionStatus = 'X'
   end
 end
 dap.listeners.before['disconnect']['arctgx'] = function (_session, _body)
-  api.nvim_exec_autocmds('User', {pattern = 'IdeStatusChanged', modeline = false})
-  vim.notify('Disconnected')
+  info('Disconnected')
   dapSessionStatus = 'D'
 end
 dap.listeners.after['event_terminated']['arctgx'] = function (_session, _body)
-  api.nvim_exec_autocmds('User', {pattern = 'IdeStatusChanged', modeline = false})
-  vim.notify('Terminated')
+  info('Terminated')
   dapSessionStatus = 'T'
 end
 
