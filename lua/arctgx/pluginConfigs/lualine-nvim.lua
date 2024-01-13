@@ -8,7 +8,6 @@ require('lualine').setup({
   options = {
     component_separators = {left = '', right = ''},
     disabled_filetypes = {
-      'fern',
       'dap-repl',
       'dapui_watches',
       'dapui_scopes',
