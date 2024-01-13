@@ -14,6 +14,7 @@ require('lualine').setup({
       'dapui_scopes',
       'dapui_breakpoints',
       'dapui_stacks',
+      'dapui_console',
       'gitcommit',
     },
   },
