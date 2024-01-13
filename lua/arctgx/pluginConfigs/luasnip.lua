@@ -46,9 +46,9 @@ ls.add_snippets('php', {
     {
       callbacks = {
         [4] = {
-          [events.leave] = function()
-              vim.api.nvim_cmd({cmd = 'stopinsert'}, {})
-              vim.lsp.buf.code_action()
+          [events.leave] = function ()
+            vim.api.nvim_cmd({cmd = 'stopinsert'}, {})
+            vim.lsp.buf.code_action()
           end
         }
       }
