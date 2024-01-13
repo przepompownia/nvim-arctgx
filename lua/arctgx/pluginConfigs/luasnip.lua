@@ -64,7 +64,7 @@ ls.add_snippets('php', {
       t(' $'),
       d(2, function (args)
         local type = args[1] and args[1][1] or 'name'
-        local lcfirst = (type:gsub("^%u", string.lower))
+        local lcfirst = (type:gsub('^%u', string.lower))
         return sn(nil, {
           i(1, lcfirst)
         })
