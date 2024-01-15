@@ -117,3 +117,7 @@ cmp.setup.filetype({'php'}, {
     keyword_pattern = [[\%(\d\+\%(\.\d\+\)\?\|\h\w*\)]],
   }
 })
+
+cmp.setup.filetype({'gitcommit'}, {
+  enabled = true,
+})
