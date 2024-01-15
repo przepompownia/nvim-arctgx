@@ -1,6 +1,7 @@
 local config = {}
 
 config.default = {
+  log = false,
   type = 'php',
   request = 'launch',
   name = 'Listen for XDebug',
@@ -23,3 +24,4 @@ config.default = {
 }
 
 return config
+
