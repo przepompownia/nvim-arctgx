@@ -24,5 +24,8 @@ require('statuscol').setup({
       click = 'v:lua.ScSa'
     },
     {text = {builtin.lnumfunc, ' '}, click = 'v:lua.ScLa',},
-  }
+  },
+  ft_ignore = {
+    'NvimTree',
+  },
 })
