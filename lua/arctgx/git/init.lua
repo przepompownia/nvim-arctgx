@@ -47,7 +47,7 @@ function extension.push(relativeDir, remoteRepo)
 
     local out = table.concat(data, '\n')
     vim.schedule(function ()
-      vim.notify(('%s: %s'):format(remoteRepo, out), level)
+      vim.notify(('%s: %s'):format(remoteRepo, out), level, {title = 'git'})
     end)
   end
 
