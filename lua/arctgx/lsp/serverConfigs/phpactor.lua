@@ -146,4 +146,8 @@ function extension.clientConfig(file, rootPatterns)
   }
 end
 
+vim.api.nvim_create_user_command('PhpactorLSPDumpConfig', extension.dumpConfig, {nargs = 0})
+vim.api.nvim_create_user_command('PhpactorLSPServerStatus', extension.status, {nargs = 0})
+vim.api.nvim_create_user_command('PhpactorLSPServerReindex', extension.reindex, {nargs = 0})
+
 return extension
