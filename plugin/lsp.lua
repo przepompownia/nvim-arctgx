@@ -88,8 +88,6 @@ vim.api.nvim_create_autocmd('LspAttach', {
         end,
       })
     end
-
-    -- vim.notify(('Server %s attached to %s'):format(client.name, api.nvim_buf_get_name(ev.buf)))
   end,
 })
 

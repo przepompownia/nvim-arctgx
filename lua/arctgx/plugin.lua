@@ -17,7 +17,7 @@ function plugin.loadCustomConfiguration(pluginDirs, pluginPrefix)
   })
 
   if vim.tbl_isempty(pluginDirs) then
-    vim.notify('Empty vim.g.pluginDirs', vim.log.levels.ERROR)
+    vim.notify('Empty vim.g.pluginDirs', vim.log.levels.ERROR, {title = 'Plugin configuration'})
   end
 
   for _, pluginDir in ipairs(pluginDirs) do
@@ -38,7 +38,7 @@ function plugin.loadSingleConfiguration(pluginName, pluginPrefix)
 
   local ok, out = pcall(require, pluginModule)
   if not ok then
-    vim.notify(out, vim.log.levels.WARN)
+    vim.notify(out, vim.log.levels.WARN, {title = 'Plugin configuration'})
   end
 end
 

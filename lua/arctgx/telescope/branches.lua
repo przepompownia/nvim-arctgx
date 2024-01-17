@@ -14,7 +14,7 @@ local function switchToBranch(branch, cwd, _noHooks)
   local _stdout, exitCode, stderr = require('telescope.utils').get_os_command_output(cmd, cwd)
 
   if {} ~= stderr then
-    vim.notify(table.concat(stderr, '\n'), vim.log.levels.INFO)
+    vim.notify(table.concat(stderr, '\n'), vim.log.levels.INFO, {title = 'git switch'})
   end
 
   if 0 ~= exitCode then

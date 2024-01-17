@@ -19,7 +19,7 @@ local function newClassFromFile(path)
   end
 
   if 1 == vim.fn.filereadable(path) then
-    vim.notify(('File %s exist!'):format(path))
+    vim.notify(('File %s exist!'):format(path), vim.log.levels.INFO, {title = 'Phpactor'})
     return
   end
 
@@ -29,6 +29,7 @@ local function newClassFromFile(path)
   vim.fn.bufload(buf)
 
   local timer = vim.uv.new_timer()
+  assert(timer)
   local i = 1
   timer:start(
     0,
@@ -36,7 +37,7 @@ local function newClassFromFile(path)
     vim.schedule_wrap(function ()
       local clients = vim.iter(vim.lsp.get_clients({bufnr = buf, name = 'phpactor'}))
       if not clients:next() then
-        vim.notify(('Server not ready, trying %s time'):format(tostring(i)))
+        vim.notify(('Server not ready, trying %s time'):format(tostring(i)), vim.log.levels.INFO, {title = 'Phpactor'})
         i = i + 1
         return
       end
@@ -47,7 +48,7 @@ local function newClassFromFile(path)
         print('V: ' .. vim.inspect(variant))
         if nil == variant then
           api.nvim_buf_delete(buf, {})
-          vim.notify('Canceled when selecting a variant')
+          vim.notify('Canceled when selecting a variant', vim.log.levels.INFO, {title = 'Phpactor'})
           return
         end
 

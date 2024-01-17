@@ -96,7 +96,7 @@ treeapi.events.subscribe(Event.NodeRenamed, function (data)
     end
     vim.system({'git', 'add', '-u', '--', data.old_name})
     vim.system({'git', 'add', '--', data.new_name})
-    vim.notify(('renamed from %s to %s'):format(data.old_name, data.new_name))
+    vim.notify(('renamed from %s to %s'):format(data.old_name, data.new_name), vim.log.levels.INFO, {title = 'NvimTree'})
   end)
 end)
 

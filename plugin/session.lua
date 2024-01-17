@@ -6,7 +6,7 @@ local function mksessionCmd(opts)
   end
   local ok, out = pcall(api.nvim_cmd, {cmd = 'mks', bang = opts.bang, args = opts.fargs}, {})
   if not ok then
-    vim.notify(out, vim.log.levels.ERROR)
+    vim.notify(out, vim.log.levels.ERROR, {title = 'Mks'})
   end
 end
 

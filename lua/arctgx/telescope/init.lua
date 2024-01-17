@@ -88,7 +88,7 @@ end
 ---@param query string
 function extension.grep(cmd, root, query)
   if query:find('\n') then
-    vim.notify('Cannot grep multiline text', vim.log.levels.WARN)
+    vim.notify('Cannot grep multiline text', vim.log.levels.WARN, {title = 'Telescope grep extension'})
 
     return
   end
