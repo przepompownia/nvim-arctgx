@@ -80,7 +80,7 @@ local abstractKeymaps = {
   langGoToImplementation = {lhs = {'gi'}, desc = 'Find implementations'},
   langFindReferences = {lhs = 'gr', desc = 'Find references'},
   langFindDocumentSymbols = {lhs = {'<Leader>ilo', '<F6>'}, desc = 'Find document symbols'},
-  langFindWorkspaceSymbols = {lhs = '<Leader>ilw', desc = 'Find workspace symbols'},
+  langFindWorkspaceSymbols = {lhs = '<S-F6>', desc = 'Find workspace symbols'},
   langToggleInlayHints = {lhs = '<Leader>ih', desc = 'Toggle inlay hints'},
   langRenameSymbol = {lhs = '<Leader>iar', desc = 'Rename symbol'},
   langShowSignatureHelp = {lhs = {i = '<C-Bslash>,', n = '<Leader>ish'}, desc = 'Show signature help'},
