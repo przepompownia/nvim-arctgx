@@ -75,6 +75,25 @@ ls.add_snippets('php', {
       end, {3}),
       t(',')
     }),
+  s(
+    {
+      trig = '<<<',
+      dscr = 'Heredoc',
+    },
+    {
+      t('<<<'),
+      i(1, 'SQL'),
+      t({'', ''}),
+      i(0),
+      t({'', ''}),
+      d(2, function (args)
+        local eol = args[1] and args[1][1] or 'SQL'
+        return sn(nil, {
+          t(eol .. ';')
+        })
+      end, {1}),
+    }
+  ),
 })
 
 
