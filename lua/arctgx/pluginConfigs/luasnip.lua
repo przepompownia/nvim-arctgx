@@ -7,7 +7,7 @@ local sn = ls.snippet_node
 local t = ls.text_node
 local i = ls.insert_node
 -- local f = ls.function_node
--- local c = ls.choice_node
+local c = ls.choice_node
 local d = ls.dynamic_node
 -- local r = ls.restore_node
 local events = require('luasnip.util.events')
@@ -59,18 +59,22 @@ ls.add_snippets('php', {
       dscr = 'promoted private property',
     },
     {
-      t('private '),
-      i(1, 'string'),
+      c(1, {
+        t 'private ',
+        t 'public ',
+      }),
+      i(2, 'readonly '),
+      i(3, 'string'),
       t(' $'),
-      d(2, function (args)
+      d(4, function (args)
         local type = args[1] and args[1][1] or 'name'
-        local lcfirst = (type:gsub('^%u', string.lower))
+        local lcfirst = type:gsub('^%u', string.lower)
         return sn(nil, {
           i(1, lcfirst)
         })
-      end, {1}),
+      end, {3}),
       t(',')
-    })
+    }),
 })
 
 
