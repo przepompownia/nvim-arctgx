@@ -5,7 +5,6 @@ local keymap = require('arctgx.vim.abstractKeymap')
 require('telescope').setup {
   defaults = {
     preview = {
-      timeout = 10,
     },
     layout_strategy = 'horizontal',
     layout_config = {
