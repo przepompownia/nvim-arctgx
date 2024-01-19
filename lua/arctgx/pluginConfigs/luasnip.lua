@@ -94,6 +94,22 @@ ls.add_snippets('php', {
       end, {1}),
     }
   ),
+  s(
+    {
+      trig = '/**',
+      dscr = 'Docblock',
+    },
+    {
+      t({'/**', ' * '}),
+      c(1, {
+        i(nil, '@throws'),
+        i(nil, '@return'),
+      }),
+      t(' '),
+      i(2, 'Exception'),
+      t({'', ' */'}),
+    }
+  ),
 })
 
 
