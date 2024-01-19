@@ -21,6 +21,15 @@ local cmpSources = {
   }
 }
 
+local function snippetChoiceOrFallback(fallback, direction)
+  local luasnip = require('luasnip')
+  if luasnip.choice_active() then
+    luasnip.change_choice(direction)
+  else
+    fallback()
+  end
+end
+
 cmp.setup({
   enabled = function ()
     local buf = vim.api.nvim_get_current_buf()
@@ -38,10 +47,10 @@ cmp.setup({
     ['<C-d>'] = cmp.mapping.scroll_docs(-4),
     ['<C-f>'] = cmp.mapping.scroll_docs(4),
     ['<C-p>'] = cmp.mapping(function (fallback)
-      fallback()
+      snippetChoiceOrFallback(fallback, -1)
     end, {'i', 's'}),
     ['<C-n>'] = cmp.mapping(function (fallback)
-      fallback()
+      snippetChoiceOrFallback(fallback, 1)
     end, {'i', 's'}),
     ['<Tab>'] = cmp.mapping(function (fallback)
       local luasnip = require('luasnip')
