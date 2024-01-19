@@ -89,7 +89,7 @@ ls.add_snippets('php', {
       d(2, function (args)
         local eol = args[1] and args[1][1] or 'SQL'
         return sn(nil, {
-          t(eol .. ';')
+          t(eol)
         })
       end, {1}),
     }
