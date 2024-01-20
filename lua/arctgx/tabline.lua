@@ -24,10 +24,10 @@ end
 --- @return string
 function tabline.prepare()
   local s = ''
-  local currentTabpage = vim.api.nvim_tabpage_get_number(vim.api.nvim_win_get_tabpage(0))
+  local currentTabpage = vim.api.nvim_win_get_tabpage(0)
   for _, tabpage in ipairs(vim.api.nvim_list_tabpages()) do
     s = s .. ((tabpage == currentTabpage) and '%#TabLineSel#' or '%#TabLine#')
-    s = s .. '%' .. (tabpage) .. 'T'
+    s = s .. '%' .. vim.api.nvim_tabpage_get_number(tabpage) .. 'T'
     -- s = s .. " %{v:lua.require'arctgx.tabline'.label(" .. (tabpage) .. ')} '
     s = s .. (' %s '):format(tabline.label(tabpage))
   end
