@@ -4,16 +4,12 @@ require('lualine').setup({
   extensions = {
     'nvim-tree',
     'quickfix',
+    'nvim-dap-ui',
   },
   options = {
     component_separators = {left = '', right = ''},
     disabled_filetypes = {
       'dap-repl',
-      'dapui_watches',
-      'dapui_scopes',
-      'dapui_breakpoints',
-      'dapui_stacks',
-      'dapui_console',
       'gitcommit',
     },
   },
