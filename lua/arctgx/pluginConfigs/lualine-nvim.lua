@@ -52,7 +52,17 @@ require('lualine').setup({
         'selectioncount',
       },
     },
-    lualine_x = {'encoding', 'fileformat', 'filetype'},
+    lualine_x = {
+      function ()
+        if not vim.v.this_session then
+          return
+        end
+        return vim.fn.fnamemodify(vim.v.this_session, ':t:r')
+      end,
+      'encoding',
+      'fileformat',
+      'filetype',
+    },
     lualine_y = {'progress'},
     lualine_z = {
       'location',
