@@ -10,12 +10,17 @@ end
 local cmpSources = {
   buffer = {
     name = 'buffer',
+    ---@param entry cmp.Entry
+    entry_filter = function (entry, _)
+      return #entry:get_word() < 60
+    end,
     option = {
       get_bufnrs = function ()
         return vim.iter(vim.api.nvim_list_bufs()):filter(function (bufnr)
           return vim.api.nvim_buf_is_loaded(bufnr)
         end):totable()
-      end
+      end,
+      max_indexed_line_length = 300,
     },
     priority = 1,
   }
@@ -88,10 +93,10 @@ cmp.setup({
     }),
   }),
   sources = {
-    {name = 'nvim_lsp'},
-    {name = 'luasnip'},
+    {name = 'nvim_lsp', priority = 1000},
+    {name = 'luasnip', priority = 900},
     cmpSources.buffer,
-    {name = 'path'},
+    {name = 'path', priority = 2},
   },
   confirmation = {
     default_behavior = cmp.ConfirmBehavior.Replace,
