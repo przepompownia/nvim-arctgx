@@ -13,16 +13,17 @@ function base.addPathMapping(remotePath, localPath)
 end
 
 ---@param path string
----@param mappings PathMappings
 ---@param line integer
 ---@param column integer
 function base.editMappedPath(path, line, column)
+  if not path then
+    return
+  end
   local remotePath, localPath = vim.iter(pathMappings)
     :filter(function (rp, _) return vim.startswith(path, rp) end)
     :next()
 
   local mappedPath = remotePath and path:gsub('^' .. remotePath, localPath) or path
-  print(mappedPath)
 
   vim.cmd.edit({args = {mappedPath}})
   if line then
