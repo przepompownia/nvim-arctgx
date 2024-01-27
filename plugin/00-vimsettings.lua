@@ -12,6 +12,7 @@ vim.wo.showbreak = '> '
 vim.go.showmatch = false
 vim.wo.foldmethod = 'expr'
 vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+vim.wo.foldtext = ''
 vim.opt.fillchars:append({fold = ' '})
 
 vim.go.pumblend = 15
