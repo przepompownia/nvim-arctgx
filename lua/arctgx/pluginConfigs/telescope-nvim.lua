@@ -65,6 +65,7 @@ api.nvim_create_user_command(
     end,
   }
 )
+keymap.set('n', 'pickerOverview', function () require('telescope.builtin').builtin() end, {desc = 'Telescope builtin'})
 keymap.set('n', 'grepGit', function () require('arctgx.telescope').gitGrep('', false, false) end)
 keymap.set('n', 'grepAll', function () require('arctgx.telescope').rgGrep('', false, false) end)
 keymap.set('n', 'filesAll', function () require('arctgx.telescope').filesAll() end)
