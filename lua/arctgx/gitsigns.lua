@@ -26,6 +26,7 @@ end
 gitsigns.configuration = {
   -- _signs_staged_enable = true,
   -- _refresh_staged_on_update = true,
+  attach_to_untracked = true,
   on_attach = function (bufnr)
     local keymap = require('arctgx.vim.abstractKeymap')
     local function map(modes, l, r, opts)
