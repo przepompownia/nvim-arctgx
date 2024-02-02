@@ -1,6 +1,6 @@
 local keymap = require('arctgx.vim.abstractKeymap')
 local tsKeymaps = {
-  init_selection = keymap.firstLhs('langInitSelection'),
+  init_selection = keymap.firstLhs('langIncrementSelection'),
   node_incremental = keymap.firstLhs('langIncrementSelection'),
   node_decremental = keymap.firstLhs('langDecrementSelection'),
   scope_incremental = keymap.firstLhs('langScopeIncrementSelection'),
