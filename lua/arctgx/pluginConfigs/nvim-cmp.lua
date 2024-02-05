@@ -135,3 +135,32 @@ cmp.setup.filetype({'php'}, {
 cmp.setup.filetype({'gitcommit'}, {
   enabled = true,
 })
+
+local function confirmDone(evt)
+  local context = evt.entry.context
+  if context.filetype ~= 'php' then
+    return
+  end
+
+  if vim.startswith(context.cursor_after_line, '(') then
+    return
+  end
+
+  local endRange = evt.entry.source_insert_range['end']
+  vim.treesitter.get_parser(context.bufnr, 'php'):parse({endRange.line, endRange.line})
+  local node = assert(vim.treesitter.get_node({pos = {endRange.line, endRange.character - 1}}))
+
+  local parent = node:parent()
+
+  if not parent then
+    return
+  end
+
+  if parent:type() ~= 'object_creation_expression' then
+    return
+  end
+
+  vim.api.nvim_feedkeys('(', 'i', false)
+end
+
+cmp.event:on('confirm_done', confirmDone)
