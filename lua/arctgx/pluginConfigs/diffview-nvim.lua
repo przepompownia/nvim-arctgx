@@ -4,6 +4,20 @@ local keymap = require('arctgx.vim.abstractKeymap')
 require('diffview').setup({
   use_icons = false,
   enhanced_diff_hl = true,
+  file_panel = {
+    listing_style = 'list',
+    tree_options = {
+      flatten_dirs = true,
+      folder_statuses = 'only_folded'
+    },
+    win_config = {
+      type = 'float',
+      position = 'left',
+      width = 120,
+      height = 40,
+      win_opts = {}
+    },
+  },
 })
 
 local function closeDiffviewTabs()
