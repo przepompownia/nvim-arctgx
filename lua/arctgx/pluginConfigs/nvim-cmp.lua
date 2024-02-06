@@ -147,7 +147,7 @@ local function confirmDone(evt)
   end
 
   local endRange = evt.entry.source_insert_range['end']
-  vim.treesitter.get_parser(context.bufnr, 'php'):parse({endRange.line, endRange.line})
+  vim.treesitter.get_parser(context.bufnr):parse({endRange.line, endRange.line})
   local node = assert(vim.treesitter.get_node({pos = {endRange.line, endRange.character - 1}}))
 
   local parent = node:parent()
