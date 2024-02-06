@@ -60,6 +60,7 @@ require 'nvim-treesitter.configs'.setup {
   },
 }
 
+vim.treesitter.language.register('php_only', {'php'})
 -- -- require 'nvim-treesitter.install'.compilers = { 'clang' }
 -- local parserConfig = require 'nvim-treesitter.parsers'.get_parser_configs()
 -- parserConfig.php = {
