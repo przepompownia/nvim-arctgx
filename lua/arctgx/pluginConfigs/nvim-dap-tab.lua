@@ -3,7 +3,7 @@ local session = require 'arctgx.session'
 local api = vim.api
 local keymap = require('arctgx.vim.abstractKeymap')
 
-local opts = {silent = true, noremap = true}
+local opts = {silent = true}
 
 keymap.set({'n'}, 'debuggerJumpToUI', dapTab.verboseGoToDebugWin, opts)
 keymap.set({'n'}, 'debuggerCloseUI', dapTab.closeDebugWin, opts)

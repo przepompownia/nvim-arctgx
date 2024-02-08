@@ -25,7 +25,7 @@ require('nvim-tree').setup({
       'n',
       '<TAB>',
       '<C-w>w',
-      {buffer = bufnr, noremap = true, desc = 'Jump to the last used window'}
+      {buffer = bufnr, desc = 'Jump to the last used window'}
     )
     vim.keymap.set(
       'n',
@@ -43,7 +43,7 @@ require('nvim-tree').setup({
       'n',
       '<Left>',
       treeapi.node.navigate.parent_close,
-      {buffer = bufnr, noremap = true, desc = 'Close directory'}
+      {buffer = bufnr, desc = 'Close directory'}
     )
   end,
   view = {

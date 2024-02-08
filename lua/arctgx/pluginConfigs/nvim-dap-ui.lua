@@ -54,7 +54,7 @@ api.nvim_create_user_command('DAW', function (opts)
   watchExpression(opts.args)
 end , {nargs = 1, desc = 'DAP UI: add expression to watch'})
 
-local opts = {silent = true, noremap = true}
+local opts = {silent = true}
 keymap.set('x', 'debuggerAddToWatched', function ()
   watchExpression(base.getVisualSelection())
 end)
