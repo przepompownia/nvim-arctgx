@@ -64,11 +64,16 @@ vim.keymap.set('v', '<A-k>', function ()
   return 'dkP' .. selectionFromPastedRange() .. '=gv'
 end, {expr = true, desc = 'Move single line up with indentation', silent = true})
 
+local function setreg(register, value)
+  vim.fn.setreg(register, value)
+  vim.notify(('"%s" copied to reg "%s"'):format(value, register), vim.log.levels.INFO)
+end
+
 vim.keymap.set('t', '<S-Insert>', '<C-\\><C-N>"*pi', opts)
 vim.keymap.set('n', 'i', function () base.insertWithInitialIndentation('i') end, opts)
 vim.keymap.set('n', 'a', function () base.insertWithInitialIndentation('a') end, opts)
-vim.keymap.set('n', '<Leader>fcc', function () vim.fn.setreg('+', vim.fn.expand('%:.')) end, opts)
-vim.keymap.set('n', '<Leader>fcC', function () vim.fn.setreg('+', vim.fn.expand('%:p')) end, opts)
+vim.keymap.set('n', '<Leader>fcc', function () setreg('+', vim.fn.expand('%:.')) end, opts)
+vim.keymap.set('n', '<Leader>fcC', function () setreg('+', vim.fn.expand('%:p')) end, opts)
 vim.keymap.set('n', '<Leader>co', vim.cmd.copen, opts)
 vim.keymap.set('t', '<M-p>', function ()
   local regname = vim.fn.nr2char(vim.fn.getchar())
