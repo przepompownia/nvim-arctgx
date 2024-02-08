@@ -1,7 +1,9 @@
 local tsj = require('treesj')
 local keymap = require('arctgx.vim.abstractKeymap')
 
-local langs = {}
+local langs = {
+  php_only = require('treesj.langs.utils').merge_preset(require('treesj.langs.php'), {}),
+}
 
 tsj.setup({
   use_default_keymaps = false,
@@ -11,6 +13,7 @@ tsj.setup({
   notify = true,
   langs = langs,
 })
+
 keymap.set({'n'}, 'toggleSplitJoinLinesAtCursor', tsj.toggle, {})
 keymap.set({'n'}, 'splitLinesAtCursor', tsj.split, {})
 keymap.set({'n'}, 'joinLinesAtCursor', tsj.join, {})
