@@ -1,4 +1,4 @@
-.PHONY: install-vscode-php-debug install-vscode-bash-debug install-vscode-cpptools-debug luarc
+.PHONY: *
 
 SHELL := /bin/bash
 DIR := ${CURDIR}
