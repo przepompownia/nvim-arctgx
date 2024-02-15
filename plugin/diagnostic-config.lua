@@ -12,4 +12,5 @@ vim.diagnostic.config({
       [vim.diagnostic.severity.HINT] = '󰌶',
     },
   },
+  severity_sort = true,
 })
