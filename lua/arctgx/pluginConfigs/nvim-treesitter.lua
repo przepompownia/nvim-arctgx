@@ -30,6 +30,7 @@ require 'nvim-treesitter.configs'.setup {
     'make',
     'markdown',
     'markdown_inline',
+    'muttrc',
     'passwd',
     'php_only',
     'phpdoc',
