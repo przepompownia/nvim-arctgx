@@ -40,6 +40,7 @@ require 'nvim-treesitter.configs'.setup {
     'sql',
     'strace',
     'ssh_config',
+    'tmux',
     'todotxt',
     'toml',
     'udev',
