@@ -40,6 +40,7 @@ local function setupNoice()
     views = {
       mini = {
         timeout = 5000,
+        reverse = false,
       },
     },
     presets = {
