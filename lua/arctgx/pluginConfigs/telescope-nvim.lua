@@ -49,23 +49,6 @@ api.nvim_create_user_command(
   end,
   {nargs = '*'}
 )
-api.nvim_create_user_command(
-  'GTDiff',
-  function (opts)
-    require('git-utils.telescope.gdiff').run({
-      args = opts.fargs,
-      cwd = require('arctgx.git').top(base.getBufferCwd()),
-      attach_mappings = require('arctgx.telescope').defaultFileMappings,
-    })
-  end,
-  {
-    nargs = '*',
-    complete = function (argLead, _, _)
-      local git = require('arctgx.git')
-      return git.matchBranchesToRange(git.top(base.getBufferCwd()), argLead)
-    end,
-  }
-)
 keymap.set('n', 'pickerOverview', function () require('telescope.builtin').builtin() end, {desc = 'Telescope builtin'})
 keymap.set('n', 'grepGit', function () require('arctgx.telescope').gitGrep('', false, false) end)
 keymap.set('n', 'grepAll', function () require('arctgx.telescope').rgGrep('', false, false) end)
