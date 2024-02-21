@@ -1,5 +1,5 @@
 local base = require('arctgx.base')
-local git = require('arctgx.git')
+local git = require('git-utils.git')
 
 local extension = {}
 

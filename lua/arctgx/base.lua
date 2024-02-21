@@ -97,7 +97,7 @@ do
 
     local ok, fileDir = pcall(vim.uv.fs_realpath, vim.api.nvim_buf_get_name(buf))
     if not ok or fileDir == nil then
-      return vim.uv.cwd()
+      return assert(vim.uv.cwd())
     end
 
     return vim.fs.dirname(fileDir)

@@ -3,6 +3,3 @@ vim.g.arctgxBackupDir = vim.env['XDG_CONFIG_HOME'] or vim.env['HOME'] .. '/.conf
 keymap.set('n', 'writeBackup', function ()
   require('arctgx.writebackup').save()
 end)
-keymap.set('n', 'gitPush', function ()
-  require 'arctgx.git'.pushToAllRemoteRepos(require('arctgx.base').getBufferCwd())
-end)

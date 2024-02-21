@@ -31,7 +31,7 @@ function Branches.list(opts)
   require('telescope.pickers').new(opts, {
     prompt_title = 'Git branches',
     finder = require('telescope.finders').new_table({
-      results = require('arctgx.git').branches(opts.cwd, true, true),
+      results = require('git-utils.git').branches(opts.cwd, true, true),
       entry_maker = makeEntry,
     }),
     sorter = require('telescope.config').values.generic_sorter(opts),
