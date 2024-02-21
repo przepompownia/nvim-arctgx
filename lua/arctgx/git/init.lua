@@ -25,13 +25,6 @@ local function system(command, opts)
   return out
 end
 
----@param command string[]
----@param opts vim.SystemOpts
----@return string[]
-function extension.system(command, opts)
-  return system(command, opts)
-end
-
 function extension.top(relativeDir)
   local out = system({'git', 'rev-parse', '--show-toplevel'}, {cwd = relativeDir})
 

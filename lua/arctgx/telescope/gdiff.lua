@@ -22,7 +22,9 @@ local function makeRequest(command)
       command:unsetShortOptionWithValue('-S')
     end
 
-    return require('arctgx.git').system(command, {})
+    local sysObj = vim.system(command, {}):wait()
+
+    return vim.split(sysObj.stdout, '\n', {trimempty = true})
   end
 end
 
