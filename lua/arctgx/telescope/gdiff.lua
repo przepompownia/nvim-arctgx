@@ -1,9 +1,9 @@
 local finders = require 'telescope.finders'
 local conf = require('telescope.config').values
 local diff = require('arctgx.git.diff')
-local from_entry = require 'telescope.from_entry'
-local make_entry = require('telescope.make_entry')
-local buffer_previewer = require('telescope.previewers.buffer_previewer')
+local fromEntry = require 'telescope.from_entry'
+local makeEntry = require('telescope.make_entry')
+local bufferPreviewer = require('telescope.previewers.buffer_previewer')
 local sorters = require('telescope.sorters')
 local putils = require 'telescope.previewers.utils'
 local telescope = require 'arctgx.telescope'
@@ -37,13 +37,13 @@ end
 ---@param command arctgx.git.diff
 ---@return table
 local function previewer(opts, command)
-  return buffer_previewer.new_buffer_previewer {
+  return bufferPreviewer.new_buffer_previewer {
     title = 'Git File Diff Preview',
     get_buffer_by_name = function(_, entry) return entry.value end,
 
     define_preview = function(self, entry, status)
       if entry.status and (entry.status == '??' or entry.status == 'A ') then
-        local p = from_entry.path(entry, true)
+        local p = fromEntry.path(entry, true)
         if p == nil or p == '' then return end
         conf.buffer_previewer_maker(p, self.state.bufnr, {
           bufname = self.state.bufname,
@@ -72,7 +72,7 @@ function gdiff.run(opts)
     prompt_title = 'GDiff',
     finder = finders.new_dynamic({
       fn = makeRequest(command),
-      entry_maker = make_entry.gen_from_file(opts)
+      entry_maker = makeEntry.gen_from_file(opts)
     }),
     sorter = sorters.empty(),
     attach_mappings = telescope.defaultFileMappings,
