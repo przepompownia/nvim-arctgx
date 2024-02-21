@@ -21,14 +21,8 @@ local function makeRequest(command)
     else
       command:unsetShortOptionWithValue('-S')
     end
-    local job = require('plenary.job'):new({
-      args = {unpack(command, 2)},
-      sync = true,
-      command = command[1]
-    })
-    job:sync()
 
-    return job:result()
+    return require('arctgx.git').system(command, {})
   end
 end
 
