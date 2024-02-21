@@ -31,7 +31,7 @@ end
 local customActions = require('telescope.actions.mt').transform_mod({
   toggleCaseSensibility = function () end,
   toggleFixedStrings = function () end,
-  toggleOnlyFirstResult = function () end
+  toggleOnlyFirstResult = function () end,
 })
 
 extension.customActions = customActions
