@@ -52,7 +52,7 @@ api.nvim_create_user_command(
 api.nvim_create_user_command(
   'GTDiff',
   function (opts)
-    require('arctgx.telescope.gdiff').run({
+    require('git-utils.telescope.gdiff').run({
       args = opts.fargs,
       cwd = require('arctgx.git').top(base.getBufferCwd()),
       attach_mappings = require('arctgx.telescope').defaultFileMappings,
