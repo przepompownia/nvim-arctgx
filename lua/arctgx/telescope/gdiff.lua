@@ -15,7 +15,7 @@ local gdiff = {}
 local function makeRequest(command)
   command:switchNamesOnly()
 
-  return function(query)
+  return function (query)
     if ('' ~= query) then
       command:setQuery('-S', query)
     else
@@ -39,9 +39,9 @@ end
 local function previewer(opts, command)
   return bufferPreviewer.new_buffer_previewer {
     title = 'Git File Diff Preview',
-    get_buffer_by_name = function(_, entry) return entry.value end,
+    get_buffer_by_name = function (_, entry) return entry.value end,
 
-    define_preview = function(self, entry, status)
+    define_preview = function (self, entry, _status)
       if entry.status and (entry.status == '??' or entry.status == 'A ') then
         local p = fromEntry.path(entry, true)
         if p == nil or p == '' then return end
