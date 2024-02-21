@@ -45,10 +45,10 @@ local function previewer(opts, command)
           winid = self.state.winid
         })
       else
-        local command = command:clone()
-        command:switchNamesOnly(false)
-        command:appendArgument(entry.value)
-        putils.job_maker(command, self.state.bufnr, {
+        local newCommand = command:clone()
+        newCommand:switchNamesOnly(false)
+        newCommand:appendArgument(entry.value)
+        putils.job_maker(newCommand, self.state.bufnr, {
           value = entry.value,
           bufname = self.state.bufname,
           cwd = opts.cwd
