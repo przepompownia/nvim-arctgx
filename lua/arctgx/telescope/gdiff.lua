@@ -6,7 +6,6 @@ local makeEntry = require('telescope.make_entry')
 local bufferPreviewer = require('telescope.previewers.buffer_previewer')
 local sorters = require('telescope.sorters')
 local putils = require 'telescope.previewers.utils'
-local telescope = require 'arctgx.telescope'
 
 local gdiff = {}
 
@@ -61,8 +60,7 @@ local function previewer(opts, command)
 end
 
 function gdiff.run(opts)
-  local command = diff:newCommand('GDiff', opts.args or {},
-    opts.cwd or vim.uv.cwd())
+  local command = diff:newCommand('GDiff', opts.args or {}, opts.cwd or vim.uv.cwd())
   opts = opts or {}
   require('telescope.pickers').new(opts, {
     prompt_title = 'GDiff',
@@ -71,7 +69,6 @@ function gdiff.run(opts)
       entry_maker = makeEntry.gen_from_file(opts)
     }),
     sorter = sorters.empty(),
-    attach_mappings = telescope.defaultFileMappings,
     previewer = previewer(opts, command)
   }):find()
 end
