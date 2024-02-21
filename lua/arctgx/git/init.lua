@@ -111,7 +111,7 @@ local function trimHead(text)
   return text
 end
 
----@return table<int, {branch: string, desc: string, head: string?}>
+---@return {branch: string, desc: string, head: string?}[]
 function extension.branches(gitDir, withRelativeDate, keepEmpty)
   local relativeDatePart = withRelativeDate and ';%09%(committerdate:relative)' or ''
   local function formatArgs(strip)
