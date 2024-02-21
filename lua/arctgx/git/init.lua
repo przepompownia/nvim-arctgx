@@ -5,7 +5,7 @@ local function gsplit(text)
 end
 
 ---@param command string[]
----@param opts SystemOpts
+---@param opts vim.SystemOpts
 ---@return string[]
 local function system(command, opts)
   local out = {}
