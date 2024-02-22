@@ -31,12 +31,12 @@ if okTs then
   end
 
   npairs.add_rules({
-    existingRules['`']:with_pair(cond.not_filetypes({ 'sql', 'mysql' })),
+    existingRules['`']:with_pair(cond.not_filetypes({'sql', 'mysql'})),
     Rule('<', '>', 'php'):with_pair(isAfterTypeInPhpDocblock),
   })
 end
 
 if okCmp then
   local cmp_autopairs = require('nvim-autopairs.completion.cmp')
-  cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done({ filetypes = { bash = false, sh = false } }))
+  cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done({filetypes = {bash = false, sh = false}}))
 end
