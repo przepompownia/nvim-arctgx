@@ -52,10 +52,6 @@ function extension.createOperator(searchFunction, cmd, root, title)
   end
 end
 
-function extension.branches(opts)
-  require('arctgx.telescope.branches').list(vim.tbl_deep_extend('keep', opts or {}, {cwd = git.top(base.getBufferCwd())}))
-end
-
 ---@param onlyCwd boolean
 function extension.oldfiles(onlyCwd)
   require('telescope.builtin').oldfiles({

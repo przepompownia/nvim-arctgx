@@ -19,7 +19,7 @@ require('lualine').setup({
         'branch',
         on_click = function (_numberOfClicks, button, _modifiers)
           if 'r' == button then
-            require('arctgx.telescope').branches()
+            require('git-utils').branches()
           end
         end
       },

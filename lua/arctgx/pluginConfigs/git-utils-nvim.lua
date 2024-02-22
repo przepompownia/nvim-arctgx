@@ -13,3 +13,5 @@ require('git-utils').setup({
   telescopeAttachMappings = require('arctgx.telescope').defaultFileMappings,
   currentBufferDirectory = require('arctgx.base').getBufferCwd,
 })
+
+keymap.set('n', 'browseGitBranches', require('git-utils').branches)
