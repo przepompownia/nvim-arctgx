@@ -57,7 +57,7 @@ function M.onInit(client)
   end
 
   vim.notify('.luarc.json(c) not found. Loading defaults.', vim.log.levels.INFO, {title = 'LSP'})
-  client.config.settings = vim.tbl_deep_extend('force', client.config.settings, {
+  client.config.settings = vim.tbl_deep_extend('force', client.config.settings or {}, {
     Lua = M.defaultConfig()
   })
 
