@@ -156,7 +156,7 @@ local function confirmDone(evt)
     return
   end
 
-  if parent:type() ~= 'object_creation_expression' then
+  if not vim.tbl_contains({'object_creation_expression', 'attribute'}, parent:type()) then
     return
   end
 
