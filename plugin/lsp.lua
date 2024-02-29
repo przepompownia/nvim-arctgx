@@ -21,6 +21,21 @@ function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
   return origUtilOpenFloatingPreview(contents, syntax, opts, ...)
 end
 
+vim.lsp.handlers[vim.lsp.protocol.Methods.textDocument_references] = vim.lsp.with(
+  vim.lsp.handlers[vim.lsp.protocol.Methods.textDocument_references],
+  {
+    on_list = function (params)
+      local client = assert(vim.lsp.get_client_by_id(params.context.client_id))
+      if #params.items == 1 then
+        vim.lsp.util.jump_to_location(params.items[1].user_data, client.offset_encoding, true)
+        return
+      end
+      vim.fn.setqflist({}, ' ', {title = 'References', items = params.items, context = params.context})
+      vim.api.nvim_command('botright copen')
+    end,
+  }
+)
+
 local augroup = vim.api.nvim_create_augroup('LspDocumentHighlight', {clear = true})
 vim.api.nvim_create_autocmd('LspAttach', {
   group = vim.api.nvim_create_augroup('UserLspConfig', {}),
