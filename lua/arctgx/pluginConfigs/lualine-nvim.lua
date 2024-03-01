@@ -2,6 +2,7 @@ local nord = require('lualine.themes.nord')
 
 require('lualine').setup({
   extensions = {
+    'man',
     'nvim-tree',
     'quickfix',
     'nvim-dap-ui',
