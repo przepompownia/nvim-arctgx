@@ -5,10 +5,80 @@ local base = require('arctgx.base')
 local api = vim.api
 local keymap = require('arctgx.vim.abstractKeymap')
 
+dap.set_log_level('TRACE')
+
 dap.adapters.php = {
   type = 'executable',
   command = base.getPluginDir() .. '/bin/dap-adapter-utils',
   args = {'run', 'vscode-php-debug', 'phpDebug'}
+}
+
+dap.adapters.cppdbg = {
+  id = 'cppdbg',
+  type = 'executable',
+  command = base.getPluginDir() .. '/tools/vscode-cpptools/current/extension/debugAdapters/bin/OpenDebugAD7',
+}
+
+dap.configurations.c = {
+  setmetatable(
+    {
+      name = 'Neovim',
+      type = 'cppdbg',
+      request = 'launch',
+      program = vim.env['NVIM_FROM_SRC_DIR'] .. '/bin/nvim',
+      args = {
+        '--clean',
+        '-u',
+        '/home/arctgx/dev/arctgx/vim/issues/telescope_crash_no_symbol/init.lua',
+        '-c',
+        'Telescope builtin',
+      },
+      externalConsole = true,
+      cwd = '${workspaceFolder}',
+    },
+    {
+      -- from https://zignar.net/2023/02/17/debugging-neovim-with-neovim-and-nvim-dap/
+      __call = function (config)
+        vim.fn.system('make')
+
+        local key = 'arctgx.dap.c.embedded.nvim'
+
+        dap.listeners.after.initialize[key] = function (session)
+          dap.listeners.after.initialize[key] = nil
+
+          session.on_close[key] = function ()
+            for _, handler in pairs(dap.listeners.after) do
+              handler[key] = nil
+            end
+          end
+        end
+
+        dap.listeners.after.event_process[key] = function (_, body)
+          dap.listeners.after.event_process[key] = nil
+
+          local ppid = body.systemProcessId
+          vim.wait(1000, function ()
+            return tonumber(vim.fn.system('ps -o pid= --ppid ' .. tostring(ppid))) ~= nil
+          end)
+          local pid = tonumber(vim.fn.system('ps -o pid= --ppid ' .. tostring(ppid)))
+
+          if pid then
+            dap.run({
+              name = 'Neovim embedded',
+              type = 'cppdbg',
+              request = 'attach',
+              processId = pid,
+              program = os.getenv('HOME') .. '/dev/external/neovim/build/bin/nvim',
+              cwd = os.getenv('HOME') .. '/dev/external/neovim/',
+              externalConsole = false,
+            })
+          end
+        end
+
+        return config
+      end
+    }
+  ),
 }
 
 local bashdbDir = base.getPluginDir() .. '/tools/vscode-bash-debug/'
@@ -168,12 +238,10 @@ dap.configurations.php = {php.default}
 local dapSessionStatus = ''
 
 dap.listeners.after['event_initialized']['arctgx'] = function (_session, _body)
-  api.nvim_exec_autocmds('User', {pattern = 'IdeStatusChanged', modeline = false})
   dapSessionStatus = 'L'
 end
 
 dap.listeners.after['event_stopped']['arctgx'] = function (_session, _body)
-  api.nvim_exec_autocmds('User', {pattern = 'IdeStatusChanged', modeline = false})
   dapSessionStatus = 'S'
 end
 
@@ -182,7 +250,6 @@ dap.listeners.after['event_exited']['arctgx'] = function (_session, _body)
   dapSessionStatus = 'E'
 end
 dap.listeners.after['event_thread']['arctgx'] = function (_session, body)
-  api.nvim_exec_autocmds('User', {pattern = 'IdeStatusChanged', modeline = false})
   if body.reason == 'exited' then
     info('Thread ' .. body.threadId .. ' exited')
     dapSessionStatus = 'X'
@@ -197,9 +264,9 @@ dap.listeners.after['event_terminated']['arctgx'] = function (_session, _body)
   dapSessionStatus = 'T'
 end
 
-require('arctgx.widgets').setDebugHook(function ()
+require('arctgx.widgets').debugHook = function ()
   return {
     session = dap.session() and true or false,
     status = dapSessionStatus,
   }
-end)
+end
