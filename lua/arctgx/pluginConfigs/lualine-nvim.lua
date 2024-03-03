@@ -16,6 +16,7 @@ require('lualine').setup({
     disabled_filetypes = {
       'dap-repl',
       'gitcommit',
+      'noice',
     },
   },
   sections = {
