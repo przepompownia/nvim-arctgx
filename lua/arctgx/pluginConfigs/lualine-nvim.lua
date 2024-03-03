@@ -1,5 +1,7 @@
 local nord = require('lualine.themes.nord')
 
+local debugcolor = {bg = nord.normal.c.bg, fg = nord.normal.c.fg}
+
 require('lualine').setup({
   extensions = {
     'man',
@@ -69,11 +71,14 @@ require('lualine').setup({
           for _, hook in ipairs(require('arctgx.widgets').getDebugHooks()) do
             local data = hook()
             local symbol = data.session and '⛧ ' or '☠'
+            debugcolor.fg = data.session and '#bb0000' or nord.normal.c.fg
             out = out .. symbol .. ' ' .. data.status
           end
           return out
         end,
-        color = nord.normal.c,
+        color = function ()
+          return debugcolor
+        end,
         separator = {
           left = '',
         },
