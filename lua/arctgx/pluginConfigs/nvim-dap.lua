@@ -197,7 +197,7 @@ dap.listeners.after['event_terminated']['arctgx'] = function (_session, _body)
   dapSessionStatus = 'T'
 end
 
-require('arctgx.widgets').addDebugHook(function ()
+require('arctgx.widgets').setDebugHook(function ()
   return {
     session = dap.session() and true or false,
     status = dapSessionStatus,

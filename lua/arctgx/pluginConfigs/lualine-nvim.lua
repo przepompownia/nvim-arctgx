@@ -1,6 +1,8 @@
 local nord = require('lualine.themes.nord')
+local ns = require('arctgx.lsp').ns()
 
-local debugcolor = {bg = nord.normal.c.bg, fg = nord.normal.c.fg}
+vim.api.nvim_set_hl(ns, 'DebugWidgetInactive', {bg = nord.normal.c.bg, fg = nord.normal.c.fg})
+vim.api.nvim_set_hl(ns, 'DebugWidgetActive', {bg = nord.normal.c.bg, fg = '#bb0000'})
 
 require('lualine').setup({
   extensions = {
@@ -67,17 +69,11 @@ require('lualine').setup({
       'location',
       {
         function ()
-          local out = ''
-          for _, hook in ipairs(require('arctgx.widgets').getDebugHooks()) do
-            local data = hook()
-            local symbol = data.session and '⛧ ' or '☠'
-            debugcolor.fg = data.session and '#bb0000' or nord.normal.c.fg
-            out = out .. symbol .. ' ' .. data.status
-          end
-          return out
-        end,
-        color = function ()
-          return debugcolor
+          return require('arctgx.widgets').renderDebug({
+            active = 'DebugWidgetActive',
+            inactive = 'DebugWidgetInactive',
+            fallback = 'lualine_z_4_normal',
+          })
         end,
         separator = {
           left = '',
