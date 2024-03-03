@@ -1,6 +1,7 @@
 local api = vim.api
----@field setOperatorfunc fun(cb: function)
 local base = {}
+---@alias base.setOperatorfunc fun(cb: function)
+
 local pluginDir = nil
 ---@class PathMappings table<string,string>
 ---@type PathMappings
@@ -109,6 +110,7 @@ function base.feedKeys(input)
 end
 
 -- from @zeertzjq https://github.com/neovim/neovim/issues/14157#issuecomment-1320787927
+--- @type base.setOperatorfunc
 base.setOperatorfunc = vim.fn[vim.api.nvim_exec([[
   func s:set_opfunc(val)
     let &opfunc = a:val
