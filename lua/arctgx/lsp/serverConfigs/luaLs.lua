@@ -75,7 +75,7 @@ local rootPatterns = {
   '.git',
 }
 
----@return lsp.ClientConfig
+--- @return lsp.ClientConfig
 function M.clientConfig(file)
   local lsp = require('arctgx.lsp')
   return {

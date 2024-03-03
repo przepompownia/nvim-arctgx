@@ -6,7 +6,7 @@ local hasWordsBefore = function ()
   return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match('%s') == nil
 end
 
----@type table<string, cmp.SourceConfig>
+--- @type table<string, cmp.SourceConfig>
 local cmpSources = {
   buffer = {
     name = 'buffer',

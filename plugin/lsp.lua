@@ -14,7 +14,7 @@ vim.api.nvim_set_hl_ns(require('arctgx.lsp').ns())
 
 local border = 'rounded'
 local origUtilOpenFloatingPreview = lsp.util.open_floating_preview
----@diagnostic disable-next-line: duplicate-set-field
+--- @diagnostic disable-next-line: duplicate-set-field
 function lsp.util.open_floating_preview(contents, syntax, opts, ...)
   opts = opts or {}
   opts.border = opts.border or border

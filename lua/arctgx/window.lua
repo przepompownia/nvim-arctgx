@@ -2,8 +2,8 @@ local api = vim.api
 
 local extension = {}
 
----@param filetypes table
----@param callback fun(winId: integer): any
+--- @param filetypes table
+--- @param callback fun(winId: integer): any
 function extension.forEachWindowWithBufFileType(filetypes, callback)
   vim.validate({filetypes = {filetypes, {'table'}}})
   vim.iter(api.nvim_list_wins())

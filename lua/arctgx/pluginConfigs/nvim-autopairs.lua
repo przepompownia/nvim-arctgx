@@ -10,7 +10,7 @@ npairs.setup {
   },
 }
 
----@type table<string, Rule>
+--- @type table<string, Rule>
 local existingRules = {
   ['`'] = npairs.get_rule('`'),
 }

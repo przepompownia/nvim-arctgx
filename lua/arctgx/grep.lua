@@ -39,7 +39,7 @@ function extension:switchWithRequiredValue(option, value)
   table.insert(self, value)
 end
 
----@return string
+--- @return string
 function extension:status()
   local settings = {}
   table.insert(settings, self:indexOf('--fixed-strings') and 'Fixed strings' or 'Regex')

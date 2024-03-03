@@ -116,7 +116,7 @@ extension.defaultRootPatterns = {
   '.git',
 }
 
----@return lsp.ClientConfig
+--- @return lsp.ClientConfig
 function extension.clientConfig(file, rootPatterns)
   return {
     name = 'phpactor',

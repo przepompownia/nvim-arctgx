@@ -21,8 +21,8 @@ function M.defaultClientCapabilities()
   return capabilities
 end
 
----@param file string?
----@param rootPatterns string[]?
+--- @param file string?
+--- @param rootPatterns string[]?
 function M.findRoot(file, rootPatterns)
   file = vim.fn.fnamemodify(file or '', ':p')
   return vim.fs.dirname(vim.fs.find(rootPatterns or {}, {

@@ -1,6 +1,6 @@
 local Shell = {}
 
----@param opts {cmd: string[], cwd: string}?
+--- @param opts {cmd: string[], cwd: string}?
 function Shell.open(opts)
   opts = opts or {}
   vim.validate({cmd = {opts.cmd, {'table', 'string', 'nil'}}})

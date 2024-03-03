@@ -1,7 +1,7 @@
----@class arctgx.Cmd
+--- @class arctgx.Cmd @parent class
 local Cmd = {}
 
----@return arctgx.Cmd
+--- @return arctgx.Cmd
 function Cmd:new(name, args)
   self.__index = self
   setmetatable(args, self)
@@ -10,8 +10,8 @@ function Cmd:new(name, args)
   return args
 end
 
----@param element any
----@return integer|nil
+--- @param element any
+--- @return integer|nil
 function Cmd:indexOfOption(element)
   for k, v in ipairs(self) do
     if '--' == v and '--' ~= element then
@@ -24,7 +24,7 @@ function Cmd:indexOfOption(element)
   end
 end
 
----@param option any
+--- @param option any
 function Cmd:switchOption(option)
   if nil ~= self:removeOption(option) then
     return
@@ -33,7 +33,7 @@ function Cmd:switchOption(option)
   self:insertOption(option)
 end
 
----@param option any
+--- @param option any
 function Cmd:removeOption(option)
   local key = self:indexOfOption(option)
   if not key then
@@ -47,7 +47,7 @@ function Cmd:indexOfOptionsEnd()
   return self:indexOfOption('--') or #self + 1
 end
 
----@param option any
+--- @param option any
 function Cmd:insertOption(option)
   table.insert(self, self:indexOfOptionsEnd(), option)
 end
@@ -78,7 +78,7 @@ function Cmd:appendArgument(value)
   table.insert(self, value)
 end
 
----@return arctgx.Cmd
+--- @return arctgx.Cmd
 function Cmd:clone()
   return vim.deepcopy(self)
 end

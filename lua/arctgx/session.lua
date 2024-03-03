@@ -1,6 +1,6 @@
 local extension = {}
 
----@todo hook names
+--- @todo hook names
 local hooks = {
   save = {
     ---@type table<{name: string, callback: function}>
@@ -32,7 +32,7 @@ local function runHooks(event, when)
   end
 end
 
----@param hook function
+--- @param hook function
 function extension.appendBeforeSaveHook(name, hook)
   appendHook(name, hook, 'save', 'before')
 end

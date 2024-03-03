@@ -2,9 +2,9 @@ local api = vim.api
 -- local dap = require('dap')
 local virtualText = require('nvim-dap-virtual-text')
 
----@param variable any
----@param buf any
----@return boolean
+--- @param variable any
+--- @param buf any
+--- @return boolean
 local function skipDisplayingVariable(variable, buf)
   local filetype = vim.bo[buf].filetype
   if variable.name == '$this' and filetype == 'php' then

@@ -1,4 +1,4 @@
----@type AbstractKeymaps
+--- @type AbstractKeymaps
 local abstractKeymaps = {
   shellOpen = {lhs = {'<F8>'}, desc = 'Open shell window, mostly with dirname of current buffer as CWD'},
   pickerOverview = {lhs = '<F9>', desc = 'Picker overview'},

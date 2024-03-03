@@ -1,13 +1,13 @@
 local abstractKeymap = {}
 
----@alias AbstractKeymap {lhs: string|table<string>|table<string, string>, desc: string?}
----@alias AbstractKeymaps table<string, AbstractKeymap>
+--- @alias AbstractKeymap {lhs: string|table<string>|table<string, string>, desc: string?}
+--- @alias AbstractKeymaps table<string, AbstractKeymap>
 
----@type AbstractKeymaps
+--- @type AbstractKeymaps
 local keymaps = {}
 
----@param name string
----@return AbstractKeymap?
+--- @param name string
+--- @return AbstractKeymap?
 local function getKeymap(name)
   local keymap = keymaps[name]
   if nil ~= keymap then
@@ -41,8 +41,8 @@ function abstractKeymap.set(modes, name, rhs, opts)
 end
 
 ---Wrapper for keymap rhs to make callback repeatable
----@param cb function
----@return function
+--- @param cb function
+--- @return function
 function abstractKeymap.repeatable(cb)
   return function ()
     require('arctgx.base').setOperatorfunc(function (_type)
@@ -59,7 +59,7 @@ function abstractKeymap.firstLhs(name)
   end
 end
 
----@param mappings AbstractKeymaps
+--- @param mappings AbstractKeymaps
 function abstractKeymap.load(mappings)
   keymaps = mappings
 end

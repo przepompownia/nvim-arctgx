@@ -1,8 +1,8 @@
 local string = {}
 
----@param name string
----@param margin integer
----@return string
+--- @param name string
+--- @param margin integer
+--- @return string
 function string.shorten(name, margin)
   local coupler = '…'
 

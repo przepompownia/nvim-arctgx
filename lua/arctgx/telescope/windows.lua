@@ -4,7 +4,7 @@ local actions = require 'telescope.actions'
 local action_state = require 'telescope.actions.state'
 local buffer_previewer = require('telescope.previewers.buffer_previewer')
 
----@class arctgx.telescope.windows
+--- @class arctgx.telescope.windows
 local Windows = {}
 
 local function listBufferWindowPairs()
@@ -34,7 +34,7 @@ local function makeEntry(entry)
   }
 end
 
----@diagnostic disable-next-line: unused-local, unused-function
+--- @diagnostic disable-next-line: unused-local, unused-function
 local function previewer()
   return buffer_previewer.new_buffer_previewer {
     title = 'Window content',

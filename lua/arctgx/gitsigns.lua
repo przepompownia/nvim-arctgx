@@ -3,8 +3,8 @@ local gs = require('gitsigns')
 
 local gitsigns = {}
 
----@param repoParams table<integer, {toplevel: string, gitdir: string}>
----@return function
+--- @param repoParams table<integer, {toplevel: string, gitdir: string}>
+--- @return function
 gitsigns.tryWorktrees = function (repoParams)
   return function (bufnr, callback)
     local file = vim.api.nvim_buf_get_name(bufnr)

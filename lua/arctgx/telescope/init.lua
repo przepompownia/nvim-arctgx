@@ -3,8 +3,8 @@ local git = require('git-utils.git')
 
 local extension = {}
 
----@param promptBufnr integer
----@param callback function({bufnr: integer}, Picker)
+--- @param promptBufnr integer
+--- @param callback function({bufnr: integer}, Picker)
 local function callOnSelection(promptBufnr, callback, actionName)
   local actionState = require 'telescope.actions.state'
   local selection = actionState.get_selected_entry()
@@ -52,7 +52,7 @@ function extension.createOperator(searchFunction, cmd, root, title)
   end
 end
 
----@param onlyCwd boolean
+--- @param onlyCwd boolean
 function extension.oldfiles(onlyCwd)
   require('telescope.builtin').oldfiles({
     only_cwd = onlyCwd or false,
@@ -60,7 +60,7 @@ function extension.oldfiles(onlyCwd)
   })
 end
 
----@param opts table?
+--- @param opts table?
 function extension.buffers(opts)
   opts = vim.tbl_deep_extend('keep', opts or {}, {
     attach_mappings = function (promptBufnr, map)
@@ -79,9 +79,9 @@ function extension.buffers(opts)
   require('telescope.builtin').buffers(opts)
 end
 
----@param cmd Grep
----@param root string
----@param query string
+--- @param cmd Grep
+--- @param root string
+--- @param query string
 function extension.grep(cmd, root, query)
   if query:find('\n') then
     vim.notify('Cannot grep multiline text', vim.log.levels.WARN, {title = 'Telescope grep extension'})

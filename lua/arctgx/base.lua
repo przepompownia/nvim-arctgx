@@ -1,21 +1,21 @@
 local api = vim.api
 local base = {}
----@alias base.setOperatorfunc fun(cb: function)
+--- @alias base.setOperatorfunc fun(cb: function)
 
 local pluginDir = nil
----@class PathMappings table<string,string>
----@type PathMappings
+--- @class PathMappings table<string,string>
+--- @type PathMappings
 local pathMappings = {}
 
----@param remotePath string
----@param localPath string
+--- @param remotePath string
+--- @param localPath string
 function base.addPathMapping(remotePath, localPath)
   pathMappings[remotePath] = localPath
 end
 
----@param path string
----@param line integer
----@param column integer
+--- @param path string
+--- @param line integer
+--- @param column integer
 function base.editMappedPath(path, line, column)
   if not path then
     return
@@ -119,8 +119,8 @@ base.setOperatorfunc = vim.fn[vim.api.nvim_exec([[
 ]], true)]
 
 ---Defer callback until terminal related options autodetection is complete
----@param augroupName string
----@param cb fun(): boolean? return true to call it once unless you want to run it on each next change of those options
+--- @param augroupName string
+--- @param cb fun(): boolean? return true to call it once unless you want to run it on each next change of those options
 function base.onColorschemeReady(augroupName, cb)
   local colorschemeReadyOptions = {'background', 'termguicolors'}
   local function isColorschemeReady()
@@ -147,8 +147,8 @@ function base.onColorschemeReady(augroupName, cb)
   })
 end
 
----@param keywordChars table<string>
----@param callback function
+--- @param keywordChars table<string>
+--- @param callback function
 function base.withAppendedToKeyword(keywordChars, callback)
   local isKeyword = vim.opt.iskeyword:get()
   vim.opt.iskeyword:append(keywordChars)

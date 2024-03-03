@@ -13,11 +13,11 @@ dap.adapters.php = {
 
 local bashdbDir = base.getPluginDir() .. '/tools/vscode-bash-debug/'
 
----@param defaultValue any
----@param promptTemplate string
----@param valueConversionCallback function|nil
----@param completion string|nil
----@return any
+--- @param defaultValue any
+--- @param promptTemplate string
+--- @param valueConversionCallback function|nil
+--- @param completion string|nil
+--- @return any
 local function getInput(defaultValue, promptTemplate, completion, valueConversionCallback)
   local value = vim.fn.input(promptTemplate:format(defaultValue), defaultValue, completion)
   if '' == value then
