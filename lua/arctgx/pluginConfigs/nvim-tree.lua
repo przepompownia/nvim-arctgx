@@ -126,7 +126,7 @@ local function focusOnFile()
   local realParent = vim.iter(vim.fs.parents(bufPath)):find(function (path)
     return vim.uv.fs_realpath(path) and path ~= '/'
   end) or vim.uv.cwd()
-  treeapi.tree.open(require('git-utils.git').top(realParent))
+  treeapi.tree.open(require('arctgx.git').top(realParent))
   -- treeapi.tree.toggle_hidden_filter()
   treeapi.live_filter.clear()
   local pathToFocus = vim.uv.fs_realpath(bufPath) or realParent

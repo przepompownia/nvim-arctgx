@@ -1,6 +1,6 @@
-local extension = {}
+local git = {}
 
-function extension.isTracked(path, gitDir, workTree)
+function git.isTracked(path, gitDir, workTree)
   local cmd = {
     'git',
     '--git-dir', gitDir,
@@ -14,4 +14,19 @@ function extension.isTracked(path, gitDir, workTree)
   return 0 == obj.code
 end
 
-return extension
+function git.top(relativeDir)
+  local out = vim.system({'git', 'rev-parse', '--show-toplevel'}, {cwd = relativeDir}):wait()
+
+  if out.code > 0 then
+    vim.notify(('Cannot determine top level directory for %s'):format(relativeDir), vim.log.levels.WARN, {title = 'git'})
+    return relativeDir or vim.uv.cwd()
+  end
+
+  return vim.trim(out.stdout)
+end
+
+function git.commandFiles()
+  return {'git', 'ls-files'}
+end
+
+return git
