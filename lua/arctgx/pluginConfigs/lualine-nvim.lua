@@ -21,14 +21,7 @@ require('lualine').setup({
   },
   sections = {
     lualine_b = {
-      {
-        'branch',
-        on_click = function (_numberOfClicks, button, _modifiers)
-          if 'r' == button then
-            require('git-utils').branches()
-          end
-        end
-      },
+      'git-utils-branch',
       'diff',
       {
         'diagnostics',
