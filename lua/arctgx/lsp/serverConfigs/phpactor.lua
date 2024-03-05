@@ -116,7 +116,7 @@ extension.defaultRootPatterns = {
   '.git',
 }
 
---- @return lsp.ClientConfig
+--- @return vim.lsp.ClientConfig
 function extension.clientConfig(file, rootPatterns)
   return {
     name = 'phpactor',
