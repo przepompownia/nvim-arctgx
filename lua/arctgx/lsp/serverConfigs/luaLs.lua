@@ -47,7 +47,7 @@ function M.defaultConfig()
   }
 end
 
---- @param client lsp.Client
+--- @param client vim.lsp.Client
 --- @return boolean
 function M.onInit(client)
   local path = client.workspace_folders[1].name
@@ -57,7 +57,7 @@ function M.onInit(client)
   end
 
   vim.notify('.luarc.json(c) not found. Loading defaults.', vim.log.levels.INFO, {title = 'LSP'})
-  client.config.settings = vim.tbl_deep_extend('force', client.config.settings or {}, {
+  client.config.settings.Lua = vim.tbl_deep_extend('force', client.config.settings.Lua, {
     Lua = M.defaultConfig()
   })
 
@@ -75,7 +75,7 @@ local rootPatterns = {
   '.git',
 }
 
---- @return lsp.ClientConfig
+--- @return vim.lsp.ClientConfig
 function M.clientConfig(file)
   local lsp = require('arctgx.lsp')
   return {
@@ -101,6 +101,9 @@ function M.clientConfig(file)
         vim.lsp.buf.add_workspace_folder(root)
       end
     end,
+    settings = {
+      Lua = {}
+    }
   }
 end
 
