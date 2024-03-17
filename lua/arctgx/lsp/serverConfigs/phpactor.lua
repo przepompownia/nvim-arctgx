@@ -136,6 +136,9 @@ function extension.clientConfig(file, rootPatterns)
     log_level = vim.lsp.protocol.MessageType.Warning,
     capabilities = require('arctgx.lsp').defaultClientCapabilities(),
     init_options = {
+      ['indexer.enabled_watchers'] = {
+        'lsp',
+      },
       ['logging.path'] = '/tmp/phpactor.log',
       ['completion_worse.completor.keyword.enabled'] = true,
       ['phpunit.enabled'] = true,
