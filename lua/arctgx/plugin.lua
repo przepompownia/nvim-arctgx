@@ -31,7 +31,14 @@ end
 
 function plugin.loadSingleConfiguration(pluginName, pluginPrefix)
   local tail = pluginName:gsub('%.lua$', ''):gsub('%.', '-')
-  if not vim.uv.fs_stat(require('arctgx.base').getPluginDir() .. '/lua/' .. pluginPrefix:gsub('%.', '/') .. '/' .. tail .. '.lua') then
+  local modulePath = vim.fs.joinpath(
+    require('arctgx.base').getPluginDir(),
+    'lua',
+    pluginPrefix:gsub('%.', '/'),
+    tail .. '.lua'
+  )
+  if not vim.uv.fs_stat(modulePath) then
+    vim.notify(('For plugin %s expected path %s does not exist'):format(pluginName, modulePath), vim.log.levels.DEBUG, {title = 'Plugin configuration'})
     return
   end
   local pluginModule = pluginPrefix .. '.' .. tail
