@@ -110,6 +110,14 @@ ls.add_snippets('php', {
       t({'', ' */'}),
     }
   ),
+  s({
+    trig = 'pdump',
+    dscr = 'Phpactor dump',
+  }, {
+    t('dump(\\Phpactor\\WorseReflection\\Core\\Util\\NodeUtil::dump($'),
+    i(1, 'node'),
+    t('));'),
+  }),
 })
 
 
