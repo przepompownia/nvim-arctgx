@@ -1,33 +1,69 @@
 local keymap = require('arctgx.vim.abstractKeymap')
 
-local peekDefMap = {}
-peekDefMap[keymap.firstLhs('langPeekDefinition')] = '@function.outer'
+local tsMoveKeymaps = {
+  ['af'] = '@function.outer',
+  ['if'] = '@function.inner',
+  ['aC'] = '@class.outer',
+  ['iC'] = '@class.inner',
+  ['al'] = '@block.outer',
+  ['il'] = '@block.inner',
+  ['as'] = '@statement.outer',
+  ['is'] = '@statement.inner',
+  ['aa'] = '@assignment.outer',
+  ['ia'] = '@assignment.inner',
+  ['ac'] = '@call.outer',
+  ['ic'] = '@call.inner',
+  ['aO'] = '@comment.outer',
+  ['iO'] = '@comment.inner',
+  ['ap'] = '@parameter.outer',
+  ['ip'] = '@parameter.inner',
+}
 
-require 'nvim-treesitter.configs'.setup {
+for input, capture in pairs(tsMoveKeymaps) do
+  vim.keymap.set({'n', 'x', 'o'}, input, function ()
+    require 'nvim-treesitter-textobjects.select'.select_textobject(capture, 'textobjects')
+  end)
+end
+
+vim.keymap.set({'n', 'x', 'o'}, '[[', function ()
+  require('nvim-treesitter-textobjects.move').goto_previous_start('@function.outer', 'textobjects')
+end)
+vim.keymap.set({'n', 'x', 'o'}, '[m', function ()
+  require('nvim-treesitter-textobjects.move').goto_previous_start('@class.outer', 'textobjects')
+end)
+vim.keymap.set({'n', 'x', 'o'}, ']]', function ()
+  require('nvim-treesitter-textobjects.move').goto_next_start('@function.outer', 'textobjects')
+end)
+vim.keymap.set({'n', 'x', 'o'}, ']m', function ()
+  require('nvim-treesitter-textobjects.move').goto_next_start('@class.outer', 'textobjects')
+end)
+vim.keymap.set({'n', 'x', 'o'}, '[]', function ()
+  require('nvim-treesitter-textobjects.move').goto_previous_end('@function.outer', 'textobjects')
+end)
+vim.keymap.set({'n', 'x', 'o'}, '[M', function ()
+  require('nvim-treesitter-textobjects.move').goto_previous_end('@class.outer', 'textobjects')
+end)
+vim.keymap.set({'n', 'x', 'o'}, '][', function ()
+  require('nvim-treesitter-textobjects.move').goto_next_end('@function.outer', 'textobjects')
+end)
+vim.keymap.set({'n', 'x', 'o'}, ']M', function ()
+  require('nvim-treesitter-textobjects.move').goto_next_end('@class.outer', 'textobjects')
+end)
+
+vim.keymap.set('n', '<leader>a', function ()
+  require('nvim-treesitter-textobjects.swap').swap_previous('@parameter.inner')()
+end)
+vim.keymap.set('n', '<leader>A', function ()
+  require('nvim-treesitter-textobjects.swap').swap_next('@parameter.inner')()
+end)
+keymap.set({'n', 'x'}, 'langPeekDefinition', function ()
+  require 'nvim-treesitter-textobjects.lsp_interop'.peek_definition_code('@function.outer', 'textobjects')
+end)
+
+require('nvim-treesitter-textobjects').setup {
   textobjects = {
     select = {
-      enable = true,
-
       lookahead = true,
-
-      keymaps = {
-        ['af'] = '@function.outer',
-        ['if'] = '@function.inner',
-        ['aC'] = '@class.outer',
-        ['iC'] = '@class.inner',
-        ['al'] = '@block.outer',
-        ['il'] = '@block.inner',
-        ['as'] = '@statement.outer',
-        ['is'] = '@statement.inner',
-        ['aa'] = '@assignment.outer',
-        ['ia'] = '@assignment.inner',
-        ['ac'] = '@call.outer',
-        ['ic'] = '@call.inner',
-        ['aO'] = '@comment.outer',
-        ['iO'] = '@comment.inner',
-        ['ap'] = '@parameter.outer',
-        ['ip'] = '@parameter.inner',
-      },
       selection_modes = {
         ['@function.outer'] = 'V',
         ['@class.outer'] = 'V',
@@ -35,38 +71,11 @@ require 'nvim-treesitter.configs'.setup {
       -- include_surrounding_whitespace = true,
     },
     move = {
-      enable = true,
       set_jumps = true,
-      goto_next_start = {
-        [']]'] = '@function.outer',
-        [']m'] = '@class.outer',
-      },
-      goto_next_end = {
-        [']['] = '@function.outer',
-        [']M'] = '@class.outer',
-      },
-      goto_previous_start = {
-        ['[['] = '@function.outer',
-        ['[m'] = '@class.outer',
-      },
-      goto_previous_end = {
-        ['[]'] = '@function.outer',
-        ['[M'] = '@class.outer',
-      },
     },
     swap = {
-      enable = true,
-      swap_next = {
-        ['<Leader>a'] = '@parameter.inner',
-      },
-      swap_previous = {
-        ['<Leader>A'] = '@parameter.inner',
-      },
     },
     lsp_interop = {
-      enable = true,
-      border = 'none',
-      peek_definition_code = peekDefMap,
     },
   },
 }
