@@ -1,6 +1,6 @@
 local keymap = require('arctgx.vim.abstractKeymap')
 
-local tsMoveKeymaps = {
+local tsSelectKeymaps = {
   ['af'] = '@function.outer',
   ['if'] = '@function.inner',
   ['aC'] = '@class.outer',
@@ -19,8 +19,8 @@ local tsMoveKeymaps = {
   ['ip'] = '@parameter.inner',
 }
 
-for input, capture in pairs(tsMoveKeymaps) do
-  vim.keymap.set({'n', 'x', 'o'}, input, function ()
+for input, capture in pairs(tsSelectKeymaps) do
+  vim.keymap.set({'x', 'o'}, input, function ()
     require 'nvim-treesitter-textobjects.select'.select_textobject(capture, 'textobjects')
   end)
 end
