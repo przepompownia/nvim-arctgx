@@ -16,9 +16,13 @@ local cmpSources = {
     end,
     option = {
       get_bufnrs = function ()
-        return vim.iter(vim.api.nvim_list_bufs()):filter(function (bufnr)
-          return vim.api.nvim_buf_is_loaded(bufnr)
-        end):totable()
+        local bufs = {}
+        for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+          if vim.api.nvim_buf_is_loaded(buf) then
+            bufs[#bufs + 1] = buf
+          end
+        end
+        return bufs
       end,
       max_indexed_line_length = 300,
     },
