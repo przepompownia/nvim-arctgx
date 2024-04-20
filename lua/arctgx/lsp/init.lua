@@ -20,9 +20,6 @@ function M.defaultClientCapabilities()
   end
 
   capabilities = vim.lsp.protocol.make_client_capabilities()
-  if capabilities.workspace.didChangeWatchedFiles then
-    capabilities.workspace.didChangeWatchedFiles.dynamicRegistration = true
-  end
 
   capabilities.textDocument.completion.completionItem.snippetSupport = true
 
