@@ -1,5 +1,5 @@
 local keymap = require('arctgx.vim.abstractKeymap')
-vim.g.arctgxBackupDir = vim.env['XDG_CONFIG_HOME'] or vim.env['HOME'] .. '/.config/backups'
+vim.g.arctgxBackupDir = vim.fs.joinpath(vim.env['XDG_CONFIG_HOME'] or os.getenv('HOME'), '.config', 'backups')
 keymap.set('n', 'writeBackup', function ()
   require('arctgx.writebackup').save()
 end)
