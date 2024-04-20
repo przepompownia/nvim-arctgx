@@ -37,4 +37,17 @@ function M.findRoot(file, rootPatterns)
   })[1] or file)
 end
 
+function M.findRootOfWorkingClient(file, clientName)
+  file = vim.fn.fnamemodify(file or '', ':p')
+  local result = nil
+  for _, client in ipairs(vim.lsp.get_clients({name = clientName})) do
+    local rootDir = vim.fn.fnamemodify(client.root_dir, ':p')
+    if vim.startswith(file, rootDir) and #rootDir > #(result or {}) then
+      result = rootDir
+    end
+  end
+
+  return result
+end
+
 return M
