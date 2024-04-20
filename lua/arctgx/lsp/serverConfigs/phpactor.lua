@@ -13,6 +13,9 @@ function extension.getVariants()
 end
 
 local function newClassFromFile(path)
+  if #variants == 0 then
+    vim.notify('No class new variants', vim.log.levels.WARN, {title = 'phpactor'})
+  end
   if not path then
     print('Cancelled.')
     return
@@ -44,7 +47,7 @@ local function newClassFromFile(path)
 
       timer:close()
 
-      vim.ui.select(extension.getVariants(), {prompt = 'Select variant: '}, function (variant)
+      local function selectVariant(variant)
         if nil == variant then
           api.nvim_buf_delete(buf, {})
           vim.notify('Canceled when selecting a variant', vim.log.levels.INFO, {title = 'Phpactor'})
@@ -56,7 +59,14 @@ local function newClassFromFile(path)
           command = 'create_class',
           arguments = {vim.uri_from_fname(path), variant},
         })
-      end)
+      end
+
+      if #variants == 1 then
+        selectVariant(variants[1])
+        return
+      end
+
+      vim.ui.select(variants, {prompt = 'Select variant: '}, selectVariant)
     end)
   )
 end
