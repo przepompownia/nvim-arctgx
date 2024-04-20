@@ -13,11 +13,15 @@ local d = ls.dynamic_node
 local events = require('luasnip.util.events')
 
 ls.add_snippets('lua', {
-  s('lvd', {
-    t('print(vim.inspect('),
-    i(1),
-    t('))'),
-  }),
+  s({
+      trig = 'lvd',
+      dscr = 'print(vim.inspect())'
+    },
+    {
+      t('print(vim.inspect('),
+      i(1),
+      t('))'),
+    }),
   s('lvt', {
     t('print(debug.traceback())'),
   }),
