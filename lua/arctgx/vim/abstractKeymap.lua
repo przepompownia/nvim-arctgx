@@ -34,7 +34,7 @@ function abstractKeymap.set(modes, name, rhs, opts)
   for _, mode in ipairs(modes) do
     for lhsMode, lhs in pairs(keymap.lhs) do
       if type(lhsMode) ~= 'string' or lhsMode == mode then
-        vim.keymap.set(mode, lhs, rhs, vim.tbl_extend('keep', opts or {}, {desc = keymap.desc}))
+        vim.keymap.set(mode, lhs, rhs, vim.tbl_extend('keep', opts or {}, {desc = ('%s: %s'):format(name, keymap.desc)}))
       end
     end
   end
