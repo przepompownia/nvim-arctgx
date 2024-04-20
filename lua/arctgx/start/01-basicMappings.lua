@@ -84,12 +84,6 @@ end, {
   expr = true,
 })
 
-for i = 1, 12 do
-  vim.keymap.set({'n', 'i'}, '<F' .. 12 + i .. '>', function ()
-    vim.cmd.normal(api.nvim_replace_termcodes('<S-F' .. i .. '>', true, false, true))
-  end, {})
-end
-
 vim.keymap.set({'i', 'n'}, '<A-Up>', function () vim.cmd.wincmd('k') end, opts)
 vim.keymap.set({'i', 'n'}, '<A-Down>', function () vim.cmd.wincmd('j') end, opts)
 vim.keymap.set({'i', 'n'}, '<A-Left>', function () vim.cmd.wincmd('h') end, opts)
@@ -99,6 +93,7 @@ vim.keymap.set('i', '<C-Del>', function () vim.cmd.normal('dw') end, opts)
 vim.keymap.set({'i', 'n'}, '<F2>', vim.cmd.update, opts)
 vim.keymap.set({'i', 'n'}, '<F3>', vim.cmd.quit, opts)
 vim.keymap.set({'i', 'n'}, '<S-F3>', function () vim.cmd.quit {bang = true} end, opts)
+vim.keymap.set({'i', 'n'}, '<F15>', function () vim.cmd.quit {bang = true} end, opts)
 vim.keymap.set({'i'}, '<C-Left>', function () vim.cmd.normal('b') end, opts)
 vim.keymap.set({'i'}, '<C-Right>', function () vim.cmd.normal('w') end, opts)
 vim.keymap.set({'i'}, '<S-Left>', function () vim.cmd.normal('v') end, opts)
