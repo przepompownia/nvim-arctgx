@@ -15,7 +15,8 @@ require('diffview').setup({
       position = 'left',
       width = 120,
       height = 40,
-      win_opts = {}
+      win_opts = {},
+      border = 'rounded',
     },
   },
 })
