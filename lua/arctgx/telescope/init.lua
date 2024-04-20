@@ -28,16 +28,32 @@ local function callOnSelection(promptBufnr, callback, actionName)
   for _, entry in ipairs(multiSelection) do callback(entry, picker) end
 end
 
-local customActions = require('telescope.actions.mt').transform_mod({
-  toggleCaseSensibility = function () end,
-  toggleFixedStrings = function () end,
-  toggleOnlyFirstResult = function () end,
-})
+local customActions = nil
 
-extension.customActions = customActions
+function extension.customActions()
+  if customActions then
+    return customActions
+  end
+  local ok, mt = pcall(require, 'telescope.actions.mt')
+  if not ok then
+    return
+  end
+
+  customActions = mt.transform_mod({
+    toggleCaseSensibility = function () end,
+    toggleFixedStrings = function () end,
+    toggleOnlyFirstResult = function () end,
+  })
+
+  return customActions
+end
 
 function extension.defaultFileMappings(_promptBufnr, map)
-  local actions = require('telescope.actions')
+  local ok, actions = pcall(require, 'telescope.actions')
+  if not ok then
+    return true
+  end
+
   map({'i', 'n'}, '<C-y>', actions.file_edit)
   map({'i', 'n'}, '<A-u>', actions.to_fuzzy_refine)
 
@@ -124,19 +140,19 @@ function extension.grep(cmd, root, query)
   end
 
   opts.attach_mappings = function (promptBufnr, map)
-    customActions.toggleCaseSensibility:enhance {
+    extension.customActions().toggleCaseSensibility:enhance {
       post = function ()
         cmd:switchCaseSensibility()
         refreshPicker(promptBufnr, cmd)
       end
     }
-    customActions.toggleFixedStrings:enhance {
+    extension.customActions().toggleFixedStrings:enhance {
       post = function ()
         cmd:switchFixedStrings()
         refreshPicker(promptBufnr, cmd)
       end
     }
-    customActions.toggleOnlyFirstResult:enhance {
+    extension.customActions().toggleOnlyFirstResult:enhance {
       post = function ()
         cmd:switchOnlyaFirstResult()
         refreshPicker(promptBufnr, cmd)
@@ -144,9 +160,9 @@ function extension.grep(cmd, root, query)
     }
 
     extension.defaultFileMappings(promptBufnr, map)
-    map({'i', 'n'}, '<A-i>', customActions.toggleCaseSensibility)
-    map({'i', 'n'}, '<A-f>', customActions.toggleFixedStrings)
-    map({'i', 'n'}, '<A-o>', customActions.toggleOnlyFirstResult)
+    map({'i', 'n'}, '<A-i>', extension.customActions().toggleCaseSensibility)
+    map({'i', 'n'}, '<A-f>', extension.customActions().toggleFixedStrings)
+    map({'i', 'n'}, '<A-o>', extension.customActions().toggleOnlyFirstResult)
 
     return true
   end
