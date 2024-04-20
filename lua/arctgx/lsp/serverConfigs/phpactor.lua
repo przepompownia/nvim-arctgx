@@ -45,7 +45,6 @@ local function newClassFromFile(path)
       timer:close()
 
       vim.ui.select(extension.getVariants(), {prompt = 'Select variant: '}, function (variant)
-        print('V: ' .. vim.inspect(variant))
         if nil == variant then
           api.nvim_buf_delete(buf, {})
           vim.notify('Canceled when selecting a variant', vim.log.levels.INFO, {title = 'Phpactor'})
