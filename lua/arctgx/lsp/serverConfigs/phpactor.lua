@@ -2,73 +2,66 @@ local api = vim.api
 
 local extension = {}
 
-local variants = {'default'}
-
-function extension.addVariant(variant)
-  table.insert(variants, variant)
-end
-
-function extension.getVariants()
-  return variants
-end
-
 local function newClassFromFile(path)
-  if #variants == 0 then
-    vim.notify('No class new variants', vim.log.levels.WARN, {title = 'phpactor'})
-  end
-  if not path then
-    print('Cancelled.')
-    return
-  end
+  vim.lsp.buf_request(0, 'phpactor/classnew/variants', {['return'] = true}, function (_, variants)
+    if #variants == 0 then
+      vim.notify('No class new variants', vim.log.levels.WARN, {title = 'phpactor'})
+      return
+    end
+    if not path then
+      print('Cancelled.')
+      return
+    end
 
-  if 1 == vim.fn.filereadable(path) then
-    vim.notify(('File %s exist!'):format(path), vim.log.levels.INFO, {title = 'Phpactor'})
-    return
-  end
+    if 1 == vim.fn.filereadable(path) then
+      vim.notify(('File %s exist!'):format(path), vim.log.levels.INFO, {title = 'Phpactor'})
+      return
+    end
 
-  local buf = api.nvim_create_buf(true, false)
-  api.nvim_buf_set_name(buf, path)
-  vim.bo[buf].filetype = 'php'
-  vim.fn.bufload(buf)
+    local buf = api.nvim_create_buf(true, false)
+    api.nvim_buf_set_name(buf, path)
+    vim.bo[buf].filetype = 'php'
+    vim.fn.bufload(buf)
 
-  local timer = vim.uv.new_timer()
-  assert(timer)
-  local i = 1
-  timer:start(
-    0,
-    1000,
-    vim.schedule_wrap(function ()
-      local clients = vim.iter(vim.lsp.get_clients({bufnr = buf, name = 'phpactor'}))
-      if not clients:next() then
-        vim.notify(('Server not ready, trying %s time'):format(tostring(i)), vim.log.levels.INFO, {title = 'Phpactor'})
-        i = i + 1
-        return
-      end
-
-      timer:close()
-
-      local function selectVariant(variant)
-        if nil == variant then
-          api.nvim_buf_delete(buf, {})
-          vim.notify('Canceled when selecting a variant', vim.log.levels.INFO, {title = 'Phpactor'})
+    local timer = vim.uv.new_timer()
+    assert(timer)
+    local i = 1
+    timer:start(
+      0,
+      1000,
+      vim.schedule_wrap(function ()
+        local clients = vim.iter(vim.lsp.get_clients({bufnr = buf, name = 'phpactor'}))
+        if not clients:next() then
+          vim.notify(('Server not ready, trying %s time'):format(tostring(i)), vim.log.levels.INFO, {title = 'Phpactor'})
+          i = i + 1
           return
         end
 
-        vim.cmd.edit({args = {path}})
-        vim.lsp.buf.execute_command({
-          command = 'create_class',
-          arguments = {vim.uri_from_fname(path), variant},
-        })
-      end
+        timer:close()
 
-      if #variants == 1 then
-        selectVariant(variants[1])
-        return
-      end
+        local function selectVariant(variant)
+          if nil == variant then
+            api.nvim_buf_delete(buf, {})
+            vim.notify('Canceled when selecting a variant', vim.log.levels.INFO, {title = 'Phpactor'})
+            return
+          end
 
-      vim.ui.select(variants, {prompt = 'Select variant: '}, selectVariant)
-    end)
-  )
+          vim.cmd.edit({args = {path}})
+          vim.lsp.buf.execute_command({
+            command = 'create_class',
+            arguments = {vim.uri_from_fname(path), variant},
+          })
+        end
+
+        if #variants == 1 then
+          selectVariant(variants[1])
+          return
+        end
+
+        vim.ui.select(variants, {prompt = 'Select variant: '}, selectVariant)
+      end)
+    )
+  end)
 end
 
 function extension.classNew()
