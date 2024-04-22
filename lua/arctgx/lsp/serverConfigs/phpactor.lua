@@ -53,14 +53,18 @@ local function showWindow(title, filetype, contents)
 end
 
 function extension.dumpConfig()
-  vim.lsp.buf_request(0, 'phpactor/debug/config', {['return'] = true}, function (_, result)
-    showWindow('Phpactor LSP Configuration', 'json', result)
+  vim.lsp.buf_request_all(0, 'phpactor/debug/config', {['return'] = true}, function (result)
+    for _, data in pairs(result) do
+      showWindow('Phpactor LSP Configuration', 'json', data.result)
+    end
   end)
 end
 
 function extension.status()
-  vim.lsp.buf_request(0, 'phpactor/status', {['return'] = true}, function (_, result)
-    showWindow('Phpactor Status', 'markdown', result)
+  vim.lsp.buf_request_all(0, 'phpactor/status', {['return'] = true}, function (result)
+    for _, data in pairs(result) do
+      showWindow('Phpactor Status', 'markdown', data.result)
+    end
   end)
 end
 
