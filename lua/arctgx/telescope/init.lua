@@ -62,7 +62,7 @@ end
 
 function extension.createOperator(searchFunction, cmd, root, title)
   return function (_type)
-    local str = base.operatorGetText() or ''
+    local str = vim.iter(vim.fn.getregion(vim.fn.getpos('\'['), vim.fn.getpos('\']'))):next() or ''
 
     searchFunction(cmd, root, str, title)
   end
