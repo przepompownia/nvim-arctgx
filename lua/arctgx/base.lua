@@ -32,10 +32,6 @@ function base.editMappedPath(path, line, column)
   end
 end
 
-function base.operatorGetText()
-  return base.getTextBetweenMarks('\'[', '\']')
-end
-
 function base.getRangeBetweenMarks(mark1, mark2)
   local start = vim.fn.getpos(mark1)
   local finish = vim.fn.getpos(mark2)
