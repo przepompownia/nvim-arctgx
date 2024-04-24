@@ -48,14 +48,6 @@ function base.getRangeBetweenMarks(mark1, mark2)
   return startLine, startCol, finishLine, finishCol
 end
 
-function base.getTextBetweenMarks(mark1, mark2)
-  local startLine, startCol, finishLine, finishCol = base.getRangeBetweenMarks(mark1, mark2)
-
-  local lines = api.nvim_buf_get_text(0, startLine - 1, startCol - 1, finishLine - 1, finishCol, {})
-
-  return table.concat(lines, '\n')
-end
-
 function base.getVisualSelectionRange()
   if not vim.tbl_contains({'v', 'V'}, vim.fn.mode()) then
     return
@@ -74,7 +66,7 @@ function base.getVisualSelection()
     return
   end
 
-  return base.getTextBetweenMarks('v', '.')
+  return table.concat(vim.fn.getregion(vim.fn.getpos('v'), vim.fn.getpos('.')), '\n')
 end
 
 do
