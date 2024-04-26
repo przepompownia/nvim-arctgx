@@ -24,6 +24,7 @@ end
 lsp.handlers[lsp.protocol.Methods.textDocument_references] = lsp.with(
   lsp.handlers[lsp.protocol.Methods.textDocument_references],
   {
+    include_declaration = false,
     on_list = function (params)
       local client = assert(lsp.get_client_by_id(params.context.client_id))
       if #params.items == 1 then
@@ -50,9 +51,6 @@ vim.api.nvim_create_autocmd('LspAttach', {
     keymap.set('n', 'langFindWorkspaceSymbols', lsp.buf.workspace_symbol, opts)
     keymap.set('n', 'langFindDocumentSymbols', lsp.buf.document_symbol, opts)
     keymap.set('n', 'langRenameSymbol', lsp.buf.rename, opts)
-    keymap.set('n', 'langFindReferences', function ()
-      lsp.buf.references {includeDeclaration = false}
-    end, opts)
     keymap.set('n', 'langWorkspaceFolderAdd', lsp.buf.add_workspace_folder, opts)
     keymap.set('n', 'langWorkspaceFolderRemove', lsp.buf.remove_workspace_folder, opts)
     keymap.set('n', 'langWorkspaceFolderList', function ()
