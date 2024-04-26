@@ -83,7 +83,7 @@ local abstractKeymaps = {
   langFindWorkspaceSymbols = {lhs = {'<S-F6>', '<F18>'}, desc = 'Find workspace symbols'},
   langToggleInlayHints = {lhs = '<Leader>ih', desc = 'Toggle inlay hints'},
   langRenameSymbol = {lhs = '<Leader>r', desc = 'Rename symbol'},
-  langShowSignatureHelp = {lhs = {i = '<C-Bslash>,', n = '<Leader>ish'}, desc = 'Show signature help'},
+  langShowSignatureHelp = {lhs = {n = '<Leader>ish'}, desc = 'Show signature help'},
   langTriggerCompletion = {lhs = '<C-Space>', desc = 'Trigger completion'},
   langApplyAllformatters = {lhs = '<Space>f', desc = 'Apply all formatters'},
   langApplySelectedformatter = {lhs = '<Space>F', desc = 'Select formatter'},
