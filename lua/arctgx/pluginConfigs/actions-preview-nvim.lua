@@ -13,5 +13,4 @@ require('actions-preview').setup {
     },
   },
 }
-local keymap = require('arctgx.vim.abstractKeymap')
-keymap.set({'n', 'x'}, 'langCodeAction', require('actions-preview').code_actions, {})
+vim.lsp.buf.code_action = require('actions-preview').code_actions

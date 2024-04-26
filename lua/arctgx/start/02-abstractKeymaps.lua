@@ -86,7 +86,6 @@ local abstractKeymaps = {
   langTriggerCompletion = {lhs = '<C-Space>', desc = 'Trigger completion'},
   langApplyAllformatters = {lhs = '<Space>f', desc = 'Apply all formatters'},
   langApplySelectedformatter = {lhs = '<Space>F', desc = 'Select formatter'},
-  langCodeAction = {lhs = '<Leader>ca', desc = 'Code action'},
   langWorkspaceFolderList = {lhs = '<Leader>sfl', desc = 'List workspace folders'},
   langWorkspaceFolderAdd = {lhs = '<Leader>sfa', desc = 'Add workspace folder'},
   langWorkspaceFolderRemove = {lhs = '<Leader>sfd', desc = 'Remove workspace folder'},
