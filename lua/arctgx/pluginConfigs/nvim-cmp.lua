@@ -84,7 +84,7 @@ cmp.setup({
     ['<C-y>'] = cmp.mapping.confirm({select = true}),
     ['<C-e>'] = cmp.mapping.abort(),
     ['<CR>'] = cmp.mapping.confirm({select = true}),
-    ['<C-s>'] = cmp.mapping.complete({
+    ['<A-s>'] = cmp.mapping.complete({
       config = {
         sources = {
           {name = 'luasnip'}
