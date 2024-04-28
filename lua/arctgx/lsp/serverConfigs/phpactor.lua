@@ -33,33 +33,10 @@ function extension.classNew()
   }, newClassFromCodeAction)
 end
 
-local function showWindow(title, filetype, contents)
-  local buf = vim.api.nvim_create_buf(false, false)
-
-  vim.bo[buf].filetype = filetype
-  vim.bo[buf].bufhidden = 'wipe'
-  local lines = vim.split(contents, '\n')
-  vim.api.nvim_buf_set_lines(buf, 0, -1, false, lines)
-
-  local win = vim.api.nvim_open_win(buf, true, {
-    relative = 'editor',
-    width = 120,
-    height = #lines,
-    row = 0.9,
-    col = 0.9,
-    border = 'rounded',
-    style = 'minimal',
-    title = title,
-    title_pos = 'center',
-  })
-
-  vim.wo[win].winblend = 0
-end
-
 function extension.dumpConfig()
   vim.lsp.buf_request_all(0, 'phpactor/debug/config', {['return'] = true}, function (result)
     for _, data in pairs(result) do
-      showWindow('Phpactor LSP Configuration', 'json', data.result)
+      require('arctgx.base').displayInWindow('Phpactor LSP Configuration', 'json', data.result)
     end
   end)
 end
@@ -67,7 +44,7 @@ end
 function extension.status()
   vim.lsp.buf_request_all(0, 'phpactor/status', {['return'] = true}, function (result)
     for _, data in pairs(result) do
-      showWindow('Phpactor Status', 'markdown', data.result)
+      require('arctgx.base').displayInWindow('Phpactor Status', 'markdown', data.result)
     end
   end)
 end

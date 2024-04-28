@@ -158,6 +158,29 @@ function base.insertWithInitialIndentation(modeCharacter)
   api.nvim_feedkeys(api.nvim_replace_termcodes('<C-f>', true, false, true), 'n', false)
 end
 
+function base.displayInWindow(title, filetype, contents)
+  local buf = vim.api.nvim_create_buf(false, true)
+
+  vim.treesitter.start(buf, filetype)
+  vim.bo[buf].bufhidden = 'wipe'
+  local lines = vim.split(contents, '\n')
+  vim.api.nvim_buf_set_lines(buf, 0, -1, false, lines)
+
+  local win = vim.api.nvim_open_win(buf, true, {
+    relative = 'editor',
+    width = 120,
+    height = #lines,
+    row = 0.9,
+    col = 0.9,
+    border = 'rounded',
+    style = 'minimal',
+    title = title,
+    title_pos = 'center',
+  })
+
+  vim.wo[win].winblend = 0
+end
+
 function base.enablePrivateMode()
   vim.opt_global.history = 0
   vim.opt_global.backup = false
@@ -177,6 +200,11 @@ function base.getPluginDir()
   local modulePath = debug.getinfo(1).source:match('@?(.*/)')
 
   return vim.uv.fs_realpath(modulePath .. '../../')
+end
+
+function dump(value)
+  local valueString = vim.inspect(value):gsub('<function (%d+)>', '"function %1"'):gsub('<%d+>', '')
+  base.displayInWindow('Dump', 'lua', valueString)
 end
 
 return base
