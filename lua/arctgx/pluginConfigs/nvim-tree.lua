@@ -80,6 +80,9 @@ require('nvim-tree').setup({
   },
   git = {
     ignore = false,
+    disable_for_dirs = {
+      vim.uv.os_homedir(),
+    },
   },
 })
 
