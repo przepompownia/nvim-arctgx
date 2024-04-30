@@ -56,7 +56,7 @@ local opts = {silent = true}
 keymap.set('x', 'debuggerAddToWatched', function ()
   watchExpression(base.getVisualSelection())
 end)
-keymap.set({'n'}, 'debuggerUIToggle', require('dapui').toggle, opts)
+keymap.set({'n'}, 'debuggerUIToggle', function() require('dapui').toggle() end, opts)
 keymap.set({'n', 'x'}, 'debuggerEvalToFloat', function ()
   local keywordChars = {}
   if vim.tbl_contains({'php', 'sh'}, vim.bo.ft) then
