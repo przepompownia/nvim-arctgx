@@ -1,9 +1,7 @@
-local api = vim.api
-local dapui = require('dapui')
 local base = require('arctgx.base')
 local keymap = require('arctgx.vim.abstractKeymap')
 
-local augroup = api.nvim_create_augroup('ArctgxDapUi', {clear = true})
+local augroup = vim.api.nvim_create_augroup('ArctgxDapUi', {clear = true})
 local function reloadColors()
   local highlights = {
     DapUIVariable = {link = 'Normal'},
@@ -28,7 +26,7 @@ local function reloadColors()
   }
 
   for name, def in pairs(highlights) do
-    api.nvim_set_hl(0, name, def)
+    vim.api.nvim_set_hl(0, name, def)
   end
 end
 
@@ -41,16 +39,16 @@ vim.api.nvim_create_autocmd({'FileType'}, {
   end
 })
 
-api.nvim_create_autocmd({'ColorScheme'}, {
+vim.api.nvim_create_autocmd({'ColorScheme'}, {
   group = augroup,
   callback = reloadColors,
 })
 
 local function watchExpression(expression)
-  dapui.elements.watches.add(expression)
+  require('dapui').elements.watches.add(expression)
 end
 
-api.nvim_create_user_command('DAW', function (opts)
+vim.api.nvim_create_user_command('DAW', function (opts)
   watchExpression(opts.args)
 end, {nargs = 1, desc = 'DAP UI: add expression to watch'})
 
@@ -58,18 +56,18 @@ local opts = {silent = true}
 keymap.set('x', 'debuggerAddToWatched', function ()
   watchExpression(base.getVisualSelection())
 end)
-keymap.set({'n'}, 'debuggerUIToggle', dapui.toggle, opts)
+keymap.set({'n'}, 'debuggerUIToggle', require('dapui').toggle, opts)
 keymap.set({'n', 'x'}, 'debuggerEvalToFloat', function ()
   local keywordChars = {}
   if vim.tbl_contains({'php', 'sh'}, vim.bo.ft) then
     keywordChars = {'$'}
   end
   base.withAppendedToKeyword(keywordChars, function ()
-    dapui.eval(nil, {enter = true, context = 'repl'})
+    require('dapui').eval(nil, {enter = true, context = 'repl'})
   end)
 end, opts)
 
-dapui.setup({
+require('dapui').setup({
   mappings = {
     expand = {'<Right>'},
     open = {'<CR>', '<2-LeftMouse>'},
