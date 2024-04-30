@@ -52,7 +52,7 @@ end
 
 api.nvim_create_user_command('DAW', function (opts)
   watchExpression(opts.args)
-end , {nargs = 1, desc = 'DAP UI: add expression to watch'})
+end, {nargs = 1, desc = 'DAP UI: add expression to watch'})
 
 local opts = {silent = true}
 keymap.set('x', 'debuggerAddToWatched', function ()
@@ -71,8 +71,8 @@ end, opts)
 
 dapui.setup({
   mappings = {
-    expand = { '<Right>' },
-    open = { '<CR>', '<2-LeftMouse>' },
+    expand = {'<Right>'},
+    open = {'<CR>', '<2-LeftMouse>'},
     remove = 'd',
     edit = 'e',
     repl = 'r',
@@ -81,10 +81,10 @@ dapui.setup({
   layouts = {
     {
       elements = {
-        { id = 'scopes', size = 0.25 },
-        { id = 'watches', size = 0.25 },
-        { id = 'stacks', size = 0.25 },
-        { id = 'breakpoints', size = 0.25 },
+        {id = 'scopes',      size = 0.25},
+        {id = 'watches',     size = 0.25},
+        {id = 'stacks',      size = 0.25},
+        {id = 'breakpoints', size = 0.25},
       },
       size = 40,
       position = 'left',
@@ -103,7 +103,7 @@ dapui.setup({
     max_width = nil,
     border = 'single',
     mappings = {
-      close = { 'q', '<Esc>' },
+      close = {'q', '<Esc>'},
     },
   },
 })
