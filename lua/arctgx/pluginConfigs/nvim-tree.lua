@@ -1,9 +1,45 @@
 local api = vim.api
 local session = require('arctgx.session')
-local treeapi = require('nvim-tree.api')
 
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
+
+vim.api.nvim_create_autocmd('User', {
+  pattern = 'NvimTreeSetup',
+  callback = function ()
+    local treeapi = require('nvim-tree.api')
+    local Event = treeapi.events.Event
+
+    treeapi.events.subscribe(Event.NodeRenamed, function (data)
+      local yes = 'y'
+      vim.ui.input({
+        prompt = 'Do you want to stage this renaming? > ',
+        default = yes,
+      }, function (input)
+        if input ~= yes then
+          return
+        end
+        vim.system({'git', 'add', '-u', '--', data.old_name})
+        vim.system({'git', 'add', '--', data.new_name})
+        vim.notify(('renamed from %s to %s'):format(data.old_name, data.new_name), vim.log.levels.INFO,
+          {title = 'NvimTree'})
+      end)
+    end)
+
+    treeapi.events.subscribe(Event.FileRemoved, function (data)
+      local yes = 'y'
+      vim.ui.input({
+        prompt = 'Do you want to stage this removal? > ',
+        default = yes,
+      }, function (input)
+        if input ~= yes then
+          return
+        end
+        vim.system({'git', 'add', '-u', '--', data.fname})
+      end)
+    end)
+  end,
+})
 
 require('nvim-tree').setup({
   hijack_cursor = true,
@@ -19,6 +55,7 @@ require('nvim-tree').setup({
     },
   },
   on_attach = function (bufnr)
+    local treeapi = require('nvim-tree.api')
     treeapi.config.mappings.default_on_attach(bufnr)
 
     vim.keymap.set(
@@ -86,45 +123,8 @@ require('nvim-tree').setup({
   },
 })
 
-local Event = treeapi.events.Event
-
-treeapi.events.subscribe(Event.NodeRenamed, function (data)
-  local yes = 'y'
-  vim.ui.input({
-    prompt = 'Do you want to stage this renaming? > ',
-    default = yes,
-  }, function (input)
-    if input ~= yes then
-      return
-    end
-    vim.system({'git', 'add', '-u', '--', data.old_name})
-    vim.system({'git', 'add', '--', data.new_name})
-    vim.notify(('renamed from %s to %s'):format(data.old_name, data.new_name), vim.log.levels.INFO, {title = 'NvimTree'})
-  end)
-end)
-
-treeapi.events.subscribe(Event.FileRemoved, function (data)
-  local yes = 'y'
-  vim.ui.input({
-    prompt = 'Do you want to stage this removal? > ',
-    default = yes,
-  }, function (input)
-    if input ~= yes then
-      return
-    end
-    vim.system({'git', 'add', '-u', '--', data.fname})
-  end)
-end)
-
-local function expandNode()
-  local node = treeapi.tree.get_node_under_cursor()
-  if node.name == '..' then
-    return
-  end
-  treeapi.node.open.edit(node)
-end
-
 local function focusOnFile()
+  local treeapi = require('nvim-tree.api')
   local bufPath = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(0), ':p')
   local realParent = vim.iter(vim.fs.parents(bufPath)):find(function (path)
     return vim.uv.fs_realpath(path) and path ~= '/'
@@ -137,6 +137,15 @@ local function focusOnFile()
   treeapi.tree.find_file({
     buf = pathToFocus,
   })
+
+  local function expandNode()
+    local node = treeapi.tree.get_node_under_cursor()
+    if node.name == '..' then
+      return
+    end
+    treeapi.node.open.edit(node)
+  end
+
   if vim.fn.isdirectory(pathToFocus) == 1 then
     expandNode()
   end
