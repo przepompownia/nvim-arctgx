@@ -41,7 +41,7 @@ vim.api.nvim_create_autocmd('User', {
   end,
 })
 
-require('nvim-tree').setup({
+require('arctgx.lazy')['nvim-tree'].setup({
   hijack_cursor = true,
   actions = {
     change_dir = {
@@ -124,6 +124,7 @@ require('nvim-tree').setup({
 })
 
 local function focusOnFile()
+  require('nvim-tree')
   local treeapi = require('nvim-tree.api')
   local bufPath = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(0), ':p')
   local realParent = vim.iter(vim.fs.parents(bufPath)):find(function (path)
