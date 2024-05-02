@@ -58,7 +58,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
       dump(lsp.buf.list_workspace_folders())
     end, opts)
     keymap.set('n', 'langToggleInlayHints', function ()
-      lsp.inlay_hint.enable(ev.buf, not lsp.inlay_hint.is_enabled(ev.buf))
+      lsp.inlay_hint.enable(not lsp.inlay_hint.is_enabled({bufnr = ev.buf}), {bufnr = ev.buf})
     end, opts)
     keymap.set({'n', 'v'}, 'langApplyAllformatters', function () return lsp.buf.format({async = true}) end, opts)
 
