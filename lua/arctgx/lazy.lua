@@ -1,6 +1,6 @@
 local lazy = {}
 
---- @type table <string, {method: string, args: table}[]>
+--- @type table <string, {callback: fun()?, method: string?, args: table?}[]>
 local configs = {}
 --- @type table <string, boolean>
 local loaded = {}
@@ -13,6 +13,8 @@ function lazy.setupAtFirstLoad(modname)
     for _, config in ipairs(configs[modname]) do
       if type(module) == 'table' and type(module[config.method]) == 'function' then
         module[config.method](unpack(config.args))
+      elseif config.callback then
+        config.callback()
       end
     end
 
@@ -22,13 +24,21 @@ function lazy.setupAtFirstLoad(modname)
   end
 end
 
+local function addConfig(modname, config)
+  configs[modname] = configs[modname] or {}
+  configs[modname][#configs[modname] + 1] = config
+end
+
+function lazy.before(modname, callback)
+  addConfig(modname, {callback = callback})
+end
+
 setmetatable(lazy, {
   __index = function (_, modname)
     return setmetatable({}, {
       __index = function (_, method)
         return function (...)
-          configs[modname] = configs[modname] or {}
-          configs[modname][#configs[modname] + 1] = {method = method, args = {...}}
+          addConfig(modname, {method = method, args = {...}})
         end
       end
     })

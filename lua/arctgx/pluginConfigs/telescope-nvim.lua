@@ -2,7 +2,7 @@ local base = require 'arctgx.base'
 local api = vim.api
 local keymap = require('arctgx.vim.abstractKeymap')
 
-require('telescope').setup {
+local config = {
   defaults = {
     preview = {
     },
@@ -28,6 +28,11 @@ require('telescope').setup {
     },
   },
 }
+
+require('arctgx.lazy').telescope.setup(config)
+require('arctgx.lazy').before('telescope.builtin', function ()
+  require('telescope')
+end)
 
 api.nvim_create_user_command(
   'GGrep',
