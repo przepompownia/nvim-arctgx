@@ -1,3 +1,4 @@
+table.insert(package.loaders, 2, require('arctgx.lazy').setupAtFirstLoad)
 require('arctgx.start.00-vimsettings')
 require('arctgx.start.01-basicMappings')
 require('arctgx.start.02-abstractKeymaps')
