@@ -1,7 +1,7 @@
 local session = require('arctgx.session')
 local keymap = require('arctgx.vim.abstractKeymap')
-local neotest = require('neotest')
-neotest.setup({
+require('arctgx.lazy').neotest.setup({
+  -- log_level = vim.log.levels.INFO,
   adapters = {
     require('neotest-phpunit') {
       phpunit_cmd = function ()
@@ -10,15 +10,16 @@ neotest.setup({
       dap = require('arctgx.dap.php').default,
       env = {
         XDEBUG_CONFIG = 'idekey=neotest',
+        -- XDEBUG_TRIGGER = '1',
       },
     },
   }
 })
 
-keymap.set({'n'}, 'testUIToggleSummary', neotest.summary.toggle, {})
-keymap.set({'n'}, 'testUIToggleOutput', neotest.output_panel.toggle, {})
-keymap.set({'n'}, 'testUIRunNearest', neotest.run.run, {})
-keymap.set({'n'}, 'testUIRunNearestWithDap', function () neotest.run.run({
+keymap.set({'n'}, 'testUIToggleSummary', function () require('neotest').summary.toggle() end, {})
+keymap.set({'n'}, 'testUIToggleOutput', function () require('neotest').output_panel.toggle() end, {})
+keymap.set({'n'}, 'testUIRunNearest', function () require('neotest').run.run() end, {})
+keymap.set({'n'}, 'testUIRunNearestWithDap', function () require('neotest').run.run({
   strategy = 'dap',
   -- env = phpXdebugEnv,
 }) end, {})
