@@ -1,9 +1,3 @@
-local pickers = require 'telescope.pickers'
-local finders = require 'telescope.finders'
-local actions = require 'telescope.actions'
-local action_state = require 'telescope.actions.state'
-local buffer_previewer = require('telescope.previewers.buffer_previewer')
-
 --- @class arctgx.telescope.windows
 local Windows = {}
 
@@ -36,7 +30,7 @@ end
 
 --- @diagnostic disable-next-line: unused-local, unused-function
 local function previewer()
-  return buffer_previewer.new_buffer_previewer {
+  return require('telescope.previewers.buffer_previewer').new_buffer_previewer {
     title = 'Window content',
     get_buffer_by_name = function (_, entry)
       return entry.value.bufname
@@ -52,10 +46,11 @@ local function previewer()
 end
 
 function Windows.list(opts)
+  local actions = require 'telescope.actions'
   opts = opts or {}
-  pickers.new(opts, {
+  require('telescope.pickers').new(opts, {
     prompt_title = 'Windows',
-    finder = finders.new_table({
+    finder = require('telescope.finders').new_table({
       results = listBufferWindowPairs(),
       entry_maker = makeEntry,
     }),
@@ -63,7 +58,7 @@ function Windows.list(opts)
     attach_mappings = function (prompt_bufnr, _map)
       actions.select_default:replace(function ()
         actions.close(prompt_bufnr)
-        local selection = action_state.get_selected_entry()
+        local selection = require('telescope.actions.state').get_selected_entry()
         if nil == selection then
           return
         end
