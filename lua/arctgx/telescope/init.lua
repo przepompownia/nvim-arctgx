@@ -104,7 +104,7 @@ function extension.grep(cmd, root, query)
 
     return
   end
-  local action_state = require 'telescope.actions.state'
+  local actionState = require 'telescope.actions.state'
   local opts = {
     cwd = root,
     default_text = query,
@@ -129,11 +129,11 @@ function extension.grep(cmd, root, query)
   end, opts.entry_maker or require('telescope.make_entry').gen_from_vimgrep(opts), opts.max_results, opts.cwd)
 
   local newGrepFinder = function (promptBufnr)
-    local picker = action_state.get_current_picker(promptBufnr)
+    local picker = actionState.get_current_picker(promptBufnr)
     return picker.finder
   end
   local refreshPicker = function (promptBufnr, command)
-    local picker = action_state.get_current_picker(promptBufnr)
+    local picker = actionState.get_current_picker(promptBufnr)
 
     picker:refresh(newGrepFinder(promptBufnr), {reset_prompt = false})
     picker.prompt_border:change_title(command:status())
