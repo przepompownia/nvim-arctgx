@@ -41,87 +41,89 @@ vim.api.nvim_create_autocmd('User', {
   end,
 })
 
-require('arctgx.lazy')['nvim-tree'].setup({
-  hijack_cursor = true,
-  actions = {
-    change_dir = {
-      enable = false,
+require('arctgx.lazy').setupOnLoad('nvim-tree', function ()
+  require('nvim-tree').setup({
+    hijack_cursor = true,
+    actions = {
+      change_dir = {
+        enable = false,
+      },
+      open_file = {
+        quit_on_open = true,
+      },
+      remove_file = {
+        close_window = false,
+      },
     },
-    open_file = {
-      quit_on_open = true,
-    },
-    remove_file = {
-      close_window = false,
-    },
-  },
-  on_attach = function (bufnr)
-    local treeapi = require('nvim-tree.api')
-    treeapi.config.mappings.default_on_attach(bufnr)
+    on_attach = function (bufnr)
+      local treeapi = require('nvim-tree.api')
+      treeapi.config.mappings.default_on_attach(bufnr)
 
-    vim.keymap.set(
-      'n',
-      '<TAB>',
-      '<C-w>w',
-      {buffer = bufnr, desc = 'Jump to the last used window'}
-    )
-    vim.keymap.set(
-      'n',
-      '<Right>',
-      function ()
-        local node = treeapi.tree.get_node_under_cursor()
-        if nil == node or nil == node.nodes then
-          return api.nvim_feedkeys(vim.keycode('<Right>'), 'n', false)
-        end
-        require('nvim-tree.lib').expand_or_collapse(node)
-      end,
-      {buffer = bufnr, desc = 'Expand directory node or move right'}
-    )
-    vim.keymap.set(
-      'n',
-      '<Left>',
-      treeapi.node.navigate.parent_close,
-      {buffer = bufnr, desc = 'Close directory'}
-    )
-  end,
-  view = {
-    signcolumn = 'no',
-    -- adaptive_size = true,
-  },
-  sort = {
-    sorter = 'name',
-  },
-  renderer = {
-    full_name = true,
-    group_empty = true,
-    icons = {
-      git_placement = 'after',
-      glyphs = {
-        default = '',
-        symlink = '',
-        bookmark = '',
-        folder = {
-          arrow_closed = '▶',
-          arrow_open = '▼',
+      vim.keymap.set(
+        'n',
+        '<TAB>',
+        '<C-w>w',
+        {buffer = bufnr, desc = 'Jump to the last used window'}
+      )
+      vim.keymap.set(
+        'n',
+        '<Right>',
+        function ()
+          local node = treeapi.tree.get_node_under_cursor()
+          if nil == node or nil == node.nodes then
+            return api.nvim_feedkeys(vim.keycode('<Right>'), 'n', false)
+          end
+          require('nvim-tree.lib').expand_or_collapse(node)
+        end,
+        {buffer = bufnr, desc = 'Expand directory node or move right'}
+      )
+      vim.keymap.set(
+        'n',
+        '<Left>',
+        treeapi.node.navigate.parent_close,
+        {buffer = bufnr, desc = 'Close directory'}
+      )
+    end,
+    view = {
+      signcolumn = 'no',
+      -- adaptive_size = true,
+    },
+    sort = {
+      sorter = 'name',
+    },
+    renderer = {
+      full_name = true,
+      group_empty = true,
+      icons = {
+        git_placement = 'after',
+        glyphs = {
           default = '',
-          open = '',
-          empty = '',
-          empty_open = '',
           symlink = '',
-          symlink_open = '',
+          bookmark = '',
+          folder = {
+            arrow_closed = '▶',
+            arrow_open = '▼',
+            default = '',
+            open = '',
+            empty = '',
+            empty_open = '',
+            symlink = '',
+            symlink_open = '',
+          },
         },
       },
     },
-  },
-  filters = {
-    dotfiles = false,
-  },
-  git = {
-    ignore = false,
-    disable_for_dirs = {
-      vim.uv.os_homedir(),
+    filters = {
+      dotfiles = false,
     },
-  },
-})
+    git = {
+      ignore = false,
+      disable_for_dirs = {
+        vim.uv.os_homedir(),
+      },
+    },
+  })
+end)
 
 local function focusOnFile()
   require('nvim-tree')

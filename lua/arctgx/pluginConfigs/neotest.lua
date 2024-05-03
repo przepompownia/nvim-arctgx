@@ -1,20 +1,22 @@
 local session = require('arctgx.session')
 local keymap = require('arctgx.vim.abstractKeymap')
-require('arctgx.lazy').neotest.setup({
-  -- log_level = vim.log.levels.INFO,
-  adapters = {
-    require('neotest-phpunit') {
-      phpunit_cmd = function ()
-        return 'vendor/bin/phpunit'
-      end,
-      dap = require('arctgx.dap.php').default,
-      env = {
-        XDEBUG_CONFIG = 'idekey=neotest',
-        -- XDEBUG_TRIGGER = '1',
+require('arctgx.lazy').setupOnLoad('neotest', function ()
+  require('neotest').setup({
+    -- log_level = vim.log.levels.INFO,
+    adapters = {
+      require('neotest-phpunit') {
+        phpunit_cmd = function ()
+          return 'vendor/bin/phpunit'
+        end,
+        dap = require('arctgx.dap.php').default,
+        env = {
+          XDEBUG_CONFIG = 'idekey=neotest',
+          -- XDEBUG_TRIGGER = '1',
+        },
       },
-    },
-  }
-})
+    }
+  })
+end)
 
 keymap.set({'n'}, 'testUIToggleSummary', function () require('neotest').summary.toggle() end, {})
 keymap.set({'n'}, 'testUIToggleOutput', function () require('neotest').output_panel.toggle() end, {})

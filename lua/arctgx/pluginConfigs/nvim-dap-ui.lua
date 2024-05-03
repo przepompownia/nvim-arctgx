@@ -69,7 +69,9 @@ local config = {
   },
 }
 
-require('arctgx.lazy').dapui.setup(config)
+require('arctgx.lazy').setupOnLoad('dapui', function ()
+  require('dapui').setup(config)
+end)
 
 vim.api.nvim_create_autocmd({'FileType'}, {
   pattern = {'dapui_scopes'},
