@@ -8,10 +8,15 @@ keymap.set('n', 'gitPush', function ()
   require 'git-utils.git'.pushToAllRemoteRepos(require('git-utils').currentBufferDirectory())
 end)
 
-require('git-utils').setup({
-  createCommands = true,
-  telescopeAttachMappings = require('arctgx.telescope').defaultFileMappings,
-  currentBufferDirectory = require('arctgx.base').getBufferCwd,
-})
+require('arctgx.lazy').setupOnLoad('git-utils', function ()
+  require('git-utils').setup({
+    createCommands = true,
+    telescopeAttachMappings = function () require('arctgx.telescope').defaultFileMappings() end,
+    currentBufferDirectory = require('arctgx.base').getBufferCwd,
+  })
+end)
 
-keymap.set('n', 'browseGitBranches', require('git-utils').branches)
+keymap.set('n', 'browseGitBranches', function ()
+  require('telescope')
+  require('git-utils').branches()
+end)
