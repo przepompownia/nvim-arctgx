@@ -1,16 +1,18 @@
-local function createPrehook()
-  local res, comment = pcall(require, 'ts_context_commentstring.integrations.comment_nvim')
+require('arctgx.lazy').setupOnLoad('Comment', function ()
+  local function createPrehook()
+    local res, comment = pcall(require, 'ts_context_commentstring.integrations.comment_nvim')
 
-  if not res then
-    return nil
+    if not res then
+      return nil
+    end
+
+    return comment.create_pre_hook()
   end
 
-  return comment.create_pre_hook()
-end
-
-require('Comment').setup {
-  pre_hook = createPrehook(),
-}
+  require('Comment').setup {
+    pre_hook = createPrehook(),
+  }
+end)
 
 local esc = vim.api.nvim_replace_termcodes(
   '<ESC>', true, false, true
