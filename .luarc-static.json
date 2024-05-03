@@ -22,7 +22,6 @@
   "completion": {
     "callSnippet": "Replace",
     "keywordSnippet": "Replace",
-    "postfix": ".",
     "showWord": "Disable"
   },
   "window": {

@@ -39,7 +39,6 @@ function M.defaultConfig()
       },
     },
     completion = {
-      postfix = '.',
       showWord = 'Disable',
       callSnippet = 'Replace',
       keywordSnippet = 'Replace',
