@@ -1,24 +1,26 @@
 local lazy = {}
 
---- @type table <string, {callback: fun()?, method: string?, args: table?}[]>
+--- @type table <string, {callback: fun()}[]>
 local configs = {}
 --- @type table <string, boolean>
 local loaded = {}
 
-function lazy.setupAtFirstLoader(modname)
-  if configs[modname] and not loaded[modname] then
-    loaded[modname] = true
-    local module = require(modname)
+local function setupAtFirstLoader(modname)
+  if not configs[modname] or loaded[modname] then
+    return nil
+  end
 
-    for _, config in ipairs(configs[modname]) do
-      if config.callback then
-        config.callback()
-      end
-    end
+  loaded[modname] = true
+  local module = require(modname)
 
-    return function ()
-      return module
+  for _, config in ipairs(configs[modname]) do
+    if config.callback then
+      config.callback()
     end
+  end
+
+  return function ()
+    return module
   end
 end
 
@@ -32,5 +34,7 @@ end
 function lazy.setupOnLoad(modname, callback)
   addConfig(modname, {callback = callback})
 end
+
+table.insert(package.loaders, 2, setupAtFirstLoader)
 
 return lazy
