@@ -1,3 +1,4 @@
+--- @type table<string, Configuration>
 local config = {}
 
 config.default = {
@@ -24,4 +25,3 @@ config.default = {
 }
 
 return config
-
