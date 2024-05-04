@@ -99,3 +99,13 @@ vim.keymap.set({'i'}, '<C-Right>', function () vim.cmd.normal('w') end, opts)
 vim.keymap.set({'i'}, '<S-Left>', function () vim.cmd.normal('v') end, opts)
 vim.keymap.set({'i'}, '<S-Right>', function () vim.cmd.normal('v') end, opts)
 vim.keymap.set('n', '<Esc>', vim.cmd.fclose, {desc = 'Close float window'})
+
+for _, lhs in ipairs({'<C-/>', '<C-_>'}) do
+  vim.keymap.set({'n', 'i'}, lhs, function ()
+    vim.cmd.normal 'gccj'
+  end)
+
+  vim.keymap.set('x', lhs, function ()
+    vim.cmd.normal 'gc'
+  end)
+end
