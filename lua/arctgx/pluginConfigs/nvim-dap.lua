@@ -1,8 +1,6 @@
 local dap = require 'dap'
 local php = require('arctgx.dap.php')
-local widgets = require('dap.ui.widgets')
 local base = require('arctgx.base')
-local api = vim.api
 local keymap = require('arctgx.vim.abstractKeymap')
 
 dap.adapters.php = {
@@ -99,11 +97,13 @@ dap.adapters.nlua = function (callback, config)
 end
 
 local function toggle_scopes()
+  local widgets = require('dap.ui.widgets')
   local scopes = widgets.sidebar(widgets.scopes)
   scopes.toggle()
 end
 
 local function toggle_frames()
+  local widgets = require('dap.ui.widgets')
   local frames = widgets.sidebar(widgets.frames)
   frames.toggle()
 end
@@ -144,7 +144,7 @@ keymap.set(
   function ()
     dap.close()
     dap.clear_breakpoints()
-    api.nvim_exec_autocmds('User', {pattern = 'DAPClean', modeline = false})
+    vim.api.nvim_exec_autocmds('User', {pattern = 'DAPClean', modeline = false})
   end,
   opts
 )
