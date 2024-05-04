@@ -1,7 +1,8 @@
 local dap = require 'dap'
-local php = require('arctgx.dap.php')
 local base = require('arctgx.base')
 local keymap = require('arctgx.vim.abstractKeymap')
+
+local keymapOpts = {silent = true}
 
 dap.adapters.php = {
   type = 'executable',
@@ -117,43 +118,12 @@ vim.fn.sign_define('DapBreakpointRejected', {text = 'R', texthl = 'IdeCodeWindow
 vim.fn.sign_define('DapLogPoint', {text = 'L', texthl = 'IdeCodeWindowCurrentFrameSign', linehl = ''})
 vim.fn.sign_define('DapStopped', {text = '▶', texthl = 'IdeCodeWindowCurrentFrameSign', linehl = 'CursorLine'})
 
-local opts = {silent = true}
-keymap.set({'n'}, 'debuggerRun', keymap.repeatable(dap.continue), {expr = true})
 keymap.set({'n'}, 'debuggerStepOver', keymap.repeatable(dap.step_over), {expr = true})
 keymap.set({'n'}, 'debuggerStepInto', keymap.repeatable(dap.step_into), {expr = true})
 keymap.set({'n'}, 'debuggerStepOut', keymap.repeatable(dap.step_out), {expr = true})
-keymap.set({'n'}, 'debuggerToggleBreakpoint', keymap.repeatable(dap.toggle_breakpoint), {expr = true})
-keymap.set({'n'}, 'debuggerClearBreakpoints', dap.clear_breakpoints, opts)
-keymap.set(
-  {'n'},
-  'debuggerSetBreakpointConditional',
-  function ()
-    vim.ui.input({prompt = 'Breakpoint condition: '}, function (condition)
-      dap.set_breakpoint(condition)
-    end)
-  end,
-  opts
-)
 keymap.set({'n'}, 'debuggerFrameUp', keymap.repeatable(dap.up), {expr = true})
 keymap.set({'n'}, 'debuggerFrameDown', keymap.repeatable(dap.down), {expr = true})
-keymap.set({'n'}, 'debuggerRunToCursor', dap.run_to_cursor, opts)
-keymap.set({'n'}, 'debuggerClose', dap.close, opts)
-keymap.set(
-  {'n'},
-  'debuggerClean',
-  function ()
-    dap.close()
-    dap.clear_breakpoints()
-    vim.api.nvim_exec_autocmds('User', {pattern = 'DAPClean', modeline = false})
-  end,
-  opts
-)
-keymap.set(
-  {'n'},
-  'debuggerSetLogBreakpoint',
-  function () dap.set_breakpoint(nil, nil, vim.fn.input('Log point message: ')) end,
-  opts
-)
+keymap.set({'n'}, 'debuggerRunToCursor', dap.run_to_cursor, keymapOpts)
 
 local function info(message)
   vim.notify(message, vim.log.levels.INFO, {title = 'DAP'})
@@ -164,7 +134,7 @@ dap.defaults.fallback.switchbuf = 'uselast'
 dap.defaults.fallback.external_terminal = {
   command = '/usr/bin/kitty',
 }
-dap.configurations.php = {php.default}
+dap.configurations.php = {require('arctgx.dap.php').default}
 local dapSessionStatus = ''
 
 dap.listeners.after['event_initialized']['arctgx'] = function (_session, _body)
@@ -200,3 +170,34 @@ require('arctgx.widgets').debugHook = function ()
     status = dapSessionStatus,
   }
 end
+
+keymap.set({'n'}, 'debuggerRun', keymap.repeatable(function () dap.continue() end), {expr = true})
+keymap.set({'n'}, 'debuggerToggleBreakpoint', keymap.repeatable(function () dap.toggle_breakpoint() end), {expr = true})
+keymap.set({'n'}, 'debuggerClearBreakpoints', function () dap.clear_breakpoints() end, keymapOpts)
+keymap.set(
+  {'n'},
+  'debuggerSetBreakpointConditional',
+  function ()
+    vim.ui.input({prompt = 'Breakpoint condition: '}, function (condition)
+      dap.set_breakpoint(condition)
+    end)
+  end,
+  keymapOpts
+)
+keymap.set({'n'}, 'debuggerClose', function () dap.close() end, keymapOpts)
+keymap.set(
+  {'n'},
+  'debuggerClean',
+  function ()
+    dap.close()
+    dap.clear_breakpoints()
+    vim.api.nvim_exec_autocmds('User', {pattern = 'DAPClean', modeline = false})
+  end,
+  keymapOpts
+)
+keymap.set(
+  {'n'},
+  'debuggerSetLogBreakpoint',
+  function () dap.set_breakpoint(nil, nil, vim.fn.input('Log point message: ')) end,
+  keymapOpts
+)
