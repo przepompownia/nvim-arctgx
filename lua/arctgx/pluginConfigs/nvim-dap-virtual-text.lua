@@ -36,5 +36,5 @@ local augroup = vim.api.nvim_create_augroup('ArctgxDapVirtualText', {clear = tru
 vim.api.nvim_create_autocmd('User', {
   group = augroup,
   pattern = 'DAPClean',
-  callback = require('nvim-dap-virtual-text.virtual_text').clear_virtual_text,
+  callback = function () require('nvim-dap-virtual-text.virtual_text').clear_virtual_text() end,
 })
