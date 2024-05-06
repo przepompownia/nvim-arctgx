@@ -79,7 +79,6 @@ local abstractKeymaps = {
   langFindDocumentSymbols = {lhs = {'<Leader>ilo', '<F6>'}, desc = 'Find document symbols'},
   langFindWorkspaceSymbols = {lhs = {'<S-F6>', '<F18>'}, desc = 'Find workspace symbols'},
   langToggleInlayHints = {lhs = '<Leader>ih', desc = 'Toggle inlay hints'},
-  langShowSignatureHelp = {lhs = {n = '<Leader>ish'}, desc = 'Show signature help'},
   langTriggerCompletion = {lhs = '<C-Space>', desc = 'Trigger completion'},
   langApplyAllformatters = {lhs = '<Space>f', desc = 'Apply all formatters'},
   langApplySelectedformatter = {lhs = '<Space>F', desc = 'Select formatter'},
@@ -90,6 +89,11 @@ local abstractKeymaps = {
   langIncrementSelection = {lhs = '<Leader>]', desc = 'Increment selection based on language'},
   langScopeIncrementSelection = {lhs = '<Leader>]', desc = 'Increment selection based on language'},
   langDecrementSelection = {lhs = '<Leader>[', desc = 'Decrement selection based on language'},
+
+  langShowSignatureHelp = {lhs = {i = '<C-Bslash>,', n = '<Leader>ish'}, desc = 'Show signature help'},
+  langFindReferences = {lhs = 'gr', desc = 'Find references'},
+  langRenameSymbol = {lhs = '<Leader>r', desc = 'Rename symbol'},
+  langCodeAction = {lhs = '<Leader>ca', desc = 'Code action'},
 }
 
 require('arctgx.vim.abstractKeymap').load(abstractKeymaps)
