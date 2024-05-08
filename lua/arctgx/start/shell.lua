@@ -3,7 +3,7 @@ vim.api.nvim_create_autocmd('TermOpen', {
   group = augroup,
   pattern = 'term://*',
   callback = function ()
-    vim.opt_local.number = false
+    vim.wo.number = false
     vim.cmd.startinsert()
   end
 })

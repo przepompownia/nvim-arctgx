@@ -3,7 +3,7 @@ vim.api.nvim_create_autocmd('InsertEnter', {
   group = augroup,
   pattern = '*',
   callback = function ()
-    vim.b.savedHlsearch = vim.opt_local.hlsearch:get()
+    vim.b.savedHlsearch = vim.go.hlsearch
     vim.go.hlsearch = false
   end
 })

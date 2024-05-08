@@ -17,7 +17,7 @@ vim.opt.fillchars:append({fold = ' '})
 vim.go.pumblend = 15
 vim.opt.complete:remove('t')
 vim.opt.matchpairs:append('<:>')
-vim.opt_global.spell = false
+vim.o.spell = false
 vim.o.conceallevel = 2
 vim.opt.spelloptions:append('camel')
 vim.opt.spelloptions:append('noplainbuffer')

@@ -1,6 +1,6 @@
 local function configureHighlight()
   local path = vim.uv.fs_realpath(
-    ('%s/colors/%s.lua'):format(require('arctgx.base').getPluginDir(), vim.opt_global.background:get())
+    ('%s/colors/%s.lua'):format(require('arctgx.base').getPluginDir(), vim.go.background)
   )
   dofile(path)
 end
