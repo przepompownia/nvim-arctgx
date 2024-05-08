@@ -1,4 +1,4 @@
-vim.opt_global.guifont = 'SauceCodePro Nerd Font Mono:h14'
+vim.go.guifont = 'SauceCodePro Nerd Font Mono:h14'
 if vim.g.GuiLoaded then
   vim.fn.GuiWindowFullScreen(1)
   vim.cmd.GuiPopupmenu(false)

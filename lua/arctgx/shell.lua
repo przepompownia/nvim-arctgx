@@ -1,11 +1,11 @@
 local Shell = {}
 
---- @param opts {cmd: string[], cwd: string}?
+--- @param opts {cmd: string|string[], cwd: string}?
 function Shell.open(opts)
   opts = opts or {}
   vim.validate({cmd = {opts.cmd, {'table', 'string', 'nil'}}})
   if not opts.cmd or (#opts.cmd == 0) then
-    opts.cmd = vim.opt.shell:get()
+    opts.cmd = vim.go.shell
   end
   local cwd = opts.cwd or require('arctgx.base').getBufferCwd()
   vim.cmd.new({mods = {split = 'botright'}})

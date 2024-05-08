@@ -182,14 +182,15 @@ function base.displayInWindow(title, filetype, contents)
 end
 
 function base.enablePrivateMode()
-  vim.opt_global.history = 0
-  vim.opt_global.backup = false
-  vim.opt_global.modeline = false
-  vim.opt_global.shelltemp = false
-  vim.opt_global.swapfile = false
-  vim.opt_global.undofile = false
-  vim.opt_global.writebackup = false
-  vim.opt.shada = nil
+  vim.go.history = 0
+  vim.go.backup = false
+  vim.go.modeline = false
+  vim.go.shelltemp = false
+  vim.go.swapfile = false
+  vim.go.undofile = false
+  vim.go.writebackup = false
+  vim.go.shada = nil
+  vim.go.shada = nil
 end
 
 function base.getPluginDir()

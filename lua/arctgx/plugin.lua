@@ -20,9 +20,11 @@ function plugin.loadCustomConfiguration(pluginDirs, pluginPrefix)
     vim.notify('Empty vim.g.pluginDirs', vim.log.levels.ERROR, {title = 'Plugin configuration'})
   end
 
+  local rtp = vim.api.nvim_list_runtime_paths()
+
   for _, pluginDir in ipairs(pluginDirs) do
     for _, pluginName in ipairs(listAllPlugins(pluginDir)) do
-      if vim.tbl_contains(vim.opt.runtimepath:get(), vim.uv.fs_realpath(pluginDir .. '/' .. pluginName)) then
+      if vim.tbl_contains(rtp, vim.uv.fs_realpath(pluginDir .. '/' .. pluginName)) then
         plugin.loadSingleConfiguration(pluginName, pluginPrefix)
       end
     end

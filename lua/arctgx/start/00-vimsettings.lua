@@ -1,7 +1,7 @@
 vim.g.mapleader = ','
 vim.go.mouse = 'a'
 vim.go.mousemodel = 'extend'
-vim.go.backspace = 'indent,eol,start'
+vim.opt.backspace:append('nostop')
 vim.bo.softtabstop = -1
 vim.bo.tabstop = 4
 vim.bo.shiftwidth = 4
@@ -14,12 +14,11 @@ vim.wo.foldmethod = 'expr'
 vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
 vim.wo.foldtext = ''
 vim.opt.fillchars:append({fold = ' '})
-
 vim.go.pumblend = 15
 vim.opt.complete:remove('t')
 vim.opt.matchpairs:append('<:>')
-vim.opt.spell = false
-vim.wo.conceallevel = 2
+vim.opt_global.spell = false
+vim.o.conceallevel = 2
 vim.opt.spelloptions:append('camel')
 vim.opt.spelloptions:append('noplainbuffer')
 vim.go.splitbelow = true
@@ -43,6 +42,7 @@ vim.go.wildmenu = true
 vim.go.history = 1000
 vim.go.laststatus = 2
 vim.opt.completeopt:remove('preview')
+vim.opt.completeopt:append('popup')
 vim.go.showtabline = 1
 vim.go.tabline = "%!v:lua.require'arctgx.tabline'.prepare()"
 
@@ -52,11 +52,11 @@ vim.bo.path = '.,,'
 vim.opt.path:append(vim.fs.dirname(vim.env.VIMRUNTIME))
 vim.opt.path:append(vim.env.VIMRUNTIME)
 vim.go.showcmd = true
-vim.opt.swapfile = false
+vim.o.swapfile = false
 
 vim.opt.sessionoptions:remove('help')
 vim.opt.sessionoptions:remove('folds')
 
 vim.opt.signcolumn = 'auto:1-9'
 vim.opt.tags = ''
-vim.opt.listchars = 'eol:$,tab:>-,trail:~,extends:>,precedes:<'
+vim.go.listchars = 'eol:$,tab:>-,trail:~,extends:>,precedes:<'

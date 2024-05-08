@@ -5,7 +5,7 @@ vim.api.nvim_create_autocmd('CmdLineEnter', {
   group = augroup,
   pattern = ':',
   callback = function ()
-    caseInsensivity = vim.opt.ignorecase:get()
+    caseInsensivity = vim.go.ignorecase
     vim.opt.ignorecase = true
   end
 })
@@ -13,7 +13,7 @@ vim.api.nvim_create_autocmd('CmdLineLeave', {
   group = augroup,
   pattern = ':',
   callback = function ()
-    vim.opt.ignorecase = caseInsensivity
+    vim.go.ignorecase = caseInsensivity
     caseInsensivity = nil
   end
 })
