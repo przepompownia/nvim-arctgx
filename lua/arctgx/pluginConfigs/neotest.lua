@@ -5,6 +5,9 @@ require('arctgx.lazy').setupOnLoad('neotest', function ()
     -- log_level = vim.log.levels.INFO,
     adapters = {
       require('neotest-phpunit') {
+        filter_dirs = {
+          'vendor',
+        },
         phpunit_cmd = function ()
           return 'vendor/bin/phpunit'
         end,
