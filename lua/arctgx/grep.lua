@@ -86,13 +86,14 @@ function extension:newGitGrepCommand(useFixedStrings, ignoreCase)
 end
 
 function extension:newRgGrepCommand(useFixedStrings, ignoreCase)
-  return self:newCommand('Grep (rg)', {
+  return self:newCommand('Grep (ripgrep, also in non-vcs files)', {
     'rg',
     '--color=never',
     '--line-number',
     '--column',
     '--smart-case',
     '--no-heading',
+    '--no-ignore-vcs',
   }, useFixedStrings, ignoreCase)
 end
 
