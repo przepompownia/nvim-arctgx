@@ -22,12 +22,8 @@ null.setup({
   diagnostics_format = '#{s}: #{m} [#{c}]',
   update_in_insert = false,
   sources = {
-    null.builtins.code_actions.shellcheck,
-    null.builtins.code_actions.eslint,
     null.builtins.diagnostics.tidy,
     null.builtins.diagnostics.twigcs,
-    null.builtins.diagnostics.eslint,
-    null.builtins.diagnostics.jsonlint,
     null.builtins.diagnostics.phpcs.with(phpcsArgs),
     null.builtins.diagnostics.phpmd.with({
       extra_args = {'cleancode,codesize,controversial,design,naming,unusedcode'}
