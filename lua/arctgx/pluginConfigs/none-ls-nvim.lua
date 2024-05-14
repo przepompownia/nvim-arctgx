@@ -24,27 +24,27 @@ null.setup({
   sources = {
     null.builtins.diagnostics.tidy,
     null.builtins.diagnostics.twigcs,
-    null.builtins.diagnostics.phpcs.with(phpcsArgs),
+    -- null.builtins.diagnostics.phpcs.with(phpcsArgs),
     null.builtins.diagnostics.phpmd.with({
       extra_args = {'cleancode,codesize,controversial,design,naming,unusedcode'}
     }),
-    null.builtins.diagnostics.phpstan.with({
-      temp_dir = '/tmp',
-      timeout = 10000,
-      debounce = 3000,
-      cwd = phpProjectRoot,
-      args = {
-        'analyze',
-        '--level',
-        'max',
-        '--error-format',
-        'json',
-        '--no-progress',
-        '--no-interaction',
-        -- '--',
-        '$FILENAME',
-      },
-    }),
+    -- null.builtins.diagnostics.phpstan.with({
+    --   temp_dir = '/tmp',
+    --   timeout = 10000,
+    --   debounce = 3000,
+    --   cwd = phpProjectRoot,
+    --   args = {
+    --     'analyze',
+    --     '--level',
+    --     'max',
+    --     '--error-format',
+    --     'json',
+    --     '--no-progress',
+    --     '--no-interaction',
+    --     -- '--',
+    --     '$FILENAME',
+    --   },
+    -- }),
     null.builtins.formatting.phpcbf.with(phpcsArgs),
     null.builtins.formatting.phpcsfixer.with({cwd = phpProjectRoot}),
     -- null.builtins.formatting.prettier.with({
