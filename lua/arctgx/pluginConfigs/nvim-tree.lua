@@ -9,6 +9,16 @@ vim.api.nvim_create_autocmd('User', {
   callback = function ()
     local treeapi = require('nvim-tree.api')
     local Event = treeapi.events.Event
+    --- @param obj vim.SystemCompleted
+    local function onExit(obj)
+      if obj.code > 0 then
+        vim.notify(
+          obj.stderr,
+          vim.log.levels.WARN,
+          {title = 'NvimTree'}
+        )
+      end
+    end
 
     treeapi.events.subscribe(Event.NodeRenamed, function (data)
       local yes = 'y'
@@ -19,10 +29,13 @@ vim.api.nvim_create_autocmd('User', {
         if input ~= yes then
           return
         end
-        vim.system({'git', 'add', '-u', '--', data.old_name})
-        vim.system({'git', 'add', '--', data.new_name})
-        vim.notify(('renamed from %s to %s'):format(data.old_name, data.new_name), vim.log.levels.INFO,
-          {title = 'NvimTree'})
+        vim.system({'git', 'add', '-u', '--', data.old_name}, {}, onExit)
+        vim.system({'git', 'add', '--', data.new_name}, {}, onExit)
+        vim.notify(
+          ('renamed from %s to %s'):format(data.old_name, data.new_name),
+          vim.log.levels.INFO,
+          {title = 'NvimTree'}
+        )
       end)
     end)
 
@@ -35,7 +48,7 @@ vim.api.nvim_create_autocmd('User', {
         if input ~= yes then
           return
         end
-        vim.system({'git', 'add', '-u', '--', data.fname})
+        vim.system({'git', 'add', '-u', '--', data.fname}, {}, onExit)
       end)
     end)
   end,
