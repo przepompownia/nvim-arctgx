@@ -51,7 +51,7 @@ end
 function M.onInit(client)
   local path = client.workspace_folders[1].name
 
-  if vim.uv.fs_stat(path .. '/.luarc.json') or vim.uv.fs_stat(path .. '/.luarc.jsonc') then
+  if vim.uv.fs_stat(path .. '/.luarc.jsonc') or vim.uv.fs_stat(path .. '/.luarc.json') then
     return true
   end
 
