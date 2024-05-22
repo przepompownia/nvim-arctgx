@@ -1,4 +1,7 @@
-require('luasnip.loaders.from_snipmate').lazy_load()
+require('luasnip.loaders.from_vscode').lazy_load({
+  paths = {vim.fs.joinpath(require('arctgx.base').getPluginDir(), 'snippets')},
+  include = {'php'},
+})
 
 local ls = require 'luasnip'
 local s = ls.snippet

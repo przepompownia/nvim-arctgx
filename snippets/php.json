@@ -1,0 +1,57 @@
+{
+  "__construct": {
+    "prefix": "con",
+    "body": [
+      "public function __construct(",
+      "\t${1}",
+      ") {",
+      "}$0"
+    ],
+    "description": "Constructor"
+  },
+  "throw new …": {
+    "prefix": "th",
+    "body": [
+      "throw new ${1:Exception}($2);"
+    ],
+    "description": "throw new Exception"
+  },
+  "static method": {
+    "prefix": "mets",
+    "body": [
+      "${1|public,private,protected|} static function ${2:name}($3)",
+      "{$0",
+      "}"
+    ],
+    "description": "Static method"
+  },
+  "method": {
+    "prefix": "met",
+    "body": [
+      "${1|public,private,protected|} function ${2:name}($3)",
+      "{$0",
+      "}"
+    ],
+    "description": "Method"
+  },
+  "private": {
+    "prefix": "prv",
+    "body": ["private ${1:string} \\$${2:name};"],
+    "description": "private variable"
+  },
+  "dst": {
+    "prefix": "dst",
+    "body": ["declare(strict_types=${1:1});"],
+    "description": "declare(strict_types=1);"
+  },
+  "@var": {
+    "prefix": "dv",
+    "body": ["/** @var ${1:type} \\$${2:name} */"],
+    "description": "@var"
+  },
+  "@return": {
+    "prefix": "dr",
+    "body": ["/** @return ${1:type} */"],
+    "description": "@return"
+  }
+}
