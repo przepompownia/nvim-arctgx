@@ -1,6 +1,6 @@
 require('luasnip.loaders.from_vscode').lazy_load({
   paths = {vim.fs.joinpath(require('arctgx.base').getPluginDir(), 'snippets')},
-  include = {'php'},
+  include = {'php', 'lua'},
 })
 
 local ls = require 'luasnip'
@@ -14,24 +14,6 @@ local c = ls.choice_node
 local d = ls.dynamic_node
 -- local r = ls.restore_node
 local events = require('luasnip.util.events')
-
-ls.add_snippets('lua', {
-  s({
-      trig = 'lvd',
-      dscr = 'print(vim.inspect())'
-    },
-    {
-      t('print(vim.inspect('),
-      i(1),
-      t('))'),
-    }),
-  s('lvt', {
-    t('print(debug.traceback())'),
-  }),
-  s('finish', {
-    t('if true then return end'),
-  }),
-})
 
 ls.add_snippets('php', {
   s(

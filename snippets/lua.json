@@ -1,0 +1,8 @@
+{
+  "finish": {
+    "prefix": "finish",
+    "body": [
+      "if true then return end"
+    ]
+  }
+}

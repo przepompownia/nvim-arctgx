@@ -5,6 +5,10 @@
       {
         "language": ["php"],
         "path": "./php.json"
+      },
+      {
+        "language": ["lua"],
+        "path": "./lua.json"
       }
     ]
   }
