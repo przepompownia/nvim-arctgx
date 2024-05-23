@@ -2,11 +2,6 @@ local plugin = require 'arctgx.plugin'
 local api = vim.api
 local pluginPrefix = 'arctgx.pluginConfigs'
 
--- remove it after nvim 0.10 will be available
-if nil == vim.uv then
-  vim.uv = vim.loop
-end
-
 plugin.loadCustomConfiguration(vim.g.pluginDirs or {}, pluginPrefix)
 
 api.nvim_create_autocmd('VimEnter', {
