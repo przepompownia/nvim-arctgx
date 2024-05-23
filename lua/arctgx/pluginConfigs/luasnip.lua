@@ -12,8 +12,6 @@ local c = ls.choice_node
 local d = ls.dynamic_node
 local events = require('luasnip.util.events')
 
-vim.api.nvim_create_user_command('LuaSnipEdit', function() require('luasnip.loaders').edit_snippet_files() end, {nargs = 0})
-
 ls.add_snippets('php', {
   s(
     {
