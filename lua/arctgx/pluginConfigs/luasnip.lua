@@ -83,30 +83,6 @@ ls.add_snippets('php', {
       end, {1}),
     }
   ),
-  s(
-    {
-      trig = '/**',
-      dscr = 'Docblock',
-    },
-    {
-      t({'/**', ' * '}),
-      c(1, {
-        i(nil, '@throws'),
-        i(nil, '@return'),
-      }),
-      t(' '),
-      i(2, 'Exception'),
-      t({'', ' */'}),
-    }
-  ),
-  s({
-    trig = 'pdump',
-    dscr = 'Phpactor Node dump',
-  }, {
-    t('dump(\\Phpactor\\WorseReflection\\Core\\Util\\NodeUtil::dump($'),
-    i(1, 'node'),
-    t('));'),
-  }),
 })
 
 

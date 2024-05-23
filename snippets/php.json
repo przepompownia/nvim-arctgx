@@ -53,5 +53,18 @@
     "prefix": "dr",
     "body": ["/** @return ${1:type} */"],
     "description": "@return"
+  },
+  "pdump": {
+    "description": "Phpactor Node dump",
+    "body": ["dump(\\Phpactor\\WorseReflection\\Core\\Util\\NodeUtil::dump(\\$${1:node});"],
+    "prefix": "pdump"
+  },
+  "docblock": {
+    "prefix": "/**",
+    "body": [
+      "/**",
+      " * @${1|throws,return|} ${2:Exception}",
+      " */"
+    ]
   }
 }
