@@ -3,7 +3,7 @@ local pluginPrefix = 'arctgx.pluginConfigs'
 
 plugin.loadCustomConfiguration(vim.g.pluginDirs or {}, pluginPrefix)
 
-api.nvim_create_autocmd('VimEnter', {
+vim.api.nvim_create_autocmd('VimEnter', {
   once = true,
   pattern = '*',
   callback = function ()
