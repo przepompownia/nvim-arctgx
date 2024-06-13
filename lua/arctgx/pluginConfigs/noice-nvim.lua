@@ -38,6 +38,14 @@ local function setupNoice()
       },
     },
     views = {
+      cmdline_input = {
+        relative = 'editor',
+        anchor = 'auto',
+        position = {
+          row = '50%',
+          col = '50%',
+        },
+      },
       mini = {
         timeout = 5000,
         reverse = false,
