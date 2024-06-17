@@ -76,25 +76,6 @@ function extension.oldfiles(onlyCwd)
   })
 end
 
---- @param opts table?
-function extension.buffers(opts)
-  opts = vim.tbl_deep_extend('keep', opts or {}, {
-    attach_mappings = function (promptBufnr, map)
-      extension.defaultFileMappings(promptBufnr, map)
-      local function deleteBuffer()
-        callOnSelection(promptBufnr, function (selectedEntry, _picker)
-          vim.api.nvim_buf_delete(selectedEntry.bufnr, {force = false})
-        end, 'actions.deleteBuffer')
-      end
-
-      map({'i', 'n'}, '<C-u>', deleteBuffer)
-
-      return true
-    end,
-  })
-  require('telescope.builtin').buffers(opts)
-end
-
 --- @param cmd Grep
 --- @param root string
 --- @param query string

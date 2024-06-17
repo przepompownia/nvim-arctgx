@@ -61,9 +61,13 @@ keymap.set('n', 'previewJumps', function () require('telescope.builtin').jumplis
 keymap.set('n', 'browseCommandHistory', function () require('telescope.builtin').command_history() end)
 keymap.set('n', 'browseOldfiles', function () require('arctgx.telescope').oldfiles(false) end)
 keymap.set('n', 'browseOldfilesInCwd', function () require('arctgx.telescope').oldfiles(true) end)
-keymap.set('n', 'browseAllBuffers', function () require('arctgx.telescope').buffers() end)
+keymap.set('n', 'browseAllBuffers', function () require('telescope.builtin').buffers({
+    sort_mru = true,
+    ignore_current_buffer = true,
+  })
+end)
 keymap.set({'n', 'i'}, 'browseBuffersInCwd', function ()
-  require('arctgx.telescope').buffers({
+  require('telescope.builtin').buffers({
     only_cwd = true,
     sort_mru = true,
     ignore_current_buffer = true,
