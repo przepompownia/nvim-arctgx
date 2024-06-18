@@ -63,6 +63,7 @@ gitsigns.configuration = {
     map('n', 'gitHunkPreview', gs.preview_hunk)
     map('n', 'gitHunkPrintInline', gs.preview_hunk_inline)
     map('n', 'gitBlameLine', function () gs.blame_line {full = true} end)
+    map('n', 'gitBlame', gs.blame)
     map('n', 'gitBlameToggleVirtual', gs.toggle_current_line_blame)
     map('n', 'gitToggleHighlight', gs.toggle_linehl)
     map('n', 'gitDiffAgainstIndex', gs.diffthis)
