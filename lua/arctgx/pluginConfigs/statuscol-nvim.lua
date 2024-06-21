@@ -23,7 +23,8 @@ require('statuscol').setup({
       sign = {name = {'.*'}, maxwidth = 1, colwidth = 1, auto = true},
       click = 'v:lua.ScSa'
     },
-    {text = {builtin.lnumfunc, ' '}, click = 'v:lua.ScLa',},
+    -- {text = {'%{&nu?v:lnum:""}', ' '}, click = 'v:lua.ScLa'},
+    {text = {builtin.lnumfunc, ' '}, click = 'v:lua.ScLa'},
   },
   ft_ignore = {
     'NvimTree',
