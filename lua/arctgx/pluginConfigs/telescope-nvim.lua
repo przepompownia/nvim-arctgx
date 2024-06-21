@@ -4,8 +4,7 @@ local keymap = require('arctgx.vim.abstractKeymap')
 
 local config = {
   defaults = {
-    preview = {
-    },
+    preview = {},
     layout_strategy = 'horizontal',
     layout_config = {
       height = 0.99,
