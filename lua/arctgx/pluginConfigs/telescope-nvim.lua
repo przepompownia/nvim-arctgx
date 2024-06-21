@@ -14,6 +14,13 @@ local config = {
     },
     mappings = {
       i = {
+        ['<C-/>'] = function (promptBufnr)
+          return require('telescope.actions.generate').which_key({
+            max_height = 0.6,
+            keybind_width = 20,
+            name_width = 50,
+          })(promptBufnr)
+        end,
         ['<C-p>'] = 'cycle_history_next',
         ['<C-n>'] = 'cycle_history_prev',
         ['<A-Up>'] = 'preview_scrolling_up',
