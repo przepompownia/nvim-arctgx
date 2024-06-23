@@ -3,13 +3,13 @@ require 'treesitter-context'.setup {
   on_attach = function (buf)
     local excludedFiletypes = {
       'noice',
+      'dapui_stacks',
+      'dapui_watches',
+      'dapui_scopes',
+      'dapui_breakpoints',
     }
 
-    if vim.tbl_contains(excludedFiletypes, vim.bo[buf].filetype) then
-      return false
-    end
-
-    return true
+    return not vim.tbl_contains(excludedFiletypes, vim.bo[buf].filetype)
   end,
   max_lines = 0,
   min_window_height = 15,
