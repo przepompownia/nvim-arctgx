@@ -1,8 +1,18 @@
 {
   "finish": {
     "prefix": "finish",
-    "body": [
-      "if true then return end"
-    ]
+    "body": ["if true then return end"]
+  },
+  "lvt": {
+    "prefix": "lvt",
+    "body": ["print(debug.traceback())"]
+  },
+  "print(vim.inspect())": {
+    "prefix": "lvd",
+    "body": ["print(vim.inspect($1))"]
+  },
+  "table escaped element": {
+    "prefix": "[]",
+    "body": ["['$1'] = $2,"]
   }
 }
