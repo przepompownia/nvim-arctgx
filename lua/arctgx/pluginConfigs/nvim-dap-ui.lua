@@ -74,6 +74,41 @@ vim.api.nvim_create_autocmd({'ColorScheme'}, {
   callback = reloadColors,
 })
 
+keymap.set({'n'}, 'debuggerUIToggle', function() require('dapui').toggle() end)
+
+local function watchExpression(expression)
+  require('dapui').elements.watches.add(expression)
+end
+
+vim.api.nvim_create_user_command('DAW', function (opts)
+  watchExpression(opts.args)
+end, {nargs = 1, desc = 'DAP UI: add expression to watch'})
+
+local function dapuiEval(buffer)
+  return function ()
+    local additionalKeywordChars = {
+      php = '$',
+      sh = '$',
+    }
+
+    base.withAppendedToKeyword(additionalKeywordChars[vim.bo[buffer].filetype], function ()
+      require('dapui').eval(nil, {enter = true, context = 'repl'})
+    end)
+  end
+end
+
+vim.api.nvim_create_autocmd({'FileType'}, {
+  pattern = require('arctgx.dap').getDeclaredConfigurations(),
+  group = augroup,
+  callback = function (event)
+    local opts = {silent = true, buffer = event.buf}
+    keymap.set('x', 'debuggerAddToWatched', function ()
+      watchExpression(base.getVisualSelection())
+    end, opts)
+    keymap.set({'n', 'x'}, 'debuggerEvalToFloat', dapuiEval(event.buf), opts)
+  end
+})
+
 require('arctgx.lazy').setupOnLoad('dapui', function ()
   require('dapui').setup(config)
 
@@ -85,27 +120,4 @@ require('arctgx.lazy').setupOnLoad('dapui', function ()
       vim.t[tabpage].arctgxTabName = 'DAP UI'
     end
   })
-
-  local function watchExpression(expression)
-    require('dapui').elements.watches.add(expression)
-  end
-
-  vim.api.nvim_create_user_command('DAW', function (opts)
-    watchExpression(opts.args)
-  end, {nargs = 1, desc = 'DAP UI: add expression to watch'})
-
-  local opts = {silent = true}
-  keymap.set('x', 'debuggerAddToWatched', function ()
-    watchExpression(base.getVisualSelection())
-  end)
-  keymap.set({'n'}, 'debuggerUIToggle', function() require('dapui').toggle() end, opts)
-  keymap.set({'n', 'x'}, 'debuggerEvalToFloat', function ()
-    local keywordChars = {}
-    if vim.tbl_contains({'php', 'sh'}, vim.bo.ft) then
-      keywordChars = {'$'}
-    end
-    base.withAppendedToKeyword(keywordChars, function ()
-      require('dapui').eval(nil, {enter = true, context = 'repl'})
-    end)
-  end, opts)
 end)
