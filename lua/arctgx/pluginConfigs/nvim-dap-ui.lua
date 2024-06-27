@@ -84,19 +84,6 @@ vim.api.nvim_create_user_command('DAW', function (opts)
   watchExpression(opts.args)
 end, {nargs = 1, desc = 'DAP UI: add expression to watch'})
 
-local function dapuiEval(buffer)
-  return function ()
-    local additionalKeywordChars = {
-      php = '$',
-      sh = '$',
-    }
-
-    base.withAppendedToKeyword(buffer, additionalKeywordChars[vim.bo[buffer].filetype], function ()
-      require('dapui').eval(nil, {enter = true, context = 'repl'})
-    end)
-  end
-end
-
 vim.api.nvim_create_autocmd({'FileType'}, {
   pattern = require('arctgx.dap').getDeclaredConfigurations(),
   group = augroup,
@@ -105,7 +92,9 @@ vim.api.nvim_create_autocmd({'FileType'}, {
     keymap.set('x', 'debuggerAddToWatched', function ()
       watchExpression(base.getVisualSelection())
     end, opts)
-    keymap.set({'n', 'x'}, 'debuggerEvalToFloat', dapuiEval(event.buf), opts)
+    keymap.set({'n', 'x'}, 'debuggerEvalToFloat', function ()
+      require('dapui').eval(nil, {enter = true})
+    end, opts)
   end
 })
 
