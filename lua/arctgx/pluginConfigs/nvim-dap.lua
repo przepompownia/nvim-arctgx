@@ -98,6 +98,10 @@ require('arctgx.lazy').setupOnLoad('dap', function ()
     callback({type = 'server', host = config.host, port = config.port})
   end
 
+  dap.configurations.php = {require('arctgx.dap.php').default}
+
+  require('arctgx.dap').compareDeclaredFiletypes(dap.configurations)
+
   local function toggle_scopes()
     local widgets = require('dap.ui.widgets')
     local scopes = widgets.sidebar(widgets.scopes)
@@ -129,7 +133,6 @@ require('arctgx.lazy').setupOnLoad('dap', function ()
   dap.defaults.fallback.external_terminal = {
     command = '/usr/bin/kitty',
   }
-  dap.configurations.php = {require('arctgx.dap.php').default}
   local dapSessionStatus = ''
 
   dap.listeners.after['event_initialized']['arctgx'] = function (_session, _body)
