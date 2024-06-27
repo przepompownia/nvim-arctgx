@@ -23,7 +23,9 @@ function dap.compareDeclaredFiletypes(configurations)
 end
 
 function dap.getDeclaredConfigurations()
-  return declaredConfigurations
+  return vim.iter(declaredConfigurations):map(function (ft, v)
+    return v and ft or nil
+  end):totable()
 end
 
 return dap
