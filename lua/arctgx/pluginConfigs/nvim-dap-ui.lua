@@ -91,7 +91,7 @@ local function dapuiEval(buffer)
       sh = '$',
     }
 
-    base.withAppendedToKeyword(additionalKeywordChars[vim.bo[buffer].filetype], function ()
+    base.withAppendedToKeyword(buffer, additionalKeywordChars[vim.bo[buffer].filetype], function ()
       require('dapui').eval(nil, {enter = true, context = 'repl'})
     end)
   end

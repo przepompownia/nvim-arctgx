@@ -135,13 +135,13 @@ function base.onColorschemeReady(augroupName, cb)
   })
 end
 
---- @param keywordChars table<string>
+--- @param additionalChars table<string>
 --- @param callback function
-function base.withAppendedToKeyword(keywordChars, callback)
-  local isKeyword = vim.opt.iskeyword:get()
-  vim.opt.iskeyword:append(keywordChars)
+function base.withAppendedToKeyword(buffer, additionalChars, callback)
+  local isKeyword = vim.bo[buffer].iskeyword
+  vim.bo[buffer].iskeyword = vim.bo[buffer].iskeyword .. ',' .. additionalChars
   callback()
-  vim.opt.iskeyword = isKeyword
+  vim.bo[buffer].iskeyword = isKeyword
 end
 
 function base.insertWithInitialIndentation(modeCharacter)
