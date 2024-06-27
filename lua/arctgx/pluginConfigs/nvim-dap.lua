@@ -191,7 +191,6 @@ vim.api.nvim_create_autocmd({'FileType'}, {
       {'n'},
       'debuggerSetLogBreakpoint',
       function () require('dap').set_breakpoint(nil, nil, vim.fn.input('Log point message: ')) end,
-      keymapOpts
       {buffer = event.buf}
     )
   end
