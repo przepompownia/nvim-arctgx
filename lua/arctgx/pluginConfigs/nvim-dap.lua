@@ -176,8 +176,28 @@ vim.fn.sign_define('DapBreakpointRejected', {text = 'R', texthl = 'IdeCodeWindow
 vim.fn.sign_define('DapLogPoint', {text = 'L', texthl = 'IdeCodeWindowCurrentFrameSign', linehl = ''})
 vim.fn.sign_define('DapStopped', {text = '▶', texthl = 'IdeCodeWindowCurrentFrameSign', linehl = 'CursorLine'})
 
+local augroup = vim.api.nvim_create_augroup('ArctgxDap', {clear = true})
+vim.api.nvim_create_autocmd({'FileType'}, {
+  pattern = require('arctgx.dap').getDeclaredConfigurations(),
+  group = augroup,
+  callback = function (event)
+    keymap.set(
+      {'n'},
+      'debuggerToggleBreakpoint',
+      keymap.repeatable(function () require('dap').toggle_breakpoint() end),
+      {expr = true, buffer = event.buf}
+    )
+    keymap.set(
+      {'n'},
+      'debuggerSetLogBreakpoint',
+      function () require('dap').set_breakpoint(nil, nil, vim.fn.input('Log point message: ')) end,
+      keymapOpts
+      {buffer = event.buf}
+    )
+  end
+})
+
 keymap.set({'n'}, 'debuggerRun', keymap.repeatable(function () require('dap').continue() end), {expr = true})
-keymap.set({'n'}, 'debuggerToggleBreakpoint', keymap.repeatable(function () require('dap').toggle_breakpoint() end), {expr = true})
 keymap.set({'n'}, 'debuggerClearBreakpoints', function () require('dap').clear_breakpoints() end, keymapOpts)
 keymap.set(
   {'n'},
@@ -198,11 +218,5 @@ keymap.set(
     require('dap').clear_breakpoints()
     vim.api.nvim_exec_autocmds('User', {pattern = 'DAPClean', modeline = false})
   end,
-  keymapOpts
-)
-keymap.set(
-  {'n'},
-  'debuggerSetLogBreakpoint',
-  function () require('dap').set_breakpoint(nil, nil, vim.fn.input('Log point message: ')) end,
   keymapOpts
 )
