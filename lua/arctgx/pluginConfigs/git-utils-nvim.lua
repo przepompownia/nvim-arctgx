@@ -10,11 +10,12 @@ end)
 
 require('arctgx.lazy').setupOnLoad('git-utils', function ()
   require('git-utils').setup({
-    createCommands = true,
-    telescopeAttachMappings = function () require('arctgx.telescope').defaultFileMappings() end,
+    telescopeAttachMappings = function (_promptBufnr, map) return require('arctgx.telescope').defaultFileMappings(_promptBufnr, map) end,
     currentBufferDirectory = require('arctgx.base').getBufferCwd,
   })
 end)
+
+require('git-utils.createCommands')()
 
 keymap.set('n', 'browseGitBranches', function ()
   require('telescope')
