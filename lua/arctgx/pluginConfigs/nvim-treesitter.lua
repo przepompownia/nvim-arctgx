@@ -11,6 +11,7 @@ require 'nvim-treesitter.configs'.setup {
     'awk',
     'diff',
     'dockerfile',
+    'editorconfig',
     'gitattributes',
     'gitcommit',
     'gitignore',
