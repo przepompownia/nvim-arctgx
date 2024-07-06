@@ -1,5 +1,4 @@
 local base = require 'arctgx.base'
-local api = vim.api
 
 local opts = {silent = true}
 vim.keymap.set({'n'}, '<Leader>=', 'ggVG=', opts)
@@ -78,7 +77,7 @@ vim.keymap.set('n', '<Leader>co', vim.cmd.copen, opts)
 vim.keymap.set('t', '<M-p>', function ()
   local regname = vim.fn.nr2char(vim.fn.getchar())
   local sequence = ('<C-\\><C-n>"%spi'):format(regname)
-  return api.nvim_replace_termcodes(sequence, true, false, true)
+  return vim.api.nvim_replace_termcodes(sequence, true, false, true)
 end, {
   silent = true,
   expr = true,
