@@ -9,6 +9,7 @@ local tsKeymaps = {
 require 'nvim-treesitter.configs'.setup {
   ensure_installed = {
     'awk',
+    'bash',
     'diff',
     'dockerfile',
     'editorconfig',
@@ -31,6 +32,7 @@ require 'nvim-treesitter.configs'.setup {
     'passwd',
     'php_only',
     'phpdoc',
+    'python',
     'regex',
     'sql',
     'strace',
