@@ -19,7 +19,7 @@
   "static method": {
     "prefix": "mets",
     "body": [
-      "${1|public,private,protected|} static function ${2:name}($3)",
+      "${1|public,private,protected|} static function ${2:name}($3): ${4:void}",
       "{$0",
       "}"
     ],
@@ -28,7 +28,7 @@
   "method": {
     "prefix": "met",
     "body": [
-      "${1|public,private,protected|} function ${2:name}($3)",
+      "${1|public,private,protected|} function ${2:name}($3): ${4:void}",
       "{$0",
       "}"
     ],
