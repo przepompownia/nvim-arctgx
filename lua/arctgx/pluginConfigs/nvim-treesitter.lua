@@ -1,3 +1,42 @@
+local additionalParsers = {
+  'awk',
+  'bash',
+  'diff',
+  'dockerfile',
+  'editorconfig',
+  'gitattributes',
+  'gitcommit',
+  'gitignore',
+  'git_rebase',
+  'git_config',
+  'html',
+  'http',
+  'ini',
+  'javascript',
+  'jq',
+  'json',
+  'json5',
+  'jsonc',
+  'luadoc',
+  'make',
+  'muttrc',
+  'passwd',
+  'php_only',
+  'phpdoc',
+  'python',
+  'regex',
+  'sql',
+  'strace',
+  'ssh_config',
+  'tmux',
+  'todotxt',
+  'toml',
+  'udev',
+  'twig',
+  'xml',
+  'yaml',
+}
+
 local keymap = require('arctgx.vim.abstractKeymap')
 local tsKeymaps = {
   init_selection = keymap.firstLhs('langIncrementSelection'),
@@ -7,44 +46,7 @@ local tsKeymaps = {
 }
 
 require 'nvim-treesitter.configs'.setup {
-  ensure_installed = {
-    'awk',
-    'bash',
-    'diff',
-    'dockerfile',
-    'editorconfig',
-    'gitattributes',
-    'gitcommit',
-    'gitignore',
-    'git_rebase',
-    'git_config',
-    'html',
-    'http',
-    'ini',
-    'javascript',
-    'jq',
-    'json',
-    'json5',
-    'jsonc',
-    'luadoc',
-    'make',
-    'muttrc',
-    'passwd',
-    'php_only',
-    'phpdoc',
-    'python',
-    'regex',
-    'sql',
-    'strace',
-    'ssh_config',
-    'tmux',
-    'todotxt',
-    'toml',
-    'udev',
-    'twig',
-    'xml',
-    'yaml',
-  },
+  ensure_installed = additionalParsers,
   highlight = {
     enable = true,
   },
@@ -57,7 +59,15 @@ require 'nvim-treesitter.configs'.setup {
   },
 }
 
-vim.treesitter.language.register('php_only', {'php'})
+local tsLangMap = {
+  php = 'php_only',
+}
+
+for filetype, lang in pairs(tsLangMap) do
+  if filetype ~= lang then
+    vim.treesitter.language.register(lang, filetype)
+  end
+end
 -- require 'nvim-treesitter.install'.compilers = { 'clang' }
 -- local parserConfig = require 'nvim-treesitter.parsers'.get_parser_configs()
 -- parserConfig.php_only = {
