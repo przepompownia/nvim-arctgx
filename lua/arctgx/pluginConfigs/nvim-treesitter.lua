@@ -68,16 +68,3 @@ for filetype, lang in pairs(tsLangMap) do
     vim.treesitter.language.register(lang, filetype)
   end
 end
--- require 'nvim-treesitter.install'.compilers = { 'clang' }
--- local parserConfig = require 'nvim-treesitter.parsers'.get_parser_configs()
--- parserConfig.php_only = {
---   install_info = {
---     url = '~/dev/external/tree-sitter-php',
---     location = 'php_only',
---     files = {'src/parser.c', 'src/scanner.c'},
---     -- branch = 'array',
---     generate_requires_npm = false,
---     requires_generate_from_grammar = false,
---   },
---   filetype = 'php',
--- }
