@@ -1,5 +1,3 @@
-local keymap = require('arctgx.vim.abstractKeymap')
-
 local tsSelectKeymaps = {
   ['af'] = '@function.outer',
   ['if'] = '@function.inner',
@@ -56,9 +54,6 @@ end)
 vim.keymap.set('n', '<leader>A', function ()
   require('nvim-treesitter-textobjects.swap').swap_next('@parameter.inner')()
 end)
-keymap.set({'n', 'x'}, 'langPeekDefinition', function ()
-  require 'nvim-treesitter-textobjects.lsp_interop'.peek_definition_code('@function.outer', 'textobjects')
-end)
 
 require('nvim-treesitter-textobjects').setup {
   textobjects = {
@@ -74,8 +69,6 @@ require('nvim-treesitter-textobjects').setup {
       set_jumps = true,
     },
     swap = {
-    },
-    lsp_interop = {
     },
   },
 }
