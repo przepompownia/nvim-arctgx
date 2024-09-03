@@ -1,6 +1,7 @@
 local additionalParsers = {
   'awk',
   'bash',
+  'css',
   'diff',
   'dockerfile',
   'editorconfig',
