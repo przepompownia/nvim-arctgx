@@ -52,7 +52,7 @@ local servers = {
   'bashls',
   'vimls',
   'dockerls',
-  'tsserver',
+  'ts_ls',
 }
 for _, lsp in ipairs(servers) do
   lspconfig[lsp].setup {
