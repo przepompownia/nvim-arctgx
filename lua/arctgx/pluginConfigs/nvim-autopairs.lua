@@ -1,9 +1,9 @@
-local npairs = require('nvim-autopairs')
+local autopairs = require('nvim-autopairs')
 local Rule = require('nvim-autopairs.rule')
 local okCmp, cmp = pcall(require, 'cmp')
 local okTs, _ = pcall(require, 'nvim-treesitter.parsers')
 
-npairs.setup {
+autopairs.setup {
   check_ts = true,
   ts_config = {
     php = {},
@@ -12,11 +12,11 @@ npairs.setup {
 
 --- @type table<string, Rule>
 local existingRules = {
-  ['`'] = npairs.get_rule('`'),
+  ['`'] = autopairs.get_rule('`'),
 }
 
 for start, _ in pairs(existingRules) do
-  npairs.remove_rule(start)
+  autopairs.remove_rule(start)
 end
 
 if okTs then
@@ -30,7 +30,7 @@ if okTs then
     return vim.tbl_contains(captures, 'type')
   end
 
-  npairs.add_rules({
+  autopairs.add_rules({
     existingRules['`']:with_pair(cond.not_filetypes({'sql', 'mysql'})),
     Rule('<', '>', 'php'):with_pair(isAfterTypeInPhpDocblock),
   })
