@@ -107,19 +107,26 @@ local function configureMain()
   vim.api.nvim_create_autocmd('FileType', {
     pattern = vim.tbl_keys(ftLangMap),
     callback = function (event)
-      vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
       local ok, error = pcall(vim.treesitter.start, event.buf, ftLangMap[event.match])
-      if not ok and error:find('no parser') then
-        vim.api.nvim_create_autocmd('User', {
-          buffer = event.buf,
-          callback = function (tsinstallEvent)
-            if not tsinstallEvent.match == 'TSInstallFinished' then
-              return
-            end
-            vim.treesitter.start(event.buf, ftLangMap[event.match])
-          end
-        })
+      if ok then
+        vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+        return
       end
+
+      if not error:find('no parser') then
+        return
+      end
+
+      vim.api.nvim_create_autocmd('User', {
+        buffer = event.buf,
+        callback = function (tsinstallEvent)
+          if not tsinstallEvent.match == 'TSInstallFinished' then
+            return
+          end
+          vim.treesitter.start(event.buf, ftLangMap[event.match])
+          vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+        end
+      })
     end
   })
 end
