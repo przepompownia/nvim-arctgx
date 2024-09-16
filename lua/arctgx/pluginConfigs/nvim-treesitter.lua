@@ -1,6 +1,7 @@
 local additionalParsers = {
   'awk',
   'bash',
+  'c',
   'css',
   'diff',
   'dockerfile',
@@ -20,6 +21,8 @@ local additionalParsers = {
   'jsonc',
   'luadoc',
   'make',
+  'markdown',
+  'markdown_inline',
   'muttrc',
   'passwd',
   'php_only',
@@ -34,6 +37,7 @@ local additionalParsers = {
   'toml',
   'udev',
   'twig',
+  'vim',
   'xml',
   'yaml',
 }
@@ -83,11 +87,22 @@ for filetype, lang in pairs(ftLangMap) do
 end
 
 local function configureMain()
-  require('nvim-treesitter').setup()
+  require('nvim-treesitter').setup({
+    ignore_install = {
+      'markdown',
+      'markdown_inline',
+      'c',
+      'vim',
+    },
+  })
 
-  require('nvim-treesitter.install').install(vim.tbl_values(ftLangMap), {skip = {installed = true}}, function ()
-    vim.api.nvim_exec_autocmds('User', {pattern = 'TSInstallFinished'})
-  end)
+  require('nvim-treesitter.install').install(
+    vim.tbl_values(ftLangMap),
+    {skip = {installed = true, ignored = true}},
+    function ()
+      vim.api.nvim_exec_autocmds('User', {pattern = 'TSInstallFinished'})
+    end
+  )
 
   vim.api.nvim_create_autocmd('FileType', {
     pattern = vim.tbl_keys(ftLangMap),
