@@ -46,12 +46,12 @@ local ftLangMap = {
   php = 'php_only',
 }
 
-local notFtiletype = {
+local notFileType = {
   php_only = true,
 }
 
 for _, parser in ipairs(additionalParsers) do
-  if nil == notFtiletype[parser] then
+  if nil == notFileType[parser] then
     ftLangMap[parser] = parser
   end
 end
