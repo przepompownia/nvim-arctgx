@@ -1,7 +1,6 @@
-local additionalParsers = {
+local fileTypes = {
   'awk',
   'bash',
-  'c',
   'css',
   'diff',
   'dockerfile',
@@ -19,14 +18,9 @@ local additionalParsers = {
   'json',
   'json5',
   'jsonc',
-  'luadoc',
   'make',
-  'markdown',
-  'markdown_inline',
   'muttrc',
   'passwd',
-  'php_only',
-  'phpdoc',
   'python',
   'regex',
   'sql',
@@ -37,23 +31,36 @@ local additionalParsers = {
   'toml',
   'udev',
   'twig',
-  'vim',
   'xml',
   'yaml',
+}
+
+local notFtLangs = {
+  'luadoc',
+  'phpdoc',
+  'php_only',
+}
+
+local additionalFiletypes = {
+  'php',
+  'markdown',
+  'markdown_inline',
+  'c',
+  'vim',
 }
 
 local ftLangMap = {
   php = 'php_only',
 }
 
-local notFileType = {
-  php_only = true,
-}
+local langs = vim.deepcopy(fileTypes)
 
-for _, parser in ipairs(additionalParsers) do
-  if nil == notFileType[parser] then
-    ftLangMap[parser] = parser
-  end
+for _, lang in ipairs(notFtLangs) do
+  langs[#langs + 1] = lang
+end
+
+for _, fileType in ipairs(additionalFiletypes) do
+  fileTypes[#fileTypes + 1] = fileType
 end
 
 local function configureMaster()
@@ -66,7 +73,7 @@ local function configureMaster()
   }
 
   require 'nvim-treesitter.configs'.setup {
-    ensure_installed = additionalParsers,
+    ensure_installed = langs,
     highlight = {
       enable = true,
     },
@@ -81,33 +88,26 @@ local function configureMaster()
 end
 
 for filetype, lang in pairs(ftLangMap) do
-  if filetype ~= lang then
-    vim.treesitter.language.register(lang, filetype)
-  end
+  vim.treesitter.language.register(lang, filetype)
 end
 
 local function configureMain()
-  require('nvim-treesitter').setup({
-    ignore_install = {
-      'markdown',
-      'markdown_inline',
-      'c',
-      'vim',
-    },
-  })
+  require('nvim-treesitter').setup({})
 
   require('nvim-treesitter.install').install(
-    vim.tbl_values(ftLangMap),
-    {skip = {installed = true, ignored = true}},
+    langs,
+    {skip = {installed = true}},
     function ()
       vim.api.nvim_exec_autocmds('User', {pattern = 'TSInstallFinished'})
     end
   )
 
   vim.api.nvim_create_autocmd('FileType', {
-    pattern = vim.tbl_keys(ftLangMap),
+    pattern = fileTypes,
     callback = function (event)
-      local ok, error = pcall(vim.treesitter.start, event.buf, ftLangMap[event.match])
+      local lang = ftLangMap[event.match] or event.match
+      -- use add() and get_lang
+      local ok, error = pcall(vim.treesitter.start, event.buf, lang)
       if ok then
         vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
         return
@@ -123,7 +123,7 @@ local function configureMain()
           if not tsinstallEvent.match == 'TSInstallFinished' then
             return
           end
-          vim.treesitter.start(event.buf, ftLangMap[event.match])
+          vim.treesitter.start(event.buf, lang)
           vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
         end
       })
