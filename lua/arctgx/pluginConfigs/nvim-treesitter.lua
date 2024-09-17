@@ -63,30 +63,6 @@ for _, fileType in ipairs(additionalFiletypes) do
   fileTypes[#fileTypes + 1] = fileType
 end
 
-local function configureMaster()
-  local keymap = require('arctgx.vim.abstractKeymap')
-  local tsKeymaps = {
-    init_selection = keymap.firstLhs('langIncrementSelection'),
-    node_incremental = keymap.firstLhs('langIncrementSelection'),
-    node_decremental = keymap.firstLhs('langDecrementSelection'),
-    scope_incremental = keymap.firstLhs('langScopeIncrementSelection'),
-  }
-
-  require 'nvim-treesitter.configs'.setup {
-    ensure_installed = langs,
-    highlight = {
-      enable = true,
-    },
-    incremental_selection = {
-      enable = true,
-      keymaps = tsKeymaps,
-    },
-    indent = {
-      enable = true,
-    },
-  }
-end
-
 for filetype, lang in pairs(ftLangMap) do
   vim.treesitter.language.register(lang, filetype)
 end
@@ -129,6 +105,30 @@ local function configureMain()
       })
     end
   })
+end
+
+local function configureMaster()
+  local keymap = require('arctgx.vim.abstractKeymap')
+  local tsKeymaps = {
+    init_selection = keymap.firstLhs('langIncrementSelection'),
+    node_incremental = keymap.firstLhs('langIncrementSelection'),
+    node_decremental = keymap.firstLhs('langDecrementSelection'),
+    scope_incremental = keymap.firstLhs('langScopeIncrementSelection'),
+  }
+
+  require 'nvim-treesitter.configs'.setup {
+    ensure_installed = langs,
+    highlight = {
+      enable = true,
+    },
+    incremental_selection = {
+      enable = true,
+      keymaps = tsKeymaps,
+    },
+    indent = {
+      enable = true,
+    },
+  }
 end
 
 if require('nvim-treesitter.install').install then
