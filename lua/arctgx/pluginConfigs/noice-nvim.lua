@@ -6,6 +6,9 @@ local function setupNoice()
       view_error = 'mini',
       view_warn = 'mini',
     },
+    popupmenu = {
+      enabled = false,
+    },
     notify = {
       enabled = true,
       view = 'mini',
