@@ -1,11 +1,6 @@
 local cmp = require 'cmp'
 local keymap = require('arctgx.vim.abstractKeymap')
 
-local hasWordsBefore = function ()
-  local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-  return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match('%s') == nil
-end
-
 --- @type table<string, cmp.SourceConfig>
 local cmpSources = {
   buffer = {
@@ -63,7 +58,7 @@ cmp.setup({
         cmp.select_next_item()
       elseif luasnip.expand_or_locally_jumpable() then
         luasnip.expand_or_jump()
-      elseif hasWordsBefore() then
+      elseif require('arctgx.completion').hasWordsBefore() then
         cmp.complete()
       else
         fallback()

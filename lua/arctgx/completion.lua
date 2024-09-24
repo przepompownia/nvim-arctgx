@@ -41,6 +41,11 @@ local function showDocumentation(buf, clientId)
   vim.wo[winData.winid].conceallevel = 3
 end
 
+function completion.hasWordsBefore()
+  local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+  return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match('%s') == nil
+end
+
 function completion.init()
   vim.api.nvim_create_autocmd('LspAttach', {
     group = completionAugroup,
