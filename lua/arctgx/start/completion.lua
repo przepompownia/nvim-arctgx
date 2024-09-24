@@ -93,7 +93,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
   end
 })
 
-vim.go.completeopt = 'menu,menuone,popup,fuzzy'
+vim.go.completeopt = 'noinsert,menuone,fuzzy'
 
 local pumMaps = {
   ['<Tab>'] = '<C-n>',
