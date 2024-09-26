@@ -80,7 +80,7 @@ function completion.init()
             return
           end
 
-          if vim.v.char:match('[%w_]') or vim.tbl_contains(triggerCharacters, vim.v.char) then
+          if vim.tbl_contains(triggerCharacters, vim.v.char) or vim.v.char:match('[%w_]') then
             timer:start(debounce, 0, vim.schedule_wrap(vim.lsp.completion.trigger))
           end
           -- vim.notify('Triggering completion ' .. vim.api.nvim_get_current_line())
@@ -103,9 +103,7 @@ function completion.init()
   vim.go.completeopt = 'noinsert,menuone,fuzzy'
 
   local pumMaps = {
-    ['<Tab>'] = '<C-n>',
     ['<Down>'] = '<C-n>',
-    ['<S-Tab>'] = '<C-p>',
     ['<Up>'] = '<C-p>',
     ['<CR>'] = '<C-y>',
   }
@@ -120,6 +118,36 @@ function completion.init()
       {expr = true}
     )
   end
+
+  vim.keymap.set({'i', 's'}, '<Tab>', function ()
+    if vim.snippet.active({direction = 1}) then
+      return '<cmd>lua vim.snippet.jump(' .. 1 .. ')<cr>'
+    elseif vim.fn.pumvisible() == 1 then
+      return '<C-n>'
+    elseif completion.hasWordsBefore() then
+      vim.lsp.completion.trigger()
+    else
+      return '<Tab>'
+    end
+  end, {
+    expr = true,
+    silent = true,
+  })
+
+  vim.keymap.set({'i', 's'}, '<S-Tab>', function ()
+    if vim.snippet.active({direction = -1}) then
+      return '<cmd>lua vim.snippet.jump(-1)<cr>'
+    elseif vim.fn.pumvisible() == 1 then
+      return '<C-p>'
+    elseif completion.hasWordsBefore() then
+      vim.lsp.completion.trigger()
+    else
+      return '<S-Tab>'
+    end
+  end, {
+    expr = true,
+    silent = true,
+  })
 end
 
 return completion
