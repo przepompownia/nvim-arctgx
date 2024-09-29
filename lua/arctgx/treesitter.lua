@@ -83,6 +83,10 @@ vim.api.nvim_create_autocmd('FileType', {
   callback = function (event)
     local lang = vim.treesitter.language.get_lang(event.match)
 
+    if nil == lang then
+      return
+    end
+
     if vim.treesitter.language.add(lang) then
       start(event.buf, lang)
       return
