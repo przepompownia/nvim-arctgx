@@ -73,14 +73,14 @@ function extension.langs()
   return langs
 end
 
+local function start(buf, lang)
+  vim.treesitter.start(buf, lang)
+  vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+end
+
 vim.api.nvim_create_autocmd('FileType', {
   pattern = fileTypes,
   callback = function (event)
-    local function start(buf, lang)
-      vim.treesitter.start(buf, lang)
-      vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
-    end
-
     local lang = vim.treesitter.language.get_lang(event.match)
 
     if vim.treesitter.language.add(lang) then
