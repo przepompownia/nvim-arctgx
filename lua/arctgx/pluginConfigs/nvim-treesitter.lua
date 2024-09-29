@@ -86,7 +86,7 @@ local function configureMain()
         vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
       end
 
-      local lang = ftLangMap[event.match] or event.match
+      local lang = vim.treesitter.language.get_lang(event.match)
 
       if vim.treesitter.language.add(lang) then
         start(event.buf, lang)
