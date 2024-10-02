@@ -2,6 +2,7 @@
 local completion = {}
 
 local debounce = 300
+local useBuiltinAutotrigger = false
 local timer = assert(vim.uv.new_timer())
 local completionAugroup = vim.api.nvim_create_augroup('arctgx.completion', {clear = true})
 
@@ -46,6 +47,23 @@ function completion.hasWordsBefore()
   return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match('%s') == nil
 end
 
+local function autotrigger(triggerCharacters)
+  -- https://github.com/neovim/neovim/pull/30028#issuecomment-2285503268
+  if vim.fn.pumvisible() == 1 then
+    return
+  end
+  if timer:get_due_in() > 0 then
+    -- vim.notify('Inactive ' .. tostring(timer:get_due_in()))
+    return
+  end
+
+  if vim.tbl_contains(triggerCharacters, vim.v.char) or vim.v.char:match('[%w_]') then
+    -- vim.notify('Triggered after ' .. vim.v.char, vim.log.levels.DEBUG)
+    timer:start(debounce, 0, vim.schedule_wrap(vim.lsp.completion.trigger))
+  end
+  -- vim.notify('Triggering completion ' .. vim.api.nvim_get_current_line())
+end
+
 function completion.init()
   vim.api.nvim_create_autocmd('LspAttach', {
     group = completionAugroup,
@@ -58,34 +76,24 @@ function completion.init()
         'completionProvider',
         'triggerCharacters'
       ) or {}
-      vim.lsp.completion.enable(true, clientId, args.buf, {autotrigger = false})
+      -- vim.print(triggerCharacters)
+      vim.lsp.completion.enable(true, clientId, args.buf, {autotrigger = useBuiltinAutotrigger})
 
       vim.keymap.set({'i'}, '<C-Space>', function ()
         vim.lsp.completion.trigger()
       end, {buffer = args.buf})
 
-      vim.api.nvim_create_autocmd({
-        -- 'TextChangedI',
-        'InsertCharPre',
-      }, {
-        group = completionAugroup,
-        buffer = args.buf,
-        callback = function ()
-          -- https://github.com/neovim/neovim/pull/30028#issuecomment-2285503268
-          if vim.fn.pumvisible() == 1 then
-            return
-          end
-          if timer:get_due_in() > 0 then
-            -- vim.notify('Inactive ' .. tostring(timer:get_due_in()))
-            return
-          end
-
-          if vim.tbl_contains(triggerCharacters, vim.v.char) or vim.v.char:match('[%w_]') then
-            timer:start(debounce, 0, vim.schedule_wrap(vim.lsp.completion.trigger))
-          end
-          -- vim.notify('Triggering completion ' .. vim.api.nvim_get_current_line())
-        end
-      })
+      if not useBuiltinAutotrigger then
+        vim.api.nvim_create_autocmd({
+          'InsertCharPre',
+        }, {
+          group = completionAugroup,
+          buffer = args.buf,
+          callback = function ()
+            autotrigger(triggerCharacters)
+          end,
+        })
+      end
 
       if client.supports_method(vim.lsp.protocol.Methods.completionItem_resolve, {bufnr = args.buf}) then
         vim.api.nvim_create_autocmd('CompleteChanged', {
