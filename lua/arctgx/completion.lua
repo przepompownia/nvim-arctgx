@@ -79,9 +79,7 @@ function completion.init()
       -- vim.print(triggerCharacters)
       vim.lsp.completion.enable(true, clientId, args.buf, {autotrigger = useBuiltinAutotrigger})
 
-      vim.keymap.set({'i'}, '<C-Space>', function ()
-        vim.lsp.completion.trigger()
-      end, {buffer = args.buf})
+      vim.keymap.set({'i'}, '<C-Space>', vim.lsp.completion.trigger, {buffer = args.buf})
 
       if not useBuiltinAutotrigger then
         vim.api.nvim_create_autocmd({
