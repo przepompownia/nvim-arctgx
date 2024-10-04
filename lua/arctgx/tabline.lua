@@ -20,14 +20,25 @@ function tabline.label(tabpage)
   return vim.fn.fnamemodify(bufname, ':~:.:r')
 end
 
+---@diagnostic disable-next-line: unused-local
+function tabline.click(tabnr, clicks, button, modifiers)
+  if clicks == 1 and button == 'l' then
+    local tabpages = vim.api.nvim_list_tabpages()
+    vim.api.nvim_set_current_tabpage(tabpages[tabnr])
+  end
+end
+
 --- from :h setting-tabline
 --- @return string
 function tabline.prepare()
   local s = ''
   local currentTabpage = vim.api.nvim_win_get_tabpage(0)
-  for _, tabpage in ipairs(vim.api.nvim_list_tabpages()) do
+  local tabpages = vim.api.nvim_list_tabpages()
+
+  for tabnr, tabpage in ipairs(tabpages) do
     s = s .. ((tabpage == currentTabpage) and '%#TabLineSel#' or '%#TabLine#')
-    s = s .. '%' .. vim.api.nvim_tabpage_get_number(tabpage) .. 'T'
+    s = s .. '%' .. tabnr
+    s = s .. "@v:lua.require'arctgx.tabline'.click@"
     -- s = s .. " %{v:lua.require'arctgx.tabline'.label(" .. (tabpage) .. ')} '
     s = s .. (' %s '):format(tabline.label(tabpage))
   end
