@@ -86,9 +86,9 @@ local abstractKeymaps = {
   langWorkspaceFolderAdd = {lhs = '<Leader>sfa', desc = 'Add workspace folder'},
   langWorkspaceFolderRemove = {lhs = '<Leader>sfd', desc = 'Remove workspace folder'},
   langClassNew = {lhs = '<Leader>icn', desc = 'New class'},
-  langIncrementSelection = {lhs = '<Leader>]', desc = 'Increment selection based on language'},
+  langIncrementSelection = {lhs = '<A-]>', desc = 'Increment selection based on language'},
   langScopeIncrementSelection = {lhs = '<Leader>]', desc = 'Increment selection based on language'},
-  langDecrementSelection = {lhs = '<Leader>[', desc = 'Decrement selection based on language'},
+  langDecrementSelection = {lhs = '<A-[>', desc = 'Decrement selection based on language'},
 
   langShowSignatureHelp = {lhs = {i = '<C-Bslash>,', n = '<Leader>ish'}, desc = 'Show signature help'},
   langFindReferences = {lhs = 'grr', desc = 'Find references'},
