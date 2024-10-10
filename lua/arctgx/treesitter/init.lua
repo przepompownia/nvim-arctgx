@@ -78,31 +78,33 @@ local function start(buf, lang)
   vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
 end
 
-vim.api.nvim_create_autocmd('FileType', {
-  pattern = fileTypes,
-  callback = function (event)
-    local lang = vim.treesitter.language.get_lang(event.match)
+function extension.loadOnFiletype()
+  vim.api.nvim_create_autocmd('FileType', {
+    pattern = fileTypes,
+    callback = function (event)
+      local lang = vim.treesitter.language.get_lang(event.match)
 
-    if nil == lang then
-      return
-    end
-
-    if vim.treesitter.language.add(lang) then
-      start(event.buf, lang)
-      return
-    end
-
-    vim.api.nvim_create_autocmd('User', {
-      once = true,
-      buffer = event.buf,
-      callback = function (tsinstallEvent)
-        if tsinstallEvent.match == 'TSInstallFinished' then
-          start(event.buf, lang)
-        end
+      if nil == lang then
+        return
       end
-    })
-  end
-})
+
+      if vim.treesitter.language.add(lang) then
+        start(event.buf, lang)
+        return
+      end
+
+      vim.api.nvim_create_autocmd('User', {
+        once = true,
+        buffer = event.buf,
+        callback = function (tsinstallEvent)
+          if tsinstallEvent.match == 'TSInstallFinished' then
+            start(event.buf, lang)
+          end
+        end
+      })
+    end
+  })
+end
 
 --- from https://github.com/neovim/neovim/blob/95fd1ad83e24bbb14cc084fb001251939de6c0a9/runtime/lua/vim/treesitter.lua#L257
 function extension.getCapturesBeforeCursor(winnr)
