@@ -54,8 +54,7 @@ function extension.decrementSelection()
     return
   end
 
-  -- https://github.com/neovim/neovim/pull/30629
-  selectedNode = selectedNode:child_containing_descendant(initialNode) or initialNode
+  selectedNode = selectedNode:child_with_descendant(initialNode) or initialNode
 
   if selectedNode == nil then
     return
