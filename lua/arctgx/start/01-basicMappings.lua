@@ -41,7 +41,11 @@ vim.keymap.set('n', '<A-j>', function ()
   return 'ddp' .. selectionFromPastedRange() .. '='
 end, {expr = true, desc = 'Move single line down with indentation', silent = true})
 vim.keymap.set('v', '<A-j>', function ()
-  local max = math.max(vim.fn.getpos('v')[2], vim.fn.getpos('.')[2])
+  local max = vim.fn.getpos('.')[2]
+  local vline = vim.fn.getpos('v')[2]
+  if vline > max then
+    max = vline
+  end
   if vim.fn.line('$') == max then
     return
   end
@@ -56,7 +60,11 @@ vim.keymap.set('n', '<A-k>', function ()
 end, {expr = true, desc = 'Move single line up with indentation', silent = true})
 
 vim.keymap.set('v', '<A-k>', function ()
-  local min = math.min(vim.fn.getpos('v')[2], vim.fn.getpos('.')[2])
+  local min = vim.fn.getpos('.')[2]
+  local vline = vim.fn.getpos('v')[2]
+  if vline < min then
+    min = vline
+  end
   if 1 == min then
     return
   end
