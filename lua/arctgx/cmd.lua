@@ -75,7 +75,7 @@ function Cmd:unsetShortOptionWithValue(option)
 end
 
 function Cmd:appendArgument(value)
-  table.insert(self, value)
+  self[#self + 1] = value
 end
 
 --- @return arctgx.Cmd

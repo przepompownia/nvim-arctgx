@@ -4,7 +4,7 @@ local function listAllPlugins(pluginDir)
   local plugins = {}
   local pluginPaths = vim.fn.globpath(pluginDir, '*', 1, 1)
   for _, path in ipairs(pluginPaths) do
-    table.insert(plugins, vim.fn.fnamemodify(path, ':t'))
+    plugins[#plugins+1] = vim.fn.fnamemodify(path, ':t')
   end
 
   return plugins

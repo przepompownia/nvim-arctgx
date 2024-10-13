@@ -117,7 +117,7 @@ function extension.getCapturesBeforeCursor(winnr)
   local captures = {}
 
   for _, capture in ipairs(data) do
-    table.insert(captures, capture.capture)
+    capture[#capture + 1] = capture.capture
   end
 
   return captures

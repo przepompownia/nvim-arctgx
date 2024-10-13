@@ -24,7 +24,7 @@ function extension:switch(option)
     return
   end
 
-  table.insert(self, option)
+  self[#self + 1] = option
 end
 
 function extension:switchWithRequiredValue(option, value)
@@ -35,16 +35,18 @@ function extension:switchWithRequiredValue(option, value)
     return
   end
 
-  table.insert(self, option)
-  table.insert(self, value)
+  self[#self + 1] = option
+  self[#self + 1] = value
 end
 
 --- @return string
 function extension:status()
-  local settings = {}
-  table.insert(settings, self:indexOf('--fixed-strings') and 'Fixed strings' or 'Regex')
-  table.insert(settings, 'Case ' .. (self:indexOf('--ignore-case') and 'insensitive' or 'sensitive'))
-  table.insert(settings, (self:indexOf('--max-count') and 'Only first result' or nil))
+  local settings = {
+    self:indexOf('--fixed-strings') and 'Fixed strings' or 'Regex',
+    'Case ' .. (self:indexOf('--ignore-case') and 'insensitive' or 'sensitive'),
+    (self:indexOf('--max-count') and 'Only first result' or nil),
+  }
+
   return ('%s: %s'):format(self.name, table.concat(settings, ', '))
 end
 
@@ -64,11 +66,11 @@ function extension:newCommand(name, commandTable, useFixedStrings, ignoreCase)
   local command = self:new(name, commandTable)
 
   if (true == useFixedStrings) then
-    table.insert(command, '--fixed-strings')
+    command[#command + 1] = '--fixed-strings'
   end
 
   if (true == ignoreCase) then
-    table.insert(command, '--ignore-case')
+    command[#command + 1] = '--ignore-case'
   end
 
   return command

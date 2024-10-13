@@ -34,7 +34,7 @@ require('arctgx.lazy').setupOnLoad('dap', function ()
   local function splitToArgs(input)
     local result = {}
     for param in string.gmatch(input, '%S+') do
-      table.insert(result, param)
+      result[#result+1] = param
     end
     return result
   end

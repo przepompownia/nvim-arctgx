@@ -18,7 +18,7 @@ local function appendHook(name, hook, event, when)
     return
   end
 
-  table.insert(hooks[event][when], {name = name, callback = hook})
+  hooks[event][when][#hooks[event][when] + 1] = {name = name, callback = hook}
 end
 
 local function runHooks(event, when)

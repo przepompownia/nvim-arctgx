@@ -5,10 +5,10 @@ local function listBufferWindowPairs()
   local result = {}
   for _, winId in ipairs(vim.api.nvim_list_wins()) do
     local bufname = vim.api.nvim_buf_get_name(vim.api.nvim_win_get_buf(winId))
-    table.insert(result, {
+    result[# result + 1] = {
       bufname = bufname,
       winId = winId,
-    })
+    }
   end
 
   return result
