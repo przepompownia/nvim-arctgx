@@ -112,7 +112,7 @@ function extension.getCapturesBeforeCursor(winnr)
   local bufnr = vim.api.nvim_win_get_buf(winnr)
   local cursor = vim.api.nvim_win_get_cursor(winnr)
 
-  local data = vim.treesitter.get_captures_at_pos(bufnr, cursor[1] - 1, math.max(0, cursor[2] - 1))
+  local data = vim.treesitter.get_captures_at_pos(bufnr, cursor[1] - 1, cursor[2] > 1 and cursor[2] - 1 or 0)
 
   local captures = {}
 
