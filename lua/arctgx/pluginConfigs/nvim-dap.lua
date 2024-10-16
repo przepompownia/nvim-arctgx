@@ -211,6 +211,7 @@ keymap.set(
   keymapOpts
 )
 keymap.set({'n'}, 'debuggerClose', function () require('dap').close() end, keymapOpts)
+keymap.set({'n'}, 'debuggerTerminate', function () require('dap').terminate() end, keymapOpts)
 keymap.set(
   {'n'},
   'debuggerClean',
