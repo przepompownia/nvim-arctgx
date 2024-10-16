@@ -1,3 +1,5 @@
+local api = vim.api
+
 local function configureHighlight()
   local path = vim.uv.fs_realpath(
     ('%s/colors/%s.lua'):format(require('arctgx.base').getPluginDir(), vim.go.background)
@@ -15,12 +17,12 @@ end
 require('arctgx.base').onColorschemeReady(
   'ColorschemeLoading',
   function ()
-    vim.api.nvim_cmd({cmd = 'colorscheme', args = {colorscheme(vim.go.background, vim.go.termguicolors)}}, {})
+    api.nvim_cmd({cmd = 'colorscheme', args = {colorscheme(vim.go.background, vim.go.termguicolors)}}, {})
   end
 )
 
-vim.api.nvim_create_autocmd('ColorScheme', {
-  group = vim.api.nvim_create_augroup('ConfigureHighlight', {clear = true}),
+api.nvim_create_autocmd('ColorScheme', {
+  group = api.nvim_create_augroup('ConfigureHighlight', {clear = true}),
   pattern = '*',
   callback = configureHighlight,
 })

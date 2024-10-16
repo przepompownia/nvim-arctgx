@@ -1,4 +1,6 @@
+local api = vim.api
 local lsp = vim.lsp
+
 local keymap = require('arctgx.vim.abstractKeymap')
 
 lsp.set_log_level(vim.log.levels.WARN)
@@ -8,9 +10,9 @@ local hlMap = {
   LspReferenceWrite = 'IdeReferenceWrite'
 }
 for key, value in pairs(hlMap) do
-  vim.api.nvim_set_hl(require('arctgx.lsp').ns(), key, {link = value})
+  api.nvim_set_hl(require('arctgx.lsp').ns(), key, {link = value})
 end
-vim.api.nvim_set_hl_ns(require('arctgx.lsp').ns())
+api.nvim_set_hl_ns(require('arctgx.lsp').ns())
 
 local border = 'rounded'
 local origUtilOpenFloatingPreview = lsp.util.open_floating_preview
@@ -31,14 +33,14 @@ lsp.handlers[lsp.protocol.Methods.textDocument_references] = lsp.with(
         return
       end
       vim.fn.setqflist({}, ' ', {title = 'References', items = params.items, context = params.context})
-      vim.api.nvim_command('botright copen')
+      api.nvim_command('botright copen')
     end,
   }
 )
 
-local augroup = vim.api.nvim_create_augroup('LspDocumentHighlight', {clear = true})
-vim.api.nvim_create_autocmd('LspAttach', {
-  group = vim.api.nvim_create_augroup('UserLspConfig', {}),
+local augroup = api.nvim_create_augroup('LspDocumentHighlight', {clear = true})
+api.nvim_create_autocmd('LspAttach', {
+  group = api.nvim_create_augroup('UserLspConfig', {}),
   callback = function (ev)
     local opts = {buffer = ev.buf}
 
@@ -64,17 +66,17 @@ vim.api.nvim_create_autocmd('LspAttach', {
 
     local client = lsp.get_client_by_id(ev.data.client_id)
     if client.server_capabilities.documentHighlightProvider then
-      vim.api.nvim_create_autocmd({'CursorMoved', 'CursorMovedI'}, {
+      api.nvim_create_autocmd({'CursorMoved', 'CursorMovedI'}, {
         group = augroup,
         buffer = ev.buf,
         callback = function (args) lsp.util.buf_clear_references(args.buf) end
       })
-      vim.api.nvim_create_autocmd({'CursorHold', 'CursorHoldI'}, {
+      api.nvim_create_autocmd({'CursorHold', 'CursorHoldI'}, {
         group = augroup,
         buffer = ev.buf,
         callback = lsp.buf.document_highlight
       })
-      vim.api.nvim_create_autocmd({'LspDetach'}, {
+      api.nvim_create_autocmd({'LspDetach'}, {
         group = augroup,
         buffer = ev.buf,
         callback = function (args)
@@ -89,7 +91,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
             return
           end
 
-          vim.api.nvim_clear_autocmds {
+          api.nvim_clear_autocmds {
             group = augroup,
             buffer = args.buf,
           }
@@ -99,9 +101,9 @@ vim.api.nvim_create_autocmd('LspAttach', {
   end,
 })
 
-vim.api.nvim_create_autocmd('FileType', {
+api.nvim_create_autocmd('FileType', {
   pattern = {'lua'},
-  group = vim.api.nvim_create_augroup('arctgx.lsp.clients.luals', {}),
+  group = api.nvim_create_augroup('arctgx.lsp.clients.luals', {}),
   callback = function (args)
     lsp.start(
       require('arctgx.lsp.serverConfigs.luaLs').clientConfig(args.file),
@@ -141,7 +143,7 @@ local function willRenameCurrentBuffer(newPath)
     willRenameFilesHandler
   )
 end
-vim.api.nvim_create_user_command('WillRenameCurrentBuffer', function (opts)
+api.nvim_create_user_command('WillRenameCurrentBuffer', function (opts)
   if 0 ~= #opts.args then
     willRenameCurrentBuffer(opts.args)
     return
@@ -149,7 +151,7 @@ vim.api.nvim_create_user_command('WillRenameCurrentBuffer', function (opts)
 
   vim.ui.input({
     completion = 'file',
-    default = vim.api.nvim_buf_get_name(0),
+    default = api.nvim_buf_get_name(0),
     prompt = 'New path: ',
   }, function (input)
     if not input then

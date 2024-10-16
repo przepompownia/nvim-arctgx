@@ -1,3 +1,5 @@
+local api = vim.api
+
 do
   local highlights = {
     IdeReferenceRead = {bg = '#E6F4AA'},
@@ -11,6 +13,6 @@ do
   }
 
   for name, def in pairs(highlights) do
-    vim.api.nvim_set_hl(require('arctgx.lsp').ns(), name, def)
+    api.nvim_set_hl(require('arctgx.lsp').ns(), name, def)
   end
 end

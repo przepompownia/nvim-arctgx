@@ -4,7 +4,7 @@ local session = require('arctgx.session')
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 
-vim.api.nvim_create_autocmd('User', {
+api.nvim_create_autocmd('User', {
   pattern = 'NvimTreeSetup',
   callback = function ()
     local treeapi = require('nvim-tree.api')
@@ -141,7 +141,7 @@ end)
 local function focusOnFile()
   require('nvim-tree')
   local treeapi = require('nvim-tree.api')
-  local bufPath = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(0), ':p')
+  local bufPath = vim.fn.fnamemodify(api.nvim_buf_get_name(0), ':p')
   local realParent = vim.iter(vim.fs.parents(bufPath)):find(function (path)
     return vim.uv.fs_realpath(path) and path ~= '/'
   end) or vim.uv.cwd()

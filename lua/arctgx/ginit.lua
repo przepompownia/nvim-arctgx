@@ -1,3 +1,5 @@
+local api = vim.api
+
 vim.go.guifont = 'SauceCodePro Nerd Font Mono:h14'
 if vim.g.GuiLoaded then
   vim.fn.GuiWindowFullScreen(1)
@@ -8,8 +10,8 @@ if vim.g.GuiLoaded then
   vim.env.TMUX = nil
 end
 
-local augroupGinit = vim.api.nvim_create_augroup('AfterGinit', {clear = true})
-vim.api.nvim_create_autocmd('FocusGained', {
+local augroupGinit = api.nvim_create_augroup('AfterGinit', {clear = true})
+api.nvim_create_autocmd('FocusGained', {
   group = augroupGinit,
   pattern = '*',
   callback = function ()

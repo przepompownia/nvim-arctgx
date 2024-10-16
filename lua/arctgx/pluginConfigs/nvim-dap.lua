@@ -1,3 +1,5 @@
+local api = vim.api
+
 local base = require('arctgx.base')
 local keymap = require('arctgx.vim.abstractKeymap')
 
@@ -114,8 +116,8 @@ require('arctgx.lazy').setupOnLoad('dap', function ()
     frames.toggle()
   end
 
-  vim.api.nvim_create_user_command('DAPWidgetScopes', toggle_scopes, {})
-  vim.api.nvim_create_user_command('DAPWidgetFrames', toggle_frames, {})
+  api.nvim_create_user_command('DAPWidgetScopes', toggle_scopes, {})
+  api.nvim_create_user_command('DAPWidgetFrames', toggle_frames, {})
 
   keymap.set({'n'}, 'debuggerStepOver', keymap.repeatable(dap.step_over), {expr = true})
   keymap.set({'n'}, 'debuggerStepInto', keymap.repeatable(dap.step_into), {expr = true})
@@ -176,8 +178,8 @@ vim.fn.sign_define('DapBreakpointRejected', {text = 'R', texthl = 'IdeCodeWindow
 vim.fn.sign_define('DapLogPoint', {text = 'L', texthl = 'IdeCodeWindowCurrentFrameSign', linehl = ''})
 vim.fn.sign_define('DapStopped', {text = '▶', texthl = 'IdeCodeWindowCurrentFrameSign', linehl = 'CursorLine'})
 
-local augroup = vim.api.nvim_create_augroup('ArctgxDap', {clear = true})
-vim.api.nvim_create_autocmd({'FileType'}, {
+local augroup = api.nvim_create_augroup('ArctgxDap', {clear = true})
+api.nvim_create_autocmd({'FileType'}, {
   pattern = require('arctgx.dap').getDeclaredConfigurations(),
   group = augroup,
   callback = function (event)
@@ -215,7 +217,7 @@ keymap.set(
   function ()
     require('dap').close()
     require('dap').clear_breakpoints()
-    vim.api.nvim_exec_autocmds('User', {pattern = 'DAPClean', modeline = false})
+    api.nvim_exec_autocmds('User', {pattern = 'DAPClean', modeline = false})
   end,
   keymapOpts
 )

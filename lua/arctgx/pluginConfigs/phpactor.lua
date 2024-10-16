@@ -1,6 +1,7 @@
-local augroup = vim.api.nvim_create_augroup('Phpactor', {clear = true})
+local api = vim.api
+local augroup = api.nvim_create_augroup('Phpactor', {clear = true})
 
-vim.api.nvim_create_autocmd('FileType', {
+api.nvim_create_autocmd('FileType', {
   pattern = 'php',
   group = augroup,
   callback = function (opts)

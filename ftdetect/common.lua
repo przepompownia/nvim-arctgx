@@ -1,6 +1,8 @@
-local augroup = vim.api.nvim_create_augroup('ArctgxFiletypeDetect', {clear = true})
+local api = vim.api
 
-vim.api.nvim_create_autocmd({'BufNewFile', 'BufRead'}, {
+local augroup = api.nvim_create_augroup('ArctgxFiletypeDetect', {clear = true})
+
+api.nvim_create_autocmd({'BufNewFile', 'BufRead'}, {
   pattern = '~/.src/arctgx/dconf/dump',
   group = augroup,
   callback = function ()
@@ -8,7 +10,7 @@ vim.api.nvim_create_autocmd({'BufNewFile', 'BufRead'}, {
   end
 })
 
-vim.api.nvim_create_autocmd({'BufNewFile', 'BufRead'}, {
+api.nvim_create_autocmd({'BufNewFile', 'BufRead'}, {
   pattern = '*.yml.dist',
   group = augroup,
   callback = function ()
@@ -16,7 +18,7 @@ vim.api.nvim_create_autocmd({'BufNewFile', 'BufRead'}, {
   end
 })
 
-vim.api.nvim_create_autocmd({'BufNewFile', 'BufRead'}, {
+api.nvim_create_autocmd({'BufNewFile', 'BufRead'}, {
   pattern = 'composer.lock',
   group = augroup,
   callback = function ()

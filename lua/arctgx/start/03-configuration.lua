@@ -1,9 +1,11 @@
+local api = vim.api
+
 local plugin = require 'arctgx.plugin'
 local pluginPrefix = 'arctgx.pluginConfigs'
 
 plugin.loadCustomConfiguration(vim.g.pluginDirs or {}, pluginPrefix)
 
-vim.api.nvim_create_autocmd('VimEnter', {
+api.nvim_create_autocmd('VimEnter', {
   once = true,
   pattern = '*',
   callback = function ()
@@ -11,7 +13,7 @@ vim.api.nvim_create_autocmd('VimEnter', {
   end,
 })
 
-vim.api.nvim_create_autocmd('UIEnter', {
+api.nvim_create_autocmd('UIEnter', {
   once = true,
   callback = function ()
     if 1 == vim.fn.has('gui_running') then
@@ -20,7 +22,7 @@ vim.api.nvim_create_autocmd('UIEnter', {
   end
 })
 
-vim.api.nvim_create_user_command('Packadd', function (opts)
+api.nvim_create_user_command('Packadd', function (opts)
   vim.cmd.packadd(opts.args)
   plugin.loadSingleConfiguration(opts.args, pluginPrefix, require('arctgx.base').getPluginDir())
 end, {nargs = 1, complete = 'packadd'})

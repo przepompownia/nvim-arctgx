@@ -1,3 +1,5 @@
+local api = vim.api
+
 local git = require('arctgx.git')
 local gs = require('gitsigns')
 
@@ -7,7 +9,7 @@ local gitsigns = {}
 --- @return function
 gitsigns.tryWorktrees = function (repoParams)
   return function (bufnr, callback)
-    local file = vim.api.nvim_buf_get_name(bufnr)
+    local file = api.nvim_buf_get_name(bufnr)
 
     for _, worktree in ipairs(repoParams) do
       if git.isTracked(file, worktree.gitdir, worktree.toplevel) then
@@ -35,7 +37,7 @@ gitsigns.configuration = {
 
     map('n', 'jumpToNextDiffOrGitHunk', keymap.repeatable(function ()
       if vim.wo.diff then
-        vim.api.nvim_feedkeys(']c', 'n', false)
+        api.nvim_feedkeys(']c', 'n', false)
         return '<Ignore>'
       end
       vim.schedule(function () gs.next_hunk() end)
@@ -44,7 +46,7 @@ gitsigns.configuration = {
 
     map('n', 'jumpToPreviousDiffOrGitHunk', keymap.repeatable(function ()
       if vim.wo.diff then
-        vim.api.nvim_feedkeys('[c', 'n', false)
+        api.nvim_feedkeys('[c', 'n', false)
         return '<Ignore>'
       end
       vim.schedule(function () gs.prev_hunk() end)

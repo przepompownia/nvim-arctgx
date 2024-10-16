@@ -7,7 +7,7 @@ local winId = nil
 local timer = vim.uv.new_timer()
 
 lineHover.showDelayed = function (debounceTime)
-  timer:start(debounceTime or defaultDebounceTime, 0, vim.schedule_wrap(function()
+  timer:start(debounceTime or defaultDebounceTime, 0, vim.schedule_wrap(function ()
     lineHover.show()
   end))
 end
@@ -37,7 +37,7 @@ lineHover.show = function ()
   local lineContent = fullLine:gsub('[^%g* ]+$', '')
   local contentWidth = vim.fn.strdisplaywidth(fullLine)
 
-  if contentWidth < vim.fn.winwidth(0) - vim.fn.getwininfo(vim.api.nvim_get_current_win())[1].textoff then
+  if contentWidth < vim.fn.winwidth(0) - vim.fn.getwininfo(api.nvim_get_current_win())[1].textoff then
     return
   end
 
@@ -56,15 +56,15 @@ lineHover.show = function ()
 end
 
 lineHover.enableForWindow = function ()
-  local augroup = api.nvim_create_augroup ('ArctgxLineHover', { clear = true })
-  api.nvim_create_autocmd ({'CursorMoved'}, {
+  local augroup = api.nvim_create_augroup('ArctgxLineHover', {clear = true})
+  api.nvim_create_autocmd({'CursorMoved'}, {
     group = augroup,
     buffer = 0,
     callback = function ()
       lineHover.showDelayed()
     end
   })
-  api.nvim_create_autocmd ({'BufLeave', 'TabClosed'}, {
+  api.nvim_create_autocmd({'BufLeave', 'TabClosed'}, {
     group = augroup,
     buffer = 0,
     callback = hideExistingWindow,

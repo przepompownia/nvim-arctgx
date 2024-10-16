@@ -1,3 +1,5 @@
+local api = vim.api
+
 local function setupNoice()
   require('noice').setup({
     messages = {
@@ -50,12 +52,12 @@ local function setupNoice()
   })
 end
 
-vim.api.nvim_create_autocmd('UIEnter', {
+api.nvim_create_autocmd('UIEnter', {
   once = true,
   callback = setupNoice,
 })
 
 vim.keymap.set('c', '<A-CR>', function ()
   require('noice').redirect(vim.fn.getcmdline())
-  vim.api.nvim_input('<esc>')
+  api.nvim_input('<esc>')
 end, {desc = 'Redirect Cmdline'})

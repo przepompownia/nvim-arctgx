@@ -1,7 +1,9 @@
+local api = vim.api
+
 local base = require('arctgx.base')
 local keymap = require('arctgx.vim.abstractKeymap')
 
-local augroup = vim.api.nvim_create_augroup('ArctgxDapUi', {clear = true})
+local augroup = api.nvim_create_augroup('ArctgxDapUi', {clear = true})
 local function reloadColors()
   local highlights = {
     DapUIVariable = {link = 'Normal'},
@@ -26,7 +28,7 @@ local function reloadColors()
   }
 
   for name, def in pairs(highlights) do
-    vim.api.nvim_set_hl(0, name, def)
+    api.nvim_set_hl(0, name, def)
   end
 end
 
@@ -69,7 +71,7 @@ local config = {
   },
 }
 
-vim.api.nvim_create_autocmd({'ColorScheme'}, {
+api.nvim_create_autocmd({'ColorScheme'}, {
   group = augroup,
   callback = reloadColors,
 })
@@ -80,11 +82,11 @@ local function watchExpression(expression)
   require('dapui').elements.watches.add(expression)
 end
 
-vim.api.nvim_create_user_command('DAW', function (opts)
+api.nvim_create_user_command('DAW', function (opts)
   watchExpression(opts.args)
 end, {nargs = 1, desc = 'DAP UI: add expression to watch'})
 
-vim.api.nvim_create_autocmd({'FileType'}, {
+api.nvim_create_autocmd({'FileType'}, {
   pattern = require('arctgx.dap').getDeclaredConfigurations(),
   group = augroup,
   callback = function (event)
@@ -101,11 +103,11 @@ vim.api.nvim_create_autocmd({'FileType'}, {
 require('arctgx.lazy').setupOnLoad('dapui', function ()
   require('dapui').setup(config)
 
-  vim.api.nvim_create_autocmd({'FileType'}, {
+  api.nvim_create_autocmd({'FileType'}, {
     pattern = {'dapui_scopes'},
     group = augroup,
     callback = function ()
-      local tabpage = vim.api.nvim_get_current_tabpage()
+      local tabpage = api.nvim_get_current_tabpage()
       vim.t[tabpage].arctgxTabName = 'DAP UI'
     end
   })

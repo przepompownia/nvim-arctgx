@@ -1,3 +1,5 @@
+local api = vim.api
+
 local session = require 'arctgx.session'
 local keymap = require('arctgx.vim.abstractKeymap')
 
@@ -23,7 +25,7 @@ require('diffview').setup({
 
 local function closeDiffviewTabs()
   require('arctgx.window').forEachWindowWithBufFileType({'DiffviewFiles', 'DiffviewFileHistory'}, function (winId)
-    local tabNr = vim.api.nvim_tabpage_get_number(vim.api.nvim_win_get_tabpage(winId))
+    local tabNr = api.nvim_tabpage_get_number(api.nvim_win_get_tabpage(winId))
     vim.cmd.tabclose(tabNr)
   end)
 end
@@ -41,8 +43,8 @@ keymap.set('n', 'gitStatusUIClose', closeDiffviewTabs)
 
 session.appendBeforeSaveHook('Close DiffView tabs', closeDiffviewTabs)
 
-vim.api.nvim_create_autocmd('FileType', {
-  group = vim.api.nvim_create_augroup('DiffViewBufEnter', {clear = true}),
+api.nvim_create_autocmd('FileType', {
+  group = api.nvim_create_augroup('DiffViewBufEnter', {clear = true}),
   pattern = {'diffview://.*'},
   callback = function (args)
     require('arctgx.base').addBufferCwdCallback(args.buf, function ()
@@ -51,11 +53,11 @@ vim.api.nvim_create_autocmd('FileType', {
   end,
 })
 
-vim.api.nvim_create_autocmd({'FileType'}, {
+api.nvim_create_autocmd({'FileType'}, {
   pattern = {'DiffviewFiles', 'DiffviewFileHistory'},
-  group = vim.api.nvim_create_augroup('DiffViewTabName', {clear = true}),
+  group = api.nvim_create_augroup('DiffViewTabName', {clear = true}),
   callback = function (args)
-    local tabpage = vim.api.nvim_get_current_tabpage()
+    local tabpage = api.nvim_get_current_tabpage()
     vim.t[tabpage].arctgxTabName = args.match
   end
 })

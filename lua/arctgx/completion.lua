@@ -1,10 +1,11 @@
+local api = vim.api
 -- It's experimental and rather still not very usable
 local completion = {}
 
 local debounce = 300
 local useBuiltinAutotrigger = false
 local timer = assert(vim.uv.new_timer())
-local completionAugroup = vim.api.nvim_create_augroup('arctgx.completion', {clear = true})
+local completionAugroup = api.nvim_create_augroup('arctgx.completion', {clear = true})
 
 local function showDocumentation(buf, clientId)
   local info = vim.fn.complete_info({'selected'})
@@ -30,22 +31,23 @@ local function showDocumentation(buf, clientId)
     return
   end
 
-  local winData = vim.api.nvim__complete_set(info['selected'], {info = docs})
-  if not winData.winid or not vim.api.nvim_win_is_valid(winData.winid) then
+  local winData = api.nvim__complete_set(info['selected'], {info = docs})
+  if not winData.winid or not api.nvim_win_is_valid(winData.winid) then
     return
   end
 
-  vim.api.nvim_win_set_config(winData.winid, {border = 'rounded'})
+  api.nvim_win_set_config(winData.winid, {border = 'rounded'})
 
   -- vim.lsp.util.convert_input_to_markdown_lines, documentation.kind <> markdown?
   vim.treesitter.start(winData.bufnr, 'markdown')
   vim.wo[winData.winid].conceallevel = 3
+  -- vim.print(vim.wo[winData.winid].smoothscroll)
 end
 
 function completion.hasWordsBefore()
-  local pos = vim.api.nvim_win_get_cursor(0)
+  local pos = api.nvim_win_get_cursor(0)
   local line, col = pos[1], pos[2]
-  return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match('%s') == nil
+  return col ~= 0 and api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match('%s') == nil
 end
 
 local function autotrigger(triggerCharacters)
@@ -62,11 +64,11 @@ local function autotrigger(triggerCharacters)
     -- vim.notify('Triggered after ' .. vim.v.char, vim.log.levels.DEBUG)
     timer:start(debounce, 0, vim.schedule_wrap(vim.lsp.completion.trigger))
   end
-  -- vim.notify('Triggering completion ' .. vim.api.nvim_get_current_line())
+  -- vim.notify('Triggering completion ' .. api.nvim_get_current_line())
 end
 
 function completion.init()
-  vim.api.nvim_create_autocmd('LspAttach', {
+  api.nvim_create_autocmd('LspAttach', {
     group = completionAugroup,
     callback = function (args)
       local clientId = args.data.client_id
@@ -83,7 +85,7 @@ function completion.init()
       vim.keymap.set({'i'}, '<C-Space>', vim.lsp.completion.trigger, {buffer = args.buf})
 
       if not useBuiltinAutotrigger then
-        vim.api.nvim_create_autocmd({
+        api.nvim_create_autocmd({
           'InsertCharPre',
         }, {
           group = completionAugroup,
@@ -95,7 +97,7 @@ function completion.init()
       end
 
       if client.supports_method(vim.lsp.protocol.Methods.completionItem_resolve, {bufnr = args.buf}) then
-        vim.api.nvim_create_autocmd('CompleteChanged', {
+        api.nvim_create_autocmd('CompleteChanged', {
           group = completionAugroup,
           buffer = args.buf,
           callback = function ()

@@ -1,3 +1,5 @@
+local api = vim.api
+
 local cmp = require 'cmp'
 local keymap = require('arctgx.vim.abstractKeymap')
 
@@ -11,8 +13,8 @@ local cmpSources = {
     end,
     option = {
       get_bufnrs = function ()
-        return vim.iter(vim.api.nvim_list_bufs()):filter(function (bufnr)
-          return vim.api.nvim_buf_is_loaded(bufnr)
+        return vim.iter(api.nvim_list_bufs()):filter(function (bufnr)
+          return api.nvim_buf_is_loaded(bufnr)
         end):totable()
       end,
       max_indexed_line_length = 300,
@@ -32,7 +34,7 @@ end
 
 cmp.setup({
   enabled = function ()
-    local buf = vim.api.nvim_get_current_buf()
+    local buf = api.nvim_get_current_buf()
     if vim.bo[buf].buftype ~= '' then
       return false
     end
@@ -155,7 +157,7 @@ local function confirmDone(evt)
     return
   end
 
-  vim.api.nvim_feedkeys('(', 'i', false)
+  api.nvim_feedkeys('(', 'i', false)
 end
 
 cmp.event:on('confirm_done', confirmDone)

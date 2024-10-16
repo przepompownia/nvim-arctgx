@@ -1,3 +1,5 @@
+local api = vim.api
+
 local base = require 'arctgx.base'
 
 local opts = {silent = true}
@@ -53,7 +55,7 @@ vim.keymap.set('v', '<A-j>', function ()
 end, {expr = true, desc = 'Move single line down with indentation', silent = true})
 
 vim.keymap.set('n', '<A-k>', function ()
-  if vim.api.nvim_win_get_cursor(0)[1] == 1 then
+  if api.nvim_win_get_cursor(0)[1] == 1 then
     return
   end
   return 'ddkP' .. selectionFromPastedRange() .. '='
@@ -85,7 +87,7 @@ vim.keymap.set('n', '<Leader>co', vim.cmd.copen, opts)
 vim.keymap.set('t', '<M-p>', function ()
   local regname = vim.fn.nr2char(vim.fn.getchar())
   local sequence = ('<C-\\><C-n>"%spi'):format(regname)
-  return vim.api.nvim_replace_termcodes(sequence, true, false, true)
+  return api.nvim_replace_termcodes(sequence, true, false, true)
 end, {
   silent = true,
   expr = true,

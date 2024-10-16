@@ -1,3 +1,5 @@
+local api = vim.api
+
 local extension = {}
 
 local fileTypes = {
@@ -79,7 +81,7 @@ local function start(buf, lang)
 end
 
 function extension.loadOnFiletype()
-  vim.api.nvim_create_autocmd('FileType', {
+  api.nvim_create_autocmd('FileType', {
     pattern = fileTypes,
     callback = function (event)
       local lang = vim.treesitter.language.get_lang(event.match)
@@ -93,7 +95,7 @@ function extension.loadOnFiletype()
         return
       end
 
-      vim.api.nvim_create_autocmd('User', {
+      api.nvim_create_autocmd('User', {
         once = true,
         buffer = event.buf,
         callback = function (tsinstallEvent)
@@ -109,8 +111,8 @@ end
 --- from https://github.com/neovim/neovim/blob/95fd1ad83e24bbb14cc084fb001251939de6c0a9/runtime/lua/vim/treesitter.lua#L257
 function extension.getCapturesBeforeCursor(winnr)
   winnr = winnr or 0
-  local bufnr = vim.api.nvim_win_get_buf(winnr)
-  local cursor = vim.api.nvim_win_get_cursor(winnr)
+  local bufnr = api.nvim_win_get_buf(winnr)
+  local cursor = api.nvim_win_get_cursor(winnr)
 
   local data = vim.treesitter.get_captures_at_pos(bufnr, cursor[1] - 1, cursor[2] > 1 and cursor[2] - 1 or 0)
 

@@ -1,3 +1,5 @@
+local api = vim.api
+
 require('arctgx.lazy').setupOnLoad('dap', function ()
   local function skipDisplayingVariable(variable, buf)
     local filetype = vim.bo[buf].filetype
@@ -32,8 +34,8 @@ require('arctgx.lazy').setupOnLoad('dap', function ()
   }
 end)
 
-local augroup = vim.api.nvim_create_augroup('ArctgxDapVirtualText', {clear = true})
-vim.api.nvim_create_autocmd('User', {
+local augroup = api.nvim_create_augroup('ArctgxDapVirtualText', {clear = true})
+api.nvim_create_autocmd('User', {
   group = augroup,
   pattern = 'DAPClean',
   callback = function () require('nvim-dap-virtual-text.virtual_text').clear_virtual_text() end,

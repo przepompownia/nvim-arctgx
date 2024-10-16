@@ -1,7 +1,9 @@
+local api = vim.api
+
 local extension = {}
 
 local function newClassFromCodeAction(path)
-  vim.api.nvim_create_autocmd('LspNotify', {
+  api.nvim_create_autocmd('LspNotify', {
     once = true,
     pattern = path,
     callback = function (args)
@@ -25,7 +27,7 @@ local function newClassFromCodeAction(path)
 end
 
 function extension.classNew()
-  local bufname = vim.api.nvim_buf_get_name(0)
+  local bufname = api.nvim_buf_get_name(0)
   vim.ui.input({
     prompt = 'File: ',
     completion = 'file',
@@ -91,8 +93,8 @@ function extension.clientConfig(file, rootPatterns)
   }
 end
 
-vim.api.nvim_create_user_command('PhpactorLSPDumpConfig', extension.dumpConfig, {nargs = 0})
-vim.api.nvim_create_user_command('PhpactorLSPServerStatus', extension.status, {nargs = 0})
-vim.api.nvim_create_user_command('PhpactorLSPServerReindex', extension.reindex, {nargs = 0})
+api.nvim_create_user_command('PhpactorLSPDumpConfig', extension.dumpConfig, {nargs = 0})
+api.nvim_create_user_command('PhpactorLSPServerStatus', extension.status, {nargs = 0})
+api.nvim_create_user_command('PhpactorLSPServerReindex', extension.reindex, {nargs = 0})
 
 return extension

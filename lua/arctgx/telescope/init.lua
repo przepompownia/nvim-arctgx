@@ -93,7 +93,7 @@ function extension.grep(cmd, root, query)
     vimgrep_arguments = cmd,
     prompt_title = cmd:status(),
   }
-  -- vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<C-\\><C-N>", true, true, true), "v", true)
+
   opts.finder = require('telescope.finders').new_job(function (prompt)
     if not prompt or prompt == '' then
       return nil

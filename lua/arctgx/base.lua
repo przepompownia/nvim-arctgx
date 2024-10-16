@@ -78,13 +78,13 @@ do
   ---@param buf integer?
   ---@return string
   function base.getBufferCwd(buf)
-    buf = buf or vim.api.nvim_get_current_buf()
+    buf = buf or api.nvim_get_current_buf()
     local callback = bufferCwdCallback[buf]
     if nil ~= callback then
       return callback()
     end
 
-    local ok, fileDir = pcall(vim.uv.fs_realpath, vim.api.nvim_buf_get_name(buf))
+    local ok, fileDir = pcall(vim.uv.fs_realpath, api.nvim_buf_get_name(buf))
     if not ok or fileDir == nil then
       return assert(vim.uv.cwd())
     end
@@ -99,7 +99,7 @@ end
 
 -- from @zeertzjq https://github.com/neovim/neovim/issues/14157#issuecomment-1320787927
 --- @type base.setOperatorfunc
-base.setOperatorfunc = vim.fn[vim.api.nvim_exec([[
+base.setOperatorfunc = vim.fn[api.nvim_exec([[
   func s:set_opfunc(val)
     let &opfunc = a:val
   endfunc
@@ -113,7 +113,7 @@ function base.onColorschemeReady(augroupName, cb)
   local colorschemeReadyOptions = {'background', 'termguicolors'}
   local function isColorschemeReady()
     return vim.iter(colorschemeReadyOptions):all(function (option)
-      return vim.api.nvim_get_option_info2(option, {}).was_set
+      return api.nvim_get_option_info2(option, {}).was_set
     end)
   end
 
@@ -121,15 +121,15 @@ function base.onColorschemeReady(augroupName, cb)
     return
   end
 
-  local augroup = vim.api.nvim_create_augroup(augroupName, {clear = true})
+  local augroup = api.nvim_create_augroup(augroupName, {clear = true})
 
-  vim.api.nvim_create_autocmd('OptionSet', {
+  api.nvim_create_autocmd('OptionSet', {
     group = augroup,
     nested = true,
     pattern = colorschemeReadyOptions,
     callback = function ()
       if isColorschemeReady() and true == cb() then
-        vim.api.nvim_del_augroup_by_id(augroup)
+        api.nvim_del_augroup_by_id(augroup)
       end
     end,
   })
@@ -159,14 +159,14 @@ function base.insertWithInitialIndentation(modeCharacter)
 end
 
 function base.displayInWindow(title, filetype, contents)
-  local buf = vim.api.nvim_create_buf(false, true)
+  local buf = api.nvim_create_buf(false, true)
 
   vim.treesitter.start(buf, filetype)
   vim.bo[buf].bufhidden = 'wipe'
   local lines = vim.split(contents, '\n')
-  vim.api.nvim_buf_set_lines(buf, 0, -1, false, lines)
+  api.nvim_buf_set_lines(buf, 0, -1, false, lines)
 
-  local win = vim.api.nvim_open_win(buf, true, {
+  local win = api.nvim_open_win(buf, true, {
     relative = 'editor',
     width = 120,
     height = #lines,

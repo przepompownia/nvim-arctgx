@@ -1,3 +1,5 @@
+local api = vim.api
+
 local extension = {}
 
 --- @type TSNode?
@@ -15,8 +17,8 @@ local function selectNode(node)
     col2 = #vim.fn.getline(row2 + 1) + 1
   end
 
-  vim.api.nvim_buf_set_mark(0, '<', row1 + 1, col1, {})
-  vim.api.nvim_buf_set_mark(0, '>', row2 + 1, col2 - 1, {})
+  api.nvim_buf_set_mark(0, '<', row1 + 1, col1, {})
+  api.nvim_buf_set_mark(0, '>', row2 + 1, col2 - 1, {})
   vim.cmd.normal('gv')
 end
 

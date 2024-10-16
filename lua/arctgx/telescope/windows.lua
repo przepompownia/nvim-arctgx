@@ -1,10 +1,12 @@
+local api = vim.api
+
 --- @class arctgx.telescope.windows
 local Windows = {}
 
 local function listBufferWindowPairs()
   local result = {}
-  for _, winId in ipairs(vim.api.nvim_list_wins()) do
-    local bufname = vim.api.nvim_buf_get_name(vim.api.nvim_win_get_buf(winId))
+  for _, winId in ipairs(api.nvim_list_wins()) do
+    local bufname = api.nvim_buf_get_name(api.nvim_win_get_buf(winId))
     result[# result + 1] = {
       bufname = bufname,
       winId = winId,
@@ -62,7 +64,7 @@ function Windows.list(opts)
         if nil == selection then
           return
         end
-        vim.api.nvim_set_current_win(selection.value.winId)
+        api.nvim_set_current_win(selection.value.winId)
       end)
       return true
     end,
