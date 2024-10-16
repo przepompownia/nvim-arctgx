@@ -92,7 +92,7 @@ local abstractKeymaps = {
   langDecrementSelection = {lhs = '<A-[>', desc = 'Decrement selection based on language'},
 
   langShowSignatureHelp = {lhs = {i = '<C-Bslash>,', n = '<Leader>ish'}, desc = 'Show signature help'},
-  langFindReferences = {lhs = 'grr', desc = 'Find references'},
+  langFindReferences = {lhs = {'gr', 'grr'}, desc = 'Find references'},
   langRenameSymbol = {lhs = '<Leader>r', desc = 'Rename symbol'},
   langCodeAction = {lhs = '<Leader>ca', desc = 'Code action'},
 }
