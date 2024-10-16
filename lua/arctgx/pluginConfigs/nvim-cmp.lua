@@ -119,6 +119,11 @@ cmp.setup({
       -- max_width = 80,
     -- },
   },
+  view = {
+    entries = {
+      follow_cursor = true,
+    },
+  },
 })
 
 keymap.set('i', 'langTriggerCompletion', cmp.complete, {})
