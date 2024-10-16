@@ -41,7 +41,6 @@ local function showDocumentation(buf, clientId)
   -- vim.lsp.util.convert_input_to_markdown_lines, documentation.kind <> markdown?
   vim.treesitter.start(winData.bufnr, 'markdown')
   vim.wo[winData.winid].conceallevel = 3
-  -- vim.print(vim.wo[winData.winid].smoothscroll)
 end
 
 function completion.hasWordsBefore()
