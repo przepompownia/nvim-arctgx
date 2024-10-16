@@ -86,7 +86,7 @@ require('arctgx.lazy').setupOnLoad('nvim-tree', function ()
           if nil == node or nil == node.nodes then
             return api.nvim_feedkeys(vim.keycode('<Right>'), 'n', false)
           end
-          require('nvim-tree.lib').expand_or_collapse(node)
+          node:expand_or_collapse()
         end,
         {buffer = bufnr, desc = 'Expand directory node or move right'}
       )
