@@ -1,4 +1,3 @@
-vim.g.mapleader = ','
 vim.go.mouse = 'a'
 vim.go.mousemodel = 'extend'
 vim.opt.backspace:append('nostop')
