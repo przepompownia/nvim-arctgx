@@ -16,6 +16,7 @@ api.nvim_create_autocmd('VimEnter', {
 api.nvim_create_autocmd('UIEnter', {
   once = true,
   callback = function ()
+    vim.o.cmdheight = 0
     if 1 == vim.fn.has('gui_running') then
       require 'arctgx.ginit'
     end
