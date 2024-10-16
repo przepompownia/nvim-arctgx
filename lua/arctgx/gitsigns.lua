@@ -40,7 +40,7 @@ gitsigns.configuration = {
         api.nvim_feedkeys(']c', 'n', false)
         return '<Ignore>'
       end
-      vim.schedule(function () gs.next_hunk() end)
+      vim.schedule(function () gs.nav_hunk('next', {preview = true}) end)
       return '<Ignore>'
     end), {expr = true})
 
@@ -49,7 +49,7 @@ gitsigns.configuration = {
         api.nvim_feedkeys('[c', 'n', false)
         return '<Ignore>'
       end
-      vim.schedule(function () gs.prev_hunk() end)
+      vim.schedule(function () gs.nav_hunk('prev', {preview = true}) end)
       return '<Ignore>'
     end), {expr = true})
 
