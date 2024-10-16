@@ -36,6 +36,7 @@ vim.go.foldlevelstart = 99
 vim.wo.foldcolumn = 'auto'
 vim.wo.number = true
 vim.wo.scrolloff = 10
+vim.wo.smoothscroll = true
 vim.wo.relativenumber = true
 vim.wo.numberwidth = 1
 vim.go.winminheight = 0
