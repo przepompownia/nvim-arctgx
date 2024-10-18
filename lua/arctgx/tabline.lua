@@ -19,6 +19,10 @@ function tabline.label(tabpage)
     return ' ' .. vim.fn.fnamemodify(bufname, ':t:r')
   end
 
+  if vim.b.man_sect then
+    return '🔧' .. vim.fn.fnamemodify(bufname, ':t')
+  end
+
   return vim.fn.fnamemodify(bufname, ':~:.:r')
 end
 
