@@ -148,13 +148,9 @@ local ctrlF = api.nvim_replace_termcodes('<C-f>', true, false, true)
 
 --- @param modeCharacter 'a'|'i'
 function base.insertWithInitialIndentation(modeCharacter)
-  api.nvim_feedkeys(modeCharacter, 'n', false)
+  local keys = ('%s%s'):format(modeCharacter, ('' ~= vim.opt.indentexpr:get()) and ctrlF or '')
 
-  if '' == vim.opt.indentexpr:get() then
-    return
-  end
-
-  api.nvim_feedkeys(ctrlF, 'n', false)
+  api.nvim_feedkeys(keys, 'n', false)
 end
 
 function base.displayInWindow(title, filetype, contents)
