@@ -38,16 +38,14 @@ function tabline.prepare()
   local tabpages = api.nvim_list_tabpages()
 
   for tabnr, tabpage in ipairs(tabpages) do
-    s = s .. ((tabpage == currentTabpage) and '%#TabLineSel#' or '%#TabLine#')
-    s = s .. '%' .. tabnr
-    s = s .. "@v:lua.require'arctgx.tabline'.click@"
-    -- s = s .. " %{v:lua.require'arctgx.tabline'.label(" .. (tabpage) .. ')} '
-    s = s .. (' %s '):format(tabline.label(tabpage))
+    s = s .. ("%s%%%s@v:lua.require'arctgx.tabline'.click@ %s "):format(
+      (tabpage == currentTabpage) and '%#TabLineSel#' or '%#TabLine#',
+      tabnr,
+      tabline.label(tabpage)
+    )
   end
 
-  s = s .. '%#TabLineFill#%T'
-
-  return s
+  return s .. '%#TabLineFill#%T'
 end
 
 return tabline
