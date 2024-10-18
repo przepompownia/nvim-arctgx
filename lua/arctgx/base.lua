@@ -144,11 +144,8 @@ function base.withAppendedToKeyword(buffer, additionalChars, callback)
   vim.bo[buffer].iskeyword = isKeyword
 end
 
+--- @param modeCharacter 'a'|'i'
 function base.insertWithInitialIndentation(modeCharacter)
-  vim.validate {modeCharacter = {modeCharacter, function (char)
-    return vim.tbl_contains({'a', 'i'}, char)
-  end}}
-
   api.nvim_feedkeys(modeCharacter, 'n', false)
 
   if '' == vim.opt.indentexpr:get() then
