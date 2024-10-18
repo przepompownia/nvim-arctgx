@@ -144,6 +144,8 @@ function base.withAppendedToKeyword(buffer, additionalChars, callback)
   vim.bo[buffer].iskeyword = isKeyword
 end
 
+local ctrlF = api.nvim_replace_termcodes('<C-f>', true, false, true)
+
 --- @param modeCharacter 'a'|'i'
 function base.insertWithInitialIndentation(modeCharacter)
   api.nvim_feedkeys(modeCharacter, 'n', false)
@@ -152,7 +154,7 @@ function base.insertWithInitialIndentation(modeCharacter)
     return
   end
 
-  api.nvim_feedkeys(api.nvim_replace_termcodes('<C-f>', true, false, true), 'n', false)
+  api.nvim_feedkeys(ctrlF, 'n', false)
 end
 
 function base.displayInWindow(title, filetype, contents)
