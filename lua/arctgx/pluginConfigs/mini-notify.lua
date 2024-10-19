@@ -11,7 +11,7 @@ end
 
 local notify = require('mini.notify')
 
-local level_priority = { ERROR = 6, WARN = 5, INFO = 4, DEBUG = 3, TRACE = 2, OFF = 1 }
+local level_priority = {ERROR = 6, WARN = 5, INFO = 4, DEBUG = 3, TRACE = 2, OFF = 1}
 
 local function sort(notifArr)
   local res = vim.deepcopy(notifArr)
@@ -33,6 +33,6 @@ notify.setup({
   },
   lsp_progress = {
     duration_last = 1000,
-  }
+  },
 })
 vim.notify = notify.make_notify()
