@@ -23,26 +23,30 @@ function lsp.util.open_floating_preview(contents, syntax, opts, ...)
   return origUtilOpenFloatingPreview(contents, syntax, opts, ...)
 end
 
-lsp.handlers[lsp.protocol.Methods.textDocument_references] = lsp.with(
-  lsp.handlers[lsp.protocol.Methods.textDocument_references],
-  {
-    on_list = function (params)
-      local client = assert(lsp.get_client_by_id(params.context.client_id))
-      if #params.items == 1 then
-        lsp.util.jump_to_location(params.items[1].user_data, client.offset_encoding, true)
-        return
-      end
-      vim.fn.setqflist({}, ' ', {title = 'References', items = params.items, context = params.context})
-      api.nvim_command('botright copen')
-    end,
-  }
-)
+local function onList(params)
+  if #params.items == 1 then
+    local item = params.items[1]
+    local b = item.bufnr or vim.fn.bufadd(item.filename)
+    vim.bo[b].buflisted = true
+    local w = vim.fn.win_findbuf(b)[1] or 0
+    api.nvim_win_set_buf(w, b)
+    api.nvim_win_set_cursor(w, {item.lnum, item.col - 1})
+    vim._with({win = w}, function ()
+      vim.cmd('normal! zv')
+    end)
+    return
+  end
+
+  vim.fn.setqflist({}, ' ', {title = 'References', items = params.items, context = params.context})
+  api.nvim_command('botright copen')
+end
 
 local augroup = api.nvim_create_augroup('LspDocumentHighlight', {clear = true})
 api.nvim_create_autocmd('LspAttach', {
   group = api.nvim_create_augroup('UserLspConfig', {}),
   callback = function (ev)
     local opts = {buffer = ev.buf}
+    local client = lsp.get_client_by_id(ev.data.client_id)
 
     keymap.set('n', 'langGoToDefinition', lsp.buf.definition, opts)
     keymap.set('n', 'langGoToDefinitionInPlace', lsp.buf.definition, opts)
@@ -52,7 +56,7 @@ api.nvim_create_autocmd('LspAttach', {
     keymap.set('n', 'langShowSignatureHelp', lsp.buf.signature_help, opts)
     keymap.set('n', 'langFindDocumentSymbols', lsp.buf.document_symbol, opts)
     keymap.set('n', 'langFindReferences', function ()
-      lsp.buf.references {includeDeclaration = false}
+      lsp.buf.references({includeDeclaration = false}, {on_list = onList})
     end, opts)
     keymap.set('n', 'langWorkspaceFolderAdd', lsp.buf.add_workspace_folder, opts)
     keymap.set('n', 'langWorkspaceFolderRemove', lsp.buf.remove_workspace_folder, opts)
@@ -64,7 +68,6 @@ api.nvim_create_autocmd('LspAttach', {
     end, opts)
     keymap.set({'n', 'v'}, 'langApplyAllformatters', function () return lsp.buf.format({async = true}) end, opts)
 
-    local client = lsp.get_client_by_id(ev.data.client_id)
     if client.server_capabilities.documentHighlightProvider then
       api.nvim_create_autocmd({'CursorMoved', 'CursorMovedI'}, {
         group = augroup,
@@ -120,7 +123,8 @@ local function willRenameFilesHandler(response)
   for clientId, clientResponse in pairs(response) do
     local client = lsp.get_client_by_id(clientId)
     if nil == client then
-      vim.notify(('Client %s does not exist'):format(clientId), vim.log.levels.ERROR, {title = 'LSP: workspace/willRenameFiles'})
+      vim.notify(('Client %s does not exist'):format(clientId), vim.log.levels.ERROR,
+        {title = 'LSP: workspace/willRenameFiles'})
 
       return
     end
