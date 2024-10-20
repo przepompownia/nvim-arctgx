@@ -3,13 +3,17 @@
     "prefix": "finish",
     "body": ["if true then return end"]
   },
-  "lvt": {
+  "print(debug.traceback())": {
     "prefix": "lvt",
     "body": ["print(debug.traceback())"]
   },
   "print(vim.inspect())": {
     "prefix": "lvd",
     "body": ["print(vim.inspect($1))"]
+  },
+  "print(vim.notify())": {
+    "prefix": "vn",
+    "body": ["print(vim.notify($1))"]
   },
   "table escaped element": {
     "prefix": "[]",
