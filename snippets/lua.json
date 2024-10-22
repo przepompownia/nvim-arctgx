@@ -11,6 +11,10 @@
     "prefix": "lvd",
     "body": ["print(vim.inspect($1))"]
   },
+  "print(vim.inspect())": {
+    "prefix": "lvn",
+    "body": ["vim.notify('\\n' .. vim.inspect($1))"]
+  },
   "print(vim.notify())": {
     "prefix": "vn",
     "body": ["print(vim.notify($1))"]
