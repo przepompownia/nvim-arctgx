@@ -141,6 +141,29 @@ function completion.init()
     )
   end
 
+  local tabMaps = {
+    ['<Tab>'] = {pum = '<C-n>', snippetJump = 1},
+    ['<S-Tab>'] = {pum = '<C-p>', snippetJump = -1},
+  }
+
+  for key, params in pairs(tabMaps) do
+    vim.keymap.set({'i'}, key, function ()
+      if vim.fn.pumvisible() == 1 then
+        return params.pum
+      elseif vim.snippet.active({direction = params.snippetJump}) then
+        vim.snippet.jump(params.snippetJump)
+        return
+      elseif completion.hasWordsBefore() then
+        vim.lsp.completion.trigger()
+      else
+        return key
+      end
+    end, {
+      expr = true,
+      silent = true,
+    })
+  end
+
   vim.keymap.set({'i'}, '<CR>', function ()
     if vim.fn.pumvisible() == 0 then
       return autopairCR()
@@ -151,36 +174,6 @@ function completion.init()
     end
     return keycodes.ce .. autopairCR()
   end, {expr = true, noremap = true})
-
-  vim.keymap.set({'i', 's'}, '<Tab>', function ()
-    if vim.snippet.active({direction = 1}) then
-      return '<cmd>lua vim.snippet.jump(' .. 1 .. ')<cr>'
-    elseif vim.fn.pumvisible() == 1 then
-      return '<C-n>'
-    elseif completion.hasWordsBefore() then
-      vim.lsp.completion.trigger()
-    else
-      return '<Tab>'
-    end
-  end, {
-    expr = true,
-    silent = true,
-  })
-
-  vim.keymap.set({'i', 's'}, '<S-Tab>', function ()
-    if vim.snippet.active({direction = -1}) then
-      return '<cmd>lua vim.snippet.jump(-1)<cr>'
-    elseif vim.fn.pumvisible() == 1 then
-      return '<C-p>'
-    elseif completion.hasWordsBefore() then
-      vim.lsp.completion.trigger()
-    else
-      return '<S-Tab>'
-    end
-  end, {
-    expr = true,
-    silent = true,
-  })
 end
 
 return completion
