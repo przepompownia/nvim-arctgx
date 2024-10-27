@@ -66,6 +66,21 @@ local function autotrigger(triggerCharacters)
   -- vim.notify('Triggering completion ' .. api.nvim_get_current_line())
 end
 
+local keycodes = {
+  cr = vim.keycode('<CR>'),
+  cy = vim.keycode('<C-y>'),
+  ce = vim.keycode('<C-e>'),
+}
+
+local function autopairCR()
+  return keycodes.cr
+end
+
+---@param fn fun()
+function completion.setAutopairCR(fn)
+  autopairCR = fn
+end
+
 function completion.init()
   api.nvim_create_autocmd('LspAttach', {
     group = completionAugroup,
@@ -113,7 +128,6 @@ function completion.init()
   local pumMaps = {
     ['<Down>'] = '<C-n>',
     ['<Up>'] = '<C-p>',
-    ['<CR>'] = '<C-y>',
   }
 
   for insertKmap, pumKmap in pairs(pumMaps) do
@@ -126,6 +140,17 @@ function completion.init()
       {expr = true}
     )
   end
+
+  vim.keymap.set({'i'}, '<CR>', function ()
+    if vim.fn.pumvisible() == 0 then
+      return autopairCR()
+    end
+
+    if vim.fn.complete_info({'selected'}).selected ~= -1 then
+      return keycodes.cy
+    end
+    return keycodes.ce .. autopairCR()
+  end, {expr = true, noremap = true})
 
   vim.keymap.set({'i', 's'}, '<Tab>', function ()
     if vim.snippet.active({direction = 1}) then
