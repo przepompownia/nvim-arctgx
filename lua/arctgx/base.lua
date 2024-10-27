@@ -198,6 +198,14 @@ function base.getPluginDir()
   return vim.uv.fs_realpath(modulePath .. '../../')
 end
 
+-- Prevent from triggering on api.nvim_get_option_value('option', { filetype = 'lua' })
+---@param args {buf: integer, match: string, file: string}
+function base.isDummyFileTypeBuffer(args)
+  local opts = vim.bo[args.buf]
+  -- https://github.com/neovim/neovim/blob/25b53b593ef6f229fbec5b3dc205a7539579d13a/src/nvim/api/options.c#L103-L131
+  return args.file == args.match and opts.buftype == 'nofile' and opts.bufhidden == 'hide' and opts.swapfile == false and opts.modeline == false
+end
+
 function dump(value)
   local valueString = vim.inspect(value):gsub('<function (%d+)>', '"function %1"'):gsub('<%d+>', '')
   base.displayInWindow('Dump', 'lua', valueString)

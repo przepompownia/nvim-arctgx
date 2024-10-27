@@ -108,6 +108,10 @@ api.nvim_create_autocmd('FileType', {
   pattern = {'lua'},
   group = api.nvim_create_augroup('arctgx.lsp.clients.luals', {}),
   callback = function (args)
+    if base.isDummyFileTypeBuffer(args) then
+      return
+    end
+
     lsp.start(
       require('arctgx.lsp.serverConfigs.luaLs').clientConfig(args.file),
       {
