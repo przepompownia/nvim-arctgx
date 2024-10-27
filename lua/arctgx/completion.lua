@@ -125,12 +125,12 @@ function completion.init()
 
   vim.go.completeopt = 'noinsert,menuone,fuzzy'
 
-  local pumMaps = {
+  local arrowMaps = {
     ['<Down>'] = '<C-n>',
     ['<Up>'] = '<C-p>',
   }
 
-  for insertKmap, pumKmap in pairs(pumMaps) do
+  for insertKmap, pumKmap in pairs(arrowMaps) do
     vim.keymap.set(
       {'i'},
       insertKmap,
