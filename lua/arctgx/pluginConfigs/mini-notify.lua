@@ -26,6 +26,9 @@ end
 notify.setup({
   content = {
     sort = sort,
+    format = function (notification)
+      return notification.msg
+    end
   },
   window = {
     config = winConfig,
