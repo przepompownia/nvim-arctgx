@@ -86,7 +86,7 @@ function completion.init()
     group = completionAugroup,
     callback = function (args)
       local clientId = args.data.client_id
-      local client = assert(vim.lsp.get_client_by_id(clientId))
+      local client = assert(vim.lsp.get_clients({id = clientId})[1])
       local triggerCharacters = vim.tbl_get(
         client,
         'server_capabilities',

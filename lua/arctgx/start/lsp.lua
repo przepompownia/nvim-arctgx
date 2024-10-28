@@ -46,7 +46,7 @@ api.nvim_create_autocmd('LspAttach', {
   group = api.nvim_create_augroup('UserLspConfig', {}),
   callback = function (ev)
     local opts = {buffer = ev.buf}
-    local client = lsp.get_client_by_id(ev.data.client_id)
+    local client = lsp.get_clients({id = ev.data.client_id})[1]
 
     keymap.set('n', 'langGoToDefinition', lsp.buf.definition, opts)
     keymap.set('n', 'langGoToDefinitionInPlace', lsp.buf.definition, opts)
@@ -125,7 +125,7 @@ api.nvim_create_autocmd('FileType', {
 
 local function willRenameFilesHandler(response)
   for clientId, clientResponse in pairs(response) do
-    local client = lsp.get_client_by_id(clientId)
+    local client = lsp.get_clients({id = clientId})[1]
     if nil == client then
       vim.notify(('Client %s does not exist'):format(clientId), vim.log.levels.ERROR,
         {title = 'LSP: workspace/willRenameFiles'})

@@ -8,7 +8,7 @@ local function newClassFromCodeAction(path)
     pattern = path,
     callback = function (args)
       local request = args.data
-      local client = assert(vim.lsp.get_client_by_id(request.client_id))
+      local client = assert(vim.lsp.get_clients({id = request.client_id})[1])
       if client.name ~= 'phpactor'
         or request.method ~= vim.lsp.protocol.Methods.textDocument_didOpen
         or request.params.textDocument.uri ~= vim.uri_from_bufnr(args.buf)
