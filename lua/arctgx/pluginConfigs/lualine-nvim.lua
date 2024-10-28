@@ -51,6 +51,10 @@ require('lualine').setup({
     },
     lualine_x = {
       function ()
+        local rec = vim.fn.reg_recording()
+        return #rec == 0 and '' or ('%%#@error#🖭 %s%%#lualine_z_4_normal#'):format(rec)
+      end,
+      function ()
         if not vim.v.this_session then
           return
         end
