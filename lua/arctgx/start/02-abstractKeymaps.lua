@@ -11,6 +11,7 @@ local abstractKeymaps = {
   browseOldfiles = {lhs = '<Leader><F4>', desc = 'Browse oldfiles'},
   browseGitBranches = {lhs = {'<S-F4>', '<F16>'}, desc = 'Browse git branches'},
   browseCommandHistory = {lhs = '<Leader>;', desc = 'Browse command history'},
+  browseNotificationHistory = {lhs = '<Leader>nh', desc = 'Browse notification history'},
   filesGit = {lhs = '<F11>', desc = 'Pick files from git repo'},
   filesAll = {lhs = {'<S-F11>', '<F23>'}, desc = 'Pick all files'},
   grepGit = {lhs = '<F12>', desc = 'Pick by git grep'},

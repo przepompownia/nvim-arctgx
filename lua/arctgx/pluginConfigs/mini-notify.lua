@@ -51,4 +51,4 @@ local function showHistory()
   notify.config.content.format = rawMessage
 end
 
-vim.keymap.set('n', '<Leader>nh', showHistory)
+require('arctgx.vim.abstractKeymap').set('n', 'browseNotificationHistory', showHistory)
