@@ -23,12 +23,16 @@ local function sort(notifArr)
   return res
 end
 
+local defaultFormat = notify.config.content.format
+
+local function rawMessage(notification)
+  return notification.msg
+end
+
 notify.setup({
   content = {
     sort = sort,
-    format = function (notification)
-      return notification.msg
-    end
+    format = rawMessage
   },
   window = {
     config = winConfig,
@@ -38,4 +42,13 @@ notify.setup({
     duration_last = 1000,
   },
 })
+
 vim.notify = notify.make_notify()
+
+local function showHistory()
+  notify.config.content.format = defaultFormat
+  notify.show_history()
+  notify.config.content.format = rawMessage
+end
+
+vim.keymap.set('n', '<Leader>nh', showHistory)
