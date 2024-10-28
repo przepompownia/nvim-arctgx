@@ -54,7 +54,6 @@ api.nvim_create_autocmd('LspAttach', {
     keymap.set('n', 'langGoToImplementation', lsp.buf.implementation, opts)
     keymap.set('n', 'langFindWorkspaceSymbols', lsp.buf.workspace_symbol, opts)
     keymap.set('n', 'langShowSignatureHelp', lsp.buf.signature_help, opts)
-    keymap.set('n', 'langFindDocumentSymbols', lsp.buf.document_symbol, opts)
     keymap.set('n', 'langFindReferences', function ()
       lsp.buf.references({includeDeclaration = false}, {on_list = onList})
     end, opts)
