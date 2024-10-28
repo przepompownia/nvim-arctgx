@@ -75,7 +75,7 @@ local abstractKeymaps = {
   fileTreeFocus = {lhs = '<Leader>m', desc = 'File tree: focus current buffer'},
   langGoToDefinition = {lhs = {'<C-]>', 'gd', '<C-LeftMouse>', 'g<LeftMouse>'}, desc = 'Go to definition'},
   langGoToDefinitionInPlace = {lhs = {'gyd'}, desc = 'Go to definition in place'},
-  langPeekDefinition = {lhs = {'gD'}, desc = 'Show definition in float window'},
+  -- langPeekDefinition = {lhs = {'gD'}, desc = 'Show definition in float window'},
   langGoToTypeDefinition = {lhs = 'gyD', desc = 'Go to type definition'},
   langGoToImplementation = {lhs = {'gi'}, desc = 'Find implementations'},
   langFindWorkspaceSymbols = {lhs = {'<S-F6>', '<F18>'}, desc = 'Find workspace symbols'},
