@@ -1,5 +1,6 @@
 local feline = require('feline')
 local viMode = require('feline.providers.vi_mode')
+local bo = vim.bo
 
 local colors = {
   bg        = '#4C566A',
@@ -151,7 +152,7 @@ feline.setup({
       },
       {
         {
-          provider = 'file_encoding',
+          provider = function () return ((bo.fenc ~= '' and bo.fenc) or vim.o.enc) end,
           hl = {
             bg = colors.bg,
             fg = colors.nord5,
@@ -173,7 +174,7 @@ feline.setup({
           },
         },
         {
-          provider = 'file_format',
+          provider = function () return (bo.fileformat ~= '' and bo.fileformat) or vim.o.fileformat end,
           hl = {
             bg = colors.bg,
             fg = colors.nord5,
@@ -195,7 +196,7 @@ feline.setup({
           },
         },
         {
-          provider = 'file_type',
+          provider =function () return bo.filetype end,
           hl = {
             bg = colors.bg,
             fg = colors.nord5,
