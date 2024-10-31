@@ -1,5 +1,5 @@
 local feline = require('feline')
-local vi_mode_utils = require('feline.providers.vi_mode')
+local viMode = require('feline.providers.vi_mode')
 
 local colors = {
   bg        = '#4C566A',
@@ -61,11 +61,13 @@ feline.setup({
           },
         },
         {
-          provider = 'vi_mode',
+          provider = function ()
+            return viMode.get_vim_mode()
+          end,
           hl = function ()
             return {
-              name = vi_mode_utils.get_mode_highlight_name(),
-              fg = vi_mode_utils.get_mode_color(),
+              name = viMode.get_mode_highlight_name(),
+              fg = viMode.get_mode_color(),
             }
           end,
           left_sep = ' ',
