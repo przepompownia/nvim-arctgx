@@ -4,11 +4,8 @@ local lspconfig = require('lspconfig')
 
 require('lspconfig.ui.windows').default_options.border = 'rounded'
 
-local capabilities = arctgxLsp.defaultClientCapabilities()
-
 lspconfig.jsonls.setup {
   filetypes = {'json', 'jsonc'},
-  capabilities = capabilities,
   settings = {
     json = {
       schemas = require('schemastore').json.schemas(),
@@ -16,9 +13,7 @@ lspconfig.jsonls.setup {
   },
 }
 
-lspconfig.lemminx.setup {
-  capabilities = capabilities,
-}
+lspconfig.lemminx.setup {}
 
 configs.phpactor = {
   default_config = vim.tbl_extend(
@@ -34,9 +29,7 @@ configs.phpactor = {
   ),
 }
 
-lspconfig.phpactor.setup {
-  capabilities = capabilities,
-}
+lspconfig.phpactor.setup {}
 
 lspconfig.yamlls.setup {
   capabilities = capabilities,
@@ -56,7 +49,6 @@ local servers = {
 }
 for _, lsp in ipairs(servers) do
   lspconfig[lsp].setup {
-    capabilities = capabilities,
     flags = {
       debounce_text_changes = 150,
     }

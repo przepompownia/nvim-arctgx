@@ -78,7 +78,6 @@ function extension.clientConfig(file, rootPatterns)
     -- trace = 'verbose',
     root_dir = require('arctgx.lsp').findRoot(file, rootPatterns or extension.defaultRootPatterns),
     log_level = vim.lsp.protocol.MessageType.Warning,
-    capabilities = require('arctgx.lsp').defaultClientCapabilities(),
     init_options = {
       ['indexer.enabled_watchers'] = {
         'lsp',

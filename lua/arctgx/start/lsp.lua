@@ -1,5 +1,6 @@
 local api = vim.api
 local lsp = vim.lsp
+local alsp = require('arctgx.lsp')
 local base = require('arctgx.base')
 
 local keymap = require('arctgx.vim.abstractKeymap')
@@ -11,9 +12,10 @@ local hlMap = {
   LspReferenceWrite = 'IdeReferenceWrite'
 }
 for key, value in pairs(hlMap) do
-  api.nvim_set_hl(require('arctgx.lsp').ns(), key, {link = value})
+  api.nvim_set_hl(alsp.ns(), key, {link = value})
 end
-api.nvim_set_hl_ns(require('arctgx.lsp').ns())
+api.nvim_set_hl_ns(alsp.ns())
+alsp.overrideClientCapabilities()
 
 local border = 'rounded'
 local origUtilOpenFloatingPreview = lsp.util.open_floating_preview

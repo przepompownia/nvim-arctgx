@@ -90,7 +90,6 @@ function M.clientConfig(file)
     single_file_support = true,
     log_level = vim.lsp.protocol.MessageType.Warning,
     on_init = M.onInit,
-    capabilities = lsp.defaultClientCapabilities(),
     on_attach = function (_, bufnr)
       local root = lsp.findRoot(vim.api.nvim_buf_get_name(bufnr), rootPatterns)
       if not vim.tbl_contains(vim.lsp.buf.list_workspace_folders(), root) then

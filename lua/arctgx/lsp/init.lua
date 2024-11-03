@@ -7,25 +7,29 @@ function M.ns()
 end
 
 --- @type lsp.ClientCapabilities?
-local capabilities = nil
+local clientCapabilities = nil
+
+local origMakeClientCap = vim.lsp.protocol.make_client_capabilities
 
 --- @param additionalCapabilities lsp.ClientCapabilities
 function M.extendClientCapabilities(additionalCapabilities)
-  capabilities = vim.tbl_deep_extend('force', capabilities, additionalCapabilities)
+  clientCapabilities = vim.tbl_deep_extend('force', clientCapabilities, additionalCapabilities)
 end
 
-function M.defaultClientCapabilities()
-  if capabilities then
-    return capabilities
+function M.overrideClientCapabilities()
+  vim.lsp.protocol.make_client_capabilities = function ()
+    if clientCapabilities then
+      return clientCapabilities
+    end
+
+    clientCapabilities = origMakeClientCap()
+
+    if clientCapabilities.workspace.didChangeWatchedFiles then
+      clientCapabilities.workspace.didChangeWatchedFiles.dynamicRegistration = true
+    end
+
+    return clientCapabilities
   end
-
-  capabilities = vim.lsp.protocol.make_client_capabilities()
-
-  if capabilities.workspace.didChangeWatchedFiles then
-    capabilities.workspace.didChangeWatchedFiles.dynamicRegistration = true
-  end
-
-  return capabilities
 end
 
 --- @param file string?
