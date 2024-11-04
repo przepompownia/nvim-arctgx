@@ -36,7 +36,7 @@ require('arctgx.lazy').setupOnLoad('dap', function ()
   local function splitToArgs(input)
     local result = {}
     for param in string.gmatch(input, '%S+') do
-      result[#result+1] = param
+      result[#result + 1] = param
     end
     return result
   end
@@ -164,6 +164,7 @@ require('arctgx.lazy').setupOnLoad('dap', function ()
     dapSessionStatus = 'T'
   end
 
+---@diagnostic disable-next-line: duplicate-set-field
   require('arctgx.widgets').debugHook = function ()
     return {
       session = dap.session() and true or false,

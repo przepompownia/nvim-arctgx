@@ -2,15 +2,17 @@ local api = vim.api
 local widgets = {}
 local ns = require('arctgx.lsp').ns()
 
-api.nvim_set_hl(ns, 'DebugWidgetInactive', {bg = '#434C5E', fg = '#E5E9F0'})
-api.nvim_set_hl(ns, 'DebugWidgetActive', {bg = '#434C5E', fg = '#bb0000'})
+api.nvim_set_hl(ns, 'DebugWidgetInactive', {bg = '#4C566A', fg = '#E5E9F0'})
+api.nvim_set_hl(ns, 'DebugWidgetActive', {bg = '#4C566A', fg = '#bb0000'})
 
 local function formatDebugWidget(hl, symbol, fallbackHl, status)
   return ('%%#%s#%s%%#%s#%s'):format(hl, symbol, fallbackHl, status)
 end
 
---- @type nil|fun(): {session: boolean, status: string}?
-widgets.debugHook = function () end
+--- @return {session: boolean, status: string}?
+local function debugHook() end
+
+widgets.debugHook = debugHook
 
 --- @param highlights {active: string, inactive: string, fallback: string}
 function widgets.renderDebug(highlights)
