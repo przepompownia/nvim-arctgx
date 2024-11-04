@@ -222,10 +222,11 @@ feline.setup({
             fg = colors.nord5,
           },
           left_sep = {
-            str = ' ',
+            str = '█ ',
             hl = {
               name = 'FelineFileInfoLeftSep',
-              bg = colors.bg,
+              bg = colors.nord3,
+              fg = colors.nord1,
             },
           },
         },
