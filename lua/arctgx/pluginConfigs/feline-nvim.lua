@@ -49,6 +49,7 @@ local function modeSep(char)
     str = char,
     hl = function ()
       return {
+        name = 'FelineModeSep' .. string.byte(char) .. require('feline.providers.vi_mode').get_mode_highlight_name(),
         fg = viMode.get_mode_color(),
         bg = colors.bg,
       }
@@ -59,6 +60,11 @@ end
 feline.setup({
   colors = {bg = colors.bg, fg = colors.fg},
   vi_mode_colors = viModeColors,
+  disable = {
+    buftypes = {
+      '^nofile$'
+    },
+  },
   components = {
     inactive = {
       {
@@ -66,6 +72,7 @@ feline.setup({
           provider = 'file_info',
           icon = '',
           hl = {
+            name = 'FelineFileInfo',
             bg = colors.bg,
             fg = colors.nord5,
           },
@@ -78,6 +85,7 @@ feline.setup({
         {
           provider = 'position',
           hl = {
+            name = 'FelinePosition',
             bg = colors.bg,
             fg = colors.nord5,
           },
@@ -94,6 +102,7 @@ feline.setup({
           end,
           hl = function ()
             return {
+              name = 'FelineModeHl' .. require('feline.providers.vi_mode').get_mode_highlight_name(),
               bg = viMode.get_mode_color(),
               fg = colors.nord1,
             }
@@ -103,18 +112,21 @@ feline.setup({
         {
           provider = 'git_branch',
           hl = {
+            name = 'FelineBranch',
             fg = colors.nord5,
             bg = colors.nord3,
           },
           left_sep = {
             str = ' ',
             hl = {
+              name = 'FelineBranchLeftSep',
               bg = colors.nord3,
             },
           },
           right_sep = {
             str = ' ',
             hl = {
+              name = 'FelineBranchRightSep',
               fg = 'NONE',
               bg = colors.nord3,
             },
@@ -123,6 +135,7 @@ feline.setup({
         {
           provider = 'git_diff_added',
           hl = {
+            name = 'FelineDiffAdded',
             fg = 'green',
             bg = colors.nord3,
           },
@@ -130,6 +143,7 @@ feline.setup({
         {
           provider = 'git_diff_changed',
           hl = {
+            name = 'FelineDiffChanged',
             fg = 'orange',
             bg = colors.nord3,
           },
@@ -137,12 +151,14 @@ feline.setup({
         {
           provider = 'git_diff_removed',
           hl = {
+            name = 'FelineDiffRemoved',
             fg = 'red',
             bg = colors.nord3,
           },
           right_sep = {
             str = ' ',
             hl = {
+              name = 'FelineDiffRemovedRightSep',
               fg = 'NONE',
               bg = colors.nord3,
             },
@@ -150,29 +166,47 @@ feline.setup({
         },
         {
           provider = 'diagnostic_errors',
-          hl = {fg = 'red'},
+          hl = {
+            name = 'FelineDiagErrors',
+            fg = 'red',
+          },
         },
         {
           provider = 'diagnostic_warnings',
-          hl = {fg = 'yellow'},
+          hl = {
+            name = 'FelineDiagWarnings',
+            fg = 'yellow',
+          },
         },
         {
           provider = 'diagnostic_hints',
-          hl = {fg = 'cyan'},
+          hl = {
+            name = 'FelineDiagHints',
+            fg = 'cyan',
+          },
         },
         {
           provider = 'diagnostic_info',
-          hl = {fg = 'skyblue'},
+          hl = {
+            name = 'FelineDiagInfo',
+            fg = 'skyblue',
+          },
         },
         {
           provider = 'file_info',
           icon = '',
           hl = {
+            name = 'FelineFileInfo',
             bg = colors.bg,
             fg = colors.nord5,
           },
-          left_sep = ' ',
-          right_sep = ' ',
+          left_sep = {
+            str = ' ',
+            hl = {
+              name = 'FelineFileInfoLeftSep',
+              bg = colors.bg,
+            },
+          },
         },
       },
       {
@@ -181,77 +215,70 @@ feline.setup({
         {
           provider = function () return ((bo.fenc ~= '' and bo.fenc) or vim.o.enc) end,
           hl = {
+            name = 'FelineFenc',
             bg = colors.bg,
             fg = colors.nord5,
           },
           left_sep = {
             str = ' ',
             hl = {
+              name = 'FelineFencLeftSep',
               bg = colors.bg,
             },
-          },
-          right_sep = {
-            {
-              str = ' ',
-              hl = {
-                bg = colors.bg,
-              },
-            },
-            ' ',
           },
         },
         {
           provider = function () return (bo.fileformat ~= '' and bo.fileformat) or vim.o.fileformat end,
           hl = {
+            name = 'FelineFileformat',
             bg = colors.bg,
             fg = colors.nord5,
           },
           left_sep = {
             str = ' ',
             hl = {
+              name = 'FelineFileformatLeftSep',
+              bg = colors.bg,
               bg = colors.bg,
             },
-          },
-          right_sep = {
-            {
-              str = ' ',
-              hl = {
-                bg = colors.bg,
-              },
-            },
-            ' ',
           },
         },
         {
           provider = function () return bo.filetype end,
           hl = {
+            name = 'FelineFileType',
             bg = colors.bg,
             fg = colors.nord5,
           },
           left_sep = {
             str = ' ',
             hl = {
+              name = 'FelineFileTypeLeftSep',
               bg = colors.bg,
             },
-          },
-          right_sep = {
-            {
-              str = ' ',
-              hl = {
-                bg = colors.bg,
-              },
-            },
-            ' ',
           },
         },
         {
           provider = 'line_percentage',
           hl = {
+            name = 'FelineLinePercentage',
             bg = colors.bg,
             fg = colors.nord5,
           },
-          left_sep = '  ',
-          right_sep = ' ',
+          left_sep = {
+            str = ' ',
+            hl = {
+              name = 'FelineLinePercentageLeftSep',
+              bg = colors.bg,
+            },
+          },
+          right_sep = {
+            str = ' ',
+            hl = {
+              name = 'FelineLinePercentageRightSep',
+              bg = colors.bg,
+            },
+          },
         },
         {
           provider = {
@@ -266,6 +293,7 @@ feline.setup({
           },
           hl = function ()
             return {
+              name = 'FelinePosItion' .. require('feline.providers.vi_mode').get_mode_highlight_name(),
               bg = viMode.get_mode_color(),
               fg = colors.nord1,
             }
