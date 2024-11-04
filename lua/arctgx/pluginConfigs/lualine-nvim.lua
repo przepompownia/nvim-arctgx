@@ -1,11 +1,3 @@
-local api = vim.api
-
-local nord = require('lualine.themes.nord')
-local ns = require('arctgx.lsp').ns()
-
-api.nvim_set_hl(ns, 'DebugWidgetInactive', {bg = nord.normal.c.bg, fg = nord.normal.c.fg})
-api.nvim_set_hl(ns, 'DebugWidgetActive', {bg = nord.normal.c.bg, fg = '#bb0000'})
-
 require('lualine').setup({
   extensions = {
     'man',
