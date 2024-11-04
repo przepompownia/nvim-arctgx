@@ -284,21 +284,21 @@ feline.setup({
           provider = 'line_percentage',
           hl = {
             name = 'FelineLinePercentage',
-            bg = colors.bg,
+            bg = colors.nord1,
             fg = colors.nord5,
           },
           left_sep = {
-            str = ' ',
+            str = ' █',
             hl = {
               name = 'FelineLinePercentageLeftSep',
-              bg = colors.bg,
+              fg = colors.nord1,
             },
           },
           right_sep = {
             str = ' ',
             hl = {
               name = 'FelineLinePercentageRightSep',
-              bg = colors.bg,
+              bg = colors.nord1,
             },
           },
         },
