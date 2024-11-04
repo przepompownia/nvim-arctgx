@@ -240,6 +240,15 @@ feline.setup({
             fg = colors.nord5,
           },
         },
+        {
+          provider = 'macro',
+          icon = ' ',
+          hl = {
+            name = 'FelineRecording',
+            bg = colors.bg,
+            fg = colors.nord13,
+          },
+        },
       },
       {
       },
