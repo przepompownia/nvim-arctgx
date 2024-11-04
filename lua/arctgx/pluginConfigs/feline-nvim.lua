@@ -254,13 +254,23 @@ feline.setup({
           right_sep = ' ',
         },
         {
-          provider = 'position',
-          hl = {
-            bg = colors.bg,
-            fg = colors.nord5,
+          provider = {
+            name = 'position',
+            opts = {
+              format = ' {line}:{col} ',
+              padding = {
+                line = 3,
+                col = 2,
+              },
+            },
           },
-          left_sep = '',
-          right_sep = ' ',
+          hl = function ()
+            return {
+              bg = viMode.get_mode_color(),
+              fg = colors.nord1,
+            }
+          end,
+          left_sep = modeSep(''),
         },
       },
     },
