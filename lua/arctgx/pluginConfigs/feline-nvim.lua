@@ -25,7 +25,40 @@ local colors = {
   nord13    = '#EBCB8B',
 }
 
+local viModeColors = {
+  ['NORMAL'] = colors.nord8,
+  ['OP'] = 'green',
+  ['CONFIRM'] = 'orange',
+  ['INSERT'] = colors.nord6,
+  ['VISUAL'] = colors.nord7,
+  ['LINES'] = colors.nord7,
+  ['BLOCK'] = colors.nord7,
+  ['REPLACE'] = colors.nord13,
+  ['V-REPLACE'] = colors.nord13,
+  ['ENTER'] = 'cyan',
+  ['MORE'] = 'cyan',
+  ['SELECT'] = colors.nord7,
+  ['COMMAND'] = 'green',
+  ['SHELL'] = 'green',
+  ['TERM'] = 'green',
+  ['NONE'] = colors.nord1,
+}
+
+local function modeSep(char)
+  return {
+    str = char,
+    hl = function ()
+      return {
+        fg = viMode.get_mode_color(),
+        bg = colors.bg,
+      }
+    end,
+  }
+end
+
 feline.setup({
+  colors = {bg = colors.bg, fg = colors.fg},
+  vi_mode_colors = viModeColors,
   components = {
     inactive = {
       {
@@ -56,22 +89,16 @@ feline.setup({
     active = {
       {
         {
-          provider = '▊ ',
-          hl = {
-            fg = colors.nord3,
-          },
-        },
-        {
           provider = function ()
-            return viMode.get_vim_mode()
+            return ' ' .. viMode.get_vim_mode() .. ' '
           end,
           hl = function ()
             return {
-              name = viMode.get_mode_highlight_name(),
-              fg = viMode.get_mode_color(),
+              bg = viMode.get_mode_color(),
+              fg = colors.nord1,
             }
           end,
-          left_sep = ' ',
+          right_sep = modeSep(''),
         },
         {
           provider = 'git_branch',
@@ -196,7 +223,7 @@ feline.setup({
           },
         },
         {
-          provider =function () return bo.filetype end,
+          provider = function () return bo.filetype end,
           hl = {
             bg = colors.bg,
             fg = colors.nord5,
