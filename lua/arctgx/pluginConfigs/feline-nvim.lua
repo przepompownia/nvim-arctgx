@@ -231,6 +231,15 @@ feline.setup({
             },
           },
         },
+        {
+          provider = 'search_count',
+          icon = ' ',
+          hl = {
+            name = 'FelineSearchCount',
+            bg = colors.bg,
+            fg = colors.nord5,
+          },
+        },
       },
       {
       },
