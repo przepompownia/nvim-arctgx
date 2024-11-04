@@ -134,13 +134,6 @@ feline.setup({
             fg = colors.nord5,
             bg = colors.nord1,
           },
-          left_sep = {
-            str = ' ',
-            hl = {
-              name = 'FelineBranchLeftSep',
-              bg = colors.nord1,
-            },
-          },
           right_sep = {
             str = ' ',
             hl = {
