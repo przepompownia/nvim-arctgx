@@ -1,6 +1,7 @@
 local feline = require('feline')
 local viMode = require('feline.providers.vi_mode')
 local bo = vim.bo
+local b = vim.b
 
 local colors = {
   bg        = '#4C566A',
@@ -61,7 +62,7 @@ end
 
 local function gitDiff(type)
   ---@diagnostic disable-next-line: undefined-field
-  local gsd = vim.b.gitsigns_status_dict
+  local gsd = b.gitsigns_status_dict
 
   if gsd and gsd[type] and gsd[type] > 0 then
     return tostring(gsd[type])
@@ -127,7 +128,7 @@ feline.setup({
         },
         {
           provider = function ()
-            return '  ' .. (vim.b.gitsigns_head or '[none]') .. ' '
+            return '  ' .. (b.gitsigns_head or '[none]') .. ' '
           end,
           hl = {
             name = 'FelineBranch',
@@ -260,7 +261,6 @@ feline.setup({
             str = ' ',
             hl = {
               name = 'FelineFileformatLeftSep',
-              bg = colors.bg,
               bg = colors.bg,
             },
           },
