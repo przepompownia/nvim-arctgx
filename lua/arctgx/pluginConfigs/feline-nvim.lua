@@ -51,10 +51,23 @@ local function modeSep(char)
       return {
         name = 'FelineModeSep' .. string.byte(char) .. require('feline.providers.vi_mode').get_mode_highlight_name(),
         fg = viMode.get_mode_color(),
-        bg = colors.bg,
+        bg = colors.nord1,
       }
     end,
   }
+end
+
+-- todo search index number
+
+local function gitDiff(type)
+  ---@diagnostic disable-next-line: undefined-field
+  local gsd = vim.b.gitsigns_status_dict
+
+  if gsd and gsd[type] and gsd[type] > 0 then
+    return tostring(gsd[type])
+  end
+
+  return ''
 end
 
 feline.setup({
@@ -110,17 +123,19 @@ feline.setup({
           right_sep = modeSep(''),
         },
         {
-          provider = 'git_branch',
+          provider = function ()
+            return '  ' .. (vim.b.gitsigns_head or '[none]') .. ' '
+          end,
           hl = {
             name = 'FelineBranch',
             fg = colors.nord5,
-            bg = colors.nord3,
+            bg = colors.nord1,
           },
           left_sep = {
             str = ' ',
             hl = {
               name = 'FelineBranchLeftSep',
-              bg = colors.nord3,
+              bg = colors.nord1,
             },
           },
           right_sep = {
@@ -128,39 +143,45 @@ feline.setup({
             hl = {
               name = 'FelineBranchRightSep',
               fg = 'NONE',
-              bg = colors.nord3,
+              bg = colors.nord1,
             },
           },
         },
         {
-          provider = 'git_diff_added',
+          provider = function ()
+            return ' +' .. gitDiff('added')
+          end,
           hl = {
             name = 'FelineDiffAdded',
             fg = 'green',
-            bg = colors.nord3,
+            bg = colors.nord1,
           },
         },
         {
-          provider = 'git_diff_changed',
+          provider = function ()
+            return ' ~' .. gitDiff('changed')
+          end,
           hl = {
             name = 'FelineDiffChanged',
             fg = 'orange',
-            bg = colors.nord3,
+            bg = colors.nord1,
           },
         },
         {
-          provider = 'git_diff_removed',
+          provider = function ()
+            return ' -' .. gitDiff('removed')
+          end,
           hl = {
             name = 'FelineDiffRemoved',
             fg = 'red',
-            bg = colors.nord3,
+            bg = colors.nord1,
           },
           right_sep = {
-            str = ' ',
+            str = ' ',
             hl = {
               name = 'FelineDiffRemovedRightSep',
-              fg = 'NONE',
-              bg = colors.nord3,
+              fg = colors.nord5,
+              bg = colors.nord1,
             },
           },
         },
@@ -169,6 +190,7 @@ feline.setup({
           hl = {
             name = 'FelineDiagErrors',
             fg = 'red',
+            bg = colors.nord1,
           },
         },
         {
@@ -176,6 +198,7 @@ feline.setup({
           hl = {
             name = 'FelineDiagWarnings',
             fg = 'yellow',
+            bg = colors.nord1,
           },
         },
         {
@@ -183,6 +206,7 @@ feline.setup({
           hl = {
             name = 'FelineDiagHints',
             fg = 'cyan',
+            bg = colors.nord1,
           },
         },
         {
@@ -190,6 +214,7 @@ feline.setup({
           hl = {
             name = 'FelineDiagInfo',
             fg = 'skyblue',
+            bg = colors.nord1,
           },
         },
         {
