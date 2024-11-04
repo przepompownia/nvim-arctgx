@@ -245,6 +245,20 @@ feline.setup({
       },
       {
         {
+          provider = function ()
+            return require('arctgx.widgets').renderDebug({
+              active = 'DebugWidgetActive',
+              inactive = 'DebugWidgetInactive',
+              fallback = 'FelineFileInfo',
+            })
+          end,
+          hl = {
+            name = 'FelineDebugWidget',
+            bg = colors.bg,
+            fg = colors.nord5,
+          },
+        },
+        {
           provider = function () return ((bo.fenc ~= '' and bo.fenc) or vim.o.enc) end,
           hl = {
             name = 'FelineFenc',
