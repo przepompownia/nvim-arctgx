@@ -1,5 +1,6 @@
 local feline = require('feline')
 local viMode = require('feline.providers.vi_mode')
+local widgets = require('arctgx.widgets')
 local bo = vim.bo
 local b = vim.b
 
@@ -57,8 +58,6 @@ local function modeSep(char)
     end,
   }
 end
-
--- todo search index number
 
 local function gitDiff(type)
   ---@diagnostic disable-next-line: undefined-field
@@ -173,45 +172,25 @@ feline.setup({
             fg = 'red',
             bg = colors.nord1,
           },
-          right_sep = {
-            str = ' ',
+        },
+        {
+          provider = function ()
+            return widgets.renderDiagnosticsSummary('Normal')
+          end,
+          enabled = function ()
+            return #vim.diagnostic.count(0, {}) > 0
+          end,
+          hl = {
+            name = 'FelineDiags',
+            bg = colors.nord1,
+          },
+          left_sep = {
+            str = '  ',
             hl = {
-              name = 'FelineDiffRemovedRightSep',
+              name = 'FelineDiagsLeftSep',
               fg = colors.nord5,
               bg = colors.nord1,
             },
-          },
-        },
-        {
-          provider = 'diagnostic_errors',
-          hl = {
-            name = 'FelineDiagErrors',
-            fg = 'red',
-            bg = colors.nord1,
-          },
-        },
-        {
-          provider = 'diagnostic_warnings',
-          hl = {
-            name = 'FelineDiagWarnings',
-            fg = 'yellow',
-            bg = colors.nord1,
-          },
-        },
-        {
-          provider = 'diagnostic_hints',
-          hl = {
-            name = 'FelineDiagHints',
-            fg = 'cyan',
-            bg = colors.nord1,
-          },
-        },
-        {
-          provider = 'diagnostic_info',
-          hl = {
-            name = 'FelineDiagInfo',
-            fg = 'skyblue',
-            bg = colors.nord1,
           },
         },
         {
@@ -255,7 +234,7 @@ feline.setup({
       {
         {
           provider = function ()
-            return require('arctgx.widgets').renderDebug({
+            return widgets.renderDebug({
               active = 'DebugWidgetActive',
               inactive = 'DebugWidgetInactive',
               fallback = 'FelineFileInfo',

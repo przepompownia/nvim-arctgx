@@ -27,4 +27,23 @@ function widgets.renderDebug(highlights)
   )
 end
 
+local function renderDiagnosticPart(symbol, hlName, value)
+  return value and ('%%#%s#%s %s'):format(hlName, symbol, value)
+end
+
+function widgets.renderDiagnosticsSummary(resetHl)
+  local count = vim.diagnostic.count(0, {})
+  local result =
+    (renderDiagnosticPart('', 'DiagnosticError', count[1]) or '')
+    .. (renderDiagnosticPart('󰀪', 'DiagnosticWarn', count[2]) or '')
+    .. (renderDiagnosticPart('', 'DiagnosticInfo', count[3]) or '')
+    .. (renderDiagnosticPart('', 'DiagnosticHint', count[4]) or '')
+
+  if '' == result then
+    return ''
+  end
+
+  return result .. ('%%#%s#'):format(resetHl or 'Normal')
+end
+
 return widgets
