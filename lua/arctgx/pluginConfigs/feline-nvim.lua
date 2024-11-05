@@ -123,14 +123,6 @@ feline.setup({
             fg = colors.nord5,
             bg = colors.nord1,
           },
-          right_sep = {
-            str = ' ',
-            hl = {
-              name = 'FelineBranchRightSep',
-              fg = 'NONE',
-              bg = colors.nord1,
-            },
-          },
         },
         {
           provider = function ()
