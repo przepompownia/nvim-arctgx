@@ -59,17 +59,6 @@ local function modeSep(char)
   }
 end
 
-local function gitDiff(type)
-  ---@diagnostic disable-next-line: undefined-field
-  local gsd = b.gitsigns_status_dict
-
-  if gsd and gsd[type] and gsd[type] > 0 then
-    return tostring(gsd[type])
-  end
-
-  return ''
-end
-
 feline.setup({
   colors = {bg = colors.bg, fg = colors.fg},
   vi_mode_colors = viModeColors,
@@ -127,7 +116,7 @@ feline.setup({
         },
         {
           provider = function ()
-            return '  ' .. (b.gitsigns_head or '[none]') .. ' '
+            return '  ' .. (b.gitsigns_head or '[none]')
           end,
           hl = {
             name = 'FelineBranch',
@@ -145,32 +134,22 @@ feline.setup({
         },
         {
           provider = function ()
-            return ' +' .. gitDiff('added')
+            return widgets.renderVcsSummary('Normal')
+          end,
+          enabled = function ()
+            return b.gitsigns_status ~= ''
           end,
           hl = {
-            name = 'FelineDiffAdded',
-            fg = 'green',
+            name = 'FelineVcs',
             bg = colors.nord1,
           },
-        },
-        {
-          provider = function ()
-            return ' ~' .. gitDiff('changed')
-          end,
-          hl = {
-            name = 'FelineDiffChanged',
-            fg = 'orange',
-            bg = colors.nord1,
-          },
-        },
-        {
-          provider = function ()
-            return ' -' .. gitDiff('removed')
-          end,
-          hl = {
-            name = 'FelineDiffRemoved',
-            fg = 'red',
-            bg = colors.nord1,
+          left_sep = {
+            str = '  ',
+            hl = {
+              name = 'FelineVcsLeftSep',
+              fg = colors.nord5,
+              bg = colors.nord1,
+            },
           },
         },
         {

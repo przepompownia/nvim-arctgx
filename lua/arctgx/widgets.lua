@@ -28,7 +28,25 @@ function widgets.renderDebug(highlights)
 end
 
 local function renderDiagnosticPart(symbol, hlName, value)
-  return value and ('%%#%s#%s %s'):format(hlName, symbol, value)
+  return value and ('%%#%s#%s%s'):format(hlName, symbol, value)
+end
+
+function widgets.renderVcsSummary(resetHl)
+  local status = vim.b.gitsigns_status_dict
+  if nil == status then
+    return ''
+  end
+
+  local result =
+    (renderDiagnosticPart('+', 'DiffAdd', status.added) or '')
+    .. (renderDiagnosticPart('~', 'DiagnosticWarn', status.changed) or '')
+    .. (renderDiagnosticPart('-', 'DiagnosticInfo', status.removed) or '')
+
+  if '' == result then
+    return ''
+  end
+
+  return result .. ('%%#%s#'):format(resetHl or 'Normal')
 end
 
 function widgets.renderDiagnosticsSummary(resetHl)
