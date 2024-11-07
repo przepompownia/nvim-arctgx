@@ -73,17 +73,10 @@ feline.setup({
         {
           provider = 'file_info',
           icon = '',
-          hl = {
-            name = 'FelineFileInfo',
-            bg = colors.bg,
-            fg = colors.nord5,
-          },
+          hl = {name = 'FelineFileInfo', bg = colors.bg, fg = colors.nord5},
           left_sep = {
             str = ' ',
-            hl = {
-              name = 'FelineFileInfoLeftSep',
-              bg = colors.bg,
-            },
+            hl = {name = 'FelineFileInfoLeftSep', bg = colors.bg},
           },
         },
       },
@@ -91,11 +84,7 @@ feline.setup({
       {
         {
           provider = 'position',
-          hl = {
-            name = 'FelinePosition',
-            bg = colors.bg,
-            fg = colors.nord5,
-          },
+          hl = {name = 'FelinePosition', bg = colors.bg, fg = colors.nord5},
         },
       },
     },
@@ -118,11 +107,7 @@ feline.setup({
           provider = function ()
             return '  ' .. (b.gitsigns_head or '[none]')
           end,
-          hl = {
-            name = 'FelineBranch',
-            fg = colors.nord5,
-            bg = colors.nord1,
-          },
+          hl = {name = 'FelineBranch', fg = colors.nord5, bg = colors.nord1},
         },
         {
           provider = function ()
@@ -131,17 +116,10 @@ feline.setup({
           enabled = function ()
             return b.gitsigns_status ~= ''
           end,
-          hl = {
-            name = 'FelineVcs',
-            bg = colors.nord1,
-          },
+          hl = {name = 'FelineVcs', bg = colors.nord1},
           left_sep = {
             str = '  ',
-            hl = {
-              name = 'FelineVcsLeftSep',
-              fg = colors.nord5,
-              bg = colors.nord1,
-            },
+            hl = {name = 'FelineVcsLeftSep', fg = colors.nord5, bg = colors.nord1},
           },
         },
         {
@@ -151,53 +129,30 @@ feline.setup({
           enabled = function ()
             return #vim.diagnostic.count(0, {}) > 0
           end,
-          hl = {
-            name = 'FelineDiags',
-            bg = colors.nord1,
-          },
+          hl = {name = 'FelineDiags', bg = colors.nord1},
           left_sep = {
             str = '  ',
-            hl = {
-              name = 'FelineDiagsLeftSep',
-              fg = colors.nord5,
-              bg = colors.nord1,
-            },
+            hl = {name = 'FelineDiagsLeftSep', fg = colors.nord5, bg = colors.nord1},
           },
         },
         {
           provider = 'file_info',
           icon = '',
-          hl = {
-            name = 'FelineFileInfo',
-            bg = colors.bg,
-            fg = colors.nord5,
-          },
+          hl = {name = 'FelineFileInfo', bg = colors.bg, fg = colors.nord5},
           left_sep = {
             str = '█ ',
-            hl = {
-              name = 'FelineFileInfoLeftSep',
-              bg = colors.nord3,
-              fg = colors.nord1,
-            },
+            hl = {name = 'FelineFileInfoLeftSep', bg = colors.nord3, fg = colors.nord1},
           },
         },
         {
           provider = 'search_count',
           icon = ' ',
-          hl = {
-            name = 'FelineSearchCount',
-            bg = colors.bg,
-            fg = colors.nord5,
-          },
+          hl = {name = 'FelineSearchCount', bg = colors.bg, fg = colors.nord5},
         },
         {
           provider = 'macro',
           icon = ' ',
-          hl = {
-            name = 'FelineRecording',
-            bg = colors.bg,
-            fg = colors.nord13,
-          },
+          hl = {name = 'FelineRecording', bg = colors.bg, fg = colors.nord13},
         },
       },
       {
@@ -211,77 +166,42 @@ feline.setup({
               fallback = 'FelineFileInfo',
             })
           end,
-          hl = {
-            name = 'FelineDebugWidget',
-            bg = colors.bg,
-            fg = colors.nord5,
-          },
+          hl = {name = 'FelineDebugWidget', bg = colors.bg, fg = colors.nord5},
         },
         {
           provider = function () return ((bo.fenc ~= '' and bo.fenc) or vim.o.enc) end,
-          hl = {
-            name = 'FelineFenc',
-            bg = colors.bg,
-            fg = colors.nord5,
-          },
+          hl = {name = 'FelineFenc', bg = colors.bg, fg = colors.nord5},
           left_sep = {
             str = ' ',
-            hl = {
-              name = 'FelineFencLeftSep',
-              bg = colors.bg,
-            },
+            hl = {name = 'FelineFencLeftSep', bg = colors.bg},
           },
         },
         {
           provider = function () return (bo.fileformat ~= '' and bo.fileformat) or vim.o.fileformat end,
-          hl = {
-            name = 'FelineFileformat',
-            bg = colors.bg,
-            fg = colors.nord5,
-          },
+          hl = {name = 'FelineFileformat', bg = colors.bg, fg = colors.nord5},
           left_sep = {
             str = ' ',
-            hl = {
-              name = 'FelineFileformatLeftSep',
-              bg = colors.bg,
-            },
+            hl = {name = 'FelineFileformatLeftSep', bg = colors.bg},
           },
         },
         {
           provider = function () return bo.filetype end,
-          hl = {
-            name = 'FelineFileType',
-            bg = colors.bg,
-            fg = colors.nord5,
-          },
+          hl = {name = 'FelineFileType', bg = colors.bg, fg = colors.nord5},
           left_sep = {
             str = ' ',
-            hl = {
-              name = 'FelineFileTypeLeftSep',
-              bg = colors.bg,
-            },
+            hl = {name = 'FelineFileTypeLeftSep', bg = colors.bg},
           },
         },
         {
           provider = 'line_percentage',
-          hl = {
-            name = 'FelineLinePercentage',
-            bg = colors.nord1,
-            fg = colors.nord5,
-          },
+          hl = {name = 'FelineLinePercentage', bg = colors.nord1, fg = colors.nord5},
           left_sep = {
             str = ' █',
-            hl = {
-              name = 'FelineLinePercentageLeftSep',
-              fg = colors.nord1,
-            },
+            hl = {name = 'FelineLinePercentageLeftSep', fg = colors.nord1},
           },
           right_sep = {
             str = ' ',
-            hl = {
-              name = 'FelineLinePercentageRightSep',
-              bg = colors.nord1,
-            },
+            hl = {name = 'FelineLinePercentageRightSep', bg = colors.nord1},
           },
         },
         {
