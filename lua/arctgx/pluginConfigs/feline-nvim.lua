@@ -1,5 +1,7 @@
 local feline = require('feline')
 local viMode = require('feline.providers.vi_mode')
+local modeHl = viMode.get_mode_highlight_name
+local modeColor = viMode.get_mode_color
 local widgets = require('arctgx.widgets')
 local bo = vim.bo
 local b = vim.b
@@ -47,16 +49,8 @@ local viModeColors = {
 }
 
 local function modeSep(char)
-  return {
-    str = char,
-    hl = function ()
-      return {
-        name = 'FelineModeSep' .. string.byte(char) .. viMode.get_mode_highlight_name(),
-        fg = viMode.get_mode_color(),
-        bg = colors.nord1,
-      }
-    end,
-  }
+  local name = 'FelineModeSep' .. string.byte(char) .. modeHl()
+  return {str = char, hl = function () return {name = name, fg = modeColor(), bg = colors.nord1} end}
 end
 
 feline.setup({
@@ -74,10 +68,7 @@ feline.setup({
           provider = 'file_info',
           icon = '',
           hl = {name = 'FelineFileInfo', bg = colors.bg, fg = colors.nord5},
-          left_sep = {
-            str = ' ',
-            hl = {name = 'FelineFileInfoLeftSep', bg = colors.bg},
-          },
+          left_sep = {str = ' ', hl = {name = 'FelineFileInfoLeftSep', bg = colors.bg}},
         },
       },
       {},
@@ -91,16 +82,8 @@ feline.setup({
     active = {
       {
         {
-          provider = function ()
-            return ' ' .. viMode.get_vim_mode() .. ' '
-          end,
-          hl = function ()
-            return {
-              name = 'FelineModeHl' .. viMode.get_mode_highlight_name(),
-              bg = viMode.get_mode_color(),
-              fg = colors.nord1,
-            }
-          end,
+          provider = function () return ' ' .. viMode.get_vim_mode() .. ' ' end,
+          hl = function () return {name = 'FelineModeHl' .. modeHl(), bg = modeColor(), fg = colors.nord1} end,
           right_sep = modeSep(''),
         },
         {
@@ -117,10 +100,7 @@ feline.setup({
             return b.gitsigns_status ~= ''
           end,
           hl = {name = 'FelineVcs', bg = colors.nord1},
-          left_sep = {
-            str = '  ',
-            hl = {name = 'FelineVcsLeftSep', fg = colors.nord5, bg = colors.nord1},
-          },
+          left_sep = {str = '  ', hl = {name = 'FelineVcsLeftSep', fg = colors.nord5, bg = colors.nord1}},
         },
         {
           provider = function ()
@@ -130,19 +110,13 @@ feline.setup({
             return #vim.diagnostic.count(0, {}) > 0
           end,
           hl = {name = 'FelineDiags', bg = colors.nord1},
-          left_sep = {
-            str = '  ',
-            hl = {name = 'FelineDiagsLeftSep', fg = colors.nord5, bg = colors.nord1},
-          },
+          left_sep = {str = '  ', hl = {name = 'FelineDiagsLeftSep', fg = colors.nord5, bg = colors.nord1}},
         },
         {
           provider = 'file_info',
           icon = '',
           hl = {name = 'FelineFileInfo', bg = colors.bg, fg = colors.nord5},
-          left_sep = {
-            str = '█ ',
-            hl = {name = 'FelineFileInfoLeftSep', bg = colors.nord3, fg = colors.nord1},
-          },
+          left_sep = {str = '█ ', hl = {name = 'FelineFileInfoLeftSep', bg = colors.nord3, fg = colors.nord1}},
         },
         {
           provider = 'search_count',
@@ -171,57 +145,33 @@ feline.setup({
         {
           provider = function () return ((bo.fenc ~= '' and bo.fenc) or vim.o.enc) end,
           hl = {name = 'FelineFenc', bg = colors.bg, fg = colors.nord5},
-          left_sep = {
-            str = ' ',
-            hl = {name = 'FelineFencLeftSep', bg = colors.bg},
-          },
+          left_sep = {str = ' ', hl = {name = 'FelineFencLeftSep', bg = colors.bg}},
         },
         {
           provider = function () return (bo.fileformat ~= '' and bo.fileformat) or vim.o.fileformat end,
           hl = {name = 'FelineFileformat', bg = colors.bg, fg = colors.nord5},
-          left_sep = {
-            str = ' ',
-            hl = {name = 'FelineFileformatLeftSep', bg = colors.bg},
-          },
+          left_sep = {str = ' ', hl = {name = 'FelineFileformatLeftSep', bg = colors.bg}},
         },
         {
           provider = function () return bo.filetype end,
           hl = {name = 'FelineFileType', bg = colors.bg, fg = colors.nord5},
-          left_sep = {
-            str = ' ',
-            hl = {name = 'FelineFileTypeLeftSep', bg = colors.bg},
-          },
+          left_sep = {str = ' ', hl = {name = 'FelineFileTypeLeftSep', bg = colors.bg}},
         },
         {
           provider = 'line_percentage',
           hl = {name = 'FelineLinePercentage', bg = colors.nord1, fg = colors.nord5},
-          left_sep = {
-            str = ' █',
-            hl = {name = 'FelineLinePercentageLeftSep', fg = colors.nord1},
-          },
-          right_sep = {
-            str = ' ',
-            hl = {name = 'FelineLinePercentageRightSep', bg = colors.nord1},
-          },
+          left_sep = {str = ' █', hl = {name = 'FelineLinePercentageLeftSep', fg = colors.nord1}},
+          right_sep = {str = ' ', hl = {name = 'FelineLinePercentageRightSep', bg = colors.nord1}},
         },
         {
           provider = {
             name = 'position',
             opts = {
               format = ' {line}:{col} ',
-              padding = {
-                line = 3,
-                col = 2,
-              },
+              padding = {line = 3, col = 2},
             },
           },
-          hl = function ()
-            return {
-              name = 'FelinePosItion' .. viMode.get_mode_highlight_name(),
-              bg = viMode.get_mode_color(),
-              fg = colors.nord1,
-            }
-          end,
+          hl = function () return {name = 'FelinePosItion' .. modeHl(), bg = modeColor(), fg = colors.nord1} end,
           left_sep = modeSep(''),
         },
       },
