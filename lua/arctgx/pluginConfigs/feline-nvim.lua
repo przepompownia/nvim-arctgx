@@ -51,7 +51,7 @@ local function modeSep(char)
     str = char,
     hl = function ()
       return {
-        name = 'FelineModeSep' .. string.byte(char) .. require('feline.providers.vi_mode').get_mode_highlight_name(),
+        name = 'FelineModeSep' .. string.byte(char) .. viMode.get_mode_highlight_name(),
         fg = viMode.get_mode_color(),
         bg = colors.nord1,
       }
@@ -107,7 +107,7 @@ feline.setup({
           end,
           hl = function ()
             return {
-              name = 'FelineModeHl' .. require('feline.providers.vi_mode').get_mode_highlight_name(),
+              name = 'FelineModeHl' .. viMode.get_mode_highlight_name(),
               bg = viMode.get_mode_color(),
               fg = colors.nord1,
             }
@@ -297,7 +297,7 @@ feline.setup({
           },
           hl = function ()
             return {
-              name = 'FelinePosItion' .. require('feline.providers.vi_mode').get_mode_highlight_name(),
+              name = 'FelinePosItion' .. viMode.get_mode_highlight_name(),
               bg = viMode.get_mode_color(),
               fg = colors.nord1,
             }
