@@ -130,8 +130,6 @@ feline.setup({
         },
       },
       {
-      },
-      {
         {
           provider = function ()
             return widgets.renderDebug({
