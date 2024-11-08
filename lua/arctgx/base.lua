@@ -99,12 +99,12 @@ end
 
 -- from @zeertzjq https://github.com/neovim/neovim/issues/14157#issuecomment-1320787927
 --- @type base.setOperatorfunc
-base.setOperatorfunc = vim.fn[api.nvim_exec([[
+base.setOperatorfunc = vim.fn[api.nvim_exec2([[
   func s:set_opfunc(val)
     let &opfunc = a:val
   endfunc
   echon get(function('s:set_opfunc'), 'name')
-]], true)]
+]], {output = true}).output]
 
 ---Defer callback until terminal related options autodetection is complete
 --- @param augroupName string
