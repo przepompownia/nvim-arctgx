@@ -8,7 +8,12 @@ local uaCr = '<Plug>ultimate-autopair-CR'
 local uaCrV = vim.api.nvim_replace_termcodes(uaCr, true, true, true)
 
 ua.init {ua.extend_default {
-  cr = {map = uaCr}
+  cr = {
+    map = uaCr,
+    conf = {
+      cond = function () return true end,
+    },
+  },
 }, {profile = 'map', {'i', uaCr, '\r', p = -1}}}
 
 require('arctgx.completion').setAutopairCR(function ()
