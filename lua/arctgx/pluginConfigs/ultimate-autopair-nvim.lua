@@ -14,6 +14,16 @@ ua.init {ua.extend_default {
       cond = function () return true end,
     },
   },
+  tabout = {
+    enable = true,
+    map = '<A-CR>',
+    cmap = '<A-CR>',
+    conf = {},
+    multi = false,
+    hopout = true,
+    do_nothing_if_fail = true,
+  },
+
 }, {profile = 'map', {'i', uaCr, '\r', p = -1}}}
 
 require('arctgx.completion').setAutopairCR(function ()
