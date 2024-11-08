@@ -1,4 +1,4 @@
-require 'treesitter-context'.setup {
+require 'treesitter-context'.setup({
   enable = true,
   on_attach = function (buf)
     local excludedFiletypes = {
@@ -19,4 +19,5 @@ require 'treesitter-context'.setup {
   mode = 'cursor',
   separator = '-',
   zindex = 20,
-}
+  -- multiwindow = true,
+})
