@@ -1,4 +1,3 @@
-local arctgxLsp = require 'arctgx.lsp'
 local configs = require 'lspconfig.configs'
 local lspconfig = require('lspconfig')
 
