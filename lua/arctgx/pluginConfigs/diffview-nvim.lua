@@ -39,6 +39,7 @@ end)
 keymap.set('n', 'gitStatusUIOpen', function ()
   vim.cmd.DiffviewOpen()
 end)
+vim.keymap.set({'n'}, '<Leader>gv', ':Diffview', {})
 
 session.appendBeforeSaveHook('Close DiffView tabs', closeDiffviewTabs)
 
