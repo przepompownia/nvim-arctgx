@@ -81,6 +81,11 @@ function completion.setAutopairCR(fn)
   autopairCR = fn
 end
 
+local tabMaps = {
+  ['<Tab>'] = {pum = '<C-n>', snippetJump = 1},
+  ['<S-Tab>'] = {pum = '<C-p>', snippetJump = -1},
+}
+
 function completion.init()
   api.nvim_create_autocmd('LspAttach', {
     group = completionAugroup,
@@ -118,6 +123,25 @@ function completion.init()
             -- vim.print(args.data)
             showDocumentation(args.buf, clientId)
           end,
+        })
+      end
+
+      for key, params in pairs(tabMaps) do
+        vim.keymap.set({'i'}, key, function ()
+          if vim.fn.pumvisible() == 1 then
+            return params.pum
+          elseif vim.snippet.active({direction = params.snippetJump}) then
+            vim.snippet.jump(params.snippetJump)
+            return
+          elseif completion.hasWordsBefore() then
+            vim.lsp.completion.trigger()
+          else
+            return key
+          end
+        end, {
+          expr = true,
+          silent = true,
+          buffer = args.buf,
         })
       end
     end
