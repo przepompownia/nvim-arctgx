@@ -49,8 +49,8 @@ local viModeColors = {
 }
 
 local function modeSep(char)
-  local name = 'FelineModeSep' .. string.byte(char) .. modeHl()
-  return {str = char, hl = function () return {name = name, fg = modeColor(), bg = colors.nord1} end}
+  local name = 'FelineModeSep' .. string.byte(char)
+  return {str = char, hl = function () return {name = name .. modeHl(), fg = modeColor(), bg = colors.nord1} end}
 end
 
 feline.setup({
