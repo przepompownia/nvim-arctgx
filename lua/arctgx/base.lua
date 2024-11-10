@@ -32,12 +32,12 @@ function base.editMappedPath(path, line, column)
   end
 end
 
-function base.getRangeBetweenMarks(mark1, mark2)
+function base.getRangeBetweenMarks(mark1, mark2, isLinewise)
   local start = vim.fn.getpos(mark1)
   local finish = vim.fn.getpos(mark2)
   local startLine, startCol = start[2], start[3]
   local finishLine, finishCol = finish[2], finish[3]
-  if vim.fn.mode() == 'V' then
+  if isLinewise then
     startCol = 1
     finishCol = 2 ^ 31 - 1
   end
@@ -49,11 +49,12 @@ function base.getRangeBetweenMarks(mark1, mark2)
 end
 
 function base.getVisualSelectionRange()
-  if not vim.tbl_contains({'v', 'V'}, vim.fn.mode()) then
+  local mode = api.nvim_get_mode().mode
+  if not vim.tbl_contains({'v', 'V'}, mode) then
     return
   end
 
-  local startLine, startCol, finishLine, finishCol = base.getRangeBetweenMarks('v', '.')
+  local startLine, startCol, finishLine, finishCol = base.getRangeBetweenMarks('v', '.', mode == 'V')
 
   return {
     ['start'] = {startLine, startCol - 1},
