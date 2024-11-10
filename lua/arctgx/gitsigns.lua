@@ -2,6 +2,7 @@ local api = vim.api
 
 local git = require('arctgx.git')
 local gs = require('gitsigns')
+local keymap = require('arctgx.vim.abstractKeymap')
 
 local gitsigns = {}
 
@@ -28,7 +29,6 @@ end
 gitsigns.configuration = {
   attach_to_untracked = true,
   on_attach = function (bufnr)
-    local keymap = require('arctgx.vim.abstractKeymap')
     local function map(modes, l, r, opts)
       opts = opts or {}
       opts.buffer = bufnr
