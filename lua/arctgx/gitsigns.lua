@@ -29,47 +29,43 @@ end
 gitsigns.configuration = {
   attach_to_untracked = true,
   on_attach = function (bufnr)
-    local function map(modes, l, r, opts)
-      opts = opts or {}
-      opts.buffer = bufnr
-      keymap.set(modes, l, r, opts)
-    end
+    local opts = {buffer = bufnr}
 
-    map('n', 'jumpToNextDiffOrGitHunk', keymap.repeatable(function ()
+    keymap.set('n', 'jumpToNextDiffOrGitHunk', keymap.repeatable(function ()
       if vim.wo.diff then
         api.nvim_feedkeys(']c', 'n', false)
         return '<Ignore>'
       end
       vim.schedule(function () gs.nav_hunk('next', {preview = true}) end)
       return '<Ignore>'
-    end), {expr = true})
+    end), {expr = true, buffer = bufnr})
 
-    map('n', 'jumpToPreviousDiffOrGitHunk', keymap.repeatable(function ()
+    keymap.set('n', 'jumpToPreviousDiffOrGitHunk', keymap.repeatable(function ()
       if vim.wo.diff then
         api.nvim_feedkeys('[c', 'n', false)
         return '<Ignore>'
       end
       vim.schedule(function () gs.nav_hunk('prev', {preview = true}) end)
       return '<Ignore>'
-    end), {expr = true})
+    end), {expr = true, buffer = bufnr})
 
-    map({'n'}, 'gitHunkStage', gs.stage_hunk)
-    map({'v'}, 'gitHunkStage', function () gs.stage_hunk {vim.fn.line('.'), vim.fn.line('v')} end)
-    map({'n'}, 'gitHunkReset', gs.reset_hunk)
-    map({'v'}, 'gitHunkReset', function () gs.reset_hunk {vim.fn.line('.'), vim.fn.line('v')} end)
-    map('n', 'gitStageAndWriteFile', gs.stage_buffer)
-    map({'n', 'v'}, 'gitHunkUndoStage', gs.undo_stage_hunk)
-    map('n', 'gitBufferReset', gs.reset_buffer)
-    map('n', 'gitHunkPreview', gs.preview_hunk)
-    map('n', 'gitHunkPrintInline', gs.preview_hunk_inline)
-    map('n', 'gitBlameLine', function () gs.blame_line {full = true} end)
-    map('n', 'gitBlame', gs.blame)
-    map('n', 'gitBlameToggleVirtual', gs.toggle_current_line_blame)
-    map('n', 'gitToggleHighlight', gs.toggle_linehl)
-    map('n', 'gitDiffAgainstIndex', gs.diffthis)
-    map('n', 'gitDiffAgainstLastCommit', function () gs.diffthis('~') end)
-    map('n', 'gitToggleDeleted', gs.toggle_deleted)
-    map('n', 'gitHunkToVisual', gs.select_hunk)
+    keymap.set({'n'}, 'gitHunkStage', gs.stage_hunk, opts)
+    keymap.set({'v'}, 'gitHunkStage', function () gs.stage_hunk {vim.fn.line('.'), vim.fn.line('v')} end, opts)
+    keymap.set({'n'}, 'gitHunkReset', gs.reset_hunk, opts)
+    keymap.set({'v'}, 'gitHunkReset', function () gs.reset_hunk {vim.fn.line('.'), vim.fn.line('v')} end, opts)
+    keymap.set('n', 'gitStageAndWriteFile', gs.stage_buffer, opts)
+    keymap.set({'n', 'v'}, 'gitHunkUndoStage', gs.undo_stage_hunk, opts)
+    keymap.set('n', 'gitBufferReset', gs.reset_buffer, opts)
+    keymap.set('n', 'gitHunkPreview', gs.preview_hunk, opts)
+    keymap.set('n', 'gitHunkPrintInline', gs.preview_hunk_inline, opts)
+    keymap.set('n', 'gitBlameLine', function () gs.blame_line {full = true} end, opts)
+    keymap.set('n', 'gitBlame', gs.blame, opts)
+    keymap.set('n', 'gitBlameToggleVirtual', gs.toggle_current_line_blame, opts)
+    keymap.set('n', 'gitToggleHighlight', gs.toggle_linehl, opts)
+    keymap.set('n', 'gitDiffAgainstIndex', gs.diffthis, opts)
+    keymap.set('n', 'gitDiffAgainstLastCommit', function () gs.diffthis('~') end, opts)
+    keymap.set('n', 'gitToggleDeleted', gs.toggle_deleted, opts)
+    keymap.set('n', 'gitHunkToVisual', gs.select_hunk, opts)
   end
 }
 
