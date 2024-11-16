@@ -58,7 +58,8 @@ feline.setup({
   vi_mode_colors = viModeColors,
   disable = {
     buftypes = {
-      '^nofile$'
+      '^nofile$',
+      '^prompt$',
     },
   },
   components = {
