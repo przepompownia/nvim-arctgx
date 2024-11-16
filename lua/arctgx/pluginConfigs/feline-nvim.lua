@@ -70,6 +70,11 @@ feline.setup({
           hl = {name = 'FelineFileInfo', bg = colors.bg, fg = colors.nord5},
           left_sep = {str = ' ', hl = {name = 'FelineFileInfoLeftSep', bg = colors.bg}},
         },
+        {
+          provider = 'search_count',
+          icon = ' ',
+          hl = {name = 'FelineSearchCount', bg = colors.bg, fg = colors.nord5},
+        },
       },
       {},
       {
