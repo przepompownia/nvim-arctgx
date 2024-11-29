@@ -52,6 +52,7 @@ local abstractKeymaps = {
   gitHunkStage = {lhs = '<Leader>hs', desc = 'Git: stage hunk'},
   gitStatusUIOpen = {lhs = {'<Leader>gg'}, desc = 'Git: open status UI'},
   gitCommit = {lhs = '<Leader>gc', desc = 'Git: commit'},
+  gitCommitAmend = {lhs = '<Leader>gC', desc = 'Git: amend commit'},
   gitBlame = {lhs = '<Leader>gb', desc = 'Git: blame whole buffer'},
   gitLogCurrentFile = {lhs = '<Leader>gl', desc = 'Git: log current file'},
   gitLogAllFiles = {lhs = '<Leader>gL', desc = 'Git: log all files'},
