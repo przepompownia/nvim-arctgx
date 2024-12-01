@@ -73,6 +73,7 @@ local abstractKeymaps = {
   writeBackup = {lhs = '<Leader>iwb', desc = 'Write backup file'},
   dbToggleUI = {lhs = '<F5>', desc = 'Toggle database UI'},
   fileTreeFocus = {lhs = '<Leader>m', desc = 'File tree: focus current buffer'},
+  fileTreeToggle = {lhs = '<Leader>M', desc = 'File tree: toggle view'},
   langGoToDefinition = {lhs = {'<C-]>', 'gd', '<C-LeftMouse>', 'g<LeftMouse>'}, desc = 'Go to definition'},
   langGoToDefinitionInPlace = {lhs = {'gyd'}, desc = 'Go to definition in place'},
   -- langPeekDefinition = {lhs = {'gD'}, desc = 'Show definition in float window'},

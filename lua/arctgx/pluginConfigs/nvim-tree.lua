@@ -169,6 +169,11 @@ local function focusOnFile()
 end
 
 require('arctgx.vim.abstractKeymap').set({'n'}, 'fileTreeFocus', focusOnFile)
+require('arctgx.vim.abstractKeymap').set({'n'}, 'fileTreeToggle', function ()
+  require('nvim-tree')
+  local treeapi = require('nvim-tree.api')
+  treeapi.tree.toggle()
+end)
 
 session.appendBeforeSaveHook('Close nvim-tree instances', function ()
   require('arctgx.window').forEachWindowWithBufFileType({'NvimTree'}, function (winId)
