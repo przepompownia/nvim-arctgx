@@ -1,6 +1,8 @@
 local api = vim.api
 
 local extension = {}
+local loadOnFiletypeAugroup = api.nvim_create_augroup('arctgx.treesitter.loadOnFiletype', {})
+local loadOnFiletypeAutocmd
 
 local fileTypes = {
   'awk',
@@ -63,8 +65,12 @@ for _, lang in ipairs(notFtLangs) do
   langs[#langs + 1] = lang
 end
 
-for _, fileType in ipairs(additionalFiletypes) do
-  fileTypes[#fileTypes + 1] = fileType
+local function addFiletype(filetype)
+  fileTypes[#fileTypes + 1] = filetype
+end
+
+for _, filetype in ipairs(additionalFiletypes) do
+  addFiletype(filetype)
 end
 
 for filetype, lang in pairs(ftLangMap) do
@@ -75,13 +81,23 @@ function extension.langs()
   return langs
 end
 
+function extension.addFiletype(filetype)
+  addFiletype(filetype)
+  extension.loadOnFiletype()
+end
+
 local function start(buf, lang)
   vim.treesitter.start(buf, lang)
   vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
 end
 
 function extension.loadOnFiletype()
-  api.nvim_create_autocmd('FileType', {
+  if loadOnFiletypeAutocmd and #vim.api.nvim_get_autocmds({group = loadOnFiletypeAugroup}) > 0 then
+    api.nvim_del_autocmd(loadOnFiletypeAutocmd)
+  end
+
+  loadOnFiletypeAutocmd = api.nvim_create_autocmd('FileType', {
+    group = loadOnFiletypeAugroup,
     pattern = fileTypes,
     callback = function (event)
       local lang = vim.treesitter.language.get_lang(event.match)
