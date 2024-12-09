@@ -26,28 +26,30 @@ gitsigns.tryWorktrees = function (repoParams)
   end
 end
 
+--- @type Gitsigns.Config
 gitsigns.configuration = {
+  debug_mode = true,
   attach_to_untracked = true,
   on_attach = function (bufnr)
     local opts = {buffer = bufnr}
 
-    keymap.set('n', 'jumpToNextDiffOrGitHunk', keymap.repeatable(function ()
+    keymap.set('n', 'jumpToNextDiffOrGitHunk', function ()
       if vim.wo.diff then
         api.nvim_feedkeys(']c', 'n', false)
         return '<Ignore>'
       end
       vim.schedule(function () gs.nav_hunk('next', {preview = true}) end)
       return '<Ignore>'
-    end), {expr = true, buffer = bufnr})
+    end, opts)
 
-    keymap.set('n', 'jumpToPreviousDiffOrGitHunk', keymap.repeatable(function ()
+    keymap.set('n', 'jumpToPreviousDiffOrGitHunk', function ()
       if vim.wo.diff then
         api.nvim_feedkeys('[c', 'n', false)
         return '<Ignore>'
       end
       vim.schedule(function () gs.nav_hunk('prev', {preview = true}) end)
       return '<Ignore>'
-    end), {expr = true, buffer = bufnr})
+    end, opts)
 
     keymap.set({'n'}, 'gitHunkStage', gs.stage_hunk, opts)
     keymap.set({'v'}, 'gitHunkStage', function () gs.stage_hunk {vim.fn.line('.'), vim.fn.line('v')} end, opts)
