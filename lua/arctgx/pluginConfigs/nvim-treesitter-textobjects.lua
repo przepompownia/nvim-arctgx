@@ -49,10 +49,10 @@ vim.keymap.set({'n', 'x', 'o'}, ']M', function ()
 end)
 
 vim.keymap.set('n', '<leader>a', function ()
-  require('nvim-treesitter-textobjects.swap').swap_previous('@parameter.inner')()
+  require('nvim-treesitter-textobjects.swap').swap_previous('@parameter.inner')
 end)
 vim.keymap.set('n', '<leader>A', function ()
-  require('nvim-treesitter-textobjects.swap').swap_next('@parameter.inner')()
+  require('nvim-treesitter-textobjects.swap').swap_next('@parameter.inner')
 end)
 
 require('nvim-treesitter-textobjects').setup {
