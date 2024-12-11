@@ -167,18 +167,20 @@ function extension.gitGrepOperator(type)
   )(type)
 end
 
-function extension.rgGrep(query, useFixedStrings, ignoreCase)
+function extension.rgGrep(query, root, useFixedStrings, ignoreCase)
+  vim.validate('root dir', root, {'string', 'nil'})
   return extension.grep(
     require('arctgx.grep'):newRgGrepCommand(useFixedStrings, ignoreCase),
-    git.top(base.getBufferCwd()),
+    root or git.top(base.getBufferCwd()),
     query
   )
 end
 
-function extension.gitGrep(query, useFixedStrings, ignoreCase)
+function extension.gitGrep(query, root, useFixedStrings, ignoreCase)
+  vim.validate('root dir', root, {'string', 'nil'})
   return extension.grep(
     require('arctgx.grep'):newGitGrepCommand(useFixedStrings, ignoreCase),
-    git.top(base.getBufferCwd()),
+    root or git.top(base.getBufferCwd()),
     query
   )
 end

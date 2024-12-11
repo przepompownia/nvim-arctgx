@@ -42,25 +42,27 @@ api.nvim_create_user_command(
   'GGrep',
   function (opts)
     base.onColorschemeReady('GGrep', function ()
-      require('arctgx.telescope').gitGrep(opts.args, false, false)
+      local args = opts.fargs
+      require('arctgx.telescope').gitGrep(args[1], args[2], false, false)
       return true
     end)
   end,
-  {nargs = '*'}
+  {nargs = '*', complete = 'dir'}
 )
 api.nvim_create_user_command(
   'RGrep',
   function (opts)
     base.onColorschemeReady('GGrep', function ()
-      require('arctgx.telescope').rgGrep(opts.args, false, false)
+      local args = opts.fargs
+      require('arctgx.telescope').rgGrep(args[1], args[2], false, false)
       return true
     end)
   end,
-  {nargs = '*'}
+  {nargs = '*', complete = 'dir'}
 )
 keymap.set('n', 'pickerOverview', function () require('telescope.builtin').builtin() end, {desc = 'Telescope builtin'})
-keymap.set('n', 'grepGit', function () require('arctgx.telescope').gitGrep('', false, false) end)
-keymap.set('n', 'grepAll', function () require('arctgx.telescope').rgGrep('', false, false) end)
+keymap.set('n', 'grepGit', function () require('arctgx.telescope').gitGrep('', nil, false, false) end)
+keymap.set('n', 'grepAll', function () require('arctgx.telescope').rgGrep('', nil, false, false) end)
 keymap.set('n', 'filesAll', function () require('arctgx.telescope').filesAll() end)
 keymap.set('n', 'filesGit', function () require('arctgx.telescope').filesGit() end)
 keymap.set('n', 'previewJumps', function () require('telescope.builtin').jumplist() end)
@@ -81,10 +83,10 @@ keymap.set({'n', 'i'}, 'browseBuffersInCwd', function ()
 end)
 keymap.set('n', 'browseWindows', function () require('arctgx.telescope.windows').list() end)
 keymap.set('v', 'searchStringInGitFromTextObject', function ()
-  require('arctgx.telescope').gitGrep(base.getVisualSelection(), true)
+  require('arctgx.telescope').gitGrep(base.getVisualSelection(), nil, true)
 end)
 keymap.set('v', 'searchStringFromTextObject', function ()
-  require('arctgx.telescope').rgGrep(base.getVisualSelection(), true)
+  require('arctgx.telescope').rgGrep(base.getVisualSelection(), nil, true)
 end)
 keymap.set('v', 'searchStringInGitFilenamesFromTextObject', function ()
   require('arctgx.telescope').filesGit(base.getVisualSelection())
