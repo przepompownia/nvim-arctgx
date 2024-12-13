@@ -25,7 +25,7 @@ local abstractKeymaps = {
   debuggerStepInto = {lhs = '<Leader>di', desc = 'Debugger: step into'},
   debuggerStepOut = {lhs = '<Leader>do', desc = 'Debugger: step out'},
   debuggerClose = {lhs = '<Leader>dq', desc = 'Debugger: close'},
-  debuggerTerminate = {lhs = '<Leader>dT', desc = 'Debugger: terminate'},
+  debuggerTerminate = {lhs = '<Leader>dE', desc = 'Debugger: terminate'},
   debuggerClean = {lhs = '<Leader>dQ', desc = 'Debugger: clean'},
   -- debuggerDetach = {lhs = '<Leader><S-F6>', desc = 'Debugger: detach'},
   debuggerRunToCursor = {lhs = '<Leader>dC', desc = 'Debugger: run to cursor'},
