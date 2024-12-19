@@ -55,6 +55,7 @@ vim.opt.path:append(vim.fs.dirname(vim.env.VIMRUNTIME))
 vim.opt.path:append(vim.env.VIMRUNTIME)
 vim.go.showcmd = false
 vim.go.showmode = false
+vim.go.ruler = false
 vim.o.swapfile = false
 
 vim.opt.sessionoptions:remove('help')
