@@ -10,10 +10,11 @@ function Shell.open(opts)
   end
   local cwd = opts.cwd or require('arctgx.base').getBufferCwd()
   vim.cmd.new({mods = {split = 'botright'}})
-  vim.fn.termopen(
+  vim.fn.jobstart(
     opts.cmd,
     {
       cwd = cwd,
+      term = true,
     }
   )
 end
