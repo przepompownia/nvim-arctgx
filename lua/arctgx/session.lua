@@ -12,8 +12,7 @@ local function appendHook(name, hook, event, when)
   if type(hook) ~= 'function' then
     vim.notify(
       ('Cannot add hook (%s.%s). It must be a function.'):format(event, when),
-      vim.log.levels.ERROR,
-      {title = 'Session'}
+      vim.log.levels.ERROR
     )
     return
   end
@@ -23,9 +22,9 @@ end
 
 local function runHooks(event, when)
   for _, hook in ipairs(hooks[event][when]) do
-    vim.notify(('Running "%s %s" hook "%s".'):format(when, event, hook.name), vim.log.levels.DEBUG, {title = 'Session'})
+    vim.notify(('Running "%s %s" hook "%s".'):format(when, event, hook.name), vim.log.levels.DEBUG)
     if false == hook.callback() then
-      vim.notify(('Cannot run "%s %s" hook "%s".'):format(when, event, hook.name), vim.log.levels.WARN, {title = 'Session'})
+      vim.notify(('Cannot run "%s %s" hook "%s".'):format(when, event, hook.name), vim.log.levels.WARN)
 
       return false
     end

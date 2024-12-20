@@ -129,8 +129,7 @@ local function willRenameFilesHandler(response)
   for clientId, clientResponse in pairs(response) do
     local client = lsp.get_clients({id = clientId})[1]
     if nil == client then
-      vim.notify(('Client %s does not exist'):format(clientId), vim.log.levels.ERROR,
-        {title = 'LSP: workspace/willRenameFiles'})
+      vim.notify(('Client %s does not exist'):format(clientId), vim.log.levels.ERROR)
 
       return
     end

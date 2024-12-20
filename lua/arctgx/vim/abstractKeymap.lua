@@ -18,7 +18,7 @@ local function getKeymap(name)
     return keymap
   end
 
-  vim.notify(('%s not defined yet.'):format(name), vim.log.levels.ERROR, {title = 'Keymaps'})
+  vim.notify(('%s not defined yet.'):format(name), vim.log.levels.ERROR)
 end
 
 function abstractKeymap.set(modes, name, rhs, opts)

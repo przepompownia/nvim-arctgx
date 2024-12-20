@@ -17,7 +17,7 @@ function plugin.loadCustomConfiguration(pluginDirs, pluginPrefix)
   vim.validate('pluginDirs', pluginDirs, 'table')
 
   if vim.tbl_isempty(pluginDirs) then
-    vim.notify('Empty vim.g.pluginDirs', vim.log.levels.ERROR, {title = 'Plugin configuration'})
+    vim.notify('Empty vim.g.pluginDirs', vim.log.levels.ERROR)
   end
 
   local rtp = vim.api.nvim_list_runtime_paths()
@@ -40,7 +40,7 @@ function plugin.loadSingleConfiguration(pluginName, pluginPrefix)
     tail .. '.lua'
   )
   if not vim.uv.fs_stat(modulePath) then
-    -- vim.notify(('For plugin %s expected path %s does not exist'):format(pluginName, modulePath), vim.log.levels.DEBUG, {title = 'Plugin configuration'})
+    -- vim.notify(('For plugin %s expected path %s does not exist'):format(pluginName, modulePath), vim.log.levels.DEBUG)
     return
   end
   local pluginModule = pluginPrefix .. '.' .. tail

@@ -55,7 +55,7 @@ function M.onInit(client)
     return true
   end
 
-  vim.notify('.luarc.json(c) not found. Loading defaults.', vim.log.levels.INFO, {title = 'LSP'})
+  vim.notify('.luarc.json(c) not found. Loading defaults.', vim.log.levels.INFO)
   client.config.settings.Lua = vim.tbl_deep_extend('force', client.config.settings.Lua, M.defaultConfig())
 
   return client:notify(vim.lsp.protocol.Methods.workspace_didChangeConfiguration, {settings = client.config.settings})
@@ -91,7 +91,7 @@ function M.clientConfig(file)
     on_attach = function (_, bufnr)
       local root = lsp.findRoot(vim.api.nvim_buf_get_name(bufnr), rootPatterns)
       if not vim.tbl_contains(vim.lsp.buf.list_workspace_folders(), root) then
-        vim.notify(('"%s" added to workspace folders'):format(root), vim.log.levels.INFO, {title = 'LSP'})
+        vim.notify(('"%s" added to workspace folders'):format(root), vim.log.levels.INFO)
         vim.lsp.buf.add_workspace_folder(root)
       end
     end,

@@ -14,8 +14,7 @@ api.nvim_create_autocmd('User', {
       if obj.code > 0 then
         vim.notify(
           obj.stderr,
-          vim.log.levels.WARN,
-          {title = 'NvimTree'}
+          vim.log.levels.WARN
         )
       end
     end
@@ -33,8 +32,7 @@ api.nvim_create_autocmd('User', {
         vim.system({'git', 'add', '--', data.new_name}, {}, onExit)
         vim.notify(
           ('renamed from %s to %s'):format(data.old_name, data.new_name),
-          vim.log.levels.INFO,
-          {title = 'NvimTree'}
+          vim.log.levels.INFO
         )
       end)
     end)

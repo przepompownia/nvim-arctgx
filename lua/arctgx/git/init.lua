@@ -18,7 +18,7 @@ function git.top(relativeDir)
   local out = vim.system({'git', 'rev-parse', '--show-toplevel'}, {cwd = relativeDir}):wait()
 
   if out.code > 0 then
-    vim.notify(('Cannot determine top level directory for %s'):format(relativeDir), vim.log.levels.WARN, {title = 'git'})
+    vim.notify(('Cannot determine top level directory for %s'):format(relativeDir), vim.log.levels.WARN)
     return relativeDir or vim.uv.cwd()
   end
 

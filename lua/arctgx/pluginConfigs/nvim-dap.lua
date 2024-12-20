@@ -127,7 +127,7 @@ require('arctgx.lazy').setupOnLoad('dap', function ()
   keymap.set({'n'}, 'debuggerRunToCursor', dap.run_to_cursor, keymapOpts)
 
   local function info(message)
-    vim.notify(message, vim.log.levels.INFO, {title = 'DAP'})
+    vim.notify(message, vim.log.levels.INFO)
   end
   -- nnoremap <silent> <leader>dr :lua require'dap'.repl.open()<CR>
   -- nnoremap <silent> <leader>dl :lua require'dap'.run_last()<CR>
