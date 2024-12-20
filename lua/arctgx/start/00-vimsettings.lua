@@ -29,7 +29,7 @@ vim.opt.isfname:remove('=')
 vim.opt.diffopt:append('vertical')
 vim.opt.diffopt:append('linematch:60')
 vim.opt.jumpoptions:append('view')
-vim.opt_global.shortmess:append('I')
+vim.opt_global.shortmess:append('Ic')
 
 vim.go.foldlevelstart = 99
 vim.wo.foldcolumn = 'auto'
