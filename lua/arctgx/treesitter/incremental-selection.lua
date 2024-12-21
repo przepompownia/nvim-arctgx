@@ -19,7 +19,10 @@ local function selectNode(node)
 
   api.nvim_buf_set_mark(0, '<', row1 + 1, col1, {})
   api.nvim_buf_set_mark(0, '>', row2 + 1, col2 - 1, {})
-  vim.cmd.normal('gv')
+  local vm = vim.fn.visualmode()
+  local charVisualMode = (vm == 'V' or vm == '') and 'v' or ''
+
+  vim.cmd.normal('gv' .. charVisualMode)
 end
 
 function extension.selectNodeUnderCursor()
