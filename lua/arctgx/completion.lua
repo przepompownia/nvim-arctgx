@@ -92,6 +92,9 @@ function completion.init()
     callback = function (args)
       local clientId = args.data.client_id
       local client = assert(vim.lsp.get_clients({id = clientId})[1])
+      if not client:supports_method(vim.lsp.protocol.Methods.textDocument_completion, args.buf) then
+        return
+      end
       local triggerCharacters = vim.tbl_get(
         client,
         'server_capabilities',
