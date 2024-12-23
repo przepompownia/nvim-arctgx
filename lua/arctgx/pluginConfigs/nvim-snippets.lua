@@ -1,9 +1,15 @@
+local config = {}
+
+config.filetypes = {'lua', 'php'}
+
 require('snippets').setup({
   global_snippets = nil,
   create_autocmd = false,
   create_cmp_source = false,
-  allowed_filetypes = {'lua', 'php'},
+  allowed_filetypes = config.filetypes,
   search_paths = {
-    '/home/arctgx/.vim/nvim/pack/arctgx/opt/arctgx/snippets'
+    vim.fs.joinpath(require('arctgx.base').getPluginDir(), 'snippets'),
   },
 })
+
+return config

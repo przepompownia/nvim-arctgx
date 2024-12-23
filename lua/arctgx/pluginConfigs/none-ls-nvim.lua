@@ -22,6 +22,9 @@ null.setup({
   diagnostics_format = '#{s}: #{m} [#{c}]',
   update_in_insert = false,
   sources = {
+    null.builtins.completion.nvim_snippets.with({
+      filetypes = require('arctgx.pluginConfigs.nvim-snippets').filetypes,
+    }),
     null.builtins.diagnostics.tidy,
     null.builtins.diagnostics.twigcs,
     -- null.builtins.diagnostics.phpcs.with(phpcsArgs),
