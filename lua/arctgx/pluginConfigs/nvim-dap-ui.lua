@@ -76,7 +76,7 @@ api.nvim_create_autocmd({'ColorScheme'}, {
   callback = reloadColors,
 })
 
-keymap.set({'n'}, 'debuggerUIToggle', function() require('dapui').toggle() end)
+keymap.set({'n'}, 'debuggerUIToggle', function () require('dapui').toggle() end)
 
 local function watchExpression(expression)
   require('dapui').elements.watches.add(expression)
