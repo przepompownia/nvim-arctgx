@@ -98,7 +98,7 @@ api.nvim_create_autocmd({'FileType'}, {
       watchExpression(vim.fn.expand('<cexpr>'))
     end, opts)
     keymap.set({'n', 'x'}, 'debuggerEvalToFloat', function ()
-      require('dapui').eval(nil, {enter = true})
+      require('dapui').eval(nil, {enter = true, context = 'repl'})
     end, opts)
   end
 })
