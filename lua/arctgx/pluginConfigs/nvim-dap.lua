@@ -217,7 +217,7 @@ keymap.set(
   {'n'},
   'debuggerClean',
   function ()
-    require('dap').close()
+    require('dap').disconnect()
     require('dap').clear_breakpoints()
     api.nvim_exec_autocmds('User', {pattern = 'DAPClean', modeline = false})
   end,
