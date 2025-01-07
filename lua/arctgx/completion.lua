@@ -150,7 +150,7 @@ function completion.init()
     end
   })
 
-  vim.go.completeopt = 'noinsert,menuone,fuzzy'
+  vim.go.completeopt = 'popup,menuone,noinsert,fuzzy'
 
   local arrowMaps = {
     ['<Down>'] = '<C-n>',
