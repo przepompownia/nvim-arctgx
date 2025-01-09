@@ -1,3 +1,5 @@
+vim.o.swapfile = false
+vim.go.backup = false
 vim.go.mouse = 'a'
 vim.go.mousemodel = 'extend'
 vim.opt.backspace:append('nostop')
@@ -5,7 +7,6 @@ vim.bo.softtabstop = -1
 vim.bo.tabstop = 4
 vim.bo.shiftwidth = 4
 
-vim.go.backup = false
 vim.go.updatetime = 300
 vim.wo.showbreak = '> '
 vim.go.showmatch = false
@@ -56,7 +57,6 @@ vim.opt.path:append(vim.env.VIMRUNTIME)
 vim.go.showcmd = false
 vim.go.showmode = false
 vim.go.ruler = false
-vim.o.swapfile = false
 
 vim.opt.sessionoptions:remove('help')
 vim.opt.sessionoptions:remove('folds')
