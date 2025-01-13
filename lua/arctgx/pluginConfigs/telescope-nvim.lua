@@ -113,6 +113,7 @@ keymap.set('n', 'searchStringInFilenamesFromTextObject', function ()
 end, {expr = true})
 local augroup = api.nvim_create_augroup('ArctgxTelescope', {clear = true})
 api.nvim_create_autocmd({'FileType'}, {
+  pattern = 'qf',
   group = augroup,
   callback = function ()
     vim.keymap.set({'n'}, 'zf', require('telescope.builtin').quickfix, {buffer = true})
