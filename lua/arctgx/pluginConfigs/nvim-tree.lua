@@ -4,6 +4,12 @@ local session = require('arctgx.session')
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 
+local function isFileTracked(path)
+  local gitDir = vim.fs.dirname(path)
+
+  return require('arctgx.git').isTracked(path, gitDir, gitDir)
+end
+
 api.nvim_create_autocmd('User', {
   pattern = 'NvimTreeSetup',
   callback = function ()
@@ -20,6 +26,9 @@ api.nvim_create_autocmd('User', {
     end
 
     treeapi.events.subscribe(Event.NodeRenamed, function (data)
+      if not isFileTracked(data.old_name) then
+        return
+      end
       local yes = 'y'
       vim.ui.input({
         prompt = 'Do you want to stage this renaming? > ',
@@ -38,6 +47,9 @@ api.nvim_create_autocmd('User', {
     end)
 
     treeapi.events.subscribe(Event.FileRemoved, function (data)
+      if not isFileTracked(data.fname) then
+        return
+      end
       local yes = 'y'
       vim.ui.input({
         prompt = 'Do you want to stage this removal? > ',
