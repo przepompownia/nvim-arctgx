@@ -136,32 +136,36 @@ require('arctgx.lazy').setupOnLoad('dap', function ()
     command = '/usr/bin/kitty',
   }
   local dapSessionStatus = ''
+  local function setSessionStatus(status)
+    dapSessionStatus = status
+    api.nvim__redraw({statusline = true})
+  end
 
   dap.listeners.after['event_initialized']['arctgx'] = function (_session, _body)
-    dapSessionStatus = 'L'
+    setSessionStatus('L')
   end
 
   dap.listeners.after['event_stopped']['arctgx'] = function (_session, _body)
-    dapSessionStatus = 'S'
+    setSessionStatus('S')
   end
 
   dap.listeners.after['event_exited']['arctgx'] = function (_session, _body)
     info('Exited')
-    dapSessionStatus = 'E'
+    setSessionStatus('E')
   end
   dap.listeners.after['event_thread']['arctgx'] = function (_session, body)
     if body.reason == 'exited' then
       info('Thread ' .. body.threadId .. ' exited')
-      dapSessionStatus = 'X'
+      setSessionStatus('X')
     end
   end
   dap.listeners.before['disconnect']['arctgx'] = function (_session, _body)
     info('Disconnected')
-    dapSessionStatus = 'D'
+    setSessionStatus('D')
   end
   dap.listeners.after['event_terminated']['arctgx'] = function (_session, _body)
     info('Terminated')
-    dapSessionStatus = 'T'
+    setSessionStatus('T')
   end
 
 ---@diagnostic disable-next-line: duplicate-set-field
