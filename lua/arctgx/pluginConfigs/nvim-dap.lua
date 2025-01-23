@@ -215,7 +215,12 @@ keymap.set(
   end,
   keymapOpts
 )
-keymap.set({'n'}, 'debuggerClose', function () require('dap').close() end, keymapOpts)
+keymap.set({'n'}, 'debuggerClose', function ()
+  require('dap').close()
+  vim.schedule(function ()
+    api.nvim__redraw({statusline = true})
+  end)
+end, keymapOpts)
 keymap.set({'n'}, 'debuggerTerminate', function () require('dap').terminate() end, keymapOpts)
 keymap.set(
   {'n'},
