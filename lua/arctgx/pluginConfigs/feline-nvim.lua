@@ -113,7 +113,7 @@ feline.setup({
             return widgets.renderDiagnosticsSummary('Normal')
           end,
           enabled = function ()
-            return #vim.diagnostic.count(0, {}) > 0
+            return vim.tbl_count(vim.diagnostic.count(0, {})) > 0
           end,
           hl = {name = 'FelineDiags', bg = colors.nord1},
           left_sep = {str = '  ', hl = {name = 'FelineDiagsLeftSep', fg = colors.nord5, bg = colors.nord1}},
