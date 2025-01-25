@@ -5,6 +5,8 @@ local modeColor = viMode.get_mode_color
 local widgets = require('arctgx.widgets')
 local bo = vim.bo
 local b = vim.b
+local api = vim.api
+local ns = require('arctgx.lsp').ns()
 
 local colors = {
   bg        = '#4C566A',
@@ -28,6 +30,14 @@ local colors = {
   nord8     = '#88C0D0',
   nord13    = '#EBCB8B',
 }
+
+for _, name in ipairs({'Error', 'Hint', 'Warn', 'Info'}) do
+  api.nvim_set_hl(ns, 'StlDiagnostic' .. name, vim.tbl_extend(
+    'force',
+    vim.api.nvim_get_hl(0, {name = 'Diagnostic' .. name}),
+    {bg = colors.nord1}
+  ))
+end
 
 local viModeColors = {
   ['NORMAL'] = colors.nord8,
@@ -105,7 +115,7 @@ feline.setup({
           enabled = function ()
             return b.gitsigns_status ~= ''
           end,
-          hl = {name = 'FelineVcs', bg = colors.nord1},
+          hl = {name = 'FelineVcs', fg = colors.nord5},
           left_sep = {str = '  ', hl = {name = 'FelineVcsLeftSep', fg = colors.nord5, bg = colors.nord1}},
         },
         {
@@ -115,7 +125,7 @@ feline.setup({
           enabled = function ()
             return vim.tbl_count(vim.diagnostic.count(0, {})) > 0
           end,
-          hl = {name = 'FelineDiags', bg = colors.nord1},
+          hl = {name = 'FelineDiags', fg = colors.nord5, bg = colors.nord1},
           left_sep = {str = '  ', hl = {name = 'FelineDiagsLeftSep', fg = colors.nord5, bg = colors.nord1}},
         },
         {

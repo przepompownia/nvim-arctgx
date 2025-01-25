@@ -27,8 +27,28 @@ function widgets.renderDebug(highlights)
   )
 end
 
-local function renderDiagnosticPart(symbol, hlName, value)
-  return value and ('%%#%s#%s%s'):format(hlName, symbol, value) or ''
+local stlSymbolHlMap = {
+  [' +'] = 'DiffAdd',
+  [' ~'] = 'DiffChange',
+  [' -'] = 'DiffDelete',
+  ['  '] = 'StlDiagnosticError',
+  [' 󰀪 '] = 'StlDiagnosticWarn',
+  ['  '] = 'StlDiagnosticInfo',
+  ['  '] = 'StlDiagnosticHint',
+}
+
+local symbolsStl = {}
+
+for symbol, hlName in pairs(stlSymbolHlMap) do
+  symbolsStl[symbol] = ('%%#%s#%s'):format(hlName, symbol)
+end
+
+local function renderDiagnosticPart(symbol, value)
+  if not value then
+    return ''
+  end
+
+  return symbolsStl[symbol] .. value
 end
 
 function widgets.renderVcsSummary(resetHl)
@@ -38,9 +58,9 @@ function widgets.renderVcsSummary(resetHl)
   end
 
   local result =
-    renderDiagnosticPart(' +', 'DiffAdd', status.added)
-    .. renderDiagnosticPart(' ~', 'DiffChange', status.changed)
-    .. renderDiagnosticPart(' -', 'DiffDelete', status.removed)
+    renderDiagnosticPart(' +', status.added)
+    .. renderDiagnosticPart(' ~', status.changed)
+    .. renderDiagnosticPart(' -', status.removed)
 
   if '' == result then
     return ''
@@ -52,10 +72,10 @@ end
 function widgets.renderDiagnosticsSummary(resetHl)
   local count = vim.diagnostic.count(0, {})
   local result =
-    renderDiagnosticPart('  ', 'DiagnosticError', count[1])
-    .. renderDiagnosticPart(' 󰀪 ', 'DiagnosticWarn', count[2])
-    .. renderDiagnosticPart('  ', 'DiagnosticInfo', count[3])
-    .. renderDiagnosticPart('  ', 'DiagnosticHint', count[4])
+    renderDiagnosticPart('  ', count[1])
+    .. renderDiagnosticPart(' 󰀪 ', count[2])
+    .. renderDiagnosticPart('  ', count[3])
+    .. renderDiagnosticPart('  ', count[4])
 
   if '' == result then
     return ''
