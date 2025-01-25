@@ -39,8 +39,8 @@ function widgets.renderVcsSummary(resetHl)
 
   local result =
     renderDiagnosticPart(' +', 'DiffAdd', status.added)
-    .. renderDiagnosticPart(' ~', 'DiagnosticWarn', status.changed)
-    .. renderDiagnosticPart(' -', 'DiagnosticInfo', status.removed)
+    .. renderDiagnosticPart(' ~', 'DiffChange', status.changed)
+    .. renderDiagnosticPart(' -', 'DiffDelete', status.removed)
 
   if '' == result then
     return ''
