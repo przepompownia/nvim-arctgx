@@ -12,7 +12,7 @@ require('statuscol').setup({
       click = 'v:lua.ScSa',
     },
     {
-      sign = {namespace = {'.*/diagnostic/signs'}, maxwidth = 1, colwidth = 2, auto = true, foldclosed = true},
+      sign = {namespace = {'.*.diagnostic.signs'}, maxwidth = 1, colwidth = 2, auto = true, foldclosed = true},
       click = 'v:lua.ScSa'
     },
     {
