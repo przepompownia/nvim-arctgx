@@ -4,7 +4,7 @@ local function defaultWorkspaceLibrary(rootDir)
   return {
     vim.env.VIMRUNTIME .. '/lua',
     '${3rd}/luv/library/lua',
-    rootDir .. '/lua',
+    rootDir and (rootDir .. '/lua'),
   }
 end
 
