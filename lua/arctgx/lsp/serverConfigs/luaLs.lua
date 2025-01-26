@@ -1,13 +1,14 @@
 local M = {}
 
-local function defaultWorkspaceLibrary()
+local function defaultWorkspaceLibrary(rootDir)
   return {
-    vim.env.VIMRUNTIME,
-    '${3rd}/luv/library',
+    vim.env.VIMRUNTIME .. '/lua',
+    '${3rd}/luv/library/lua',
+    rootDir .. '/lua',
   }
 end
 
-function M.defaultConfig()
+function M.defaultConfig(rootDir)
   return {
     runtime = {
       path = {
@@ -20,7 +21,7 @@ function M.defaultConfig()
     workspace = {
       ignoreDir = {'lua'},
       checkThirdParty = false,
-      library = defaultWorkspaceLibrary(),
+      library = defaultWorkspaceLibrary(rootDir),
       maxPreload = 10000,
       preloadFileSize = 10000,
     },
@@ -59,7 +60,7 @@ function M.onInit(client)
   end
 
   vim.notify('.luarc.json(c) not found. Loading defaults.', vim.log.levels.INFO)
-  client.config.settings.Lua = vim.tbl_deep_extend('force', client.config.settings.Lua, M.defaultConfig())
+  client.config.settings.Lua = vim.tbl_deep_extend('force', client.config.settings.Lua, M.defaultConfig(path))
 
   return client:notify(vim.lsp.protocol.Methods.workspace_didChangeConfiguration, {settings = client.config.settings})
 end
