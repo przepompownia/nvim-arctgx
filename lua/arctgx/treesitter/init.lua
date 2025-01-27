@@ -92,7 +92,7 @@ local function start(buf, lang)
 end
 
 function extension.loadOnFiletype()
-  if loadOnFiletypeAutocmd and #vim.api.nvim_get_autocmds({group = loadOnFiletypeAugroup}) > 0 then
+  if loadOnFiletypeAutocmd and #vim.api.nvim_get_autocmds({id = loadOnFiletypeAutocmd}) > 0 then
     api.nvim_del_autocmd(loadOnFiletypeAutocmd)
   end
 
