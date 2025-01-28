@@ -48,6 +48,7 @@ local notFtLangs = {
 }
 
 local additionalFiletypes = {
+  'mysql',
   'php',
   'markdown',
   'markdown_inline',
@@ -57,6 +58,7 @@ local additionalFiletypes = {
 
 local ftLangMap = {
   php = 'php_only',
+  mysql = 'sql',
 }
 
 local langs = vim.deepcopy(fileTypes)
@@ -88,7 +90,7 @@ end
 
 local function start(buf, lang)
   vim.treesitter.start(buf, lang)
-  vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+  vim.bo[buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
 end
 
 function extension.loadOnFiletype()
