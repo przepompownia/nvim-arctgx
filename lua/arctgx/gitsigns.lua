@@ -71,4 +71,11 @@ gitsigns.configuration = {
   end
 }
 
+api.nvim_create_autocmd('User', {
+  pattern = 'GitSignsUpdate',
+  callback = function ()
+    api.nvim__redraw({statusline = true})
+  end
+})
+
 return gitsigns
