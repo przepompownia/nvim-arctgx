@@ -66,7 +66,6 @@ gitsigns.configuration = {
     keymap.set('n', 'gitToggleHighlight', gs.toggle_linehl, opts)
     keymap.set('n', 'gitDiffAgainstIndex', gs.diffthis, opts)
     keymap.set('n', 'gitDiffAgainstLastCommit', function () gs.diffthis('~') end, opts)
-    keymap.set('n', 'gitToggleDeleted', gs.toggle_deleted, opts)
     keymap.set('n', 'gitHunkToVisual', gs.select_hunk, opts)
   end
 }

@@ -64,7 +64,6 @@ local abstractKeymaps = {
   gitHunkPreview = {lhs = '<Leader>hp', desc = 'Git: print hunk'},
   gitHunkPrintInline = {lhs = '<Leader>hP', desc = 'Git: print hunk inline'},
   gitToggleHighlight = {lhs = '<Leader>ht', desc = 'Git: toggle highlight'},
-  gitToggleDeleted = {lhs = '<Leader>hT', desc = 'Git: toggle displaying deleted lines'},
   gitBlameLine = {lhs = '<Leader>hb', desc = 'Git: blame line under cursor'},
   gitBlameToggleVirtual = {lhs = '<Leader>hB', desc = 'Git: toggle displaying blame in virtual lines'},
   gitDiffAgainstIndex = {lhs = '<Leader>hd', desc = 'Git: diff against the index'},
