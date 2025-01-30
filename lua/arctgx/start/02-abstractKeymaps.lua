@@ -57,7 +57,6 @@ local abstractKeymaps = {
   gitLogCurrentFile = {lhs = '<Leader>gl', desc = 'Git: log current file'},
   gitLogAllFiles = {lhs = '<Leader>gL', desc = 'Git: log all files'},
   gitPush = {lhs = '<Leader>gp', desc = 'Git: push'},
-  gitHunkUndoStage = {lhs = '<Leader>hu', desc = 'Git: undo stage hunk'},
   gitHunkReset = {lhs = '<Leader>hr', desc = 'Git: reset hunk'},
   gitHunkToVisual = {lhs = '<Leader>hv', desc = 'Git: create visual selection from hunk'},
   gitBufferReset = {lhs = '<Leader>hR', desc = 'Git: reset buffer'},

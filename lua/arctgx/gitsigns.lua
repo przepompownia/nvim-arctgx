@@ -56,7 +56,6 @@ gitsigns.configuration = {
     keymap.set({'n'}, 'gitHunkReset', gs.reset_hunk, opts)
     keymap.set({'v'}, 'gitHunkReset', function () gs.reset_hunk {vim.fn.line('.'), vim.fn.line('v')} end, opts)
     keymap.set('n', 'gitStageAndWriteFile', gs.stage_buffer, opts)
-    keymap.set({'n', 'v'}, 'gitHunkUndoStage', gs.undo_stage_hunk, opts)
     keymap.set('n', 'gitBufferReset', gs.reset_buffer, opts)
     keymap.set('n', 'gitHunkPreview', gs.preview_hunk, opts)
     keymap.set('n', 'gitHunkPrintInline', gs.preview_hunk_inline, opts)
