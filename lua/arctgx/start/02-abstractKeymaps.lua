@@ -76,7 +76,6 @@ local abstractKeymaps = {
   langGoToDefinitionInPlace = {lhs = {'gyd'}, desc = 'Go to definition in place'},
   -- langPeekDefinition = {lhs = {'gD'}, desc = 'Show definition in float window'},
   langGoToTypeDefinition = {lhs = 'gyD', desc = 'Go to type definition'},
-  langGoToImplementation = {lhs = {'gi'}, desc = 'Find implementations'},
   langFindDocumentSymbols = {lhs = {'<F6>'}, desc = 'Find document symbols'},
   langFindWorkspaceSymbols = {lhs = {'<S-F6>', '<F18>'}, desc = 'Find workspace symbols'},
   langToggleInlayHints = {lhs = '<Leader>ih', desc = 'Toggle inlay hints'},
