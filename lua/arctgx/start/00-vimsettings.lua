@@ -28,6 +28,7 @@ vim.go.eadirection = 'hor'
 vim.opt.isfname:remove('=')
 
 vim.opt.diffopt:append('vertical')
+vim.opt.diffopt:remove('linematch:40')
 vim.opt.diffopt:append('linematch:60')
 vim.opt.jumpoptions:append('view')
 vim.opt_global.shortmess:append('IcsS')
