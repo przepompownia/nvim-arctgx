@@ -13,7 +13,7 @@ require('arctgx.lazy').setupOnLoad('dap', function ()
     args = {'run', 'vscode-php-debug', 'phpDebug'}
   }
 
-  local bashdbDir = base.getPluginDir() .. '/tools/vscode-bash-debug/'
+  local bashdbDir = base.getPluginDir() .. '/tools/vscode-bash-debug/current/'
 
   --- @param defaultValue any
   --- @param promptTemplate string
