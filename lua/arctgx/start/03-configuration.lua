@@ -23,6 +23,12 @@ api.nvim_create_autocmd('UIEnter', {
   end
 })
 
+api.nvim_create_autocmd({'VimLeave', 'VimSuspend'}, {
+  callback = function ()
+    vim.o.guicursor = 'a:ver100'
+  end
+})
+
 api.nvim_create_user_command('Packadd', function (opts)
   vim.cmd.packadd(opts.args)
   plugin.loadSingleConfiguration(opts.args, pluginPrefix, require('arctgx.base').getPluginDir())
