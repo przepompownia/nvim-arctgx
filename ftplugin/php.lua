@@ -1,4 +1,4 @@
-vim.opt_local.iskeyword:remove('$')
+vim.opt_local.iskeyword:append('$,@-@')
 vim.opt_local.spell = true
 vim.opt_local.wrap = false
 vim.opt_local.commentstring = '// %s'
