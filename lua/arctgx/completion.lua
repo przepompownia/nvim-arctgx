@@ -199,8 +199,8 @@ function completion.init()
     if vim.fn.complete_info({'selected'}).selected ~= -1 then
       return keycodes.cy
     end
-    return keycodes.ce .. autopairCR()
-  end, {expr = true, noremap = true})
+    return keycodes.ce .. (autopairCR() or '')
+  end, {expr = true})
 end
 
 return completion
