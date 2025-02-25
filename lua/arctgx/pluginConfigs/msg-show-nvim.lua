@@ -7,4 +7,5 @@ require('msg-show.redir').init(
   notifier.debug,
   notifier.showDialogMessage
 )
-require('arctgx.vim.abstractKeymap').set('n', 'browseNotificationHistory', notifier.showHistory)
+require('arctgx.vim.abstractKeymap').set('n', 'notificationBrowseHistory', notifier.showHistory)
+require('arctgx.vim.abstractKeymap').set('n', 'notificationDelayRemoval', notifier.delayRemoval)
