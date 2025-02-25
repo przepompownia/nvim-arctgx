@@ -1,9 +1,8 @@
 local api = vim.api
 -- It's experimental and rather still not very usable
 local completion = {}
---- @type fun
+--- @type fun()?
 local cancelResolveCb = nil
-
 
 local debounce = 300
 local useBuiltinAutotrigger = false
