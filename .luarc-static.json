@@ -35,7 +35,7 @@
     "neededFileStatus": {
       "codestyle-check": "Any"
     },
-    "globals": ["dump", "vim"],
+    "globals": ["dump", "vim", "verboseLog"],
     "unusedLocalExclude": ["_*"]
   }
 }

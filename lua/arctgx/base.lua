@@ -207,6 +207,10 @@ function base.isDummyFileTypeBuffer(args)
   return args.file == args.match and opts.buftype == 'nofile' and opts.bufhidden == 'hide' and opts.swapfile == false and opts.modeline == false
 end
 
+function verboseLog(msg)
+  api.nvim_echo({{tostring(vim.uv.hrtime())}, {': '}, {vim.inspect(msg)}}, false, {verbose = true})
+end
+
 function dump(value)
   local valueString = vim.inspect(value):gsub('<function (%d+)>', '"function %1"'):gsub('<%d+>', '')
   base.displayInWindow('Dump', 'lua', valueString)
