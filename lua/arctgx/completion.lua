@@ -164,7 +164,7 @@ function completion.init()
       function ()
         return vim.fn.pumvisible() == 1 and pumKmap or insertKmap
       end,
-      {expr = true}
+      {expr = true, desc = ('%s to %s if pumvisible'):format(insertKmap, pumKmap)}
     )
   end
 
