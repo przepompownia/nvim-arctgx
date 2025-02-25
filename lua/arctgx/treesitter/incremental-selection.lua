@@ -26,7 +26,7 @@ local function selectNode(node)
 end
 
 function extension.selectNodeUnderCursor()
-  initialNode = vim.treesitter.get_node()
+  initialNode = vim.treesitter.get_node({ignore_injections = false})
   if initialNode == nil then
     return
   end
