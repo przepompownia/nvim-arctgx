@@ -4,7 +4,7 @@ local completion = {}
 --- @type fun()?
 local cancelResolveCb = nil
 
-local debounce = 300
+local debounce = 250
 local useBuiltinAutotrigger = false
 local insertCharTimer = assert(vim.uv.new_timer())
 local completeChangedTimer = assert(vim.uv.new_timer())
@@ -76,14 +76,14 @@ local function delayShowDoc(buf, clientId)
   local dueIn = completeChangedTimer:get_due_in()
   if dueIn == 0 then
     cancelResolveCb = showDocumentation(buf, clientId)
-    completeChangedTimer:start(debounce, 0, function () end)
+    completeChangedTimer:start(2 * debounce, 0, function () end)
     return
   end
   completeChangedTimer:stop()
   if type(cancelResolveCb) == 'function' then
     cancelResolveCb()
   end
-  completeChangedTimer:start(debounce - dueIn, 0, vim.schedule_wrap(function ()
+  completeChangedTimer:start(debounce, 0, vim.schedule_wrap(function ()
     cancelResolveCb = showDocumentation(buf, clientId)
   end))
 end
