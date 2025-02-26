@@ -50,7 +50,7 @@ end
 --- @param client vim.lsp.Client
 --- @return boolean
 function M.onInit(client)
-  local triggerCharaters = {'\t', '\n', '.', ':', "'", '"', ',', '#', '*', '@', '|', '=', '-', ' ', '+', '?'}
+  local triggerCharaters = {'\t', '\n', '.', ':', "'", '"', '#', '*', '@', '|', '-', ' ', '+', '?'}
   client.server_capabilities.completionProvider.triggerCharacters = triggerCharaters
 
   local path = client.workspace_folders[1].name
