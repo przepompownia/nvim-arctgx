@@ -34,14 +34,15 @@ local function showDocumentation(buf, clientId)
         end
 
         local winData = api.nvim__complete_set(info['selected'], {info = docs})
-        if not winData.winid or not api.nvim_win_is_valid(winData.winid) then
+        local winid = winData.winid
+        if not winid or not api.nvim_win_is_valid(winid) then
           return
         end
 
-        api.nvim_win_set_config(winData.winid, {border = 'rounded'})
-
+        api.nvim_win_set_config(winid, {border = 'rounded'})
         vim.treesitter.start(winData.bufnr, 'markdown')
-        vim.wo[winData.winid].conceallevel = 3
+        api.nvim__redraw({win = winId, valid = true})
+        vim.wo[winid].conceallevel = 3
       end
     end
   )
