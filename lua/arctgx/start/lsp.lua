@@ -134,7 +134,6 @@ local function willRenameFilesHandler(response)
     end
 
     lsp.util.apply_workspace_edit(clientResponse.result, client.offset_encoding)
-    -- dump(clientResponse.result)
   end
 end
 
