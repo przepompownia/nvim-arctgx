@@ -73,13 +73,17 @@ local function delayShowDoc(buf, clientId)
   if vim.fn.pumvisible() ~= 1 then
     return
   end
-  if completeChangedTimer:get_due_in() > 0 then
-    completeChangedTimer:again()
-    if type(cancelResolveCb) == 'function' then
-      cancelResolveCb()
-    end
+  local dueIn = completeChangedTimer:get_due_in()
+  if dueIn == 0 then
+    cancelResolveCb = showDocumentation(buf, clientId)
+    completeChangedTimer:start(debounce, 0, function () end)
+    return
   end
-  completeChangedTimer:start(debounce, 0, vim.schedule_wrap(function ()
+  completeChangedTimer:stop()
+  if type(cancelResolveCb) == 'function' then
+    cancelResolveCb()
+  end
+  completeChangedTimer:start(debounce - dueIn, 0, vim.schedule_wrap(function ()
     cancelResolveCb = showDocumentation(buf, clientId)
   end))
 end
