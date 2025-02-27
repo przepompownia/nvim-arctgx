@@ -18,7 +18,6 @@ vim.go.pumblend = 15
 vim.opt.complete:remove('t')
 vim.opt.matchpairs:append('<:>')
 vim.o.spell = false
-vim.o.conceallevel = 2
 vim.opt.spelloptions:append('camel')
 vim.opt.spelloptions:append('noplainbuffer')
 vim.go.splitbelow = true
