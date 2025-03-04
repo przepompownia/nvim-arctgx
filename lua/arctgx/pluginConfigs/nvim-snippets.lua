@@ -1,6 +1,6 @@
 local config = {}
 
-config.filetypes = {'lua', 'php'}
+config.filetypes = {'lua', 'php', 'markdown'}
 
 require('snippets').setup({
   global_snippets = nil,

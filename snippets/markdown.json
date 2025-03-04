@@ -1,0 +1,16 @@
+{
+  "details": {
+    "prefix": "details",
+    "body": [
+      "<details>", 
+      "",
+      "<summary>${1:init.lua}</summary>",
+      "",
+      "````${2:lua}",
+      "${3}",
+      "````",
+      "",
+      "<details>" 
+    ]
+  }
+}
