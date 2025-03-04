@@ -15,6 +15,10 @@
     "prefix": "lvn",
     "body": ["vim.notify('\\n' .. vim.inspect($1))"]
   },
+  "nvim_echo with -V3logfile": {
+    "prefix": "lvv",
+    "body": ["api.nvim_echo({{tostring(vim.uv.hrtime())}, {': '}, {vim.inspect($1)}}, false, {verbose = true})"]
+  },
   "print(vim.notify())": {
     "prefix": "vn",
     "body": ["print(vim.notify($1))"]
