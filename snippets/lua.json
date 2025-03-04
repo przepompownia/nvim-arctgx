@@ -19,10 +19,6 @@
     "prefix": "lvv",
     "body": ["api.nvim_echo({{tostring(vim.uv.hrtime())}, {': '}, {vim.inspect($1)}}, false, {verbose = true})"]
   },
-  "print(vim.notify())": {
-    "prefix": "vn",
-    "body": ["print(vim.notify($1))"]
-  },
   "table escaped element": {
     "prefix": "[]",
     "body": ["['$1'] = $2,"]
