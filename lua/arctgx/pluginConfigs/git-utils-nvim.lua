@@ -13,6 +13,7 @@ keymap.set('n', 'gitPush', function ()
 end)
 
 require('arctgx.lazy').setupOnLoad('git-utils', function ()
+  require('telescope')
   require('git-utils').setup({
     telescopeAttachMappings = function (_promptBufnr, map) return require('arctgx.telescope').defaultFileMappings(_promptBufnr, map) end,
     currentBufferDirectory = require('arctgx.base').getBufferCwd,
