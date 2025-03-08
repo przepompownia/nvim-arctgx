@@ -17,7 +17,7 @@
   },
   "nvim_echo with -V3logfile": {
     "prefix": "lvv",
-    "body": ["api.nvim_echo({{tostring(vim.uv.hrtime())}, {': '}, {vim.inspect($1)}}, false, {verbose = true})"]
+    "body": ["vim.api.nvim_echo({{tostring(vim.uv.hrtime())}, {': '}, {vim.inspect($1)}}, false, {verbose = true})"]
   },
   "table escaped element": {
     "prefix": "[]",
