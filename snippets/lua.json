@@ -17,7 +17,16 @@
   },
   "nvim_echo with -V3logfile": {
     "prefix": "lvv",
-    "body": ["vim.api.nvim_echo({{tostring(vim.uv.hrtime())}, {': '}, {vim.inspect($1)}}, false, {verbose = true})"]
+    "body": ["vim.api.nvim_echo({{tostring(vim.uv.hrtime() / 1000000000)}, {': '}, {vim.inspect($1)}}, false, {verbose = true})"]
+  },
+  "log to file": {
+    "prefix": "lll",
+    "body": [
+      "local f = assert(io.open('${2:/tmp/v.log}', 'a+'))",
+      "local msg = ('%d: %s\\n'):format(vim.uv.hrtime() / 1000000000, vim.inspect($1))",
+      "f:write(msg)",
+      "f:close()"
+    ]
   },
   "table escaped element": {
     "prefix": "[]",
