@@ -157,6 +157,11 @@ feline.setup({
           hl = {name = 'FelineDebugWidget', bg = colors.bg, fg = colors.nord5},
         },
         {
+          provider = function () return require('arctgx.lsp').getStatus() end,
+          hl = {name = 'FelineLsp', bg = colors.bg, fg = colors.nord5},
+          left_sep = {str = ' ', hl = {name = 'FelineLspLeftSep', bg = colors.bg}},
+        },
+        {
           provider = function () return ((bo.fenc ~= '' and bo.fenc) or vim.o.enc) end,
           hl = {name = 'FelineFenc', bg = colors.bg, fg = colors.nord5},
           left_sep = {str = ' ', hl = {name = 'FelineFencLeftSep', bg = colors.bg}},

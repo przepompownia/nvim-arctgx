@@ -51,6 +51,8 @@ api.nvim_create_autocmd('LspAttach', {
     local opts = {buffer = ev.buf}
     local client = lsp.get_clients({id = ev.data.client_id})[1]
 
+    alsp.updateAttachedClientNames(ev.buf, client.id, client.name)
+
     keymap.set('n', 'langGoToDefinition', lsp.buf.definition, opts)
     keymap.set('n', 'langGoToDefinitionInPlace', lsp.buf.definition, opts)
     keymap.set('n', 'langGoToTypeDefinition', lsp.buf.type_definition, opts)
@@ -84,6 +86,7 @@ api.nvim_create_autocmd('LspAttach', {
         group = augroup,
         buffer = ev.buf,
         callback = function (args)
+          alsp.updateAttachedClientNames(args.buf, args.data.client_id, nil)
           lsp.util.buf_clear_references(args.buf)
           local existsOtherClientWithHl = vim.iter(lsp.get_clients({
             bufnr = args.buf,
