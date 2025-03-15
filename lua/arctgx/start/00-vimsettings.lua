@@ -44,8 +44,6 @@ vim.go.switchbuf = 'useopen'
 vim.go.wildmenu = true
 vim.go.history = 1000
 vim.go.laststatus = 2
-vim.opt.completeopt:remove('preview')
-vim.opt.completeopt:append('popup')
 vim.go.showtabline = 1
 vim.go.tabline = "%!v:lua.require'arctgx.tabline'.prepare()"
 
