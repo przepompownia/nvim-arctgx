@@ -57,15 +57,26 @@ function completion.hasWordsBefore()
   return col ~= 0 and api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match('%s') == nil
 end
 
+local function start(triggerCharacters)
+  insertCharTimer:stop()
+  if vim.tbl_contains(triggerCharacters, vim.v.char) or vim.v.char:match('[%w_]') then
+    insertCharTimer:start(debounce, 0, vim.schedule_wrap(vim.lsp.completion.get))
+  end
+end
+
 local function autotrigger(triggerCharacters)
-  -- https://github.com/neovim/neovim/pull/30028#issuecomment-2285503268
-  if vim.fn.pumvisible() == 1 or insertCharTimer:get_due_in() > 0 then
+  if vim.fn.pumvisible() ~= 1 then
+    start(triggerCharacters)
     return
   end
 
-  if vim.tbl_contains(triggerCharacters, vim.v.char) or vim.v.char:match('[%w_]') then
-    insertCharTimer:start(debounce, 0, vim.schedule_wrap(vim.lsp.completion.trigger))
+  local dueIn = insertCharTimer:get_due_in()
+
+  if dueIn > 0 then
+    return
   end
+
+  start(triggerCharacters)
 end
 
 local function delayShowDoc(buf, clientId)
@@ -125,7 +136,7 @@ function completion.init()
 
       vim.lsp.completion.enable(true, clientId, args.buf, {autotrigger = useBuiltinAutotrigger})
 
-      vim.keymap.set({'i'}, '<C-Space>', vim.lsp.completion.trigger, {buffer = args.buf})
+      vim.keymap.set({'i'}, '<C-Space>', vim.lsp.completion.get, {buffer = args.buf})
 
       if not useBuiltinAutotrigger then
         api.nvim_create_autocmd({
@@ -157,7 +168,7 @@ function completion.init()
             vim.snippet.jump(params.snippetJump)
             return
           elseif completion.hasWordsBefore() then
-            vim.lsp.completion.trigger()
+            vim.lsp.completion.get()
           else
             return key
           end
