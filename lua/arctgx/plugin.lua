@@ -45,10 +45,7 @@ function plugin.loadSingleConfiguration(pluginName, pluginPrefix)
   end
   local pluginModule = pluginPrefix .. '.' .. tail
 
-  local ok, out = pcall(require, pluginModule)
-  if not ok then
-    vim.notify(out, vim.log.levels.WARN, {title = 'Plugin configuration'})
-  end
+  require(pluginModule)
 end
 
 return plugin
