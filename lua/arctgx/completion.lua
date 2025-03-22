@@ -136,7 +136,10 @@ function completion.init()
 
       vim.lsp.completion.enable(true, clientId, args.buf, {autotrigger = useBuiltinAutotrigger})
 
-      vim.keymap.set({'i'}, '<C-Space>', vim.lsp.completion.get, {buffer = args.buf})
+      if not definedMaps then
+        vim.keymap.set({'i'}, '<C-Space>', vim.lsp.completion.get, {buffer = args.buf})
+        definedMaps = true
+      end
 
       local existingInsertPreAutocmds = api.nvim_get_autocmds({group = completionAugroup, event = {'InsertCharPre'}})
       if not useBuiltinAutotrigger and vim.tbl_count(existingInsertPreAutocmds) == 0 then
