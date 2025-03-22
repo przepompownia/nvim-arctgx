@@ -138,7 +138,8 @@ function completion.init()
 
       vim.keymap.set({'i'}, '<C-Space>', vim.lsp.completion.get, {buffer = args.buf})
 
-      if not useBuiltinAutotrigger then
+      local existingInsertPreAutocmds = api.nvim_get_autocmds({group = completionAugroup, event = {'InsertCharPre'}})
+      if not useBuiltinAutotrigger and vim.tbl_count(existingInsertPreAutocmds) == 0 then
         api.nvim_create_autocmd({
           'InsertCharPre',
         }, {
