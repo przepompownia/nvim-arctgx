@@ -10,7 +10,7 @@ local insertCharTimer = assert(vim.uv.new_timer())
 local completeChangedTimer = assert(vim.uv.new_timer())
 local completionAugroup = api.nvim_create_augroup('arctgx.completion', {clear = true})
 local definedMaps = false
-local onKeyNs
+local onKeyNs = {}
 
 local function showDocumentation(buf, clientId)
   local completionItem = vim.tbl_get(vim.v.completed_item, 'user_data', 'nvim', 'lsp', 'completion_item')
@@ -145,7 +145,10 @@ function completion.init()
             group = completionAugroup,
             buffer = args.buf,
             callback = function ()
-              onKeyNs = vim.on_key(function (k, _)
+              onKeyNs[args.buf] = vim.on_key(function (k, _)
+                if api.nvim_get_current_buf() ~= args.buf then
+                  return
+                end
                 autotrigger(triggerCharacters, k)
               end)
             end,
@@ -154,7 +157,8 @@ function completion.init()
             group = completionAugroup,
             buffer = args.buf,
             callback = function ()
-              vim.on_key(nil, onKeyNs)
+              vim.on_key(nil, onKeyNs[args.buf])
+              onKeyNs[args.buf] = nil
             end,
           })
         end
