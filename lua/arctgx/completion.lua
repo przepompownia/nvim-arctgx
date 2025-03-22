@@ -140,22 +140,24 @@ function completion.init()
 
       if not definedMaps then
         vim.keymap.set({'i'}, '<C-Space>', vim.lsp.completion.get, {buffer = args.buf})
-        api.nvim_create_autocmd('InsertEnter', {
-          group = completionAugroup,
-          buffer = args.buf,
-          callback = function ()
-            onKeyNs = vim.on_key(function (k, _)
-              autotrigger(triggerCharacters, k)
-            end)
-          end,
-        })
-        api.nvim_create_autocmd('InsertLeave', {
-          group = completionAugroup,
-          buffer = args.buf,
-          callback = function ()
-            vim.on_key(nil, onKeyNs)
-          end,
-        })
+        if not useBuiltinAutotrigger then
+          api.nvim_create_autocmd('InsertEnter', {
+            group = completionAugroup,
+            buffer = args.buf,
+            callback = function ()
+              onKeyNs = vim.on_key(function (k, _)
+                autotrigger(triggerCharacters, k)
+              end)
+            end,
+          })
+          api.nvim_create_autocmd('InsertLeave', {
+            group = completionAugroup,
+            buffer = args.buf,
+            callback = function ()
+              vim.on_key(nil, onKeyNs)
+            end,
+          })
+        end
         definedMaps = true
       end
 
