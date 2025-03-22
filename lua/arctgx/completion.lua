@@ -9,6 +9,8 @@ local useBuiltinAutotrigger = false
 local insertCharTimer = assert(vim.uv.new_timer())
 local completeChangedTimer = assert(vim.uv.new_timer())
 local completionAugroup = api.nvim_create_augroup('arctgx.completion', {clear = true})
+local definedMaps = false
+local onKeyNs
 
 local function showDocumentation(buf, clientId)
   local completionItem = vim.tbl_get(vim.v.completed_item, 'user_data', 'nvim', 'lsp', 'completion_item')
@@ -57,16 +59,16 @@ function completion.hasWordsBefore()
   return col ~= 0 and api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match('%s') == nil
 end
 
-local function start(triggerCharacters)
+local function start(triggerCharacters, typedCharacter)
   insertCharTimer:stop()
-  if vim.tbl_contains(triggerCharacters, vim.v.char) or vim.v.char:match('[%w_]') then
+  if vim.tbl_contains(triggerCharacters, typedCharacter) or typedCharacter:match('[%w_]') then
     insertCharTimer:start(debounce, 0, vim.schedule_wrap(vim.lsp.completion.get))
   end
 end
 
-local function autotrigger(triggerCharacters)
+local function autotrigger(triggerCharacters, typedCharacter)
   if vim.fn.pumvisible() ~= 1 then
-    start(triggerCharacters)
+    start(triggerCharacters, typedCharacter)
     return
   end
 
@@ -76,7 +78,7 @@ local function autotrigger(triggerCharacters)
     return
   end
 
-  start(triggerCharacters)
+  start(triggerCharacters, typedCharacter)
 end
 
 local function delayShowDoc(buf, clientId)
@@ -138,20 +140,23 @@ function completion.init()
 
       if not definedMaps then
         vim.keymap.set({'i'}, '<C-Space>', vim.lsp.completion.get, {buffer = args.buf})
-        definedMaps = true
-      end
-
-      local existingInsertPreAutocmds = api.nvim_get_autocmds({group = completionAugroup, event = {'InsertCharPre'}})
-      if not useBuiltinAutotrigger and vim.tbl_count(existingInsertPreAutocmds) == 0 then
-        api.nvim_create_autocmd({
-          'InsertCharPre',
-        }, {
+        api.nvim_create_autocmd('InsertEnter', {
           group = completionAugroup,
           buffer = args.buf,
           callback = function ()
-            autotrigger(triggerCharacters)
+            onKeyNs = vim.on_key(function (k, _)
+              autotrigger(triggerCharacters, k)
+            end)
           end,
         })
+        api.nvim_create_autocmd('InsertLeave', {
+          group = completionAugroup,
+          buffer = args.buf,
+          callback = function ()
+            vim.on_key(nil, onKeyNs)
+          end,
+        })
+        definedMaps = true
       end
 
       if client:supports_method(vim.lsp.protocol.Methods.completionItem_resolve, {bufnr = args.buf}) then
