@@ -1,6 +1,6 @@
 local abstractKeymap = {}
 
---- @alias AbstractKeymap {lhs: string|table<string>|table<string, string>, desc: string?}
+--- @alias AbstractKeymap {lhs: table<string>|table<string, string>, desc: string?}
 --- @alias AbstractKeymaps table<string, AbstractKeymap>
 
 --- @type AbstractKeymaps
