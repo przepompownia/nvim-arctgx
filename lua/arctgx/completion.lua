@@ -10,7 +10,6 @@ local insertCharTimer = assert(vim.uv.new_timer())
 local completeChangedTimer = assert(vim.uv.new_timer())
 local completionAugroup = api.nvim_create_augroup('arctgx.completion', {clear = true})
 local definedMaps = false
-local onKeyNs = {}
 
 local function showDocumentation(buf, clientId)
   local completionItem = vim.tbl_get(vim.v.completed_item, 'user_data', 'nvim', 'lsp', 'completion_item')
@@ -141,26 +140,18 @@ function completion.init()
       if not definedMaps then
         vim.keymap.set({'i'}, '<C-Space>', vim.lsp.completion.get, {buffer = args.buf})
         if not useBuiltinAutotrigger then
-          api.nvim_create_autocmd('InsertEnter', {
-            group = completionAugroup,
-            buffer = args.buf,
-            callback = function ()
-              onKeyNs[args.buf] = vim.on_key(function (k, _)
-                if api.nvim_get_current_buf() ~= args.buf then
-                  return
-                end
-                autotrigger(triggerCharacters, k)
-              end)
-            end,
-          })
-          api.nvim_create_autocmd('InsertLeave', {
-            group = completionAugroup,
-            buffer = args.buf,
-            callback = function ()
-              vim.on_key(nil, onKeyNs[args.buf])
-              onKeyNs[args.buf] = nil
-            end,
-          })
+          local existingInsertPreAutocmds = api.nvim_get_autocmds({group = completionAugroup, event = {'InsertCharPre'}})
+          if not useBuiltinAutotrigger and vim.tbl_count(existingInsertPreAutocmds) == 0 then
+            api.nvim_create_autocmd({
+              'InsertCharPre',
+            }, {
+              group = completionAugroup,
+              buffer = args.buf,
+              callback = function ()
+                autotrigger(triggerCharacters, vim.v.char)
+              end,
+            })
+          end
         end
         definedMaps = true
       end
