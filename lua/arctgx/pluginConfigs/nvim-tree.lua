@@ -7,7 +7,7 @@ vim.g.loaded_netrwPlugin = 1
 local function isFileTracked(path)
   local gitDir = vim.fs.dirname(path)
 
-  return require('arctgx.git').isTracked(path, gitDir, gitDir)
+  return require('arctgx.git').isTracked(path, vim.fs.joinpath(gitDir, '.git'), gitDir)
 end
 
 api.nvim_create_autocmd('User', {
