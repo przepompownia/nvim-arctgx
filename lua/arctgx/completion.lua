@@ -9,7 +9,7 @@ local useBuiltinAutotrigger = false
 local insertCharTimer = assert(vim.uv.new_timer())
 local completeChangedTimer = assert(vim.uv.new_timer())
 local completionAugroup = api.nvim_create_augroup('arctgx.completion', {clear = true})
-local definedMaps = false
+local definedMaps = {}
 
 local function showDocumentation(buf, clientId, completionItem)
   local info = vim.fn.complete_info({'selected'})
@@ -137,7 +137,7 @@ function completion.init()
 
       vim.lsp.completion.enable(true, clientId, args.buf, {autotrigger = useBuiltinAutotrigger})
 
-      if not definedMaps then
+      if not definedMaps[args.buf] then
         vim.keymap.set({'i'}, '<C-Space>', vim.lsp.completion.get, {buffer = args.buf})
         if not useBuiltinAutotrigger then
           local existingInsertPreAutocmds = api.nvim_get_autocmds({group = completionAugroup, event = {'InsertCharPre'}})
@@ -153,7 +153,7 @@ function completion.init()
             })
           end
         end
-        definedMaps = true
+        definedMaps[args.buf] = true
       end
 
       if client:supports_method(vim.lsp.protocol.Methods.completionItem_resolve, args.buf) then
