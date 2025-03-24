@@ -11,12 +11,7 @@ local completeChangedTimer = assert(vim.uv.new_timer())
 local completionAugroup = api.nvim_create_augroup('arctgx.completion', {clear = true})
 local definedMaps = false
 
-local function showDocumentation(buf, clientId)
-  local completionItem = vim.tbl_get(vim.v.event.completed_item or {}, 'user_data', 'nvim', 'lsp', 'completion_item')
-  if nil == completionItem then
-    return
-  end
-
+local function showDocumentation(buf, clientId, completionItem)
   local info = vim.fn.complete_info({'selected'})
 
   return vim.lsp.buf_request_all(
@@ -83,9 +78,15 @@ local function delayShowDoc(buf, clientId)
   if vim.fn.pumvisible() ~= 1 then
     return
   end
+
+  local completionItem = vim.tbl_get(vim.v.event.completed_item or {}, 'user_data', 'nvim', 'lsp', 'completion_item')
+  if nil == completionItem then
+    return
+  end
+
   local dueIn = completeChangedTimer:get_due_in()
   if dueIn == 0 then
-    cancelResolveCb = showDocumentation(buf, clientId)
+    cancelResolveCb = showDocumentation(buf, clientId, completionItem)
     completeChangedTimer:start(2 * debounce, 0, function () end)
     return
   end
@@ -94,7 +95,7 @@ local function delayShowDoc(buf, clientId)
     cancelResolveCb()
   end
   completeChangedTimer:start(debounce, 0, vim.schedule_wrap(function ()
-    cancelResolveCb = showDocumentation(buf, clientId)
+    cancelResolveCb = showDocumentation(buf, clientId, completionItem)
   end))
 end
 
