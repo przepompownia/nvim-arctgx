@@ -40,7 +40,6 @@ local function showDocumentation(buf, clientId)
           return
         end
 
-        api.nvim_win_set_config(winId, {border = 'rounded'})
         vim.treesitter.start(winData.bufnr, 'markdown')
         vim.wo[winId].conceallevel = 3
         api.nvim_win_set_config(winId, {
