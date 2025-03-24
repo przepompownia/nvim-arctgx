@@ -12,7 +12,7 @@ local completionAugroup = api.nvim_create_augroup('arctgx.completion', {clear = 
 local definedMaps = false
 
 local function showDocumentation(buf, clientId)
-  local completionItem = vim.tbl_get(vim.v.completed_item, 'user_data', 'nvim', 'lsp', 'completion_item')
+  local completionItem = vim.tbl_get(vim.v.event.completed_item or {}, 'user_data', 'nvim', 'lsp', 'completion_item')
   if nil == completionItem then
     return
   end
