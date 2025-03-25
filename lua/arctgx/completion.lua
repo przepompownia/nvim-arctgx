@@ -156,7 +156,9 @@ function completion.init()
         definedMaps[args.buf] = true
       end
 
-      if client:supports_method(vim.lsp.protocol.Methods.completionItem_resolve, args.buf) then
+      if client:supports_method(vim.lsp.protocol.Methods.completionItem_resolve, args.buf)
+        and vim.o.completeopt:find('popup')
+      then
         api.nvim_create_autocmd('CompleteChanged', {
           group = completionAugroup,
           buffer = args.buf,
