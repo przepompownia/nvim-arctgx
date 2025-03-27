@@ -1,4 +1,12 @@
 local builtin = require('statuscol.builtin')
+local dc = require('arctgx.dap').getDeclaredConfigurations()
+
+local function lnumClick(args)
+  if args.button ~= 'l' or dc[vim.bo.filetype] ~= nil then
+    return builtin.lnum_click(args)
+  end
+end
+
 require('statuscol').setup({
   relculright = true,
   segments = {
@@ -28,5 +36,8 @@ require('statuscol').setup({
   },
   ft_ignore = {
     'NvimTree',
+  },
+  clickhandlers = {
+    Lnum = lnumClick,
   },
 })
