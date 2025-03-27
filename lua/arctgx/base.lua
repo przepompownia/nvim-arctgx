@@ -211,6 +211,19 @@ function verboseLog(msg)
   api.nvim_echo({{tostring(vim.uv.hrtime())}, {': '}, {vim.inspect(msg)}}, false, {verbose = true})
 end
 
+--- Direct log to file (useful in fast events)
+--- @param msg string
+--- @param opts {file?: string, raw?: boolean}
+function vlog(msg, opts)
+  opts = opts or {}
+  local filename = opts.file or '/tmp/v.log'
+  local entry = opts.raw and msg or vim.inspect(msg)
+  local f = assert(io.open(filename, 'a+'))
+  local formattedEntry = ('%d: %s\n'):format(vim.uv.hrtime() / 1000000000, entry)
+  f:write(formattedEntry)
+  f:close()
+end
+
 function dump(value)
   local valueString = vim.inspect(value):gsub('<function (%d+)>', '"function %1"'):gsub('<%d+>', '')
   base.displayInWindow('Dump', 'lua', valueString)

@@ -33,7 +33,7 @@ function M.defaultConfig(rootDir)
       enable = true,
     },
     diagnostics = {
-      globals = {'vim', 'dump', 'verboseLog'},
+      globals = {'vim', 'dump', 'verboseLog', 'vlog'},
       unusedLocalExclude = {'_*'},
       neededFileStatus = {
         ['codestyle-check'] = 'Any',
