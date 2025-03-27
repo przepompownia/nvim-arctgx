@@ -23,7 +23,7 @@ function dap.compareDeclaredFiletypes(configurations)
 end
 
 function dap.getDeclaredConfigurations()
-  return vim.tbl_keys(declaredConfigurations)
+  return declaredConfigurations
 end
 
 return dap

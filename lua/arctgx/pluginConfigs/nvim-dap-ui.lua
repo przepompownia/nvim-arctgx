@@ -87,7 +87,7 @@ api.nvim_create_user_command('DAW', function (opts)
 end, {nargs = 1, desc = 'DAP UI: add expression to watch'})
 
 api.nvim_create_autocmd({'FileType'}, {
-  pattern = require('arctgx.dap').getDeclaredConfigurations(),
+  pattern = vim.tbl_keys(require('arctgx.dap').getDeclaredConfigurations()),
   group = augroup,
   callback = function (event)
     local opts = {silent = true, buffer = event.buf}

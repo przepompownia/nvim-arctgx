@@ -185,7 +185,7 @@ vim.fn.sign_define('DapStopped', {text = '▶', texthl = 'IdeCodeWindowCurrentFr
 
 local augroup = api.nvim_create_augroup('ArctgxDap', {clear = true})
 api.nvim_create_autocmd({'FileType'}, {
-  pattern = require('arctgx.dap').getDeclaredConfigurations(),
+  pattern = vim.tbl_keys(require('arctgx.dap').getDeclaredConfigurations()),
   group = augroup,
   callback = function (event)
     keymap.set(
