@@ -3,11 +3,11 @@ local api = vim.api
 local augroup = api.nvim_create_augroup('arctgx.filetypes', {clear = true})
 
 api.nvim_create_autocmd({'FileType'}, {
-  pattern = 'help',
+  pattern = {'help', 'man'},
   group = augroup,
   nested = true,
-  callback = function ()
-    if vim.opt_local.buftype:get() ~= 'help' then
+  callback = function (ev)
+    if vim.opt_local.buftype:get() ~= 'help' and ev.match ~= 'man' then
       return
     end
 
