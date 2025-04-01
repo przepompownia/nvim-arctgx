@@ -35,7 +35,7 @@ vim.opt_global.shortmess:append('IcsS')
 vim.go.foldlevelstart = 99
 vim.wo.foldcolumn = 'auto'
 vim.wo.number = true
-vim.o.scrolloff = 10
+vim.o.scrolloff = 5
 vim.wo.smoothscroll = true
 vim.wo.relativenumber = true
 vim.wo.numberwidth = 1
