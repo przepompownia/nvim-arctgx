@@ -1,4 +1,3 @@
-local configs = require 'lspconfig.configs'
 local lspconfig = require('lspconfig')
 
 require('lspconfig.ui.windows').default_options.border = 'rounded'
@@ -14,21 +13,7 @@ lspconfig.jsonls.setup {
 
 lspconfig.lemminx.setup {}
 
-configs.phpactor = {
-  default_config = vim.tbl_extend(
-    'keep',
-    {
-      autostart = true,
-      root_dir = function (file)
-        return require('arctgx.lsp').findRoot(file, require('arctgx.lsp.serverConfigs.phpactor').defaultRootPatterns)
-      end,
-      filetypes = {'php'},
-    },
-    require('arctgx.lsp.serverConfigs.phpactor').clientConfig()
-  ),
-}
-
-lspconfig.phpactor.setup {}
+vim.lsp.enable('phpactor')
 
 lspconfig.yamlls.setup {
   capabilities = capabilities,

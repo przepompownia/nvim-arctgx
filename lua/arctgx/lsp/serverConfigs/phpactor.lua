@@ -55,43 +55,6 @@ function extension.reindex()
   vim.lsp.buf_notify(0, 'phpactor/indexer/reindex', {})
 end
 
-extension.defaultRootPatterns = {
-  'composer.json',
-  '.phpactor.json',
-  '.git',
-}
-
---- @return vim.lsp.ClientConfig
-function extension.clientConfig(file, rootPatterns)
-  return {
-    name = 'phpactor',
-    filetype = 'php',
-    cmd_env = {
-      XDG_CACHE_HOME = '/tmp'
-    },
-    cmd = {
-      -- 'phpxx',
-      vim.uv.fs_realpath(vim.fn.exepath('phpactor')) or 'phpactor',
-      'language-server',
-      -- '-vvv',
-    },
-    -- trace = 'verbose',
-    root_dir = require('arctgx.lsp').findRoot(file, rootPatterns or extension.defaultRootPatterns),
-    log_level = vim.lsp.protocol.MessageType.Warning,
-    init_options = {
-      ['indexer.enabled_watchers'] = {
-        'lsp',
-      },
-      ['logging.path'] = '/tmp/phpactor.log',
-      ['completion_worse.completor.keyword.enabled'] = true,
-      ['phpunit.enabled'] = true,
-      ['language_server_worse_reflection.inlay_hints.enable'] = true,
-      ['language_server_worse_reflection.inlay_hints.types'] = true,
-      ['language_server_worse_reflection.inlay_hints.params'] = true,
-    },
-  }
-end
-
 api.nvim_create_user_command('PhpactorLSPDumpConfig', extension.dumpConfig, {nargs = 0})
 api.nvim_create_user_command('PhpactorLSPServerStatus', extension.status, {nargs = 0})
 api.nvim_create_user_command('PhpactorLSPServerReindex', extension.reindex, {nargs = 0})
