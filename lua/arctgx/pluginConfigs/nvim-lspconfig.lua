@@ -12,6 +12,7 @@ local servers = {
   'lemminx',
   'jsonls',
   'yamlls',
+  'lua_ls',
   -- 'harper_ls',
   -- 'sqls',
 }

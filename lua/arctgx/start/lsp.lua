@@ -1,7 +1,6 @@
 local api = vim.api
 local lsp = vim.lsp
 local alsp = require('arctgx.lsp')
-local base = require('arctgx.base')
 
 local keymap = require('arctgx.vim.abstractKeymap')
 
@@ -105,25 +104,6 @@ api.nvim_create_autocmd('LspAttach', {
         end,
       })
     end
-  end,
-})
-
-api.nvim_create_autocmd('FileType', {
-  pattern = {'lua'},
-  group = api.nvim_create_augroup('arctgx.lsp.clients.luals', {}),
-  callback = function (args)
-    if base.isDummyFileTypeBuffer(args) then
-      return
-    end
-
-    lsp.start(
-      require('arctgx.lsp.serverConfigs.luaLs').clientConfig(args.file),
-      {
-        bufnr = args.buf,
-        reuse_client = function (client, config)
-          return client.name == config.name
-        end
-      })
   end,
 })
 
