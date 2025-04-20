@@ -19,10 +19,14 @@ function git.top(relativeDir)
 
   if out.code > 0 then
     vim.notify(('Cannot determine top level directory for %s'):format(relativeDir), vim.log.levels.WARN)
-    return relativeDir or vim.uv.cwd()
+    return nil
   end
 
   return vim.trim(out.stdout)
+end
+
+function git.topOrFallback(relativeDir)
+  return git.top(relativeDir) or relativeDir or vim.uv.cwd()
 end
 
 function git.commandFiles()

@@ -155,7 +155,7 @@ function extension.rgGrepOperator(type)
   return extension.createOperator(
     extension.grep,
     require('arctgx.grep'):newRgGrepCommand(true, false),
-    git.top(base.getBufferCwd())
+    git.topOrFallback(base.getBufferCwd())
   )(type)
 end
 
@@ -163,7 +163,7 @@ function extension.gitGrepOperator(type)
   return extension.createOperator(
     extension.grep,
     require('arctgx.grep'):newGitGrepCommand(true, false),
-    git.top(base.getBufferCwd())
+    git.topOrFallback(base.getBufferCwd())
   )(type)
 end
 
@@ -171,7 +171,7 @@ function extension.rgGrep(query, root, useFixedStrings, ignoreCase)
   vim.validate('root dir', root, {'string', 'nil'})
   return extension.grep(
     require('arctgx.grep'):newRgGrepCommand(useFixedStrings, ignoreCase),
-    root or git.top(base.getBufferCwd()),
+    root or git.topOrFallback(base.getBufferCwd()),
     query
   )
 end
@@ -180,7 +180,7 @@ function extension.gitGrep(query, root, useFixedStrings, ignoreCase)
   vim.validate('root dir', root, {'string', 'nil'})
   return extension.grep(
     require('arctgx.grep'):newGitGrepCommand(useFixedStrings, ignoreCase),
-    root or git.top(base.getBufferCwd()),
+    root or git.topOrFallback(base.getBufferCwd()),
     query
   )
 end
@@ -198,7 +198,7 @@ end
 function extension.filesGit(query)
   extension.files(
     git.commandFiles(),
-    git.top(base.getBufferCwd()),
+    git.topOrFallback(base.getBufferCwd()),
     query,
     'Files (git)'
   )
@@ -208,7 +208,7 @@ function extension.filesGitOperator(type)
   return extension.createOperator(
     extension.files,
     git.commandFiles(),
-    git.top(base.getBufferCwd())
+    git.topOrFallback(base.getBufferCwd())
   )(type)
 end
 
@@ -216,14 +216,14 @@ function extension.filesAllOperator(type)
   return extension.createOperator(
     extension.files,
     require('arctgx.files').commandFdfindAll(),
-    git.top(base.getBufferCwd())
+    git.topOrFallback(base.getBufferCwd())
   )(type)
 end
 
 function extension.filesAll(query)
   extension.files(
     require('arctgx.files').commandFdfindAll(),
-    git.top(base.getBufferCwd()),
+    git.topOrFallback(base.getBufferCwd()),
     query,
     'Files (all)'
   )
