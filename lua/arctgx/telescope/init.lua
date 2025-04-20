@@ -3,31 +3,6 @@ local git = require('arctgx.git')
 
 local extension = {}
 
---- @param promptBufnr integer
---- @param callback function({bufnr: integer}, Picker)
-local function callOnSelection(promptBufnr, callback, actionName)
-  local actionState = require 'telescope.actions.state'
-  local selection = actionState.get_selected_entry()
-  if selection == nil then
-    require('telescope.utils').__warn_no_selection(actionName)
-    return
-  end
-
-  ---@type Picker
-  local picker = actionState.get_current_picker(promptBufnr)
-  local multiSelection = picker:get_multi_selection()
-  local actions = require('telescope.actions')
-  actions.close(promptBufnr)
-
-  if next(multiSelection) == nil then
-    local selectedEntry = picker:get_selection()
-    callback(selectedEntry, picker)
-    return
-  end
-
-  for _, entry in ipairs(multiSelection) do callback(entry, picker) end
-end
-
 local customActions = nil
 
 function extension.customActions()
