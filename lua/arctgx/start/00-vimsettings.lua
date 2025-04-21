@@ -6,6 +6,7 @@ vim.opt.backspace:append('nostop')
 vim.bo.softtabstop = -1
 vim.bo.tabstop = 4
 vim.bo.shiftwidth = 4
+vim.o.cmdheight = 0
 
 vim.go.updatetime = 300
 vim.wo.showbreak = '> '
