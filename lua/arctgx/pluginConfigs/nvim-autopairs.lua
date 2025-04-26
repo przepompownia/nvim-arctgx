@@ -1,6 +1,5 @@
 local autopairs = require('nvim-autopairs')
 local Rule = require('nvim-autopairs.rule')
-local okCmp, cmp = pcall(require, 'cmp')
 
 autopairs.setup {
   check_ts = true,
@@ -32,8 +31,3 @@ autopairs.add_rules({
   existingRules['`']:with_pair(cond.not_filetypes({'sql', 'mysql'})),
   Rule('<', '>', 'php'):with_pair(isAfterTypeInPhpDocblock),
 })
-
-if okCmp then
-  local cmp_autopairs = require('nvim-autopairs.completion.cmp')
-  cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done({filetypes = {bash = false, sh = false}}))
-end
