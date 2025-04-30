@@ -168,7 +168,7 @@ require('arctgx.lazy').setupOnLoad('dap', function ()
     setSessionStatus('T')
   end
 
----@diagnostic disable-next-line: duplicate-set-field
+  --- @diagnostic disable-next-line: duplicate-set-field
   require('arctgx.widgets').debugHook = function ()
     return {
       session = dap.session() and true or false,
