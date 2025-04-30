@@ -131,6 +131,7 @@ require('arctgx.lazy').setupOnLoad('dap', function ()
   end
   -- nnoremap <silent> <leader>dr :lua require'dap'.repl.open()<CR>
   -- nnoremap <silent> <leader>dl :lua require'dap'.run_last()<CR>
+  -- dap.defaults.php.exception_breakpoints = {'Exception'}
   dap.defaults.fallback.switchbuf = 'uselast'
   dap.defaults.fallback.external_terminal = {
     command = '/usr/bin/kitty',
@@ -205,6 +206,7 @@ api.nvim_create_autocmd({'FileType'}, {
 
 keymap.set({'n'}, 'debuggerRun', keymap.repeatable(function () require('dap').continue() end), {expr = true})
 keymap.set({'n'}, 'debuggerClearBreakpoints', function () require('dap').clear_breakpoints() end, keymapOpts)
+keymap.set({'n'}, 'debuggerSetExceptionBreakpoint', function () require('dap').set_exception_breakpoints() end, keymapOpts)
 keymap.set(
   {'n'},
   'debuggerSetBreakpointConditional',

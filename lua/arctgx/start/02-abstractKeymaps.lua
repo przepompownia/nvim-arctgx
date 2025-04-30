@@ -21,6 +21,7 @@ local abstractKeymaps = {
   searchStringInGitFromTextObject = {lhs = {'<Leader>w'}, desc = 'Search string from textobject in git repo'},
   searchStringInFilenamesFromTextObject = {lhs = {'<Leader>ff'}, desc = 'Search string from textobject in finenames'},
   searchStringInGitFilenamesFromTextObject = {lhs = {'<Leader>fg'}, desc = 'Search string from textobject in git finenames'},
+
   debuggerRun = {lhs = {'<Leader>dr'}, desc = 'Debugger: run'},
   debuggerStepOver = {lhs = {'<Leader>ds'}, desc = 'Debugger: step over'},
   debuggerStepInto = {lhs = {'<Leader>di'}, desc = 'Debugger: step into'},
@@ -41,6 +42,8 @@ local abstractKeymaps = {
   debuggerClearBreakpoints = {lhs = {'<Leader>db'}, desc = 'Debugger: clear breakpoints'},
   debuggerToggleBreakpoint = {lhs = {'<Leader>dt'}, desc = 'Debugger: set breakpoint'},
   debuggerSetBreakpointConditional = {lhs = {'<Leader>dT'}, desc = 'Debugger: set conditional breakpoint'},
+  debuggerSetExceptionBreakpoint = {lhs = {'<Leader>dx'}, desc = 'Debugger: set exception breakpoint'},
+
   testUIToggleSummary = {lhs = {'<Leader>us'}, desc = 'Test UI: toggle summary'},
   testUIToggleOutput = {lhs = {'<Leader>uo'}, desc = 'Test UI: toggle output'},
   testUIRunNearest = {lhs = {'<Leader>ur'}, desc = 'Test UI: run nearest test case'},
