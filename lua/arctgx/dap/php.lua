@@ -1,4 +1,4 @@
---- @type table<string, Configuration>
+--- @type table<string, dap.Configuration>
 local config = {}
 
 config.default = {
