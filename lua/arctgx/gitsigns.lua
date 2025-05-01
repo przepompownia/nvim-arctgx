@@ -30,6 +30,9 @@ end
 gitsigns.configuration = {
   debug_mode = true,
   attach_to_untracked = true,
+  preview_config = {
+    border = 'single',
+  },
   on_attach = function (bufnr)
     local opts = {buffer = bufnr}
 
