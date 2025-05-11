@@ -201,6 +201,12 @@ api.nvim_create_autocmd({'FileType'}, {
       function () require('dap').set_breakpoint(nil, nil, vim.fn.input('Log point message: ')) end,
       {buffer = event.buf}
     )
+    keymap.set(
+      {'n', 'v'},
+      'debuggerEvalToFloat',
+      function () require('dap.ui.widgets').hover() end,
+      {buffer = event.buf}
+    )
   end
 })
 
