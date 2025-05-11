@@ -8,6 +8,7 @@ require('arctgx.lazy').setupOnLoad('dap', function ()
 
   dap.defaults.fallback.switchbuf = 'useopen'
   dv.setup({
+    switchbuf = 'uselast',
     windows = {
       terminal = {
         hide = {'php'},
