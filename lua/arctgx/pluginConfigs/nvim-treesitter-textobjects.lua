@@ -15,6 +15,8 @@ local tsSelectKeymaps = {
   ['iO'] = '@comment.inner',
   ['ap'] = '@parameter.outer',
   ['ip'] = '@parameter.inner',
+  ['ai'] = '@conditional.outer',
+  ['ii'] = '@conditional.inner',
 }
 
 for input, capture in pairs(tsSelectKeymaps) do
