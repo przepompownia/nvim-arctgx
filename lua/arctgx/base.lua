@@ -24,7 +24,7 @@ function base.editMappedPath(path, line, column)
     :filter(function (rp, _) return vim.startswith(path, rp) end)
     :next()
 
-  local mappedPath = remotePath and path:gsub('^' .. remotePath, localPath) or path
+  local mappedPath = (remotePath and localPath) and path:gsub('^' .. remotePath, localPath) or path
 
   vim.cmd.edit({args = {mappedPath}})
   if line then
