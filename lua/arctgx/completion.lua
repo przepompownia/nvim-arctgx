@@ -1,8 +1,8 @@
 local api = vim.api
 -- It's experimental and rather still not very usable
 local completion = {}
---- @type fun()?
-local cancelResolveCb = nil
+--- @type table<integer, fun()>
+local pendingCancelResolveCbs = {}
 
 local debounce = 250
 local useBuiltinAutotrigger = false
@@ -11,7 +11,14 @@ local completeChangedTimer = assert(vim.uv.new_timer())
 local completionAugroup = api.nvim_create_augroup('arctgx.completion', {clear = true})
 local definedMaps = {}
 
+local function cancelResolve()
+  for _, cb in ipairs(pendingCancelResolveCbs) do
+    cb()
+  end
+end
+
 local function showDocumentation(buf, clientId, completionItem)
+  cancelResolve()
   local info = vim.fn.complete_info({'selected'})
 
   return vim.lsp.buf_request_all(
@@ -86,16 +93,15 @@ local function delayShowDoc(buf, clientId)
 
   local dueIn = completeChangedTimer:get_due_in()
   if dueIn == 0 then
-    cancelResolveCb = showDocumentation(buf, clientId, completionItem)
+    local cancelResolveCb = showDocumentation(buf, clientId, completionItem)
+    pendingCancelResolveCbs[#pendingCancelResolveCbs + 1] = cancelResolveCb
     completeChangedTimer:start(2 * debounce, 0, function () end)
     return
   end
   completeChangedTimer:stop()
-  if type(cancelResolveCb) == 'function' then
-    cancelResolveCb()
-  end
   completeChangedTimer:start(debounce, 0, vim.schedule_wrap(function ()
-    cancelResolveCb = showDocumentation(buf, clientId, completionItem)
+    local cancelResolveCb = showDocumentation(buf, clientId, completionItem)
+    pendingCancelResolveCbs[#pendingCancelResolveCbs + 1] = cancelResolveCb
   end))
 end
 
