@@ -4,3 +4,4 @@
 /.luarc.json
 /.luarc.jsonc
 /examples
+/.stats
