@@ -1,17 +1,6 @@
 local plugin = {}
 
---- @param pluginDir string
-local function listAllPlugins(pluginDir)
-  local plugins = {}
-  local pluginPaths = vim.fn.globpath(pluginDir, '*', 1, 1)
-  for _, path in ipairs(pluginPaths) do
-    plugins[#plugins + 1] = vim.fn.fnamemodify(path, ':t')
-  end
-
-  return plugins
-end
-
---- @param pluginDirs table
+--- @param pluginDirs string[]
 --- @param pluginPrefix string
 function plugin.loadCustomConfiguration(pluginDirs, pluginPrefix)
   vim.validate('pluginDirs', pluginDirs, 'table')
@@ -20,12 +9,11 @@ function plugin.loadCustomConfiguration(pluginDirs, pluginPrefix)
     vim.notify('Empty vim.g.pluginDirs', vim.log.levels.ERROR)
   end
 
-  local rtp = vim.api.nvim_list_runtime_paths()
-
-  for _, pluginDir in ipairs(pluginDirs) do
-    for _, pluginName in ipairs(listAllPlugins(pluginDir)) do
-      if vim.tbl_contains(rtp, vim.uv.fs_realpath(pluginDir .. '/' .. pluginName)) then
-        plugin.loadSingleConfiguration(pluginName, pluginPrefix)
+  for _, pluginPath in ipairs(vim.api.nvim_list_runtime_paths()) do
+    for _, pluginDir in ipairs(pluginDirs) do
+      local pluginPaths = vim.fn.globpath(pluginDir, '*', true, true)
+      if vim.tbl_contains(pluginPaths, pluginPath) then
+        plugin.loadSingleConfiguration(vim.fn.fnamemodify(pluginPath, ':t'), pluginPrefix)
       end
     end
   end
