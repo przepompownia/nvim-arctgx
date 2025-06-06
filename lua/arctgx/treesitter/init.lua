@@ -8,6 +8,7 @@ local fileTypes = {
   'awk',
   'bash',
   'css',
+  'desktop',
   'diff',
   'dockerfile',
   'editorconfig',
