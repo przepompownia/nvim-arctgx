@@ -6,9 +6,9 @@ require('arctgx.lazy').setupOnLoad('dap', function ()
   local dap = require('dap')
   local augroup = api.nvim_create_augroup('arctgx.dap-view', {clear = true})
 
-  dap.defaults.fallback.switchbuf = 'useopen'
+  dap.defaults.fallback.switchbuf = 'useopen,uselast'
   dv.setup({
-    switchbuf = 'uselast',
+    switchbuf = 'useopen,uselast',
     help = {border = 'single'},
     windows = {
       terminal = {
