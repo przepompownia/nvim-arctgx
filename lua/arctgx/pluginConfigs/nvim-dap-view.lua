@@ -1,6 +1,7 @@
 local api = vim.api
 local keymap = require('arctgx.vim.abstractKeymap')
 
+require('arctgx.lazy').setupOnLoad('dap-view', function () end, {'dap'})
 require('arctgx.lazy').setupOnLoad('dap', function ()
   local dv = require('dap-view')
   local dap = require('dap')
