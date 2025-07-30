@@ -74,6 +74,12 @@ require('arctgx.lazy').setupOnLoad('nvim-tree', function ()
       },
       open_file = {
         quit_on_open = true,
+        window_picker = {
+          exclude = {
+            filetype = {'dap-view', 'NvimTree'},
+            buftype = {'prompt'},
+          },
+        },
       },
       remove_file = {
         close_window = false,
@@ -143,6 +149,7 @@ require('arctgx.lazy').setupOnLoad('nvim-tree', function ()
     git = {
       ignore = false,
       disable_for_dirs = {
+        '/tmp',
         vim.uv.os_homedir(),
       },
     },
