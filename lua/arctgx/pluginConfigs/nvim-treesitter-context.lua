@@ -7,6 +7,8 @@ require 'treesitter-context'.setup({
       'dapui_watches',
       'dapui_scopes',
       'dapui_breakpoints',
+      'NvimTree',
+      'dap-view',
     }
 
     return not vim.tbl_contains(excludedFiletypes, vim.bo[buf].filetype)
