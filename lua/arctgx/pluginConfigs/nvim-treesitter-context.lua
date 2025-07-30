@@ -9,6 +9,10 @@ require 'treesitter-context'.setup({
       'dapui_breakpoints',
       'NvimTree',
       'dap-view',
+      'cmd',
+      'dialog',
+      'msg',
+      'pager',
     }
 
     return not vim.tbl_contains(excludedFiletypes, vim.bo[buf].filetype)
