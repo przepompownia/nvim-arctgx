@@ -6,8 +6,8 @@ api.nvim_create_autocmd({'FileType'}, {
   pattern = {'help', 'man'},
   group = augroup,
   nested = true,
-  callback = function (ev)
-    if vim.opt_local.buftype:get() ~= 'help' and ev.match ~= 'man' then
+  callback = function ()
+    if vim.opt_local.buftype:get() ~= 'help' then
       return
     end
 
