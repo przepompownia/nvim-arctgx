@@ -4,7 +4,7 @@ local alsp = require('arctgx.lsp')
 
 local keymap = require('arctgx.vim.abstractKeymap')
 
-lsp.set_log_level(vim.log.levels.WARN)
+lsp.log.set_level(vim.log.levels.WARN)
 local hlMap = {
   LspReferenceRead = 'IdeReferenceRead',
   LspReferenceText = 'IdeReferenceText',
