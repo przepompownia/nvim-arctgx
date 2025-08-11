@@ -10,6 +10,9 @@ require('arctgx.lazy').setupOnLoad('dap', function ()
 
   dap.defaults.fallback.switchbuf = 'useopen,uselast'
   dv.setup({
+    winbar = {
+      default_section = 'scopes',
+    },
     switchbuf = 'useopen,uselast',
     help = {border = 'single'},
     windows = {
