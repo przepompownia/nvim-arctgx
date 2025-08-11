@@ -1,4 +1,5 @@
 local api = vim.api
+local base = require('arctgx.base')
 local keymap = require('arctgx.vim.abstractKeymap')
 
 require('arctgx.lazy').setupOnLoad('dap-view', function () end, {'dap'})
@@ -40,45 +41,60 @@ require('arctgx.lazy').setupOnLoad('dap', function ()
   local filetypes = vim.tbl_keys(require('arctgx.dap').getDeclaredConfigurations())
   filetypes[#filetypes + 1] = 'dap-view'
 
+  local function watchExpression(expression)
+    require('dap-view').add_expr(expression)
+  end
+
+  api.nvim_create_user_command('DAW', function (opts)
+    watchExpression(opts.args)
+  end, {nargs = 1, desc = 'dap-view: add expression to watch'})
+
   api.nvim_create_autocmd({'FileType'}, {
     pattern = filetypes,
     group = augroup,
     callback = function (event)
+      local opts = {silent = true, buffer = event.buf}
+      keymap.set('x', 'debuggerAddToWatched', function ()
+        watchExpression(base.getVisualSelection())
+      end, opts)
+      keymap.set('n', 'debuggerAddToWatched', function ()
+        watchExpression(vim.fn.expand('<cexpr>'))
+      end, opts)
       keymap.set(
         {'n'},
         'debuggerOpenViewScopes',
         function () dv.jump_to_view('scopes') end,
-        {buffer = event.buf}
+        opts
       )
       keymap.set(
         {'n'},
         'debuggerOpenViewBreakpoints',
         function () dv.jump_to_view('breakpoints') end,
-        {buffer = event.buf}
+        opts
       )
       keymap.set(
         {'n'},
         'debuggerOpenViewExceptions',
         function () dv.jump_to_view('exceptions') end,
-        {buffer = event.buf}
+        opts
       )
       keymap.set(
         {'n'},
         'debuggerOpenViewThreads',
         function () dv.jump_to_view('threads') end,
-        {buffer = event.buf}
+        opts
       )
       keymap.set(
         {'n'},
         'debuggerOpenViewWatches',
         function () dv.jump_to_view('watches') end,
-        {buffer = event.buf}
+        opts
       )
       keymap.set(
         {'n'},
         'debuggerOpenViewREPL',
         function () dv.jump_to_view('repl') end,
-        {buffer = event.buf}
+        opts
       )
     end
   })
