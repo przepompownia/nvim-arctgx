@@ -104,7 +104,7 @@ feline.setup({
         },
         {
           provider = function ()
-            return '  ' .. (b.gitsigns_head or '[none]')
+            return widgets.renderVcsBranch()
           end,
           hl = {name = 'FelineBranch', fg = colors.nord5, bg = colors.nord1},
         },

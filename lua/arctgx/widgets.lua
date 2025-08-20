@@ -14,7 +14,12 @@ local function debugHook() end
 
 widgets.debugHook = debugHook
 
+local function resetHl(rHl)
+  return (' %%#%s#'):format(rHl or 'Normal')
+end
+
 --- @param highlights {active: string, inactive: string, fallback: string}
+--- @return string
 function widgets.renderDebug(highlights)
   local data = widgets.debugHook()
   if not data then return '' end
@@ -31,10 +36,10 @@ local stlSymbolHlMap = {
   [' +'] = 'DiffAdd',
   [' ~'] = 'DiffChange',
   [' -'] = 'DiffDelete',
-  ['  '] = 'StlDiagnosticError',
-  [' 󰀪 '] = 'StlDiagnosticWarn',
-  ['  '] = 'StlDiagnosticInfo',
-  ['  '] = 'StlDiagnosticHint',
+  ['  '] = 'DiagnosticError',
+  [' 󰀪 '] = 'DiagnosticWarn',
+  ['  '] = 'DiagnosticInfo',
+  ['  '] = 'DiagnosticHint',
 }
 
 local symbolsStl = {}
@@ -51,7 +56,31 @@ local function renderDiagnosticPart(symbol, value)
   return symbolsStl[symbol] .. value
 end
 
-function widgets.renderVcsSummary(resetHl)
+-- copied from feline.nvim
+function widgets.searchCount()
+  if vim.v.hlsearch == 0 then
+    return ''
+  end
+
+  local ok, result = pcall(vim.fn.searchcount, {maxcount = 999, timeout = 250})
+  if not ok or next(result) == nil or result.incomplete == 1 then
+    return ''
+  end
+
+  local denominator = math.min(result.total, result.maxcount)
+  return string.format(' [%d/%d] ', result.current, denominator)
+end
+
+function widgets.renderVcsBranch()
+  local head = vim.b.gitsigns_head
+  if not head then
+    return ''
+  end
+
+  return ' ' .. (head) .. ' '
+end
+
+function widgets.renderVcsSummary(rHl)
   local status = vim.b.gitsigns_status_dict
   if nil == status then
     return ''
@@ -66,10 +95,10 @@ function widgets.renderVcsSummary(resetHl)
     return ''
   end
 
-  return result .. ('%%#%s#'):format(resetHl or 'Normal')
+  return result .. resetHl(rHl)
 end
 
-function widgets.renderDiagnosticsSummary(resetHl)
+function widgets.renderDiagnosticsSummary(rHl)
   local count = vim.diagnostic.count(0, {})
   local result =
     renderDiagnosticPart('  ', count[1])
@@ -81,7 +110,7 @@ function widgets.renderDiagnosticsSummary(resetHl)
     return ''
   end
 
-  return result .. ('%%#%s#'):format(resetHl or 'Normal')
+  return result .. resetHl(rHl)
 end
 
 return widgets
