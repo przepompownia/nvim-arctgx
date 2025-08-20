@@ -47,6 +47,7 @@ vim.go.history = 1000
 vim.go.laststatus = 2
 vim.go.showtabline = 1
 vim.go.tabline = "%!v:lua.require'arctgx.tabline'.prepare()"
+vim.go.statusline = "%!v:lua.require'arctgx.statusline'.prepare()"
 
 vim.go.ignorecase = false
 vim.go.wildignorecase = true
