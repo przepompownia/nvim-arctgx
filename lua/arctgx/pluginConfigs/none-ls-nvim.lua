@@ -17,6 +17,17 @@ local phpcsArgs = {
   },
 }
 
+api.nvim_create_autocmd('LspAttach', {
+  group = api.nvim_create_augroup('UserLspConfig', {}),
+  callback = function (ev)
+    local client = vim.lsp.get_clients({id = ev.data.client_id})[1]
+    if client.name ~= 'null-ls' then
+      return
+    end
+    client.server_capabilities.completionProvider.triggerCharacters = {}
+  end,
+})
+
 null.setup({
   -- debug = true,
   diagnostics_format = '#{s}: #{m} [#{c}]',
