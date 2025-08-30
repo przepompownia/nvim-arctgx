@@ -13,16 +13,16 @@ local function onInit(client)
   local triggerCharaters = {'\t', '\n', '.', ':', "'", '"', '#', '*', '@', '|', '-', ' ', '+', '?'}
   client.server_capabilities.completionProvider.triggerCharacters = triggerCharaters
 
-  local path = client.workspace_folders[1].name
+  local path = client.workspace_folders and client.workspace_folders[1].name
 
-  if vim.uv.fs_stat(path .. '/.luarc.jsonc') or vim.uv.fs_stat(path .. '/.luarc.json') then
+  if path and (vim.uv.fs_stat(path .. '/.luarc.jsonc') or vim.uv.fs_stat(path .. '/.luarc.json')) then
     return true
   end
 
   vim.notify('.luarc.json(c) not found. Loading defaults.', vim.log.levels.INFO)
   client.config.settings.Lua = vim.tbl_deep_extend(
     'force',
-    client.config.settings.Lua,
+    vim.tbl_get(client, 'config', 'settings', 'Lua'),
     require('arctgx.lsp.serverConfigs.luaLs').defaultConfig(path)
   )
 
@@ -42,7 +42,7 @@ return {
   on_init = onInit,
   on_attach = function (_, bufnr)
     local root = vim.fs.root(vim.api.nvim_buf_get_name(bufnr), rootPatterns)
-    if not vim.tbl_contains(vim.lsp.buf.list_workspace_folders(), root) then
+    if root and not vim.tbl_contains(vim.lsp.buf.list_workspace_folders(), root) then
       vim.notify(('"%s" added to workspace folders'):format(root), vim.log.levels.INFO)
       vim.lsp.buf.add_workspace_folder(root)
     end
