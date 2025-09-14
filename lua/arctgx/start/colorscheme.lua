@@ -1,10 +1,33 @@
 local api = vim.api
 
 local function configureHighlight()
-  local path = vim.uv.fs_realpath(
-    ('%s/colors/%s.lua'):format(require('arctgx.base').getPluginDir(), vim.go.background)
-  )
-  dofile(path)
+  local highlights = {
+    dark = {
+      LspReferenceRead = {bg = '#5B532C'},
+      LspReferenceText = {bg = '#2C3C5B'},
+      LspReferenceWrite = {bg = '#4B281D'},
+      DapBreakpointSign = {fg = '#1212ff'},
+      DapCurrentFrameSign = {fg = '#440000'},
+      DebugWidgetInactive = {
+        fg = vim.api.nvim_get_hl(0, {name = 'Normal'}).fg,
+      },
+      DebugWidgetActive = {fg = '#bb0000'},
+    },
+    light = {
+      LspReferenceRead = {bg = '#E6F4AA'},
+      LspReferenceText = {bg = '#F4EDAA'},
+      LspReferenceWrite = {bg = '#F4DBAA'},
+      DapBreakpointSign = {fg = '#1212ff'},
+      DapCurrentFrameSign = {fg = '#440000'},
+      DebugWidgetInactive = {
+        fg = vim.api.nvim_get_hl(0, {name = 'Normal'}).fg,
+      },
+      DebugWidgetActive = {fg = '#bb0000'},
+    },
+  }
+  for name, def in pairs(highlights[vim.go.background]) do
+    api.nvim_set_hl(require('arctgx.lsp').ns(), name, def)
+  end
 end
 
 local function colorscheme(bg, tgc)
