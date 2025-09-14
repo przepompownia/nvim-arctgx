@@ -69,6 +69,18 @@ api.nvim_create_autocmd('LspAttach', {
     end, opts)
     keymap.set({'n', 'v'}, 'langApplyAllformatters', function () return lsp.buf.format({async = true}) end, opts)
 
+    -- print(client.name .. ' folding range support: ' .. vim.inspect(client:supports_method(vim.lsp.protocol.Methods.textDocument_foldingRange)))
+    -- if client:supports_method(vim.lsp.protocol.Methods.textDocument_foldingRange) and client.name == 'phpactor' then
+    --   local win = vim.api.nvim_get_current_win()
+    --   vim.wo[win][0].foldexpr = 'v:lua.vim.lsp.foldexpr()'
+    -- end
+    api.nvim_create_autocmd({'LspDetach'}, {
+      group = augroup,
+      buffer = ev.buf,
+      callback = function (args)
+        alsp.updateAttachedClientNames(args.buf, args.data.client_id, nil)
+      end,
+    })
     if client.server_capabilities.documentHighlightProvider then
       api.nvim_create_autocmd({'CursorMoved', 'CursorMovedI'}, {
         group = augroup,
@@ -84,7 +96,6 @@ api.nvim_create_autocmd('LspAttach', {
         group = augroup,
         buffer = ev.buf,
         callback = function (args)
-          alsp.updateAttachedClientNames(args.buf, args.data.client_id, nil)
           lsp.util.buf_clear_references(args.buf)
           local existsOtherClientWithHl = vim.iter(lsp.get_clients({
             bufnr = args.buf,
