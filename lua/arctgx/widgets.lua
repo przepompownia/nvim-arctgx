@@ -28,9 +28,9 @@ function widgets.renderDebug(highlights)
 end
 
 local stlSymbolHlMap = {
-  [' +'] = 'DiffAdd',
-  [' ~'] = 'DiffChange',
-  [' -'] = 'DiffDelete',
+  [' +'] = 'StatuslineDiffAdd',
+  [' ~'] = 'StatuslineDiffChange',
+  [' -'] = 'StatuslineDiffDelete',
   ['  '] = 'DiagnosticError',
   [' 󰀪 '] = 'DiagnosticWarn',
   ['  '] = 'DiagnosticInfo',

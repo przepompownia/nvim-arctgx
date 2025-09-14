@@ -1,5 +1,9 @@
 local api = vim.api
 
+local function onlyFg(hlGroup)
+  return {fg = vim.api.nvim_get_hl(0, {name = hlGroup}).fg}
+end
+
 local function configureHighlight()
   local highlights = {
     dark = {
@@ -8,10 +12,11 @@ local function configureHighlight()
       LspReferenceWrite = {bg = '#4B281D'},
       DapBreakpointSign = {fg = '#1212ff'},
       DapCurrentFrameSign = {fg = '#440000'},
-      DebugWidgetInactive = {
-        fg = vim.api.nvim_get_hl(0, {name = 'Normal'}).fg,
-      },
+      DebugWidgetInactive = onlyFg('Normal'),
       DebugWidgetActive = {fg = '#bb0000'},
+      StatuslineDiffAdd = onlyFg('DiffAdd'),
+      StatuslineDiffChange = onlyFg('DiffChange'),
+      StatuslineDiffDelete = onlyFg('DiffDelete'),
     },
     light = {
       LspReferenceRead = {bg = '#E6F4AA'},
@@ -19,9 +24,7 @@ local function configureHighlight()
       LspReferenceWrite = {bg = '#F4DBAA'},
       DapBreakpointSign = {fg = '#1212ff'},
       DapCurrentFrameSign = {fg = '#440000'},
-      DebugWidgetInactive = {
-        fg = vim.api.nvim_get_hl(0, {name = 'Normal'}).fg,
-      },
+      DebugWidgetInactive = onlyFg('Normal'),
       DebugWidgetActive = {fg = '#bb0000'},
     },
   }
