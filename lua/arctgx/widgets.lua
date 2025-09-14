@@ -1,7 +1,7 @@
 local widgets = {}
 
 local function formatDebugWidget(hl, symbol, fallbackHl, status)
-  return ('%%#%s#%s%%#%s#%s'):format(hl, symbol, fallbackHl, status)
+  return ('%%#%s#%s%%#%s#%s '):format(hl, symbol, fallbackHl, status)
 end
 
 --- @return {session: boolean, status: string}?
