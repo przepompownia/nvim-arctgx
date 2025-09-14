@@ -7,6 +7,10 @@ do
     LspReferenceWrite = {bg = '#F4DBAA'},
     DapBreakpointSign = {fg = '#1212ff'},
     DapCurrentFrameSign = {fg = '#440000'},
+    DebugWidgetInactive = {
+      fg = vim.api.nvim_get_hl(0, {name = 'Normal'}).fg,
+    },
+    DebugWidgetActive = {fg = '#bb0000'},
   }
 
   for name, def in pairs(highlights) do
