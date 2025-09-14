@@ -5,11 +5,8 @@ do
     LspReferenceRead = {bg = '#5B532C'},
     LspReferenceText = {bg = '#2C3C5B'},
     LspReferenceWrite = {bg = '#4B281D'},
-    IdeBreakpointSign = {fg = '#1212ff'},
-    IdeCodeWindowCurrentFrameSign = {fg = '#440000'},
-    IdeCodeWindowCurrentFrameLineNr = {
-      link = 'IdeCodeWindowCurrentFrameSign',
-    },
+    DapBreakpointSign = {fg = '#1212ff'},
+    DapCurrentFrameSign = {fg = '#440000'},
   }
 
   for name, def in pairs(highlights) do

@@ -178,11 +178,11 @@ require('arctgx.lazy').setupOnLoad('dap', function ()
   end
 end)
 
-vim.fn.sign_define('DapBreakpoint', {text = '●', texthl = 'IdeBreakpointSign', linehl = ''})
-vim.fn.sign_define('DapBreakpointCondition', {text = '◆', texthl = 'IdeBreakpointSign', linehl = ''})
-vim.fn.sign_define('DapBreakpointRejected', {text = 'R', texthl = 'IdeCodeWindowCurrentFrameSign', linehl = ''})
-vim.fn.sign_define('DapLogPoint', {text = 'L', texthl = 'IdeCodeWindowCurrentFrameSign', linehl = ''})
-vim.fn.sign_define('DapStopped', {text = '▶', texthl = 'IdeCodeWindowCurrentFrameSign', linehl = 'CursorLine'})
+vim.fn.sign_define('DapBreakpoint', {text = '●', texthl = 'DapBreakpointSign', linehl = ''})
+vim.fn.sign_define('DapBreakpointCondition', {text = '◆', texthl = 'DapBreakpointSign', linehl = ''})
+vim.fn.sign_define('DapBreakpointRejected', {text = 'R', texthl = 'DapCurrentFrameSign', linehl = ''})
+vim.fn.sign_define('DapLogPoint', {text = 'L', texthl = 'DapCurrentFrameSign', linehl = ''})
+vim.fn.sign_define('DapStopped', {text = '▶', texthl = 'DapCurrentFrameSign', linehl = 'CursorLine'})
 
 local augroup = api.nvim_create_augroup('ArctgxDap', {clear = true})
 api.nvim_create_autocmd({'FileType'}, {
