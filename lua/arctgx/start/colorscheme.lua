@@ -26,6 +26,9 @@ local function configureHighlight()
       DapCurrentFrameSign = {fg = '#440000'},
       DebugWidgetInactive = onlyFg('Normal'),
       DebugWidgetActive = {fg = '#bb0000'},
+      StatuslineDiffAdd = onlyFg('DiffAdd'),
+      StatuslineDiffChange = onlyFg('DiffChange'),
+      StatuslineDiffDelete = onlyFg('DiffDelete'),
     },
   }
   for name, def in pairs(highlights[vim.go.background]) do
