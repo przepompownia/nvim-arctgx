@@ -5,14 +5,6 @@ local alsp = require('arctgx.lsp')
 local keymap = require('arctgx.vim.abstractKeymap')
 
 lsp.log.set_level(vim.log.levels.WARN)
-local hlMap = {
-  LspReferenceRead = 'IdeReferenceRead',
-  LspReferenceText = 'IdeReferenceText',
-  LspReferenceWrite = 'IdeReferenceWrite'
-}
-for key, value in pairs(hlMap) do
-  api.nvim_set_hl(alsp.ns(), key, {link = value})
-end
 api.nvim_set_hl_ns(alsp.ns())
 alsp.overrideClientCapabilities()
 
