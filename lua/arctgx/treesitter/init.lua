@@ -30,6 +30,7 @@ local fileTypes = {
   'passwd',
   'python',
   'regex',
+  'rst',
   'sql',
   'strace',
   'ssh_config',
