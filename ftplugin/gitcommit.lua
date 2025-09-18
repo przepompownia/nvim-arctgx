@@ -11,3 +11,4 @@ api.nvim_create_autocmd({'BufUnload'}, {
     vim.cmd.stopinsert()
   end,
 })
+vim.opt_local.complete:append('k/usr/share/dict/words')
