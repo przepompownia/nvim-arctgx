@@ -12,3 +12,4 @@ api.nvim_create_autocmd({'BufUnload'}, {
   end,
 })
 vim.opt_local.complete:append('k/usr/share/dict/words')
+vim.opt_local.iskeyword:remove('/')
