@@ -3,15 +3,15 @@ local widgets = require('arctgx.widgets')
 
 local statusline = {}
 
-api.nvim_set_hl(0, 'StatusLine', {link = 'StatusLineNC', default = true})
-
 function statusline.prepare()
+  local hlGroup = tonumber(vim.g.actual_curwin) == api.nvim_get_current_win() and 'StatusLine' or 'StatusLineNC'
+
   return table.concat({
     '%<',
     api.nvim_get_mode().mode .. ' ',
     widgets.renderVcsBranch(),
-    widgets.renderVcsSummary('StatusLine') .. ' ',
-    widgets.renderDiagnosticsSummary('StatusLine'),
+    widgets.renderVcsSummary(hlGroup) .. ' ',
+    widgets.renderDiagnosticsSummary(hlGroup),
     widgets.searchCount(),
     ' %t %h%w%m%r ',
     widgets.recording(),
