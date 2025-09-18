@@ -14,6 +14,7 @@ function statusline.prepare()
     widgets.renderDiagnosticsSummary('StatusLine'),
     widgets.searchCount(),
     ' %t %h%w%m%r ',
+    widgets.recording(),
     '%=',
     widgets.renderDebug({
       active = 'DebugWidgetActive',

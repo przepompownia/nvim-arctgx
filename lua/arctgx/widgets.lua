@@ -66,6 +66,14 @@ function widgets.searchCount()
   return string.format(' [%d/%d] ', result.current, denominator)
 end
 
+function widgets.recording()
+  local register = vim.fn.reg_recording()
+  if register == '' then
+    return ''
+  end
+  return 'Recording @' .. register
+end
+
 function widgets.renderVcsBranch()
   local head = vim.b.gitsigns_head
   if not head then
