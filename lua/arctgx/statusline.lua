@@ -19,7 +19,7 @@ function statusline.prepare()
     widgets.renderDebug({
       active = 'DebugWidgetActive',
       inactive = 'DebugWidgetInactive',
-      fallback = 'FelineFileInfo',
+      fallback = hlGroup,
     }),
     require('arctgx.lsp').getStatus(),
     ' %y %4p%% %10(%l: %c%) ',
