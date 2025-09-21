@@ -12,7 +12,7 @@ function autocomplete.enable()
       if vim.v.option_new ~= 'prompt' then
         return
       end
-      vim.bo[api.nvim_get_current_buf()].complete = ''
+      vim.bo[api.nvim_get_current_buf()].autocomplete = false
     end
   })
 end
