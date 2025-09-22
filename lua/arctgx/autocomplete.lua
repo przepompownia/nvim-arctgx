@@ -9,10 +9,11 @@ function autocomplete.enable()
     group = augroup,
     pattern = 'buftype',
     callback = function ()
-      if vim.v.option_new ~= 'prompt' then
+      local buf = api.nvim_get_current_buf()
+      if vim.v.option_new == 'prompt' or vim.bo[buf].filetype == 'namu_prompt' then
+        vim.bo[buf].autocomplete = false
         return
       end
-      vim.bo[api.nvim_get_current_buf()].autocomplete = false
     end
   })
 end
