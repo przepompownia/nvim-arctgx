@@ -3,10 +3,14 @@ local api = vim.api
 local base = require 'arctgx.base'
 
 local function silentLuaRhsMap(mode, lhs, rhs, opts)
-  if type(rhs) == 'function' then
-    local rhs2 = function () xpcall(rhs, function (e) api.nvim_echo({{e}}, true, {err = true}) end) end
-    keymap.set(mode, lhs, rhs2, opts)
+  if type(rhs) ~= 'function' then
+    keymap.set(mode, lhs, rhs, opts)
+    return
   end
+  local silentRhs = function ()
+    xpcall(rhs, function (e) api.nvim_echo({{e}}, true, {err = true}) end)
+  end
+  keymap.set(mode, lhs, silentRhs, opts)
 end
 
 local opts = {silent = true}
