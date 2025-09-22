@@ -16,6 +16,139 @@ function autocomplete.enable()
       end
     end
   })
+  api.nvim_create_autocmd('FileType', {
+    group = augroup,
+    pattern = 'namu_prompt',
+    callback = function (ev)
+      vim.bo[ev.buf].autocomplete = false
+    end
+  })
+  api.nvim_create_autocmd('FileType', {
+    group = augroup,
+    pattern = 'namu_prompt',
+    callback = function (ev)
+      vim.bo[ev.buf].autocomplete = false
+    end
+  })
+  api.nvim_create_autocmd('FileType', {
+    group = augroup,
+    pattern = 'namu_prompt',
+    callback = function (ev)
+      vim.bo[ev.buf].autocomplete = false
+    end
+  })
+  api.nvim_create_autocmd('FileType', {
+    group = augroup,
+    pattern = 'namu_prompt',
+    callback = function (ev)
+      vim.bo[ev.buf].autocomplete = false
+    end
+  })
+  api.nvim_create_autocmd('FileType', {
+    group = augroup,
+    pattern = 'namu_prompt',
+    callback = function (ev)
+      vim.bo[ev.buf].autocomplete = false
+    end
+  })
+  api.nvim_create_autocmd('FileType', {
+    group = augroup,
+    pattern = 'namu_prompt',
+    callback = function (ev)
+      vim.bo[ev.buf].autocomplete = false
+    end
+  })
+  api.nvim_create_autocmd('FileType', {
+    group = augroup,
+    pattern = 'namu_prompt',
+    callback = function (ev)
+      vim.bo[ev.buf].autocomplete = false
+    end
+  })
+  api.nvim_create_autocmd('FileType', {
+    group = augroup,
+    pattern = 'namu_prompt',
+    callback = function (ev)
+      vim.bo[ev.buf].autocomplete = false
+    end
+  })
+  api.nvim_create_autocmd('FileType', {
+    group = augroup,
+    pattern = 'namu_prompt',
+    callback = function (ev)
+      vim.bo[ev.buf].autocomplete = false
+    end
+  })
+  api.nvim_create_autocmd('FileType', {
+    group = augroup,
+    pattern = 'namu_prompt',
+    callback = function (ev)
+      vim.bo[ev.buf].autocomplete = false
+    end
+  })
+  api.nvim_create_autocmd('FileType', {
+    group = augroup,
+    pattern = 'namu_prompt',
+    callback = function (ev)
+      vim.bo[ev.buf].autocomplete = false
+    end
+  })
+  api.nvim_create_autocmd('FileType', {
+    group = augroup,
+    pattern = 'namu_prompt',
+    callback = function (ev)
+      vim.bo[ev.buf].autocomplete = false
+    end
+  })
+  api.nvim_create_autocmd('FileType', {
+    group = augroup,
+    pattern = 'namu_prompt',
+    callback = function (ev)
+      vim.bo[ev.buf].autocomplete = false
+    end
+  })
+  api.nvim_create_autocmd('FileType', {
+    group = augroup,
+    pattern = 'namu_prompt',
+    callback = function (ev)
+      vim.bo[ev.buf].autocomplete = false
+    end
+  })
+  api.nvim_create_autocmd('FileType', {
+    group = augroup,
+    pattern = 'namu_prompt',
+    callback = function (ev)
+      vim.bo[ev.buf].autocomplete = false
+    end
+  })
+  api.nvim_create_autocmd('FileType', {
+    group = augroup,
+    pattern = 'namu_prompt',
+    callback = function (ev)
+      vim.bo[ev.buf].autocomplete = false
+    end
+  })
+  api.nvim_create_autocmd('FileType', {
+    group = augroup,
+    pattern = 'namu_prompt',
+    callback = function (ev)
+      vim.bo[ev.buf].autocomplete = false
+    end
+  })
+  api.nvim_create_autocmd('FileType', {
+    group = augroup,
+    pattern = 'namu_prompt',
+    callback = function (ev)
+      vim.bo[ev.buf].autocomplete = false
+    end
+  })
+  api.nvim_create_autocmd('FileType', {
+    group = augroup,
+    pattern = 'namu_prompt',
+    callback = function (ev)
+      vim.bo[ev.buf].autocomplete = false
+    end
+  })
 end
 
 return autocomplete
