@@ -2,6 +2,13 @@ local keymap = vim.keymap
 local api = vim.api
 local base = require 'arctgx.base'
 
+local function silentLuaRhsMap(mode, lhs, rhs, opts)
+  if type(rhs) == 'function' then
+    local rhs2 = function () xpcall(rhs, function (e) api.nvim_echo({{e}}, true, {err = true}) end) end
+    keymap.set(mode, lhs, rhs2, opts)
+  end
+end
+
 local opts = {silent = true}
 keymap.set({'n'}, '<Leader>=', 'ggVG=', opts)
 keymap.set({'n'}, '<Leader>/', '/', {})
@@ -22,7 +29,7 @@ keymap.set({'c'}, '<C-BS>', '<C-w>', opts)
 keymap.set({'c'}, '<C-Del>', '<S-Right><C-w>', opts)
 keymap.set({'n'}, '<S-Up>', '<C-y>', opts)
 keymap.set({'n'}, '<S-Down>', '<C-e>', opts)
-keymap.set({'n'}, '<C-w>C', vim.cmd.tabclose, opts)
+silentLuaRhsMap({'n'}, '<C-w>C', vim.cmd.tabclose, opts)
 keymap.set({'n'}, '<C-;>', ':lua ', {})
 
 local function selectionFromPastedRange()
@@ -100,10 +107,10 @@ keymap.set({'i', 'n'}, '<A-Left>', function () vim.cmd.wincmd('h') end, opts)
 keymap.set({'i', 'n'}, '<A-Right>', function () vim.cmd.wincmd('l') end, opts)
 keymap.set('i', '<C-BS>', '<C-w>', opts)
 keymap.set('i', '<C-Del>', function () vim.cmd.normal('dw') end, opts)
-keymap.set({'i', 'n', 'x'}, '<F2>', vim.cmd.update, opts)
-keymap.set({'i', 'n', 'x'}, '<F3>', vim.cmd.quit, opts)
-keymap.set({'i', 'n'}, '<S-F3>', function () vim.cmd.quit {bang = true} end, opts)
-keymap.set({'i', 'n'}, '<F15>', function () vim.cmd.quit {bang = true} end, opts)
+silentLuaRhsMap({'i', 'n', 'x'}, '<F2>', vim.cmd.update, opts)
+silentLuaRhsMap({'i', 'n', 'x'}, '<F3>', vim.cmd.quit, opts)
+silentLuaRhsMap({'i', 'n'}, '<S-F3>', function () vim.cmd.quit {bang = true} end, opts)
+silentLuaRhsMap({'i', 'n'}, '<F15>', function () vim.cmd.quit {bang = true} end, opts)
 keymap.set({'i'}, '<C-Left>', function () vim.cmd.normal('b') end, opts)
 keymap.set({'i'}, '<C-Right>', function ()
   vim._with({wo = {virtualedit = 'onemore'}}, function ()
@@ -112,7 +119,7 @@ keymap.set({'i'}, '<C-Right>', function ()
 end, opts)
 keymap.set({'i'}, '<S-Left>', function () vim.cmd.normal('v') end, opts)
 keymap.set({'i'}, '<S-Right>', function () vim.cmd.normal('v') end, opts)
-keymap.set('n', '<Esc>', vim.cmd.fclose, {desc = 'Close float window'})
+silentLuaRhsMap('n', '<Esc>', vim.cmd.fclose, {desc = 'Close float window'})
 
 for _, lhs in ipairs({'<C-/>', '<C-_>'}) do
   keymap.set({'n', 'i'}, lhs, function ()
