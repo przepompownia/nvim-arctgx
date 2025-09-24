@@ -7,6 +7,7 @@ api.nvim_create_autocmd({'FileType'}, {
   group = augroup,
   nested = true,
   callback = function ()
+    vim.wo.scrolloff = 0
     if vim.opt_local.buftype:get() ~= 'help' then
       return
     end
