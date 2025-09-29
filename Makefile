@@ -7,8 +7,8 @@ vscodePhpDebugVersion := '1.37.0'
 vscodePhpDebugUrl := 'https://github.com/xdebug/vscode-php-debug/releases/download/v1.37.0/php-debug-1.37.0.vsix'
 bashDebugVersion := '0.3.9'
 bashDebugUrl := 'https://github.com/rogalmic/vscode-bash-debug/releases/download/untagged-438733f35feb8659d939/bash-debug-0.3.9.vsix'
-cpptoolsVersion := '1.26.3'
-cpptoolsUrl := 'https://github.com/microsoft/vscode-cpptools/releases/download/v1.26.3/cpptools-linux-x64.vsix'
+cpptoolsVersion := '1.28.0'
+cpptoolsUrl := 'https://github.com/microsoft/vscode-cpptools/releases/download/v1.28.0/cpptools-linux-x64.vsix'
 
 .ONESHELL:
 install-vscode-php-debug:
