@@ -27,6 +27,7 @@ install-vscode-cpptools-debug:
 	set -e
 	$(DIR)/bin/dap-adapter-utils install microsoft vscode-cpptools $(cpptoolsVersion) $(cpptoolsUrl)
 	$(DIR)/bin/dap-adapter-utils setAsCurrent vscode-cpptools $(cpptoolsVersion)
+	chmod -c +x $(DIR)/tools/vscode-cpptools/current/extension/debugAdapters/bin/OpenDebugAD7
 
 require-init:
 ifndef nvimInit
