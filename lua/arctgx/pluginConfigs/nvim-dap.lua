@@ -41,6 +41,34 @@ require('arctgx.lazy').setupOnLoad('dap', function ()
     return result
   end
 
+  local function getPidByPpid(ppid)
+    return tonumber(vim.fn.system('ps -o pid= --ppid ' .. tostring(ppid)))
+  end
+
+  local function runEmbeddedNvim(nsKey, cwd, program)
+    return function (_, body)
+      dap.listeners.after.event_process[nsKey] = nil
+
+      local ppid = body.systemProcessId
+      vim.wait(1000, function ()
+        return getPidByPpid(ppid) ~= nil
+      end)
+      local pid = getPidByPpid(ppid)
+
+      if pid then
+        dap.run({
+          name = 'Neovim embedded',
+          type = 'cppdbg',
+          request = 'attach',
+          processId = pid,
+          program = program,
+          cwd = cwd,
+          externalConsole = false,
+        })
+      end
+    end
+  end
+
   dap.adapters.bashdb = {
     type = 'executable',
     command = 'node',
@@ -100,7 +128,54 @@ require('arctgx.lazy').setupOnLoad('dap', function ()
     callback({type = 'server', host = config.host, port = config.port})
   end
 
+  dap.adapters.cppdbg = {
+    id = 'cppdbg',
+    type = 'executable',
+    command = base.getPluginDir() .. '/tools/vscode-cpptools/current/extension/debugAdapters/bin/OpenDebugAD7',
+  }
+
   dap.configurations.php = {require('arctgx.dap.php').default}
+
+  dap.configurations.c = {
+    setmetatable(
+      {
+        name = 'Neovim',
+        type = 'cppdbg',
+        request = 'launch',
+        program = vim.uv.cwd() .. '/build/bin/nvim',
+        cwd = vim.uv.cwd(),
+        args = {
+          '--clean',
+          '-u',
+          '/tmp/ex1.lua',
+        },
+        externalConsole = true,
+      },
+      {
+        --- from https://zignar.net/2023/02/17/debugging-neovim-with-neovim-and-nvim-dap/
+        __call = function (config)
+          vim.fn.system('make')
+
+          local key = 'arctgx.dap.c.embedded.nvim'
+
+          dap.listeners.after.initialize[key] = function (session)
+            dap.listeners.after.initialize[key] = nil
+
+            session.on_close[key] = function ()
+              for _, handler in pairs(dap.listeners.after) do
+                handler[key] = nil
+              end
+            end
+          end
+
+          dap.listeners.after.event_process[key] = runEmbeddedNvim(key, config.cwd, config.program)
+
+          return config
+        end
+      }
+    ),
+  }
+
 
   require('arctgx.dap').compareDeclaredFiletypes(dap.configurations)
 
@@ -134,8 +209,10 @@ require('arctgx.lazy').setupOnLoad('dap', function ()
   -- dap.defaults.php.exception_breakpoints = {'Exception'}
   dap.defaults.fallback.switchbuf = 'uselast'
   dap.defaults.fallback.external_terminal = {
-    command = '/usr/bin/kitty',
+    command = 'alacritty',
+    args = {'-e'},
   }
+
   local dapSessionStatus = ''
   local function setSessionStatus(status)
     dapSessionStatus = status

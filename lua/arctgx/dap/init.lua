@@ -5,6 +5,7 @@ local declaredConfigurations = {
   php = false,
   lua = false,
   sh = false,
+  c = false,
 }
 
 --- @param configurations table<string, dap.Configuration[]>
