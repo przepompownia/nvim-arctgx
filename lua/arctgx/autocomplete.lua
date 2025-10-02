@@ -17,7 +17,10 @@ function autocomplete.enable()
   })
   api.nvim_create_autocmd('FileType', {
     group = augroup,
-    pattern = 'namu_prompt',
+    pattern = {
+      'namu_prompt',
+      'TelescopePrompt'
+    },
     callback = function (ev)
       vim.bo[ev.buf].autocomplete = false
     end
