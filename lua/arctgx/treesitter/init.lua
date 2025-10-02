@@ -56,11 +56,13 @@ local additionalFiletypes = {
   'markdown_inline',
   'c',
   'vim',
+  'sh',
 }
 
 local ftLangMap = {
   php = 'php_only',
   mysql = 'sql',
+  sh = 'bash',
 }
 
 local langs = vim.deepcopy(fileTypes)
