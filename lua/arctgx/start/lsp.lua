@@ -61,8 +61,8 @@ api.nvim_create_autocmd('LspAttach', {
     end, opts)
     keymap.set({'n', 'v'}, 'langApplyAllformatters', function () return lsp.buf.format({async = true}) end, opts)
 
-    -- print(client.name .. ' folding range support: ' .. vim.inspect(client:supports_method(vim.lsp.protocol.Methods.textDocument_foldingRange)))
-    -- if client:supports_method(vim.lsp.protocol.Methods.textDocument_foldingRange) and client.name == 'phpactor' then
+    -- print(client.name .. ' folding range support: ' .. vim.inspect(client:supports_method('textDocument/foldingRange')))
+    -- if client:supports_method('textDocument/foldingRange') and client.name == 'phpactor' then
     --   local win = vim.api.nvim_get_current_win()
     --   vim.wo[win][0].foldexpr = 'v:lua.vim.lsp.foldexpr()'
     -- end

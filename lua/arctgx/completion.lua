@@ -23,7 +23,7 @@ local function showDocumentation(buf, clientId, completionItem)
 
   return vim.lsp.buf_request_all(
     buf,
-    vim.lsp.protocol.Methods.completionItem_resolve,
+    'completionItem/resolve',
     completionItem,
     function (results, _context)
       for respClientId, resolvedItem in pairs(results) do
@@ -131,7 +131,7 @@ function completion.init()
     callback = function (args)
       local clientId = args.data.client_id
       local client = assert(vim.lsp.get_clients({id = clientId})[1])
-      if not client:supports_method(vim.lsp.protocol.Methods.textDocument_completion, args.buf) then
+      if not client:supports_method('textDocument/completion', args.buf) then
         return
       end
       local triggerCharacters = vim.tbl_get(
@@ -166,7 +166,7 @@ function completion.init()
         definedMaps[args.buf] = true
       end
 
-      if client:supports_method(vim.lsp.protocol.Methods.completionItem_resolve, args.buf)
+      if client:supports_method('completionItem/resolve', args.buf)
         and vim.o.completeopt:find('popup')
       then
         api.nvim_create_autocmd('CompleteChanged', {

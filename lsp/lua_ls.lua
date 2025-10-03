@@ -26,7 +26,7 @@ local function onInit(client)
     require('arctgx.lsp.serverConfigs.luaLs').defaultConfig(path)
   )
 
-  return client:notify(vim.lsp.protocol.Methods.workspace_didChangeConfiguration, {settings = client.config.settings})
+  return client:notify('workspace/didChangeConfiguration', {settings = client.config.settings})
 end
 
 return {
