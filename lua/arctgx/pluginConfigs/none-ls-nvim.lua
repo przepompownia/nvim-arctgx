@@ -40,7 +40,16 @@ null.setup({
     null.builtins.diagnostics.twigcs,
     -- null.builtins.diagnostics.phpcs.with(phpcsArgs),
     null.builtins.diagnostics.phpmd.with({
-      extra_args = {'cleancode,codesize,controversial,design,naming,unusedcode'}
+      temp_dir = '/tmp',
+      extra_args = function (params)
+        if vim.uv.fs_stat(vim.fs.joinpath(params.root, 'phpmd.xml')) then
+          return {
+            'phpmd.xml',
+            '--cache',
+          }
+        end
+        return {'cleancode,codesize,controversial,design,naming,unusedcode'}
+      end,
     }),
     -- null.builtins.diagnostics.phpstan.with({
     --   temp_dir = '/tmp',
