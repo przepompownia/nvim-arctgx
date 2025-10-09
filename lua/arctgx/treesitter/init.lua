@@ -25,6 +25,7 @@ local fileTypes = {
   'json',
   'json5',
   'jsonc',
+  'kitty',
   'make',
   'muttrc',
   'passwd',
