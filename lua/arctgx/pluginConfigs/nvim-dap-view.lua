@@ -13,7 +13,6 @@ require('arctgx.lazy').setupOnLoad('dap', function ()
     winbar = {
       default_section = 'scopes',
     },
-    switchbuf = 'useopen,uselast',
     help = {border = 'single'},
     windows = {
       height = 0.3,
