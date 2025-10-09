@@ -63,42 +63,6 @@ require('arctgx.lazy').setupOnLoad('dap', function ()
       keymap.set('n', 'debuggerAddToWatched', function ()
         watchExpression(vim.fn.expand('<cexpr>'))
       end, opts)
-      keymap.set(
-        {'n'},
-        'debuggerOpenViewScopes',
-        function () dv.jump_to_view('scopes') end,
-        opts
-      )
-      keymap.set(
-        {'n'},
-        'debuggerOpenViewBreakpoints',
-        function () dv.jump_to_view('breakpoints') end,
-        opts
-      )
-      keymap.set(
-        {'n'},
-        'debuggerOpenViewExceptions',
-        function () dv.jump_to_view('exceptions') end,
-        opts
-      )
-      keymap.set(
-        {'n'},
-        'debuggerOpenViewThreads',
-        function () dv.jump_to_view('threads') end,
-        opts
-      )
-      keymap.set(
-        {'n'},
-        'debuggerOpenViewWatches',
-        function () dv.jump_to_view('watches') end,
-        opts
-      )
-      keymap.set(
-        {'n'},
-        'debuggerOpenViewREPL',
-        function () dv.jump_to_view('repl') end,
-        opts
-      )
     end
   })
 end)

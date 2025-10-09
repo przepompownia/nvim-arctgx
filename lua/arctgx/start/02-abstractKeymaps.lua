@@ -43,12 +43,6 @@ local abstractKeymaps = {
   debuggerToggleBreakpoint = {lhs = {'<Leader>dt'}, desc = 'Debugger: set breakpoint'},
   debuggerSetBreakpointConditional = {lhs = {'<Leader>dT'}, desc = 'Debugger: set conditional breakpoint'},
   debuggerSetExceptionBreakpoint = {lhs = {'<Leader>dx'}, desc = 'Debugger: set exception breakpoint'},
-  debuggerOpenViewScopes = {lhs = {'<Leader>dvs'}, desc = 'Debugger: jump to scopes view'},
-  debuggerOpenViewWatches = {lhs = {'<Leader>dvw'}, desc = 'Debugger: jump to watches view'},
-  debuggerOpenViewExceptions = {lhs = {'<Leader>dve'}, desc = 'Debugger: jump to exceptions view'},
-  debuggerOpenViewThreads = {lhs = {'<Leader>dvt'}, desc = 'Debugger: jump to threads view'},
-  debuggerOpenViewBreakpoints = {lhs = {'<Leader>dvb'}, desc = 'Debugger: jump to breakpoints view'},
-  debuggerOpenViewREPL = {lhs = {'<Leader>dvr'}, desc = 'Debugger: jump to REPL view'},
 
   testUIToggleSummary = {lhs = {'<Leader>us'}, desc = 'Test UI: toggle summary'},
   testUIToggleOutput = {lhs = {'<Leader>uo'}, desc = 'Test UI: toggle output'},
