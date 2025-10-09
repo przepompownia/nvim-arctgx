@@ -21,7 +21,7 @@ require('arctgx.lazy').setupOnLoad('dap', function ()
       },
     },
   })
-  dap.listeners.before.event_stopped['dap-view-config'] = function ()
+  dap.listeners.after.event_stopped['dap-view-config'] = function ()
     api.nvim_exec_autocmds('FileType', {
       group = augroup,
       pattern = vim.bo.ft,
