@@ -96,9 +96,9 @@ keymap.set('n', '<Leader>fcc', function () setreg('+', vim.fn.expand('%:.')) end
 keymap.set('n', '<Leader>fcC', function () setreg('+', vim.fn.expand('%:p')) end, opts)
 keymap.set('n', '<Leader>co', vim.cmd.copen, opts)
 keymap.set('t', '<M-p>', function ()
+  ---@diagnostic disable-next-line: param-type-mismatch
   local regname = vim.fn.nr2char(vim.fn.getchar())
-  local sequence = ('<C-\\><C-n>"%spi'):format(regname)
-  return api.nvim_replace_termcodes(sequence, true, false, true)
+  return vim.keycode(('<C-\\><C-n>"%spi'):format(regname))
 end, {
   silent = true,
   expr = true,
