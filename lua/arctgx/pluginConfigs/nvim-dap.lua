@@ -144,11 +144,7 @@ require('arctgx.lazy').setupOnLoad('dap', function ()
         request = 'launch',
         program = vim.uv.cwd() .. '/build/bin/nvim',
         cwd = vim.uv.cwd(),
-        args = {
-          '--clean',
-          '-u',
-          '/tmp/ex1.lua',
-        },
+        args = {},
         externalConsole = true,
       },
       {
