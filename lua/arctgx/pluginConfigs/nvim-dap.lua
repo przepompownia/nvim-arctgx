@@ -277,7 +277,7 @@ api.nvim_create_autocmd({'FileType'}, {
     keymap.set(
       {'n', 'v'},
       'debuggerEvalToFloat',
-      function () require('dap.ui.widgets').hover() end,
+      function () require('dap.ui.widgets').hover(nil, {border = 'rounded'}) end,
       {buffer = event.buf}
     )
   end
