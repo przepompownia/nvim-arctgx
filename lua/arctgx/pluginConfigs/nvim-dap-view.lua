@@ -29,10 +29,10 @@ require('arctgx.lazy').setupOnLoad('dap', function ()
     dv.open()
   end
   dap.listeners.before.event_terminated['dap-view-config'] = function ()
-    dv.close()
+    dv.close(true)
   end
   dap.listeners.before.event_exited['dap-view-config'] = function ()
-    dv.close()
+    dv.close(true)
   end
 
   api.nvim_create_autocmd('User', {
