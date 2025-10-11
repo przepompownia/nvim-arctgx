@@ -99,10 +99,7 @@ keymap.set('t', '<M-p>', function ()
   ---@diagnostic disable-next-line: param-type-mismatch
   local regname = vim.fn.nr2char(vim.fn.getchar())
   return vim.keycode(('<C-\\><C-n>"%spi'):format(regname))
-end, {
-  silent = true,
-  expr = true,
-})
+end, {silent = true, expr = true})
 
 keymap.set({'i', 'n'}, '<A-Up>', function () vim.cmd.wincmd('k') end, opts)
 keymap.set({'i', 'n'}, '<A-Down>', function () vim.cmd.wincmd('j') end, opts)
