@@ -16,6 +16,8 @@ function statusline.prepare()
     ' %t %h%w%m%r ',
     widgets.recording(),
     '%=',
+    '%S',
+    '%=',
     widgets.renderDebug({
       active = 'DebugWidgetActive',
       inactive = 'DebugWidgetInactive',

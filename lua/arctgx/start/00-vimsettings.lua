@@ -54,7 +54,8 @@ vim.go.wildignorecase = true
 vim.bo.path = '.,,'
 vim.opt.path:append(vim.fs.dirname(vim.env.VIMRUNTIME))
 vim.opt.path:append(vim.env.VIMRUNTIME)
-vim.go.showcmd = false
+vim.go.showcmd = true
+vim.go.showcmdloc = 'statusline'
 vim.go.showmode = false
 vim.go.ruler = false
 
