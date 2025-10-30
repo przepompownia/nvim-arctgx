@@ -206,7 +206,7 @@ require('arctgx.lazy').setupOnLoad('dap', function ()
   dap.defaults.fallback.switchbuf = 'uselast'
   dap.defaults.fallback.external_terminal = {
     command = 'alacritty',
-    args = {'-e'},
+    args = {'--command'},
   }
 
   local dapSessionStatus = ''
