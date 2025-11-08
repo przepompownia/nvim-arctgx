@@ -8,6 +8,8 @@ api.nvim_create_autocmd({'FileType'}, {
   nested = true,
   callback = function ()
     vim.wo.scrolloff = 0
+
+    vim.cmd([[silent wincmd T]])
     if vim.opt_local.buftype:get() ~= 'help' then
       return
     end
@@ -15,8 +17,6 @@ api.nvim_create_autocmd({'FileType'}, {
     vim.keymap.set({'n'}, 'q', function ()
       vim.api.nvim_buf_delete(0, {})
     end, {buffer = 0})
-
-    vim.cmd([[silent wincmd T]])
   end
 })
 
