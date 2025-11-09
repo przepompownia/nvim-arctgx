@@ -29,6 +29,7 @@ api.nvim_create_autocmd('LspAttach', {
 })
 
 null.setup({
+  should_attach = require('arctgx.lsp').shouldAttach,
   -- debug = true,
   diagnostics_format = '#{s}: #{m} [#{c}]',
   update_in_insert = false,

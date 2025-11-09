@@ -36,7 +36,7 @@ return {
       vim.env.NVIM_UNSANDBOXED_CONFIGDIR or vim.fn.stdpath('config'),
       1
     ), rootPatterns)
-    onDir(root)
+    require('arctgx.lsp').rootDir(bufnr, onDir, root)
   end,
   log_level = vim.lsp.protocol.MessageType.Warning,
   on_init = onInit,

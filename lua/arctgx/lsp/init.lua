@@ -49,4 +49,18 @@ function M.overrideClientCapabilities()
   end
 end
 
+function M.shouldAttach(buf)
+  if api.nvim_buf_get_name(buf):match([[^(diffview://)]]) then
+    return false
+  end
+  return true
+end
+
+function M.rootDir(buf, onDir, root)
+  if not M.shouldAttach(buf) then
+    return
+  end
+  onDir(root)
+end
+
 return M

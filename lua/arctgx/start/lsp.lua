@@ -109,6 +109,10 @@ api.nvim_create_autocmd('LspAttach', {
   end,
 })
 
+vim.lsp.config('*', {
+  root_dir = alsp.rootDir,
+})
+
 local function willRenameFilesHandler(response)
   for clientId, clientResponse in pairs(response) do
     local client = lsp.get_clients({id = clientId})[1]
