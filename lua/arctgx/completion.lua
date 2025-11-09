@@ -5,7 +5,7 @@ local completion = {}
 local pendingCancelResolveCbs = {}
 
 local debounce = 250
-local useBuiltinAutotrigger = false
+local useCustomAutotrigger = false
 local insertCharTimer = assert(vim.uv.new_timer())
 local completeChangedTimer = assert(vim.uv.new_timer())
 local completionAugroup = api.nvim_create_augroup('arctgx.completion', {clear = true})
@@ -125,6 +125,36 @@ local tabMaps = {
   ['<S-Tab>'] = {pum = '<C-p>', snippetJump = -1},
 }
 
+local function enableCustomAutotrigger(client, buf)
+  if not useCustomAutotrigger then
+    return
+  end
+
+  local triggerCharacters = vim.tbl_get(
+    client,
+    'server_capabilities',
+    'completionProvider',
+    'triggerCharacters'
+  ) or {}
+
+  local existingInsertPreAutocmds = api.nvim_get_autocmds({
+    group = completionAugroup,
+    event = {'InsertCharPre'},
+    buffer = buf,
+  })
+  if vim.tbl_count(existingInsertPreAutocmds) == 0 then
+    api.nvim_create_autocmd({
+      'InsertCharPre',
+    }, {
+      group = completionAugroup,
+      buffer = buf,
+      callback = function ()
+        autotrigger(triggerCharacters, vim.v.char)
+      end,
+    })
+  end
+end
+
 function completion.init()
   api.nvim_create_autocmd('LspAttach', {
     group = completionAugroup,
@@ -134,35 +164,12 @@ function completion.init()
       if not client:supports_method('textDocument/completion', args.buf) then
         return
       end
-      local triggerCharacters = vim.tbl_get(
-        client,
-        'server_capabilities',
-        'completionProvider',
-        'triggerCharacters'
-      ) or {}
 
-      vim.lsp.completion.enable(true, clientId, args.buf, {autotrigger = useBuiltinAutotrigger})
+      vim.lsp.completion.enable(true, clientId, args.buf, {autotrigger = not useCustomAutotrigger})
 
       if not definedMaps[args.buf] then
         vim.keymap.set({'i'}, '<C-Space>', vim.lsp.completion.get, {buffer = args.buf})
-        if not useBuiltinAutotrigger then
-          local existingInsertPreAutocmds = api.nvim_get_autocmds({
-            group = completionAugroup,
-            event = {'InsertCharPre'},
-            buffer = args.buf,
-          })
-          if not useBuiltinAutotrigger and vim.tbl_count(existingInsertPreAutocmds) == 0 then
-            api.nvim_create_autocmd({
-              'InsertCharPre',
-            }, {
-              group = completionAugroup,
-              buffer = args.buf,
-              callback = function ()
-                autotrigger(triggerCharacters, vim.v.char)
-              end,
-            })
-          end
-        end
+        enableCustomAutotrigger(client, args.buf)
         definedMaps[args.buf] = true
       end
 
