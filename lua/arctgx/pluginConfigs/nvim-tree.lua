@@ -65,8 +65,7 @@ api.nvim_create_autocmd('User', {
   end,
 })
 
-require('arctgx.lazy').setupOnLoad('nvim-tree.api', function () end, {'nvim-tree'})
-require('arctgx.lazy').setupOnLoad('nvim-tree', function ()
+require('arctgx.lazy').setupOnLoad('nvim-tree.api', function ()
   require('nvim-tree').setup({
     hijack_cursor = true,
     actions = {
