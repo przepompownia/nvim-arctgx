@@ -3,8 +3,8 @@
 SHELL := /bin/bash
 DIR := ${CURDIR}
 
-vscodePhpDebugVersion := '1.37.0'
-vscodePhpDebugUrl := 'https://github.com/xdebug/vscode-php-debug/releases/download/v1.37.0/php-debug-1.37.0.vsix'
+vscodePhpDebugVersion := '1.38.0'
+vscodePhpDebugUrl := 'https://github.com/xdebug/vscode-php-debug/releases/download/v1.38.0/php-debug-1.38.0.vsix'
 bashDebugVersion := '0.3.9'
 bashDebugUrl := 'https://github.com/rogalmic/vscode-bash-debug/releases/download/untagged-438733f35feb8659d939/bash-debug-0.3.9.vsix'
 cpptoolsVersion := '1.28.0'
