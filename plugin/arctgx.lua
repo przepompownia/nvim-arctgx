@@ -1,6 +1,8 @@
 require('vim._extui').enable({enable = true, msg = {target = 'msg'}})
 vim.schedule(function ()
-  vim.wo[require('vim._extui.shared').wins.msg].winhl = 'Normal:Comment'
+  vim._with({win = require('vim._extui.shared').wins.msg}, function ()
+    vim.opt_local.winhl:append('Normal:Comment')
+  end)
 end)
 
 require('arctgx.lazy')
