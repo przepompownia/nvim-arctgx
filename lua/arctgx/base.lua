@@ -207,6 +207,13 @@ function base.isDummyFileTypeBuffer(args)
   return args.file == args.match and opts.buftype == 'nofile' and opts.bufhidden == 'hide' and opts.swapfile == false and opts.modeline == false
 end
 
+---@param cb fun()
+---@param ... any
+---@return boolean, ...?any
+function base.epcall(cb, ...)
+  return xpcall(cb, function (e) api.nvim_echo({{e}}, true, {err = true}) end, ...)
+end
+
 function verboseLog(msg)
   api.nvim_echo({{tostring(vim.uv.hrtime())}, {': '}, {vim.inspect(msg)}}, false, {verbose = true})
 end

@@ -8,7 +8,7 @@ local function silentLuaRhsMap(mode, lhs, rhs, opts)
     return
   end
   local silentRhs = function ()
-    xpcall(rhs, function (e) api.nvim_echo({{e}}, true, {err = true}) end)
+    base.epcall(rhs)
   end
   keymap.set(mode, lhs, silentRhs, opts)
 end
