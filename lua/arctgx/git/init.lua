@@ -26,7 +26,15 @@ function git.top(relativeDir)
 end
 
 function git.topOrFallback(relativeDir)
-  return git.top(relativeDir) or relativeDir or vim.uv.cwd()
+  local gitTop = git.top(relativeDir)
+  local home = os.getenv('HOME')
+  local fallbackDir = relativeDir or vim.uv.cwd()
+
+  if nil == gitTop or (home == gitTop and home ~= vim.uv.cwd()) then
+    return fallbackDir
+  end
+
+  return gitTop
 end
 
 function git.commandFiles()
