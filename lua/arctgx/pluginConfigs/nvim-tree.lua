@@ -160,9 +160,10 @@ local function focusOnFile()
   require('nvim-tree')
   local treeapi = require('nvim-tree.api')
   local bufPath = vim.fn.fnamemodify(api.nvim_buf_get_name(0), ':p')
-  local realParent = vim.iter(vim.fs.parents(bufPath)):find(function (path)
-    return vim.uv.fs_realpath(path) and path ~= '/'
-  end) or vim.uv.cwd()
+  local realParent = vim.uv.fs_realpath(require('arctgx.base').getBufferCwd(0)) or
+    vim.iter(vim.fs.parents(bufPath)):find(function (path)
+      return vim.uv.fs_realpath(path) and path ~= '/'
+    end) or vim.uv.cwd()
   treeapi.tree.open(require('arctgx.git').topOrFallback(realParent))
   -- treeapi.tree.toggle_hidden_filter()
   treeapi.live_filter.clear()
