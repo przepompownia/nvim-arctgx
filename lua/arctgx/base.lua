@@ -72,8 +72,11 @@ end
 
 do
   local bufferCwdCallback = {}
-  function base.addBufferCwdCallback(bufNr, callback)
-    bufferCwdCallback[bufNr] = callback
+  function base.addBufferCwdCallback(buf, callback)
+    if buf == 0 or buf == nil then
+      buf = api.nvim_get_current_buf()
+    end
+    bufferCwdCallback[buf] = callback
   end
 
   ---@param buf integer?
