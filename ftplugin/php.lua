@@ -11,3 +11,7 @@ vim.keymap.set('i', '<A-.>', '->', {buffer = true})
 vim.keymap.set('i', '<M-S-.>', '=>', {buffer = true})
 vim.keymap.set('i', '<M-S->>', '=>', {buffer = true})
 vim.keymap.set('i', '<A-char-62>', '=>', {buffer = true})
+
+require('arctgx.base').addBufferCwdCallback(0, function ()
+  return vim.fs.root(0, {'composer.json', '.nvim.lua', '.phpactor.json'})
+end)
