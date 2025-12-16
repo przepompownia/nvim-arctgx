@@ -82,7 +82,9 @@ do
   ---@param buf integer?
   ---@return string
   function base.getBufferCwd(buf)
-    buf = buf or api.nvim_get_current_buf()
+    if buf == 0 or buf == nil then
+      buf = api.nvim_get_current_buf()
+    end
     local callback = bufferCwdCallback[buf]
     if nil ~= callback then
       return callback()
