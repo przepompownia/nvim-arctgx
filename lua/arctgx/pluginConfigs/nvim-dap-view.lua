@@ -15,7 +15,7 @@ require('arctgx.lazy').setupOnLoad('dap', function ()
     },
     help = {border = 'single'},
     windows = {
-      height = 0.3,
+      size = 0.3,
       terminal = {
         hide = {'php'},
       },
