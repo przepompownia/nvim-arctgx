@@ -28,6 +28,7 @@ local fileTypes = {
   'kitty',
   'make',
   'muttrc',
+  'nginx',
   'passwd',
   'python',
   'regex',
