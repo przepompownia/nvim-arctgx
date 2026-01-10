@@ -7,6 +7,7 @@ local loadOnFiletypeAutocmd
 local fileTypes = {
   'awk',
   'bash',
+  'cpp',
   'css',
   'desktop',
   'diff',
@@ -24,7 +25,6 @@ local fileTypes = {
   'jq',
   'json',
   'json5',
-  'jsonc',
   'kitty',
   'make',
   'muttrc',
@@ -96,7 +96,7 @@ end
 
 local function start(buf, lang)
   vim.treesitter.start(buf, lang)
-  vim.bo[buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+  -- vim.bo[buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
 end
 
 function extension.loadOnFiletype()
