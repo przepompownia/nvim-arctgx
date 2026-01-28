@@ -59,6 +59,15 @@
     "body": ["dump(\\Phpactor\\WorseReflection\\Core\\Util\\NodeUtil::dump(\\$${1:node});"],
     "prefix": "pdump"
   },
+  "fibd": {
+    "prefix": "fibd",
+    "body": [
+      "\\$fiber = Fiber::getCurrent();",
+      "\\$fiberId = \\$fiber ? spl_object_id(\\$fiber) : 'main';",
+      "printf(\"[%s] Fiber ID: %s\\n\", \\$msg ?? __METHOD__, \\$fiberId);"
+    ],
+    "description": "Print debug info about the current fiber"
+  },
   "docblock": {
     "prefix": "/**",
     "body": [
