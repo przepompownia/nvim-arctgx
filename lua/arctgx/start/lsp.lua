@@ -109,6 +109,36 @@ api.nvim_create_autocmd('LspAttach', {
   end,
 })
 
+api.nvim_create_autocmd('LspProgress', {
+  callback = function (ev)
+    local value = ev.data.params.value
+    local clientId = ev.data.client_id
+    local client = assert(vim.lsp.get_clients({id = clientId})[1])
+    if client.name == 'null-ls' then
+      return
+    end
+
+    local msgId = ('progress-lsp-%s-%s'):format(clientId, value.title)
+    local title = ('[%s] %s'):format(client.name or clientId, value.title)
+    local msg = value.message or ('finished')
+
+    api.nvim_echo({{msg}}, false, {
+      id = msgId,
+      kind = 'progress',
+      title = title,
+      status = 'success',
+      percent = value.percentage,
+    })
+    if value.kind == 'begin' then
+      api.nvim_ui_send('\027]9;4;1;0\027\\')
+    elseif value.kind == 'end' then
+      api.nvim_ui_send('\027]9;4;0\027\\')
+    elseif value.kind == 'report' then
+      api.nvim_ui_send(string.format('\027]9;4;1;%d\027\\', value.percentage or 0))
+    end
+  end,
+})
+
 vim.lsp.config('*', {
   root_dir = alsp.rootDir,
 })
