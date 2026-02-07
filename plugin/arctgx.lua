@@ -1,8 +1,9 @@
-require('vim._extui').enable({enable = true, msg = {target = 'msg'}})
+local ui2 = require('vim._core.ui2')
+ui2.enable({enable = true, msg = {target = 'msg'}})
 vim.api.nvim_create_autocmd('FileType', {
   pattern = 'msg',
   callback = function ()
-    vim._with({win = require('vim._extui.shared').wins.msg}, function ()
+    vim._with({win = ui2.wins.msg}, function ()
       vim.opt_local.winhl:append('Normal:Comment')
     end)
   end
