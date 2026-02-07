@@ -14,6 +14,8 @@ local function tableFromJsonFile(jsonFile)
   end
 
   local content = config:read('*a')
+  config:close()
+
   if nil == content or content:len() == 0 then
     return nil
   end
