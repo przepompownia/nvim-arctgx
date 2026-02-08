@@ -1,4 +1,7 @@
-vim.cmd.packadd('plenary.nvim')
+require('arctgx.lazy').setupOnLoad('null-ls', {
+  before = function () vim.cmd.packadd('plenary.nvim') end,
+})
+
 local null = require('null-ls')
 local base = require('arctgx.base')
 local api = vim.api
