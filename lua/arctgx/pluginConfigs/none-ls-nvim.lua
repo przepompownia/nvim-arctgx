@@ -1,3 +1,4 @@
+vim.cmd.packadd('plenary.nvim')
 local null = require('null-ls')
 local base = require('arctgx.base')
 local api = vim.api
@@ -40,18 +41,18 @@ null.setup({
     null.builtins.diagnostics.tidy,
     null.builtins.diagnostics.twigcs,
     -- null.builtins.diagnostics.phpcs.with(phpcsArgs),
-    null.builtins.diagnostics.phpmd.with({
-      temp_dir = '/tmp',
-      extra_args = function (params)
-        if vim.uv.fs_stat(vim.fs.joinpath(params.root, 'phpmd.xml')) then
-          return {
-            'phpmd.xml',
-            '--cache',
-          }
-        end
-        return {'cleancode,codesize,controversial,design,naming,unusedcode'}
-      end,
-    }),
+    -- null.builtins.diagnostics.phpmd.with({
+    --   temp_dir = '/tmp',
+    --   extra_args = function (params)
+    --     if vim.uv.fs_stat(vim.fs.joinpath(params.root, 'phpmd.xml')) then
+    --       return {
+    --         'phpmd.xml',
+    --         '--cache',
+    --       }
+    --     end
+    --     return {'cleancode,codesize,controversial,design,naming,unusedcode'}
+    --   end,
+    -- }),
     -- null.builtins.diagnostics.phpstan.with({
     --   temp_dir = '/tmp',
     --   timeout = 10000,
@@ -70,7 +71,10 @@ null.setup({
     --   },
     -- }),
     null.builtins.formatting.phpcbf.with(phpcsArgs),
-    null.builtins.formatting.phpcsfixer.with({cwd = phpProjectRoot}),
+    -- null.builtins.formatting.phpcsfixer.with({
+    --   -- env = {PHP_CS_FIXER_IGNORE_ENV = 1},
+    --   cwd = phpProjectRoot,
+    -- }),
     -- null.builtins.formatting.prettier.with({
     --   extra_filetypes = {
     --     'php',
@@ -83,6 +87,17 @@ null.setup({
     -- }),
     null.builtins.formatting.shfmt,
     null.builtins.formatting.xmllint,
+    null.builtins.formatting.sql_formatter.with({
+      extra_filetypes = {
+        'mysql',
+      },
+      generator_opts = {
+        command = 'sql-formatter',
+        -- to_stdin = true,
+      },
+    }),
+    -- null.builtins.formatting.stylua,
+    null.builtins.code_actions.ts_node_action,
   },
 })
 
