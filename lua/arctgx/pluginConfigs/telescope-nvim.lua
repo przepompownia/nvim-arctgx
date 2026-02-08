@@ -35,8 +35,11 @@ local config = {
   },
 }
 
-require('arctgx.lazy').setupOnLoad('telescope', function () require('telescope').setup(config) end)
-require('arctgx.lazy').setupOnLoad('telescope.builtin', function () require('telescope') end)
+require('arctgx.lazy').setupOnLoad('telescope', {
+  before = function () vim.cmd.packadd('telescope.nvim') end,
+  after = function () require('telescope').setup(config) end,
+})
+require('arctgx.lazy').setupOnLoad('telescope.builtin', {dependentModules = {'telescope'}})
 
 api.nvim_create_user_command(
   'GGrep',

@@ -1,37 +1,40 @@
-require('arctgx.lazy').setupOnLoad('ultimate-autopair', function ()
-  local ua = require('ultimate-autopair')
+require('arctgx.lazy').setupOnLoad('ultimate-autopair', {
+  before = function () vim.cmd.packadd('ultimate-autopair.nvim') end,
+  after = function ()
+    local ua = require('ultimate-autopair')
 
-  ua.setup({
-    cr = {enable = false},
-  })
+    ua.setup({
+      cr = {enable = false},
+    })
 
-  local uaCr = '<Plug>ultimate-autopair-CR'
+    local uaCr = '<Plug>ultimate-autopair-CR'
 
-  ua.init({
-    ua.extend_default({
-      tabout = {
-        enable = true,
-        map = '<A-CR>',
-        cmap = '<A-CR>',
-        conf = {},
-        multi = false,
-        hopout = true,
-        do_nothing_if_fail = true,
-      },
-      cr = {
-        map = uaCr,
-        conf = {
-          cond = function () return true end,
+    ua.init({
+      ua.extend_default({
+        tabout = {
+          enable = true,
+          map = '<A-CR>',
+          cmap = '<A-CR>',
+          conf = {},
+          multi = false,
+          hopout = true,
+          do_nothing_if_fail = true,
         },
-      },
-    }),
-    {profile = 'map', {'i', uaCr, '\r', p = -1}},
-  })
+        cr = {
+          map = uaCr,
+          conf = {
+            cond = function () return true end,
+          },
+        },
+      }),
+      {profile = 'map', {'i', uaCr, '\r', p = -1}},
+    })
 
-  require('arctgx.completion').setAutopairCR(function ()
-    return vim.api.nvim_feedkeys(vim.keycode('<Plug>ultimate-autopair-CR'), 'n', false)
-  end)
-end)
+    require('arctgx.completion').setAutopairCR(function ()
+      return vim.api.nvim_feedkeys(vim.keycode('<Plug>ultimate-autopair-CR'), 'n', false)
+    end)
+  end
+})
 vim.api.nvim_create_autocmd('InsertEnter', {
   once = true,
   callback = function ()

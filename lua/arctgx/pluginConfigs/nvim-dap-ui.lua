@@ -103,15 +103,18 @@ api.nvim_create_autocmd({'FileType'}, {
   end
 })
 
-require('arctgx.lazy').setupOnLoad('dapui', function ()
-  require('dapui').setup(config)
+require('arctgx.lazy').setupOnLoad('dapui', {
+  before = function () vim.cmd.packadd('dapui') end,
+  after = function ()
+    require('dapui').setup(config)
 
-  api.nvim_create_autocmd({'FileType'}, {
-    pattern = {'dapui_scopes'},
-    group = augroup,
-    callback = function ()
-      local tabpage = api.nvim_get_current_tabpage()
-      vim.t[tabpage].arctgxTabName = 'DAP UI'
-    end
-  })
-end)
+    api.nvim_create_autocmd({'FileType'}, {
+      pattern = {'dapui_scopes'},
+      group = augroup,
+      callback = function ()
+        local tabpage = api.nvim_get_current_tabpage()
+        vim.t[tabpage].arctgxTabName = 'DAP UI'
+      end
+    })
+  end
+})

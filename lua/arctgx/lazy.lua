@@ -43,16 +43,9 @@ local function addConfig(modname, config)
   configs[modname][#configs[modname] + 1] = config
 end
 
---- @param modname string
---- @param after fun()
-function lazy.setupOnLoad(modname, after, dependentModules)
-  addConfig(modname, {after = after, dependentModules = dependentModules})
-end
-
---- transitional to reimplement setupOnLoad
 ---@param modname string
 ---@param config arctgx.lazy.config
-function lazy.setupOnLoad2(modname, config)
+function lazy.setupOnLoad(modname, config)
   addConfig(modname, config)
 end
 

@@ -156,7 +156,7 @@ local function setup()
   })
 end
 
-require('arctgx.lazy').setupOnLoad2('nvim-tree.api', {
+require('arctgx.lazy').setupOnLoad('nvim-tree.api', {
   before = function ()
     vim.cmd.packadd('nvim-tree.lua')
   end,

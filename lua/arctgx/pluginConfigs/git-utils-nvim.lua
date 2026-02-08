@@ -12,13 +12,17 @@ keymap.set('n', 'gitPush', function ()
   require 'git-utils.git'.pushToAllRemoteRepos(require('git-utils').currentBufferDirectory())
 end)
 
-require('arctgx.lazy').setupOnLoad('git-utils', function ()
-  require('telescope')
-  require('git-utils').setup({
-    telescopeAttachMappings = function (_promptBufnr, map) return require('arctgx.telescope').defaultFileMappings(_promptBufnr, map) end,
-    currentBufferDirectory = require('arctgx.base').getBufferCwd,
-  })
-end)
+require('arctgx.lazy').setupOnLoad('git-utils', {
+  after = function ()
+    require('telescope')
+    require('git-utils').setup({
+      telescopeAttachMappings = function (_promptBufnr, map)
+        return require('arctgx.telescope').defaultFileMappings(_promptBufnr, map)
+      end,
+      currentBufferDirectory = require('arctgx.base').getBufferCwd,
+    })
+  end
+})
 
 require('git-utils.createCommands')()
 

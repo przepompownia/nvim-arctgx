@@ -5,251 +5,254 @@ local keymap = require('arctgx.vim.abstractKeymap')
 
 local keymapOpts = {silent = true}
 
-require('arctgx.lazy').setupOnLoad('dap', function ()
-  local dap = require('dap')
-  dap.adapters.php = {
-    type = 'executable',
-    command = base.getPluginDir() .. '/bin/dap-adapter-utils',
-    args = {'run', 'vscode-php-debug', 'phpDebug'}
-  }
+require('arctgx.lazy').setupOnLoad('dap', {
+  before = function () vim.cmd.packadd('nvim-dap') end,
+  after = function ()
+    local dap = require('dap')
+    dap.adapters.php = {
+      type = 'executable',
+      command = base.getPluginDir() .. '/bin/dap-adapter-utils',
+      args = {'run', 'vscode-php-debug', 'phpDebug'}
+    }
 
-  local bashdbDir = base.getPluginDir() .. '/tools/vscode-bash-debug/current/'
+    local bashdbDir = base.getPluginDir() .. '/tools/vscode-bash-debug/current/'
 
-  --- @param defaultValue any
-  --- @param promptTemplate string
-  --- @param valueConversionCallback function|nil
-  --- @param completion string|nil
-  --- @return any
-  local function getInput(defaultValue, promptTemplate, completion, valueConversionCallback)
-    local value = vim.fn.input(promptTemplate:format(defaultValue), defaultValue, completion)
-    if '' == value then
-      return defaultValue
+    --- @param defaultValue any
+    --- @param promptTemplate string
+    --- @param valueConversionCallback function|nil
+    --- @param completion string|nil
+    --- @return any
+    local function getInput(defaultValue, promptTemplate, completion, valueConversionCallback)
+      local value = vim.fn.input(promptTemplate:format(defaultValue), defaultValue, completion)
+      if '' == value then
+        return defaultValue
+      end
+
+      if nil == valueConversionCallback then
+        return value
+      end
+
+      return valueConversionCallback(value)
     end
 
-    if nil == valueConversionCallback then
-      return value
+    local function splitToArgs(input)
+      local result = {}
+      for param in string.gmatch(input, '%S+') do
+        result[#result + 1] = param
+      end
+      return result
     end
 
-    return valueConversionCallback(value)
-  end
-
-  local function splitToArgs(input)
-    local result = {}
-    for param in string.gmatch(input, '%S+') do
-      result[#result + 1] = param
+    local function getPidByPpid(ppid)
+      return tonumber(vim.fn.system('ps -o pid= --ppid ' .. tostring(ppid)))
     end
-    return result
-  end
 
-  local function getPidByPpid(ppid)
-    return tonumber(vim.fn.system('ps -o pid= --ppid ' .. tostring(ppid)))
-  end
+    local function runEmbeddedNvim(nsKey, cwd, program)
+      return function (_, body)
+        dap.listeners.after.event_process[nsKey] = nil
 
-  local function runEmbeddedNvim(nsKey, cwd, program)
-    return function (_, body)
-      dap.listeners.after.event_process[nsKey] = nil
+        local ppid = body.systemProcessId
+        vim.wait(1000, function ()
+          return getPidByPpid(ppid) ~= nil
+        end)
+        local pid = getPidByPpid(ppid)
 
-      local ppid = body.systemProcessId
-      vim.wait(1000, function ()
-        return getPidByPpid(ppid) ~= nil
-      end)
-      local pid = getPidByPpid(ppid)
-
-      if pid then
-        dap.run({
-          name = 'Neovim embedded',
-          type = 'cppdbg',
-          request = 'attach',
-          processId = pid,
-          program = program,
-          cwd = cwd,
-          externalConsole = false,
-        })
+        if pid then
+          dap.run({
+            name = 'Neovim embedded',
+            type = 'cppdbg',
+            request = 'attach',
+            processId = pid,
+            program = program,
+            cwd = cwd,
+            externalConsole = false,
+          })
+        end
       end
     end
-  end
 
-  dap.adapters.bashdb = {
-    type = 'executable',
-    command = 'node',
-    args = {bashdbDir .. 'extension/out/bashDebug.js'}
-  }
-
-  dap.configurations.sh = {
-    {
-      type = 'bashdb',
-      request = 'launch',
-      name = 'Launch bash',
-      program = function ()
-        return getInput(vim.fn.bufname(), 'Executable to debug [%s]: ', 'file')
-      end,
-      args = function ()
-        return getInput('', 'Params [%s]: ', 'file', splitToArgs)
-      end,
-      env = {},
-      pathBash = '/usr/bin/bash',
-      pathBashdb = bashdbDir .. 'extension/bashdb_dir/bashdb',
-      pathBashdbLib = bashdbDir .. 'extension/bashdb_dir',
-      pathCat = 'cat',
-      pathMkfifo = 'mkfifo',
-      pathPkill = 'pkill',
-      cwd = '${workspaceFolder}',
-      terminalKind = 'integrated',
+    dap.adapters.bashdb = {
+      type = 'executable',
+      command = 'node',
+      args = {bashdbDir .. 'extension/out/bashDebug.js'}
     }
-  }
 
-  dap.configurations.lua = {
-    {
-      type = 'nlua',
-      request = 'attach',
-      name = 'Attach to running Neovim instance',
-      host = function ()
-        local defaultValue = '127.0.0.1'
-        local value = vim.fn.input(('Host [%s]: '):format(defaultValue), defaultValue)
-        if value ~= '' then
-          return value
-        end
-        return defaultValue
-      end,
-      port = function ()
-        local defaultValue = 9004
-        local val = tonumber(vim.fn.input(('Port [%s]: '):format(defaultValue), defaultValue))
-        if val ~= '' then
-          return val
-        end
-        return defaultValue
-      end,
-    }
-  }
-
-  --- @param callback function
-  --- @param config ServerAdapter
-  dap.adapters.nlua = function (callback, config)
-    callback({type = 'server', host = config.host, port = config.port})
-  end
-
-  dap.adapters.cppdbg = {
-    id = 'cppdbg',
-    type = 'executable',
-    command = base.getPluginDir() .. '/tools/vscode-cpptools/current/extension/debugAdapters/bin/OpenDebugAD7',
-  }
-
-  dap.configurations.php = {require('arctgx.dap.php').default}
-
-  dap.configurations.c = {
-    setmetatable(
+    dap.configurations.sh = {
       {
-        name = 'Neovim',
-        type = 'cppdbg',
+        type = 'bashdb',
         request = 'launch',
-        program = vim.uv.cwd() .. '/build/bin/nvim',
-        cwd = vim.uv.cwd(),
-        args = {},
-        externalConsole = true,
-      },
+        name = 'Launch bash',
+        program = function ()
+          return getInput(vim.fn.bufname(), 'Executable to debug [%s]: ', 'file')
+        end,
+        args = function ()
+          return getInput('', 'Params [%s]: ', 'file', splitToArgs)
+        end,
+        env = {},
+        pathBash = '/usr/bin/bash',
+        pathBashdb = bashdbDir .. 'extension/bashdb_dir/bashdb',
+        pathBashdbLib = bashdbDir .. 'extension/bashdb_dir',
+        pathCat = 'cat',
+        pathMkfifo = 'mkfifo',
+        pathPkill = 'pkill',
+        cwd = '${workspaceFolder}',
+        terminalKind = 'integrated',
+      }
+    }
+
+    dap.configurations.lua = {
       {
-        --- from https://zignar.net/2023/02/17/debugging-neovim-with-neovim-and-nvim-dap/
-        __call = function (config)
-          vim.fn.system('make')
+        type = 'nlua',
+        request = 'attach',
+        name = 'Attach to running Neovim instance',
+        host = function ()
+          local defaultValue = '127.0.0.1'
+          local value = vim.fn.input(('Host [%s]: '):format(defaultValue), defaultValue)
+          if value ~= '' then
+            return value
+          end
+          return defaultValue
+        end,
+        port = function ()
+          local defaultValue = 9004
+          local val = tonumber(vim.fn.input(('Port [%s]: '):format(defaultValue), defaultValue))
+          if val ~= '' then
+            return val
+          end
+          return defaultValue
+        end,
+      }
+    }
 
-          local key = 'arctgx.dap.c.embedded.nvim'
+    --- @param callback function
+    --- @param config ServerAdapter
+    dap.adapters.nlua = function (callback, config)
+      callback({type = 'server', host = config.host, port = config.port})
+    end
 
-          dap.listeners.after.initialize[key] = function (session)
-            dap.listeners.after.initialize[key] = nil
+    dap.adapters.cppdbg = {
+      id = 'cppdbg',
+      type = 'executable',
+      command = base.getPluginDir() .. '/tools/vscode-cpptools/current/extension/debugAdapters/bin/OpenDebugAD7',
+    }
 
-            session.on_close[key] = function ()
-              for _, handler in pairs(dap.listeners.after) do
-                handler[key] = nil
+    dap.configurations.php = {require('arctgx.dap.php').default}
+
+    dap.configurations.c = {
+      setmetatable(
+        {
+          name = 'Neovim',
+          type = 'cppdbg',
+          request = 'launch',
+          program = vim.uv.cwd() .. '/build/bin/nvim',
+          cwd = vim.uv.cwd(),
+          args = {},
+          externalConsole = true,
+        },
+        {
+          --- from https://zignar.net/2023/02/17/debugging-neovim-with-neovim-and-nvim-dap/
+          __call = function (config)
+            vim.fn.system('make')
+
+            local key = 'arctgx.dap.c.embedded.nvim'
+
+            dap.listeners.after.initialize[key] = function (session)
+              dap.listeners.after.initialize[key] = nil
+
+              session.on_close[key] = function ()
+                for _, handler in pairs(dap.listeners.after) do
+                  handler[key] = nil
+                end
               end
             end
+
+            dap.listeners.after.event_process[key] = runEmbeddedNvim(key, config.cwd, config.program)
+
+            return config
           end
+        }
+      ),
+    }
 
-          dap.listeners.after.event_process[key] = runEmbeddedNvim(key, config.cwd, config.program)
 
-          return config
-        end
+    require('arctgx.dap').compareDeclaredFiletypes(dap.configurations)
+
+    local function toggle_scopes()
+      local widgets = require('dap.ui.widgets')
+      local scopes = widgets.sidebar(widgets.scopes)
+      scopes.toggle()
+    end
+
+    local function toggle_frames()
+      local widgets = require('dap.ui.widgets')
+      local frames = widgets.sidebar(widgets.frames)
+      frames.toggle()
+    end
+
+    api.nvim_create_user_command('DAPWidgetScopes', toggle_scopes, {})
+    api.nvim_create_user_command('DAPWidgetFrames', toggle_frames, {})
+
+    keymap.set({'n'}, 'debuggerStepOver', keymap.repeatable(dap.step_over), {expr = true})
+    keymap.set({'n'}, 'debuggerStepInto', keymap.repeatable(dap.step_into), {expr = true})
+    keymap.set({'n'}, 'debuggerStepOut', keymap.repeatable(dap.step_out), {expr = true})
+    keymap.set({'n'}, 'debuggerFrameUp', keymap.repeatable(dap.up), {expr = true})
+    keymap.set({'n'}, 'debuggerFrameDown', keymap.repeatable(dap.down), {expr = true})
+    keymap.set({'n'}, 'debuggerRunToCursor', dap.run_to_cursor, keymapOpts)
+
+    local function info(message)
+      vim.notify(message, vim.log.levels.INFO)
+    end
+    -- nnoremap <silent> <leader>dr :lua require'dap'.repl.open()<CR>
+    -- nnoremap <silent> <leader>dl :lua require'dap'.run_last()<CR>
+    -- dap.defaults.php.exception_breakpoints = {'Exception'}
+    dap.defaults.fallback.switchbuf = 'uselast'
+    dap.defaults.fallback.external_terminal = {
+      command = 'alacritty',
+      args = {'--command'},
+    }
+
+    local dapSessionStatus = ''
+    local function setSessionStatus(status)
+      dapSessionStatus = status
+      api.nvim__redraw({statusline = true})
+    end
+
+    dap.listeners.after['event_initialized']['arctgx'] = function (_session, _body)
+      setSessionStatus('L')
+    end
+
+    dap.listeners.after['event_stopped']['arctgx'] = function (_session, _body)
+      setSessionStatus('S')
+    end
+
+    dap.listeners.after['event_exited']['arctgx'] = function (_session, _body)
+      info('Exited')
+      setSessionStatus('E')
+    end
+    dap.listeners.after['event_thread']['arctgx'] = function (_session, body)
+      if body.reason == 'exited' then
+        info('Thread ' .. body.threadId .. ' exited')
+        setSessionStatus('X')
+      end
+    end
+    dap.listeners.before['disconnect']['arctgx'] = function (_session, _body)
+      info('Disconnected')
+      setSessionStatus('D')
+    end
+    dap.listeners.after['event_terminated']['arctgx'] = function (_session, _body)
+      info('Terminated')
+      setSessionStatus('T')
+    end
+
+    --- @diagnostic disable-next-line: duplicate-set-field
+    require('arctgx.widgets').debugHook = function ()
+      return {
+        session = dap.session() and true or false,
+        status = dapSessionStatus,
       }
-    ),
-  }
-
-
-  require('arctgx.dap').compareDeclaredFiletypes(dap.configurations)
-
-  local function toggle_scopes()
-    local widgets = require('dap.ui.widgets')
-    local scopes = widgets.sidebar(widgets.scopes)
-    scopes.toggle()
-  end
-
-  local function toggle_frames()
-    local widgets = require('dap.ui.widgets')
-    local frames = widgets.sidebar(widgets.frames)
-    frames.toggle()
-  end
-
-  api.nvim_create_user_command('DAPWidgetScopes', toggle_scopes, {})
-  api.nvim_create_user_command('DAPWidgetFrames', toggle_frames, {})
-
-  keymap.set({'n'}, 'debuggerStepOver', keymap.repeatable(dap.step_over), {expr = true})
-  keymap.set({'n'}, 'debuggerStepInto', keymap.repeatable(dap.step_into), {expr = true})
-  keymap.set({'n'}, 'debuggerStepOut', keymap.repeatable(dap.step_out), {expr = true})
-  keymap.set({'n'}, 'debuggerFrameUp', keymap.repeatable(dap.up), {expr = true})
-  keymap.set({'n'}, 'debuggerFrameDown', keymap.repeatable(dap.down), {expr = true})
-  keymap.set({'n'}, 'debuggerRunToCursor', dap.run_to_cursor, keymapOpts)
-
-  local function info(message)
-    vim.notify(message, vim.log.levels.INFO)
-  end
-  -- nnoremap <silent> <leader>dr :lua require'dap'.repl.open()<CR>
-  -- nnoremap <silent> <leader>dl :lua require'dap'.run_last()<CR>
-  -- dap.defaults.php.exception_breakpoints = {'Exception'}
-  dap.defaults.fallback.switchbuf = 'uselast'
-  dap.defaults.fallback.external_terminal = {
-    command = 'alacritty',
-    args = {'--command'},
-  }
-
-  local dapSessionStatus = ''
-  local function setSessionStatus(status)
-    dapSessionStatus = status
-    api.nvim__redraw({statusline = true})
-  end
-
-  dap.listeners.after['event_initialized']['arctgx'] = function (_session, _body)
-    setSessionStatus('L')
-  end
-
-  dap.listeners.after['event_stopped']['arctgx'] = function (_session, _body)
-    setSessionStatus('S')
-  end
-
-  dap.listeners.after['event_exited']['arctgx'] = function (_session, _body)
-    info('Exited')
-    setSessionStatus('E')
-  end
-  dap.listeners.after['event_thread']['arctgx'] = function (_session, body)
-    if body.reason == 'exited' then
-      info('Thread ' .. body.threadId .. ' exited')
-      setSessionStatus('X')
     end
   end
-  dap.listeners.before['disconnect']['arctgx'] = function (_session, _body)
-    info('Disconnected')
-    setSessionStatus('D')
-  end
-  dap.listeners.after['event_terminated']['arctgx'] = function (_session, _body)
-    info('Terminated')
-    setSessionStatus('T')
-  end
-
-  --- @diagnostic disable-next-line: duplicate-set-field
-  require('arctgx.widgets').debugHook = function ()
-    return {
-      session = dap.session() and true or false,
-      status = dapSessionStatus,
-    }
-  end
-end)
+})
 
 vim.fn.sign_define('DapBreakpoint', {text = '●', texthl = 'DapBreakpointSign', linehl = ''})
 vim.fn.sign_define('DapBreakpointCondition', {text = '◆', texthl = 'DapBreakpointSign', linehl = ''})
@@ -285,7 +288,8 @@ api.nvim_create_autocmd({'FileType'}, {
 
 keymap.set({'n'}, 'debuggerRun', keymap.repeatable(function () require('dap').continue() end), {expr = true})
 keymap.set({'n'}, 'debuggerClearBreakpoints', function () require('dap').clear_breakpoints() end, keymapOpts)
-keymap.set({'n'}, 'debuggerSetExceptionBreakpoint', function () require('dap').set_exception_breakpoints() end, keymapOpts)
+keymap.set({'n'}, 'debuggerSetExceptionBreakpoint', function () require('dap').set_exception_breakpoints() end,
+  keymapOpts)
 keymap.set(
   {'n'},
   'debuggerSetBreakpointConditional',

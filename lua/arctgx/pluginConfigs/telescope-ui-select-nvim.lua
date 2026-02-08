@@ -1,12 +1,15 @@
-require('arctgx.lazy').setupOnLoad('telescope', function ()
-  require('telescope').setup {
-    extensions = {
-      ['ui-select'] = {
-        require('telescope.themes').get_dropdown {
+require('arctgx.lazy').setupOnLoad('telescope', {
+  before = function () vim.cmd.packadd('telescope-ui-select.nvim') end,
+  after = function ()
+    require('telescope').setup {
+      extensions = {
+        ['ui-select'] = {
+          require('telescope.themes').get_dropdown {
+          }
         }
-      }
-    },
-  }
+      },
+    }
 
-  require('telescope').load_extension('ui-select')
-end)
+    require('telescope').load_extension('ui-select')
+  end
+})
