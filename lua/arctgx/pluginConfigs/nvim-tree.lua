@@ -65,7 +65,7 @@ api.nvim_create_autocmd('User', {
   end,
 })
 
-require('arctgx.lazy').setupOnLoad('nvim-tree.api', function ()
+local function setup()
   require('nvim-tree').setup({
     hijack_cursor = true,
     actions = {
@@ -154,7 +154,14 @@ require('arctgx.lazy').setupOnLoad('nvim-tree.api', function ()
       },
     },
   })
-end)
+end
+
+require('arctgx.lazy').setupOnLoad2('nvim-tree.api', {
+  before = function ()
+    vim.cmd.packadd('nvim-tree.lua')
+  end,
+  after = setup,
+})
 
 local function focusOnFile()
   require('nvim-tree')
