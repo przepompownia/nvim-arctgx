@@ -157,9 +157,7 @@ local function setup()
 end
 
 require('arctgx.lazy').setupOnLoad('nvim-tree.api', {
-  before = function ()
-    vim.cmd.packadd('nvim-tree.lua')
-  end,
+  before = function () vim.cmd.packadd('nvim-tree.lua') end,
   after = setup,
 })
 
