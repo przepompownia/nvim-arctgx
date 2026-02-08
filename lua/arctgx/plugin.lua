@@ -9,12 +9,17 @@ function plugin.loadCustomConfiguration(pluginDirs, pluginPrefix)
     vim.notify('Empty vim.g.pluginDirs', vim.log.levels.ERROR)
   end
 
+  local pluginPaths = {}
+
+  for _, pluginDir in ipairs(pluginDirs) do
+    for _, pluginPath in ipairs(vim.fn.globpath(pluginDir, '*', true, true)) do
+      pluginPaths[pluginPath] = true
+    end
+  end
+
   for _, pluginPath in ipairs(vim.api.nvim_list_runtime_paths()) do
-    for _, pluginDir in ipairs(pluginDirs) do
-      local pluginPaths = vim.fn.globpath(pluginDir, '*', true, true)
-      if vim.tbl_contains(pluginPaths, pluginPath) then
-        plugin.loadSingleConfiguration(vim.fn.fnamemodify(pluginPath, ':t'), pluginPrefix)
-      end
+    if nil ~= pluginPaths[pluginPath] then
+      plugin.loadSingleConfiguration(vim.fn.fnamemodify(pluginPath, ':t'), pluginPrefix)
     end
   end
 end
