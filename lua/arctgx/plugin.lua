@@ -1,8 +1,31 @@
-local plugin = {}
+-- packadded as late as possible
+-- but need its own config to defines how to do it
+local lazyPackadded = vim.g.lazyPackaddedExtensions or {}
+
+local function loadSingleConfiguration(pluginName, pluginPrefix)
+  local tail = pluginName:gsub('%.lua$', ''):gsub('%.', '-')
+  local modulePath = vim.fs.joinpath(
+    require('arctgx.base').getPluginDir(),
+    'lua',
+    pluginPrefix:gsub('%.', '/'),
+    tail .. '.lua'
+  )
+  if not vim.uv.fs_stat(modulePath) then
+    -- vim.notify(('For plugin %s expected path %s does not exist'):format(pluginName, modulePath), vim.log.levels.DEBUG)
+    return
+  end
+  local pluginModule = pluginPrefix .. '.' .. tail
+
+  require(pluginModule)
+end
+
+local function lazyPackadd(pluginName)
+  lazyPackadded[#lazyPackadded + 1] = pluginName
+end
 
 --- @param pluginDirs string[]
 --- @param pluginPrefix string
-function plugin.loadCustomConfiguration(pluginDirs, pluginPrefix)
+local function loadCustomConfiguration(pluginDirs, pluginPrefix)
   vim.validate('pluginDirs', pluginDirs, 'table')
 
   if vim.tbl_isempty(pluginDirs) then
@@ -19,26 +42,19 @@ function plugin.loadCustomConfiguration(pluginDirs, pluginPrefix)
 
   for _, pluginPath in ipairs(vim.api.nvim_list_runtime_paths()) do
     if nil ~= pluginPaths[pluginPath] then
-      plugin.loadSingleConfiguration(vim.fn.fnamemodify(pluginPath, ':t'), pluginPrefix)
+      loadSingleConfiguration(vim.fn.fnamemodify(pluginPath, ':t'), pluginPrefix)
     end
   end
-end
 
-function plugin.loadSingleConfiguration(pluginName, pluginPrefix)
-  local tail = pluginName:gsub('%.lua$', ''):gsub('%.', '-')
-  local modulePath = vim.fs.joinpath(
-    require('arctgx.base').getPluginDir(),
-    'lua',
-    pluginPrefix:gsub('%.', '/'),
-    tail .. '.lua'
-  )
-  if not vim.uv.fs_stat(modulePath) then
-    -- vim.notify(('For plugin %s expected path %s does not exist'):format(pluginName, modulePath), vim.log.levels.DEBUG)
-    return
+  for _, pluginName in ipairs(lazyPackadded) do
+    loadSingleConfiguration(pluginName, pluginPrefix)
   end
-  local pluginModule = pluginPrefix .. '.' .. tail
-
-  require(pluginModule)
 end
+
+local plugin = {
+  loadCustomConfiguration = loadCustomConfiguration,
+  loadSingleConfiguration = loadSingleConfiguration,
+  lazyPackadd = lazyPackadd,
+}
 
 return plugin
