@@ -39,7 +39,16 @@ api.nvim_create_autocmd('FileType', {
   end
 })
 
+local function loadPackages()
+  if 1 == vim.g.loaded_dbui then
+    return
+  end
+  vim.cmd.packadd('vim-dadbod')
+  vim.cmd.packadd('vim-dadbod-ui')
+end
+
 require('arctgx.vim.abstractKeymap').set('n', 'dbToggleUI', function ()
+  loadPackages()
   vim.cmd.DBUI({mods = {tab = 1}})
 end, {})
 
