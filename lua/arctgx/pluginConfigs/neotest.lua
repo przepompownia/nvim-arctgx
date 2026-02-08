@@ -1,7 +1,11 @@
 local session = require('arctgx.session')
 local keymap = require('arctgx.vim.abstractKeymap')
 require('arctgx.lazy').setupOnLoad('neotest', {
-  before = function () vim.cmd.packadd('neotest') end,
+  before = function ()
+    vim.cmd.packadd('plenary.nvim')
+    vim.cmd.packadd('nvim-nio')
+    vim.cmd.packadd('neotest')
+  end,
   after = function ()
     require('neotest').setup({
       -- log_level = vim.log.levels.INFO,

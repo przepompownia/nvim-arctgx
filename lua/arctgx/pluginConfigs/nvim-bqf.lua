@@ -1,3 +1,6 @@
+require('arctgx.lazy').setupOnLoad('bqf', {
+  before = function () vim.cmd.packadd('nvim-bqf') end,
+})
 require('bqf').setup({
   auto_enable = true,
   preview = {

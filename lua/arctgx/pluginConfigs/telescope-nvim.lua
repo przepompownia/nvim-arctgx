@@ -36,7 +36,10 @@ local config = {
 }
 
 require('arctgx.lazy').setupOnLoad('telescope', {
-  before = function () vim.cmd.packadd('telescope.nvim') end,
+  before = function ()
+    vim.cmd.packadd('plenary.nvim')
+    vim.cmd.packadd('telescope.nvim')
+  end,
   after = function () require('telescope').setup(config) end,
 })
 require('arctgx.lazy').setupOnLoad('telescope.builtin', {dependentModules = {'telescope'}})

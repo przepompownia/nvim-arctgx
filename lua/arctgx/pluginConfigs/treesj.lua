@@ -1,3 +1,6 @@
+require('arctgx.lazy').setupOnLoad('treesj', {
+  before = function () vim.cmd.packadd('treesj') end,
+})
 vim.api.nvim_create_autocmd('FileType', {
   once = true,
   callback = function (args)
