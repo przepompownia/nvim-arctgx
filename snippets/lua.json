@@ -23,8 +23,7 @@
     "prefix": "lll",
     "body": [
       "local f = assert(io.open('${2:/tmp/v.log}', 'a+'))",
-      "f:write(('%d: %s\\n'):format(vim.uv.hrtime() / 1000000000, vim.inspect($1)))",
-      "f:close()"
+      "f:write(('%d: %s\\n'):format(vim.uv.hrtime() / 1000000000, vim.inspect($1))); f:close()"
     ]
   },
   "table escaped element": {
