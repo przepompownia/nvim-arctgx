@@ -156,13 +156,12 @@ local function setup()
   })
 end
 
-require('arctgx.lazy').setupOnLoad('nvim-tree', {
+require('arctgx.lazy').setupOnLoad('nvim-tree.api', {
   before = function () vim.cmd.packadd('nvim-tree.lua') end,
   after = setup,
 })
 
 local function focusOnFile()
-  require('nvim-tree')
   local treeapi = require('nvim-tree.api')
   local bufPath = vim.fn.fnamemodify(api.nvim_buf_get_name(0), ':p')
   local realParent = vim.uv.fs_realpath(require('arctgx.base').getBufferCwd(0)) or
@@ -194,7 +193,6 @@ end
 
 require('arctgx.vim.abstractKeymap').set({'n'}, 'fileTreeFocus', focusOnFile)
 require('arctgx.vim.abstractKeymap').set({'n'}, 'fileTreeToggle', function ()
-  require('nvim-tree')
   local treeapi = require('nvim-tree.api')
   treeapi.tree.toggle()
 end)
