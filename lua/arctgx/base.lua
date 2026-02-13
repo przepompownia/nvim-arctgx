@@ -103,6 +103,11 @@ function base.feedKeys(input)
   api.nvim_feedkeys(api.nvim_replace_termcodes(input, true, false, true), 'n', false)
 end
 
+-- function base.setOperatorfunc(cb)
+  -- vim.print(cb)
+  -- vim.go.opfunc = cb
+-- end
+
 -- from @zeertzjq https://github.com/neovim/neovim/issues/14157#issuecomment-1320787927
 --- @type base.setOperatorfunc
 base.setOperatorfunc = vim.fn[api.nvim_exec2([[
@@ -152,7 +157,7 @@ end
 
 local ctrlF = api.nvim_replace_termcodes('<C-f>', true, false, true)
 
---- @param modeCharacter 'a'|'i'
+--- @param modeCharacter 'a'|'A'|'i'|'I'
 function base.insertWithInitialIndentation(modeCharacter)
   local keys = ('%s%s'):format(modeCharacter, ('' ~= vim.opt.indentexpr:get()) and ctrlF or '')
 
