@@ -5,8 +5,9 @@ api.nvim_create_autocmd('TermOpen', {
   group = augroup,
   pattern = 'term://*',
   callback = function ()
-    vim.wo.number = false
-    vim.wo.relativenumber = false
+    local winid = vim.api.nvim_get_current_win()
+    vim.wo[winid][0].number = false
+    vim.wo[winid][0].relativenumber = false
     vim.cmd.startinsert()
   end
 })
