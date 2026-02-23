@@ -1,13 +1,17 @@
+local api = vim.api
 local ui2 = require('vim._core.ui2')
-ui2.enable({enable = true, msg = {target = 'msg'}})
-vim.api.nvim_create_autocmd('FileType', {
-  pattern = 'msg',
-  callback = function ()
-    vim._with({win = ui2.wins.msg}, function ()
-      vim.opt_local.winhl:append('Normal:Comment')
-    end)
-  end
-})
+
+if 0 < #api.nvim_list_uis() then
+  ui2.enable({enable = true, msg = {target = 'msg'}})
+  api.nvim_create_autocmd('FileType', {
+    pattern = 'msg',
+    callback = function ()
+      vim._with({win = ui2.wins.msg}, function ()
+        vim.opt_local.winhl:append('Normal:Comment')
+      end)
+    end
+  })
+end
 
 require('arctgx.lazy')
 require('arctgx.start.00-vimsettings')
