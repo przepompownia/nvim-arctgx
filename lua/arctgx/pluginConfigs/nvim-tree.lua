@@ -77,7 +77,7 @@ local function setup()
         window_picker = {
           exclude = {
             filetype = {'dap-view', 'NvimTree'},
-            buftype = {'prompt'},
+            buftype = {'prompt', 'terminal'},
           },
         },
       },
