@@ -2,6 +2,44 @@ local base = require 'arctgx.base'
 local api = vim.api
 local keymap = require('arctgx.vim.abstractKeymap')
 
+--- based on suggestions from Gemini
+local function resizePreviewWidth(buf, step)
+  local picker = require('telescope.actions.state').get_current_picker(buf)
+  local strategy = picker.layout_strategy
+
+  if strategy ~= 'horizontal' then
+    return
+  end
+
+  picker.layout_config = picker.layout_config or {}
+  picker.layout_config[strategy] = picker.layout_config[strategy] or {}
+  local config = picker.layout_config[strategy]
+
+  if not config._applied_width then
+    local previewWinId = picker.previewer and picker.previewer.state and picker.previewer.state.winid
+    if previewWinId and vim.api.nvim_win_is_valid(previewWinId) then
+      config.preview_width = vim.api.nvim_win_get_width(previewWinId)
+      config._applied_width = true
+    else
+      config.preview_width = config.preview_width or 80
+    end
+  end
+
+  local count = vim.v.count > 0 and vim.v.count or 1
+
+  config.preview_width = math.max(1, config.preview_width + (step * count))
+
+  picker:full_layout_update()
+end
+
+local function incrPreviewWidth(buf)
+  resizePreviewWidth(buf, 1)
+end
+
+local function decrPreviewWidth(buf)
+  resizePreviewWidth(buf, -1)
+end
+
 local config = {
   defaults = {
     preview = {},
@@ -12,7 +50,13 @@ local config = {
       preview_cutoff = 1,
     },
     mappings = {
+      n = {
+        ['<M-S-.>'] = incrPreviewWidth,
+        ['<M-S-,>'] = decrPreviewWidth,
+      },
       i = {
+        ['<M-S-.>'] = incrPreviewWidth,
+        ['<M-S-,>'] = decrPreviewWidth,
         ['<C-/>'] = function (promptBufnr)
           return require('telescope.actions.generate').which_key({
             max_height = 0.6,
@@ -75,7 +119,8 @@ keymap.set('n', 'previewJumps', function () require('telescope.builtin').jumplis
 keymap.set('n', 'browseCommandHistory', function () require('telescope.builtin').command_history() end)
 keymap.set('n', 'browseOldfiles', function () require('arctgx.telescope').oldfiles(false) end)
 keymap.set('n', 'browseOldfilesInCwd', function () require('arctgx.telescope').oldfiles(true) end)
-keymap.set('n', 'browseAllBuffers', function () require('telescope.builtin').buffers({
+keymap.set('n', 'browseAllBuffers', function ()
+  require('telescope.builtin').buffers({
     sort_mru = true,
     ignore_current_buffer = true,
   })
