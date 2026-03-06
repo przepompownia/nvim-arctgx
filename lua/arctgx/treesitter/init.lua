@@ -89,6 +89,10 @@ function extension.langs()
   return langs
 end
 
+function extension.fileTypes()
+  return fileTypes
+end
+
 function extension.addFiletype(filetype)
   addFiletype(filetype)
   extension.loadOnFiletype()
