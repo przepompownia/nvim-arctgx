@@ -12,6 +12,7 @@ local fileTypes = {
   'desktop',
   'diff',
   'dockerfile',
+  -- 'emmylua',
   'editorconfig',
   'gitattributes',
   'gitcommit',
@@ -90,7 +91,7 @@ function extension.langs()
 end
 
 function extension.fileTypes()
-  return fileTypes
+  return vim.list_extend(fileTypes, {'query', 'lua'})
 end
 
 function extension.addFiletype(filetype)
