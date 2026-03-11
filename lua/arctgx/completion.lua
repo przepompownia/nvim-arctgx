@@ -1,57 +1,11 @@
 local api = vim.api
--- It's experimental and rather still not very usable
 local completion = {}
---- @type table<integer, fun()>
-local pendingCancelResolveCbs = {}
 
 local debounce = 250
 local useCustomAutotrigger = false
 local insertCharTimer = assert(vim.uv.new_timer())
-local completeChangedTimer = assert(vim.uv.new_timer())
 local completionAugroup = api.nvim_create_augroup('arctgx.completion', {clear = true})
 local definedMaps = {}
-
-local function cancelResolve()
-  for _, cb in ipairs(pendingCancelResolveCbs) do
-    cb()
-  end
-end
-
-local function showDocumentation(buf, clientId, completionItem)
-  cancelResolve()
-  local info = vim.fn.complete_info({'selected'})
-
-  return vim.lsp.buf_request_all(
-    buf,
-    'completionItem/resolve',
-    completionItem,
-    function (results, _context)
-      for respClientId, resolvedItem in pairs(results) do
-        if respClientId ~= clientId then
-          return
-        end
-
-        local docs = vim.tbl_get(resolvedItem, 'result', 'documentation', 'value')
-        if nil == docs then
-          return
-        end
-
-        local winData = api.nvim__complete_set(info['selected'], {info = docs})
-        local winId = winData.winid
-        if not winId or not api.nvim_win_is_valid(winId) then
-          return
-        end
-
-        vim.treesitter.start(winData.bufnr, 'markdown')
-        vim.wo[winId].conceallevel = 3
-        api.nvim_win_set_config(winId, {
-          border = 'rounded',
-          height = api.nvim_win_text_height(winId, {}).all,
-        })
-      end
-    end
-  )
-end
 
 function completion.hasWordsBefore()
   local pos = api.nvim_win_get_cursor(0)
@@ -79,30 +33,6 @@ local function autotrigger(triggerCharacters, typedCharacter)
   end
 
   start(triggerCharacters, typedCharacter)
-end
-
-local function delayShowDoc(buf, clientId)
-  if vim.fn.pumvisible() ~= 1 then
-    return
-  end
-
-  local completionItem = vim.tbl_get(vim.v.event.completed_item or {}, 'user_data', 'nvim', 'lsp', 'completion_item')
-  if nil == completionItem then
-    return
-  end
-
-  local dueIn = completeChangedTimer:get_due_in()
-  if dueIn == 0 then
-    local cancelResolveCb = showDocumentation(buf, clientId, completionItem)
-    pendingCancelResolveCbs[#pendingCancelResolveCbs + 1] = cancelResolveCb
-    completeChangedTimer:start(2 * debounce, 0, function () end)
-    return
-  end
-  completeChangedTimer:stop()
-  completeChangedTimer:start(debounce, 0, vim.schedule_wrap(function ()
-    local cancelResolveCb = showDocumentation(buf, clientId, completionItem)
-    pendingCancelResolveCbs[#pendingCancelResolveCbs + 1] = cancelResolveCb
-  end))
 end
 
 local keycodes = {
@@ -171,18 +101,6 @@ function completion.init()
         vim.keymap.set({'i'}, '<C-Space>', vim.lsp.completion.get, {buffer = args.buf})
         enableCustomAutotrigger(client, args.buf)
         definedMaps[args.buf] = true
-      end
-
-      if client:supports_method('completionItem/resolve', args.buf)
-        and vim.o.completeopt:find('popup')
-      then
-        api.nvim_create_autocmd('CompleteChanged', {
-          group = completionAugroup,
-          buffer = args.buf,
-          callback = function ()
-            delayShowDoc(args.buf, clientId)
-          end,
-        })
       end
 
       for key, params in pairs(tabMaps) do
