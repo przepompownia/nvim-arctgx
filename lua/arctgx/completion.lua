@@ -9,8 +9,8 @@ local definedMaps = {}
 
 function completion.hasWordsBefore()
   local pos = api.nvim_win_get_cursor(0)
-  local line, col = pos[1], pos[2]
-  return col ~= 0 and api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match('%s') == nil
+  local _, col = pos[1], pos[2]
+  return col ~= 0 and api.nvim_get_current_line():sub(col, col):match('%s') == nil
 end
 
 local function start(triggerCharacters, typedCharacter)
