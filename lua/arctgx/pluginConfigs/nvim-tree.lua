@@ -40,10 +40,12 @@ api.nvim_create_autocmd('User', {
         end
         vim.system({'git', 'add', '-u', '--', data.old_name}, {}, onExit)
         vim.system({'git', 'add', '--', data.new_name}, {}, onExit)
-        vim.notify(
-          ('renamed from %s to %s'):format(data.old_name, data.new_name),
-          vim.log.levels.INFO
-        )
+        vim.schedule(function ()
+          vim.notify(
+            ('renamed from %s to %s'):format(data.old_name, data.new_name),
+            vim.log.levels.INFO
+          )
+        end)
       end)
     end)
 
