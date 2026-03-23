@@ -156,6 +156,12 @@ local function setup()
       },
     },
   })
+
+  session.appendBeforeSaveHook('Close nvim-tree instances', function ()
+    require('arctgx.window').forEachWindowWithBufFileType({'NvimTree'}, function (winId)
+      api.nvim_win_close(winId, false)
+    end)
+  end)
 end
 
 require('arctgx.lazy').setupOnLoad('nvim-tree.api', {
@@ -197,10 +203,4 @@ require('arctgx.vim.abstractKeymap').set({'n'}, 'fileTreeFocus', focusOnFile)
 require('arctgx.vim.abstractKeymap').set({'n'}, 'fileTreeToggle', function ()
   local treeapi = require('nvim-tree.api')
   treeapi.tree.toggle()
-end)
-
-session.appendBeforeSaveHook('Close nvim-tree instances', function ()
-  require('arctgx.window').forEachWindowWithBufFileType({'NvimTree'}, function (winId)
-    api.nvim_win_close(winId, false)
-  end)
 end)

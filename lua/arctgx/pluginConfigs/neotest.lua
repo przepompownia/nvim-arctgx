@@ -25,6 +25,12 @@ require('arctgx.lazy').setupOnLoad('neotest', {
         },
       }
     })
+
+    session.appendBeforeSaveHook('Close neotest windows', function ()
+      require('arctgx.window').forEachWindowWithBufFileType({'neotest-output-panel', 'neotest-summary'}, function (winId)
+        vim.api.nvim_win_close(winId, false)
+      end)
+    end)
   end
 })
 
@@ -37,9 +43,3 @@ keymap.set({'n'}, 'testUIRunNearestWithDap', function ()
     -- env = phpXdebugEnv,
   })
 end, {})
-
-session.appendBeforeSaveHook('Close neotest windows', function ()
-  require('arctgx.window').forEachWindowWithBufFileType({'neotest-output-panel', 'neotest-summary'}, function (winId)
-    vim.api.nvim_win_close(winId, false)
-  end)
-end)
