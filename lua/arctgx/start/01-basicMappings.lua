@@ -120,6 +120,16 @@ keymap.set({'i'}, '<C-Right>', function ()
   end)
 end, opts)
 
+keymap.set({'n'}, '<C-w>z', function ()
+  vim.api.nvim_open_win(0, true, {
+    relative = 'editor',
+    row = 0,
+    col = 0,
+    height = vim.o.lines,
+    width = vim.o.columns,
+  })
+end, {})
+
 silentLuaRhsMap('n', '<Esc>', vim.cmd.fclose, {desc = 'Close float window'})
 
 for _, lhs in ipairs({'<C-/>', '<C-_>'}) do
