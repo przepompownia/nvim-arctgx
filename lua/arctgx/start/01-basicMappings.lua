@@ -91,7 +91,9 @@ end
 
 keymap.set('t', '<S-Insert>', '<C-\\><C-N>"*pi', opts)
 keymap.set('n', 'i', function () base.insertWithInitialIndentation('i') end, opts)
+keymap.set('n', 'I', function () base.insertWithInitialIndentation('I') end, opts)
 keymap.set('n', 'a', function () base.insertWithInitialIndentation('a') end, opts)
+keymap.set('n', 'A', function () base.insertWithInitialIndentation('A') end, opts)
 keymap.set('n', '<Leader>fcc', function () setreg('+', vim.fn.expand('%:.')) end, opts)
 keymap.set('n', '<Leader>fcC', function () setreg('+', vim.fn.expand('%:p')) end, opts)
 keymap.set('n', '<Leader>co', vim.cmd.copen, opts)
