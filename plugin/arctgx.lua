@@ -1,7 +1,7 @@
 local api = vim.api
-local ui2 = require('vim._core.ui2')
 
 if 0 < #api.nvim_list_uis() then
+  local ui2 = require('vim._core.ui2')
   ui2.enable({enable = true, msg = {target = 'msg'}})
   api.nvim_create_autocmd('FileType', {
     pattern = 'msg',
