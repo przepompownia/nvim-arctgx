@@ -4,6 +4,8 @@ currentDir="$(dirname "$(dirname "$(realpath "${BASH_SOURCE[0]}")")")"
 
 set -e
 
-initFile="${1?Please specify init file as the only parameter}"
+helpMsg="$0 nvimExecutable initFile"
+initFile="${2?$helpMsg}"
+nvimExecutable="${1?$helpMsg}"
 
-nvim -u "${initFile}" -l "${currentDir}/lua/arctgx/luaLs/generateLuarcJson.lua"
+"${nvimExecutable}" -u "${initFile}" -l "${currentDir}/lua/arctgx/luaLs/generateLuarcJson.lua"

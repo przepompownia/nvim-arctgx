@@ -40,6 +40,6 @@ projectDir := $(DIR)
 .ONESHELL:
 luarc: require-init
 	cd $(projectDir)
-	$(DIR)/bin/luarc-generator $(nvimInit)
+	$(DIR)/bin/luarc-generator $(nvimExecutable) $(nvimInit)
 
 start: install-vscode-php-debug
