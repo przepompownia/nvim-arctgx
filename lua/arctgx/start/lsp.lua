@@ -125,6 +125,7 @@ api.nvim_create_autocmd('LspProgress', {
     api.nvim_echo({{msg}}, false, {
       id = msgId,
       kind = 'progress',
+      source = msgId,
       title = title,
       status = 'success',
       percent = value.percentage,
