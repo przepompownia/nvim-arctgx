@@ -8,4 +8,7 @@ helpMsg="$0 nvimExecutable initFile"
 initFile="${2?$helpMsg}"
 nvimExecutable="${1?$helpMsg}"
 
-"${nvimExecutable}" -u "${initFile}" -l "${currentDir}/lua/arctgx/luaLs/generateLuarcJson.lua"
+"${nvimExecutable}" \
+    -u "${initFile}" \
+    -c 'lua vim.iter(vim.g.lazyPackaddedExtensions):map(function(plugin) vim.cmd.packadd(plugin) end)' \
+    -l "${currentDir}/lua/arctgx/luaLs/generateLuarcJson.lua"
