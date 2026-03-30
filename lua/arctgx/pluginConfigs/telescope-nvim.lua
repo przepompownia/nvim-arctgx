@@ -119,10 +119,22 @@ keymap.set('n', 'previewJumps', function () require('telescope.builtin').jumplis
 keymap.set('n', 'browseCommandHistory', function () require('telescope.builtin').command_history() end)
 keymap.set('n', 'browseOldfiles', function () require('arctgx.telescope').oldfiles(false) end)
 keymap.set('n', 'browseOldfilesInCwd', function () require('arctgx.telescope').oldfiles(true) end)
+local function previewBuffer(self, entry, _status)
+  vim.api.nvim_buf_set_lines(
+    self.state.bufnr,
+    0,
+    -1,
+    false,
+    vim.api.nvim_buf_get_lines(entry.bufnr, 0, -1, false)
+  )
+
+  require('telescope.previewers.utils').highlighter(self.state.bufnr, vim.bo[entry.bufnr].filetype)
+end
 keymap.set('n', 'browseAllBuffers', function ()
   require('telescope.builtin').buffers({
     sort_mru = true,
     ignore_current_buffer = true,
+    previewer = require('telescope.previewers').new_buffer_previewer({define_preview = previewBuffer})
   })
 end)
 keymap.set({'n', 'i'}, 'browseBuffersInCwd', function ()
@@ -130,6 +142,7 @@ keymap.set({'n', 'i'}, 'browseBuffersInCwd', function ()
     only_cwd = true,
     sort_mru = true,
     ignore_current_buffer = true,
+    previewer = require('telescope.previewers').new_buffer_previewer({define_preview = previewBuffer})
   })
 end)
 keymap.set('n', 'browseWindows', function () require('arctgx.telescope.windows').list() end)
