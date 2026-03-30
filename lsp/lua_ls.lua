@@ -10,8 +10,8 @@ local rootPatterns = {
 --- @param client vim.lsp.Client
 --- @return boolean
 local function onInit(client)
-  local triggerCharaters = {'\t', '\n', '.', ':', "'", '"', '#', '*', '@', '|', '-', ' ', '+', '?'}
-  client.server_capabilities.completionProvider.triggerCharacters = triggerCharaters
+  local triggerCharacters = {'\t', '\n', '.', ':', "'", '"', '#', '*', '@', '|', '-', ' ', '+', '?'}
+  client.server_capabilities.completionProvider.triggerCharacters = triggerCharacters
 
   local path = client.workspace_folders and client.workspace_folders[1].name
 
