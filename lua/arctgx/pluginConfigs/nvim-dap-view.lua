@@ -57,18 +57,32 @@ require('arctgx.lazy').setupOnLoad('dap', {
       watchExpression(opts.args)
     end, {nargs = 1, desc = 'dap-view: add expression to watch'})
 
+    local function addKeymaps(buf)
+      local opts = {silent = true, buffer = buf}
+      keymap.set('x', 'debuggerAddToWatched', function ()
+        watchExpression(base.getVisualSelection())
+      end, opts)
+      keymap.set('n', 'debuggerAddToWatched', function ()
+        watchExpression(vim.fn.expand('<cexpr>'))
+      end, opts)
+      keymap.set('n', 'debuggerToggleVirtualText', function ()
+        require('dap-view').virtual_text_toggle()
+      end, opts)
+    end
+
     api.nvim_create_autocmd({'FileType'}, {
       pattern = filetypes,
       group = augroup,
       callback = function (event)
-        local opts = {silent = true, buffer = event.buf}
-        keymap.set('x', 'debuggerAddToWatched', function ()
-          watchExpression(base.getVisualSelection())
-        end, opts)
-        keymap.set('n', 'debuggerAddToWatched', function ()
-          watchExpression(vim.fn.expand('<cexpr>'))
-        end, opts)
+        addKeymaps(event.buf)
       end
     })
+
+    vim.iter(api.nvim_list_bufs())
+      :each(function (buf)
+        if api.nvim_buf_is_loaded(buf) and vim.list_contains(filetypes, vim.bo[buf].filetype) then
+          addKeymaps(buf)
+        end
+      end)
   end
 })
