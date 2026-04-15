@@ -37,6 +37,7 @@ local abstractKeymaps = {
   debuggerSetLogBreakpoint = {lhs = {'<Leader>dl'}, desc = 'Debugger: set log breakpoint'},
   debuggerJumpToUI = {lhs = {'<Leader>dw'}, desc = 'Debugger: jump to UI if exists'},
   debuggerAddToWatched = {lhs = {'<Leader>dW'}, desc = 'Debugger: add expression to watchlist'},
+  debuggerToggleVirtualText = {lhs = {'<Leader>dI'}, desc = 'Debugger: toggle variable info (as virtual text)'},
   debuggerCloseUI = {lhs = {'<Leader>dc'}, desc = 'Debugger: close UI'},
   debuggerUIToggle = {lhs = {'<Leader><S-F5>', '<Leader><F17>'}, desc = 'Debugger: UI toggle'},
   debuggerClearBreakpoints = {lhs = {'<Leader>db'}, desc = 'Debugger: clear breakpoints'},
