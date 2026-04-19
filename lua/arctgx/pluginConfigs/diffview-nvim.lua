@@ -6,6 +6,7 @@ local keymap = require('arctgx.vim.abstractKeymap')
 require('diffview').setup({
   use_icons = false,
   enhanced_diff_hl = true,
+  clean_up_buffers = true,
   file_panel = {
     listing_style = 'list',
     tree_options = {
