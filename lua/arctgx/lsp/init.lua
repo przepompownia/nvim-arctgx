@@ -50,9 +50,6 @@ function M.overrideClientCapabilities()
 end
 
 function M.shouldAttach(buf)
-  if api.nvim_buf_get_name(buf):match([[^(diffview://)]]) then
-    return false
-  end
   return true
 end
 
