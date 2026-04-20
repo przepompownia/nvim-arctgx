@@ -32,13 +32,13 @@ local function closeDiffviewTabs()
 end
 
 keymap.set('n', 'gitLogAllFiles', function ()
-  vim.cmd.DiffviewFileHistory()
+  require('diffview.lazy').require('diffview').file_history(nil, {})
 end)
 keymap.set('n', 'gitLogCurrentFile', function ()
-  vim.cmd.DiffviewFileHistory({args = {'%'}})
+  require('diffview.lazy').require('diffview').file_history(nil, {'%'})
 end)
 keymap.set('n', 'gitStatusUIOpen', function ()
-  vim.cmd.DiffviewOpen()
+  require('diffview.lazy').require('diffview').open()
 end)
 vim.keymap.set({'n'}, '<Leader>gv', ':Diffview', {})
 
