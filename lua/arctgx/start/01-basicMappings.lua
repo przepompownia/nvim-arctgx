@@ -119,6 +119,9 @@ keymap.set({'i'}, '<C-Right>', function ()
     vim.cmd.normal('w')
   end)
 end, opts)
+vim.keymap.set('n', '<Leader><Leader>', function ()
+  api.nvim_set_current_win(require('vim._core.ui2').wins.msg)
+end)
 
 keymap.set({'n'}, '<C-w>z', function ()
   vim.api.nvim_open_win(0, true, {
