@@ -38,7 +38,7 @@ keymap.set('n', 'gitLogCurrentFile', function ()
   require('diffview.lazy').require('diffview').file_history(nil, {'%'})
 end)
 keymap.set('n', 'gitStatusUIOpen', function ()
-  require('diffview.lazy').require('diffview').open()
+  require('diffview.lazy').require('diffview').toggle()
 end)
 vim.keymap.set({'n'}, '<Leader>gv', ':Diffview', {})
 
