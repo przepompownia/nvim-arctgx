@@ -24,6 +24,7 @@ local fileTypes = {
   'ini',
   'javascript',
   'jq',
+  'jsdoc',
   'json',
   'json5',
   'kitty',
