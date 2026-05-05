@@ -32,6 +32,7 @@ local abstractKeymaps = {
   -- debuggerDetach = {lhs = {'<Leader><S-F6>'}, desc = 'Debugger: detach'},
   debuggerRunToCursor = {lhs = {'<Leader>dC'}, desc = 'Debugger: run to cursor'},
   debuggerEvalToFloat = {lhs = {'<Leader>dp'}, desc = 'Debugger: evaluate and show the result in float window'},
+  debuggerEvalToFloatRepl = {lhs = {'<Leader>dp'}, desc = 'Debugger: evaluate (in `repl` context) and show the result in float window'},
   debuggerFrameUp = {lhs = {'<Leader>dk'}, desc = 'Debugger: frame up'},
   debuggerFrameDown = {lhs = {'<Leader>dj'}, desc = 'Debugger: frame down'},
   debuggerSetLogBreakpoint = {lhs = {'<Leader>dl'}, desc = 'Debugger: set log breakpoint'},

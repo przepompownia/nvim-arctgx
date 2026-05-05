@@ -68,6 +68,10 @@ require('arctgx.lazy').setupOnLoad('dap', {
       keymap.set('n', 'debuggerToggleVirtualText', function ()
         require('dap-view').virtual_text_toggle()
       end, opts)
+      keymap.set({'n', 'v'}, 'debuggerEvalToFloat',
+        function () require('dap-view').hover() end, opts)
+      keymap.set({'n', 'v'}, 'debuggerEvalToFloatRepl',
+        function () require('dap-view').hover(nil, nil, {context = 'repl'}) end, opts)
     end
 
     api.nvim_create_autocmd({'FileType'}, {
