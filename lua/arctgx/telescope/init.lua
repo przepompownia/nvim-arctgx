@@ -51,43 +51,6 @@ function extension.oldfiles(onlyCwd)
   })
 end
 
-function extension.createIndexedEntryMaker(defaultMakerCb)
-  --- based on suggestions from Gemini
-  return function (opts)
-    local entryDisplay = require('telescope.pickers.entry_display')
-
-    local defaultMaker = defaultMakerCb(opts)
-    local count = 0
-
-    return function (entry)
-      local displayTable = defaultMaker(entry)
-      if not displayTable then return nil end
-
-      count = count + 1
-      local currentIndex = count
-
-      displayTable.display = function (et)
-        local displayer = entryDisplay.create {
-          separator = ' ',
-          items = {
-            {width = 4},
-            {remaining = true},
-          },
-        }
-
-        local origDisplay, highlights = defaultMaker(entry).display(et)
-
-        return displayer {
-          {currentIndex, 'TelescopeResultsNumber'},
-          origDisplay,
-        }, highlights
-      end
-
-      return displayTable
-    end
-  end
-end
-
 --- @param cmd Grep
 --- @param root string
 --- @param query string
@@ -205,7 +168,6 @@ function extension.files(cmd, root, query, title)
     default_text = query,
     prompt_title = title,
     attach_mappings = extension.defaultFileMappings,
-    entry_maker = extension.createIndexedEntryMaker(require('telescope.make_entry').gen_from_file)({}),
   })
 end
 
