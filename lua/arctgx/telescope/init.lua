@@ -83,7 +83,7 @@ function extension.grep(cmd, root, query)
     end
 
     return vim.iter({cmd, '--', prompt, search_list}):flatten():totable()
-  end, opts.entry_maker or extension.createIndexedEntryMaker(require('telescope.make_entry').gen_from_vimgrep)(opts), opts.max_results, opts.cwd)
+  end, opts.entry_maker or require('telescope.make_entry').gen_from_vimgrep(opts), opts.max_results, opts.cwd)
 
   local newGrepFinder = function (promptBufnr)
     local picker = actionState.get_current_picker(promptBufnr)
