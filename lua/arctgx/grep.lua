@@ -95,7 +95,7 @@ function extension:newRgGrepCommand(useFixedStrings, ignoreCase)
     '--column',
     '--smart-case',
     '--no-heading',
-    '--no-ignore-vcs',
+    '--hidden',
   }, useFixedStrings, ignoreCase)
 end
 
