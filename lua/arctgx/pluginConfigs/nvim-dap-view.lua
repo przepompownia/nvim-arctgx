@@ -15,6 +15,14 @@ require('arctgx.lazy').setupOnLoad('dap', {
 
     dap.defaults.fallback.switchbuf = 'useopen,uselast'
     dv.setup({
+      keymaps = {
+        scopes = {
+          jump_to_parent = {'[[', '<Left>'},
+        },
+        hover = {
+          jump_to_parent = {'[[', '<Left>'},
+        },
+      },
       hover = {border = 'single'},
       winbar = {
         default_section = 'scopes',
