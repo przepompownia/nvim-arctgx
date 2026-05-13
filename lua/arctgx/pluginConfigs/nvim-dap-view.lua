@@ -15,6 +15,7 @@ require('arctgx.lazy').setupOnLoad('dap', {
 
     dap.defaults.fallback.switchbuf = 'useopen,uselast'
     dv.setup({
+      hover = {border = 'single'},
       winbar = {
         default_section = 'scopes',
       },
