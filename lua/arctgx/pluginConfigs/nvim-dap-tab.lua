@@ -18,10 +18,16 @@ api.nvim_create_autocmd('User', {
 require('arctgx.lazy').setupOnLoad('dap', {
   before = function () vim.cmd.packadd('nvim-dap-tab') end,
   after = function ()
-    require('dap-tab').setup({
+    local dapTab = require('dap-tab')
+    local dapViewConfig = require('arctgx.pluginConfigs.nvim-dap-view')
+    dapTab.setup({
       uiCallbacks = {
-        open = function () end,
-        close = function () end,
+        open = function ()
+          dapViewConfig.switchbuf = dapTab.getDebugWinId
+        end,
+        close = function ()
+          dapViewConfig.switchbuf = nil
+        end,
       }
     })
 
