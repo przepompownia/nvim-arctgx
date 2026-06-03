@@ -1,6 +1,9 @@
 local api = vim.api
 local base = require('arctgx.base')
 local keymap = require('arctgx.vim.abstractKeymap')
+local config = {
+  switchbuf = function (_, winnr) return winnr end,
+}
 
 require('arctgx.lazy').setupOnLoad('dap-view', {
   before = function () vim.cmd.packadd('nvim-dap-view') end,
@@ -13,8 +16,10 @@ require('arctgx.lazy').setupOnLoad('dap', {
     local dap = require('dap')
     local augroup = api.nvim_create_augroup('arctgx.dap-view', {clear = true})
 
-    dap.defaults.fallback.switchbuf = 'useopen,uselast'
     dv.setup({
+      switchbuf = function (_, _)
+        return config.switchbuf()
+      end,
       keymaps = {
         scopes = {
           jump_to_parent = {'[[', '<Left>'},
@@ -99,3 +104,5 @@ require('arctgx.lazy').setupOnLoad('dap', {
       end)
   end
 })
+
+return config
