@@ -35,6 +35,12 @@ keymap.set({'n'}, '<S-Up>', '<C-y>', opts)
 keymap.set({'n'}, '<S-Down>', '<C-e>', opts)
 silentLuaRhsMap({'n'}, '<C-w>C', vim.cmd.tabclose, opts)
 keymap.set({'n'}, '<C-;>', ':lua ', {})
+keymap.set({'n'}, '<A-]>', function () vim.cmd.normal('vin') end,
+  {desc = 'Start incremental selection based on language'})
+keymap.set({'x'}, '<A-]>', function () vim.treesitter.select('parent') end,
+  {desc = 'Increment selection based on language'})
+keymap.set({'n', 'x'}, '<A-[>', function () vim.treesitter.select('child') end,
+  {desc = 'Decrement selection based on language'})
 
 local function selectionFromPastedRange()
   return '`[' .. vim.fn.getregtype():sub(0, 1) .. '`]'
