@@ -157,7 +157,7 @@ local function setup()
     },
   })
 
-  session.appendBeforeSaveHook('Close nvim-tree instances', function ()
+  session.writePre('Close nvim-tree instances', function ()
     require('arctgx.window').forEachWindowWithBufFileType({'NvimTree'}, function (winId)
       api.nvim_win_close(winId, false)
     end)

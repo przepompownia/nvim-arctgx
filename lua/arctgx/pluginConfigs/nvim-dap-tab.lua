@@ -31,6 +31,6 @@ require('arctgx.lazy').setupOnLoad('dap', {
       }
     })
 
-    session.appendBeforeSaveHook('dap-tab - close debug window', function () require('dap-tab').closeDebugWin() end)
+    session.writePre('dap-tab - close debug window', function () require('dap-tab').closeDebugWin() end)
   end
 })

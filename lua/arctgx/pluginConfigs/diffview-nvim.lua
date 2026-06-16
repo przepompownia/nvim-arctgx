@@ -42,7 +42,7 @@ keymap.set('n', 'gitStatusUIOpen', function ()
 end)
 vim.keymap.set({'n'}, '<Leader>gv', ':Diffview', {})
 
-session.appendBeforeSaveHook('Close DiffView tabs', closeDiffviewTabs)
+session.writePre('Close DiffView tabs', closeDiffviewTabs)
 
 api.nvim_create_autocmd('FileType', {
   group = api.nvim_create_augroup('DiffViewBufEnter', {clear = true}),
