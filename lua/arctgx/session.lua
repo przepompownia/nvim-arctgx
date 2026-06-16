@@ -3,7 +3,7 @@ local api = vim.api
 local extension = {}
 
 --- @param hook function
-function extension.appendBeforeSaveHook(name, hook)
+function extension.writePre(name, hook)
   api.nvim_create_autocmd('SessionWritePre', {
     group = api.nvim_create_augroup('arctgx.session.pre', {clear = false}),
     callback = function (ev)
