@@ -4,32 +4,6 @@
 --- nvim -u ~/.vim/nvim/init.lua -l generateLuarcJson.lua
 --- and see .luarc.jsonc as the result
 
-local function tableFromJsonFile(jsonFile)
-  if not vim.uv.fs_stat(jsonFile) then
-    return nil
-  end
-  local config = io.open(jsonFile, 'r')
-  if nil == config then
-    return nil
-  end
-
-  local content = config:read('*a')
-  config:close()
-
-  if nil == content or content:len() == 0 then
-    return nil
-  end
-
-  local ok, result = pcall(vim.json.decode, content, {table = {array = true, object = true}})
-
-  if not ok then
-    print(vim.inspect(result))
-    return
-  end
-
-  return result
-end
-
 local function listRuntimePaths()
   local paths = vim.tbl_filter(function (path)
     if vim.fn.isdirectory(path .. '/lua') ~= 1 then
@@ -65,7 +39,7 @@ local function generate()
   paths[#paths + 1] = '${3rd}/luv/library'
   paths[#paths + 1] = '${3rd}/luassert/library'
   local staticConfigFile = '.luarc-static.json'
-  local staticConfig = tableFromJsonFile(staticConfigFile)
+  local staticConfig = require('arctgx.ft.json').fromFile(staticConfigFile)
   if nil == staticConfig or nil == staticConfig['workspace'] then
     staticConfig = require('arctgx.lsp.serverConfigs.luaLs').defaultConfig()
   end
