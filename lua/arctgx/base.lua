@@ -103,20 +103,6 @@ function base.feedKeys(input)
   api.nvim_feedkeys(api.nvim_replace_termcodes(input, true, false, true), 'n', false)
 end
 
--- function base.setOperatorfunc(cb)
-  -- vim.print(cb)
-  -- vim.go.opfunc = cb
--- end
-
--- from @zeertzjq https://github.com/neovim/neovim/issues/14157#issuecomment-1320787927
---- @type base.setOperatorfunc
-base.setOperatorfunc = vim.fn[api.nvim_exec2([[
-  func s:set_opfunc(val)
-    let &opfunc = a:val
-  endfunc
-  echon get(function('s:set_opfunc'), 'name')
-]], {output = true}).output]
-
 ---Defer callback until terminal related options autodetection is complete
 --- @param augroupName string
 --- @param cb fun(): boolean? return true to call it once unless you want to run it on each next change of those options

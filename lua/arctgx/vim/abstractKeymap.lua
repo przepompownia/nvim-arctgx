@@ -35,9 +35,7 @@ end
 --- @return function
 function abstractKeymap.repeatable(cb)
   return function ()
-    require('arctgx.base').setOperatorfunc(function (_type)
-      cb()
-    end)
+    vim.go.operatorfunc = cb
     return 'g@l'
   end
 end

@@ -160,19 +160,19 @@ keymap.set('v', 'searchStringInFilenamesFromTextObject', function ()
 end)
 
 keymap.set('n', 'searchStringInGitFromTextObject', function ()
-  base.setOperatorfunc(require('arctgx.telescope').gitGrepOperator)
+  vim.go.operatorfunc = require('arctgx.telescope').gitGrepOperator
   return 'g@'
 end, {expr = true})
 keymap.set('n', 'searchStringFromTextObject', function ()
-  base.setOperatorfunc(require('arctgx.telescope').rgGrepOperator)
+  vim.go.operatorfunc = require('arctgx.telescope').rgGrepOperator
   return 'g@'
 end, {expr = true})
 keymap.set('n', 'searchStringInGitFilenamesFromTextObject', function ()
-  base.setOperatorfunc(require('arctgx.telescope').filesGitOperator)
+  vim.go.operatorfunc = require('arctgx.telescope').filesGitOperator
   return 'g@'
 end, {expr = true})
 keymap.set('n', 'searchStringInFilenamesFromTextObject', function ()
-  base.setOperatorfunc(require('arctgx.telescope').filesAllOperator)
+  vim.go.operatorfunc = require('arctgx.telescope').filesAllOperator
   return 'g@'
 end, {expr = true})
 local augroup = api.nvim_create_augroup('ArctgxTelescope', {clear = true})
