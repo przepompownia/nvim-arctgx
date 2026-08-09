@@ -16,6 +16,7 @@ function M.defaultConfig(rootDir)
         '?/init.lua',
       },
       version = 'LuaJIT',
+      enableLuaJITExtensions = true,
       pathStrict = true,
     },
     workspace = {

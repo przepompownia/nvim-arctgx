@@ -6,7 +6,8 @@
       "?/init.lua"
     ],
     "pathStrict": true,
-    "version": "LuaJIT"
+    "version": "LuaJIT",
+    "enableLuaJITExtensions": true
   },
   "workspace": {
     "ignoreDir": [
