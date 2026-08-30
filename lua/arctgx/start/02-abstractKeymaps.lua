@@ -17,6 +17,7 @@ local abstractKeymaps = {
   filesAll = {lhs = {'<S-F11>', '<F23>'}, desc = 'Pick all files'},
   grepGit = {lhs = {'<F12>'}, desc = 'Pick by git grep'},
   grepAll = {lhs = {'<S-F12>', '<F24>'}, desc = 'Pick by ripgrep'},
+  searchAndReplaceTool = {lhs = {'<Leader>gr'}, desc = 'Search and replace tool'},
   searchStringFromTextObject = {lhs = {'<Leader>q'}, desc = 'Search string from textobject'},
   searchStringInGitFromTextObject = {lhs = {'<Leader>w'}, desc = 'Search string from textobject in git repo'},
   searchStringInFilenamesFromTextObject = {lhs = {'<Leader>ff'}, desc = 'Search string from textobject in finenames'},

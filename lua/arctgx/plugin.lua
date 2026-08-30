@@ -1,5 +1,5 @@
 -- packadded as late as possible
--- but need its own config to defines how to do it
+-- but need its own config to define how to do it
 local lazyPackadded = vim.g.lazyPackaddedExtensions or {}
 
 local function loadSingleConfiguration(pluginName, pluginPrefix)
