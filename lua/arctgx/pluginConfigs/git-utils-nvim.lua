@@ -1,18 +1,21 @@
 local keymap = require('arctgx.vim.abstractKeymap')
 keymap.set('n', 'gitCommit', function ()
-  local cwd = require('git-utils.git').top(require('arctgx.base').getBufferCwd())
-  require('git-utils.commit')({gitDir = cwd})
+  local cwd = require('git-utils').top(require('arctgx.base').getBufferCwd())
+  require('git-utils').commit({gitDir = cwd})
 end)
 keymap.set('n', 'gitCommitAmend', function ()
-  local cwd = require('git-utils.git').top(require('arctgx.base').getBufferCwd())
-  require('git-utils.commit')({gitDir = cwd, amend = true})
+  local cwd = require('git-utils').top(require('arctgx.base').getBufferCwd())
+  require('git-utils').commit({gitDir = cwd, amend = true})
 end)
 
 keymap.set('n', 'gitPush', function ()
-  require 'git-utils.git'.pushToAllRemoteRepos(require('git-utils').currentBufferDirectory())
+  require('git-utils').pushToAllRemoteRepos(require('git-utils').currentBufferDirectory())
 end)
 
 require('arctgx.lazy').setupOnLoad('git-utils', {
+  before = function ()
+    vim.cmd.packadd('git-utils.nvim')
+  end,
   after = function ()
     require('telescope')
     require('git-utils').setup({
@@ -23,8 +26,6 @@ require('arctgx.lazy').setupOnLoad('git-utils', {
     })
   end
 })
-
-require('git-utils.createCommands')()
 
 keymap.set('n', 'browseGitBranches', function ()
   require('telescope')
