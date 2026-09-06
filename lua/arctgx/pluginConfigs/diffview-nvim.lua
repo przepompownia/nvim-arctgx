@@ -1,28 +1,37 @@
 local api = vim.api
+require('arctgx.lazy').setupOnLoad('diffview.lazy', {
+  before = function ()
+    -- avoid :runtime plugin/...
+    vim.cmd.packadd {'diffview.nvim', bang = true}
+  end,
+  after = function ()
+    -- :runtime plugin/...
+    vim.cmd.packadd {'diffview.nvim'}
+    require('diffview').setup({
+      use_icons = false,
+      enhanced_diff_hl = true,
+      clean_up_buffers = true,
+      file_panel = {
+        listing_style = 'list',
+        tree_options = {
+          flatten_dirs = true,
+          folder_statuses = 'only_folded'
+        },
+        win_config = {
+          type = 'float',
+          position = 'left',
+          width = 120,
+          height = 40,
+          win_opts = {},
+          border = 'rounded',
+        },
+      },
+    })
+  end,
+})
 
 local session = require 'arctgx.session'
 local keymap = require('arctgx.vim.abstractKeymap')
-
-require('diffview').setup({
-  use_icons = false,
-  enhanced_diff_hl = true,
-  clean_up_buffers = true,
-  file_panel = {
-    listing_style = 'list',
-    tree_options = {
-      flatten_dirs = true,
-      folder_statuses = 'only_folded'
-    },
-    win_config = {
-      type = 'float',
-      position = 'left',
-      width = 120,
-      height = 40,
-      win_opts = {},
-      border = 'rounded',
-    },
-  },
-})
 
 local function closeDiffviewTabs()
   require('arctgx.window').forEachWindowWithBufFileType({'DiffviewFiles', 'DiffviewFileHistory'}, function (winId)
@@ -40,7 +49,10 @@ end)
 keymap.set('n', 'gitStatusUIOpen', function ()
   require('diffview.lazy').require('diffview').toggle()
 end)
-vim.keymap.set({'n'}, '<Leader>gv', ':Diffview', {})
+vim.keymap.set({'n'}, '<Leader>gv', function ()
+  require('diffview.lazy')
+  api.nvim_feedkeys(':Diffview', 't', false)
+end, {})
 
 session.writePre('Close DiffView tabs', closeDiffviewTabs)
 
@@ -62,4 +74,3 @@ api.nvim_create_autocmd({'FileType'}, {
     vim.t[tabpage].arctgxTabName = args.match
   end
 })
-
