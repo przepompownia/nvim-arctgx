@@ -10,5 +10,5 @@ nvimExecutable="${1?$helpMsg}"
 
 "${nvimExecutable}" \
     -u "${initFile}" \
-    -c 'lua vim.iter(vim.g.lazyPackaddedExtensions):map(function(plugin) vim.cmd.packadd(plugin) end)' \
+    -c 'lua vim.iter(vim.g.lazyPackaddedExtensions):map(function(plugin) vim.cmd.packadd{plugin, bang = true} end)' \
     -l "${currentDir}/lua/arctgx/luaLs/generateLuarcJson.lua"
