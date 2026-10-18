@@ -1,6 +1,6 @@
 local rootPatterns = {
-  '.luarc.jsonc',
   '.luarc.json',
+  '.luarc.jsonc',
   '.luacheckrc',
   '.stylua.toml',
   'stylua.toml',
