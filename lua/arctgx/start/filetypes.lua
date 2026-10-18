@@ -6,16 +6,18 @@ api.nvim_create_autocmd({'FileType'}, {
   pattern = {'help', 'man'},
   group = augroup,
   nested = true,
-  callback = function ()
+  callback = function (ev)
     vim.wo.scrolloff = 0
 
-    vim.cmd([[silent wincmd T]])
+    if vim.bo[ev.buf].buftype == 'help' or api.nvim_buf_get_name(ev.buf):match('^man://') then
+      vim.cmd([[silent wincmd T]])
+    end
     if vim.opt_local.buftype:get() ~= 'help' then
       return
     end
 
     vim.keymap.set({'n'}, 'q', function ()
-      vim.api.nvim_buf_delete(0, {})
+      api.nvim_buf_delete(0, {})
     end, {buffer = 0})
   end
 })
