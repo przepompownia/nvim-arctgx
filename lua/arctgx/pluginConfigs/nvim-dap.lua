@@ -192,9 +192,9 @@ require('arctgx.lazy').setupOnLoad('dap', {
     api.nvim_create_user_command('DAPWidgetScopes', toggle_scopes, {})
     api.nvim_create_user_command('DAPWidgetFrames', toggle_frames, {})
 
-    keymap.set({'n'}, 'debuggerStepOver', keymap.repeatable(dap.step_over), {expr = true})
-    keymap.set({'n'}, 'debuggerStepInto', keymap.repeatable(dap.step_into), {expr = true})
-    keymap.set({'n'}, 'debuggerStepOut', keymap.repeatable(dap.step_out), {expr = true})
+    keymap.set({'n'}, 'debuggerStepOver', keymap.repeatable(function () dap.step_over() end), {expr = true})
+    keymap.set({'n'}, 'debuggerStepInto', keymap.repeatable(function () dap.step_into() end), {expr = true})
+    keymap.set({'n'}, 'debuggerStepOut', keymap.repeatable(function () dap.step_out() end), {expr = true})
     keymap.set({'n'}, 'debuggerFrameUp', keymap.repeatable(dap.up), {expr = true})
     keymap.set({'n'}, 'debuggerFrameDown', keymap.repeatable(dap.down), {expr = true})
     keymap.set({'n'}, 'debuggerRunToCursor', dap.run_to_cursor, keymapOpts)
